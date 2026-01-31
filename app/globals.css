@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --cream: #FDF8F3;
+  --cream-dark: #F5EDE4;
+  --forest: #2D5A47;
+  --forest-light: #3D7A5F;
+  --forest-dark: #1E3D30;
+  --amber: #E8A849;
+  --amber-light: #F5C97A;
+  --coral: #E07B6B;
+  --coral-light: #FEE2E2;
+  --text-primary: #2C3E35;
+  --text-secondary: #5A6B62;
+  --text-muted: #8A9B92;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--cream);
+  color: var(--text-primary);
+}
+
+.font-display {
+  font-family: 'DM Serif Display', serif;
+}
+
+.font-mono-science {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cream-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s infinite;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-forest text-white px-6 py-3 rounded-xl font-semibold transition-all hover:bg-forest-dark hover:-translate-y-0.5;
+}
+
+.btn-secondary {
+  @apply bg-transparent text-forest border-2 border-forest px-6 py-3 rounded-xl font-semibold transition-all hover:bg-forest hover:text-white;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white rounded-2xl p-6 shadow-sm;
+}
+
+/* Input styles */
+.input {
+  @apply w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-forest focus:border-transparent transition-all;
+}
+
+/* Status badges */
+.badge-optimal {
+  @apply bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold;
+}
+
+.badge-good {
+  @apply bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold;
+}
+
+.badge-check {
+  @apply bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-semibold;
+}
+
+/* Progress bar */
+.progress-bar {
+  @apply h-2 bg-cream-dark rounded-full overflow-hidden;
+}
+
+.progress-bar-fill {
+  @apply h-full rounded-full transition-all duration-500;
+}
+
+/* Checkbox custom */
+.checkbox-custom {
+  @apply w-7 h-7 border-2 border-forest rounded-lg flex items-center justify-center cursor-pointer transition-all;
+}
+
+.checkbox-custom.checked {
+  @apply bg-forest;
+}
+
+.checkbox-custom svg {
+  @apply w-4 h-4 text-white opacity-0 transition-opacity;
+}
+
+.checkbox-custom.checked svg {
+  @apply opacity-100;
+}
