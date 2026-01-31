@@ -73,9 +73,9 @@ function LoginForm() {
   };
 
   return (
-    <div className="bg-white rounded-3xl p-8 shadow-lg">
-      <h1 className="font-display text-3xl text-gray-900 mb-2 text-center">Welcome back</h1>
-      <p className="text-gray-500 mb-8 text-center">Continue optimizing your child's growth.</p>
+    <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg">
+      <h1 className="font-display text-2xl sm:text-3xl text-gray-900 mb-2 text-center">Welcome back</h1>
+      <p className="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8 text-center">Continue optimizing your child's growth.</p>
 
       {kickedMessage && (
         <div className="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-xl text-sm mb-6">
@@ -140,15 +140,15 @@ function LoginForm() {
 
 export default function Login() {
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center p-8">
+    <div className="min-h-screen bg-cream flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-md">
-        <Link href="/" className="flex items-center gap-2 font-display text-xl text-forest mb-12 justify-center">
-          <span className="text-2xl">🌿</span>
+        <Link href="/" className="flex items-center gap-2 font-display text-lg sm:text-xl text-forest mb-8 sm:mb-12 justify-center">
+          <span className="text-xl sm:text-2xl">🌿</span>
           bioKids
         </Link>
 
         <Suspense fallback={
-          <div className="bg-white rounded-3xl p-8 shadow-lg">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg">
             <div className="animate-pulse">
               <div className="h-8 bg-gray-200 rounded w-1/2 mx-auto mb-4"></div>
               <div className="h-4 bg-gray-200 rounded w-3/4 mx-auto mb-8"></div>
@@ -163,7 +163,7 @@ export default function Login() {
           <LoginForm />
         </Suspense>
 
-        <p className="text-center text-xs text-gray-400 mt-8">
+        <p className="text-center text-xs text-gray-400 mt-6 sm:mt-8">
           Your data stays private. We never sell or share your information.
         </p>
       </div>

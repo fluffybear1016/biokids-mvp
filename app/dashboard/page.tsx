@@ -177,35 +177,35 @@ export default function Dashboard() {
 
       <div className="flex">
         {/* Main Content */}
-        <main className="flex-1 max-w-4xl mx-auto px-4 py-12">
+        <main className="flex-1 max-w-4xl mx-auto px-4 py-6 sm:py-12">
 
         {/* Window Status Hero */}
-        <section className="bg-gradient-to-br from-forest to-forest-light rounded-3xl p-10 text-white mb-8 relative overflow-hidden">
+        <section className="bg-gradient-to-br from-forest to-forest-light rounded-2xl sm:rounded-3xl p-5 sm:p-10 text-white mb-6 sm:mb-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-radial from-white/10 to-transparent opacity-50" />
-          
-          <div className="flex justify-between items-start mb-6 relative">
-            <span className="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full text-sm font-semibold">
-              <span className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse-dot" />
+
+          <div className="flex justify-between items-start mb-4 sm:mb-6 relative">
+            <span className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
+              <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-green-400 rounded-full animate-pulse-dot" />
               Window is OPEN
             </span>
             <div className="text-right">
-              <div className="font-semibold">{child.name}</div>
-              <div className="text-sm text-white/70">Age {formatAge(child.birth_date)}</div>
+              <div className="font-semibold text-sm sm:text-base">{child.name}</div>
+              <div className="text-xs sm:text-sm text-white/70">Age {formatAge(child.birth_date)}</div>
             </div>
           </div>
-          
+
           <div className="relative">
-            <div className="text-sm uppercase tracking-wider text-white/70 mb-2">Current Stage</div>
-            <h1 className="font-display text-5xl mb-4">{stageData.label} Window</h1>
-            <p className="text-lg text-white/90 max-w-lg">
+            <div className="text-xs sm:text-sm uppercase tracking-wider text-white/70 mb-1 sm:mb-2">Current Stage</div>
+            <h1 className="font-display text-3xl sm:text-5xl mb-3 sm:mb-4">{stageData.label} Window</h1>
+            <p className="text-sm sm:text-lg text-white/90 max-w-lg">
               This is the highest-leverage period for natural GH optimization. Growth plates are fully open and highly responsive to lifestyle inputs.
             </p>
-            <Link 
-              href="/protocol" 
-              className="inline-flex items-center gap-2 bg-white text-forest px-6 py-3 rounded-xl font-semibold mt-6 hover:bg-cream transition-colors"
+            <Link
+              href="/protocol"
+              className="inline-flex items-center gap-2 bg-white text-forest px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold mt-4 sm:mt-6 hover:bg-cream transition-colors text-sm sm:text-base"
             >
               See Full Protocol
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Link>
@@ -213,119 +213,119 @@ export default function Dashboard() {
         </section>
 
         {/* Eight Category Windows */}
-        <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <Link href="/windows/baseline-screening" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer">
-            <div className="w-10 h-10 bg-gradient-to-br from-slate-400 to-slate-600 rounded-xl flex items-center justify-center text-xl mb-3">🔬</div>
-            <h3 className="font-semibold text-base">Baseline Screening</h3>
+        <section className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <Link href="/windows/baseline-screening" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-slate-400 to-slate-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🔬</div>
+            <h3 className="font-semibold text-sm sm:text-base">Baseline Screening</h3>
           </Link>
 
-          <Link href="/windows/sleep-circadian" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer">
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center text-xl mb-3">🌙</div>
-            <h3 className="font-semibold text-base">Sleep/Circadian</h3>
+          <Link href="/windows/sleep-circadian" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🌙</div>
+            <h3 className="font-semibold text-sm sm:text-base">Sleep/Circadian</h3>
           </Link>
 
-          <Link href="/windows/nutrition" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center text-xl mb-3">🥛</div>
-            <h3 className="font-semibold text-base">Nutrition</h3>
+          <Link href="/windows/nutrition" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🥛</div>
+            <h3 className="font-semibold text-sm sm:text-base">Nutrition</h3>
           </Link>
 
-          <Link href="/windows/body-composition" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer">
-            <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-xl flex items-center justify-center text-xl mb-3">⚖️</div>
-            <h3 className="font-semibold text-base">Body Composition</h3>
+          <Link href="/windows/body-composition" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">⚖️</div>
+            <h3 className="font-semibold text-sm sm:text-base">Body Comp</h3>
           </Link>
 
-          <Link href="/windows/physical-activity" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer">
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center text-xl mb-3">🏃</div>
-            <h3 className="font-semibold text-base">Physical Activity</h3>
+          <Link href="/windows/physical-activity" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🏃</div>
+            <h3 className="font-semibold text-sm sm:text-base">Physical Activity</h3>
           </Link>
 
-          <Link href="/windows/psychological" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer">
-            <div className="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-xl flex items-center justify-center text-xl mb-3">🧠</div>
-            <h3 className="font-semibold text-base">Psychological</h3>
+          <Link href="/windows/psychological" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🧠</div>
+            <h3 className="font-semibold text-sm sm:text-base">Psychological</h3>
           </Link>
 
-          <Link href="/windows/toxins" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer">
-            <div className="w-10 h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-xl flex items-center justify-center text-xl mb-3">🛡️</div>
-            <h3 className="font-semibold text-base">Toxins</h3>
+          <Link href="/windows/toxins" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🛡️</div>
+            <h3 className="font-semibold text-sm sm:text-base">Toxins</h3>
           </Link>
 
-          <Link href="/windows/gut-health" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer">
-            <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center text-xl mb-3">🦠</div>
-            <h3 className="font-semibold text-base">Gut Health</h3>
+          <Link href="/windows/gut-health" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🦠</div>
+            <h3 className="font-semibold text-sm sm:text-base">Gut Health</h3>
           </Link>
         </section>
 
         {/* Today's Protocol */}
-        <section className="card mb-8">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="font-display text-2xl">Today's Protocol</h2>
+        <section className="card mb-6 sm:mb-8 p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <h2 className="font-display text-xl sm:text-2xl">Today's Protocol</h2>
             <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-500">{completedCount} of 4 done</span>
-              <div className="w-24 progress-bar">
-                <div 
-                  className="progress-bar-fill bg-green-500" 
-                  style={{ width: `${(completedCount / 4) * 100}%` }} 
+              <span className="text-xs sm:text-sm text-gray-500">{completedCount} of 4 done</span>
+              <div className="w-20 sm:w-24 progress-bar">
+                <div
+                  className="progress-bar-fill bg-green-500"
+                  style={{ width: `${(completedCount / 4) * 100}%` }}
                 />
               </div>
             </div>
           </div>
-          
-          <div className="space-y-3">
+
+          <div className="space-y-2 sm:space-y-3">
             {[
               { key: 'morning_protein', icon: '🥛', title: 'Morning protein + raw milk', desc: 'A2 casein + amino acids support IGF-1 axis', time: 'Morning' },
               { key: 'sprints', icon: '🏃', title: 'Sprint intervals (6x30sec)', desc: 'High-intensity triggers 771% GH spike', time: 'After school' },
               { key: 'dinner_early', icon: '🍽️', title: 'Finish dinner by 6:00pm', desc: '2.5hr fast before bed preserves nocturnal GH', time: '6:00 PM' },
               { key: 'lights_out', icon: '🌙', title: 'Lights out by 8:30pm', desc: 'Catch the 10pm-1am deep sleep GH surge', time: '8:30 PM' },
             ].map((item) => (
-              <div 
+              <div
                 key={item.key}
                 onClick={() => toggleProtocol(item.key as keyof typeof todayProtocol)}
-                className={`flex items-center gap-4 p-5 bg-cream rounded-2xl cursor-pointer transition-all hover:bg-cream-dark ${
+                className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-5 bg-cream rounded-xl sm:rounded-2xl cursor-pointer transition-all hover:bg-cream-dark ${
                   todayProtocol[item.key as keyof typeof todayProtocol] ? 'opacity-60' : ''
                 }`}
               >
-                <div className={`checkbox-custom ${todayProtocol[item.key as keyof typeof todayProtocol] ? 'checked' : ''}`}>
+                <div className={`checkbox-custom flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 ${todayProtocol[item.key as keyof typeof todayProtocol] ? 'checked' : ''}`}>
                   <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center text-xl">{item.icon}</div>
-                <div className="flex-1">
-                  <div className="font-semibold">{item.title}</div>
-                  <div className="text-sm text-gray-500">{item.desc}</div>
+                <div className="w-9 h-9 sm:w-11 sm:h-11 bg-white rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl flex-shrink-0">{item.icon}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-semibold text-sm sm:text-base truncate">{item.title}</div>
+                  <div className="text-xs sm:text-sm text-gray-500 truncate">{item.desc}</div>
                 </div>
-                <span className="text-sm font-semibold text-forest bg-white px-3 py-1.5 rounded-full">{item.time}</span>
+                <span className="hidden sm:inline text-sm font-semibold text-forest bg-white px-3 py-1.5 rounded-full flex-shrink-0">{item.time}</span>
               </div>
             ))}
           </div>
         </section>
 
         {/* Bottom Row */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {/* Jarvis */}
-          <section className="bg-forest rounded-3xl p-7 text-white">
-            <div className="flex items-center gap-4 mb-5">
-              <div className="w-11 h-11 bg-white/15 rounded-xl flex items-center justify-center text-xl">🤖</div>
+          <section className="bg-forest rounded-2xl sm:rounded-3xl p-5 sm:p-7 text-white">
+            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-5">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 bg-white/15 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl">🤖</div>
               <div>
-                <h3 className="font-display text-xl">Ask Jarvis</h3>
-                <p className="text-sm text-white/70">Your GH optimization AI</p>
+                <h3 className="font-display text-lg sm:text-xl">Ask Jarvis</h3>
+                <p className="text-xs sm:text-sm text-white/70">Your GH optimization AI</p>
               </div>
             </div>
             <div className="relative">
-              <input 
-                type="text" 
-                placeholder="Ask anything..." 
-                className="w-full px-5 py-4 pr-14 bg-white/10 border border-white/20 rounded-2xl text-white placeholder:text-white/50 focus:outline-none focus:bg-white/15 focus:border-white/40"
+              <input
+                type="text"
+                placeholder="Ask anything..."
+                className="w-full px-4 sm:px-5 py-3 sm:py-4 pr-12 sm:pr-14 bg-white/10 border border-white/20 rounded-xl sm:rounded-2xl text-white text-base placeholder:text-white/50 focus:outline-none focus:bg-white/15 focus:border-white/40"
               />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-xl flex items-center justify-center hover:scale-105 transition-transform">
-                <svg className="w-5 h-5 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-lg sm:rounded-xl flex items-center justify-center hover:scale-105 transition-transform">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </button>
             </div>
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-2 mt-3 sm:mt-4">
               {['Why 8:30pm bedtime?', 'Best GH foods', 'Sprint alternatives'].map((q) => (
-                <span key={q} className="px-3 py-1.5 bg-white/10 border border-white/15 rounded-full text-xs text-white/90 cursor-pointer hover:bg-white/20">
+                <span key={q} className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-white/10 border border-white/15 rounded-full text-[10px] sm:text-xs text-white/90 cursor-pointer hover:bg-white/20">
                   {q}
                 </span>
               ))}
@@ -333,20 +333,20 @@ export default function Dashboard() {
           </section>
 
           {/* Growth Secret */}
-          <section className="bg-gradient-to-br from-amber-light to-amber rounded-3xl p-7 relative overflow-hidden">
-            <div className="absolute bottom-0 right-0 text-8xl opacity-15">{currentSecret.icon}</div>
+          <section className="bg-gradient-to-br from-amber-light to-amber rounded-2xl sm:rounded-3xl p-5 sm:p-7 relative overflow-hidden">
+            <div className="absolute bottom-0 right-0 text-6xl sm:text-8xl opacity-15">{currentSecret.icon}</div>
             <div className="relative">
-              <div className="text-xs font-bold text-forest-dark uppercase tracking-wider mb-3">🔬 Growth Secret</div>
-              <h3 className="font-display text-2xl text-forest-dark mb-3">{currentSecret.title}</h3>
-              <p className="text-sm text-forest-dark/85 leading-relaxed mb-3">
+              <div className="text-[10px] sm:text-xs font-bold text-forest-dark uppercase tracking-wider mb-2 sm:mb-3">🔬 Growth Secret</div>
+              <h3 className="font-display text-xl sm:text-2xl text-forest-dark mb-2 sm:mb-3">{currentSecret.title}</h3>
+              <p className="text-xs sm:text-sm text-forest-dark/85 leading-relaxed mb-2 sm:mb-3">
                 {currentSecret.text}
               </p>
-              <span className="text-xs text-forest-dark/60">{currentSecret.citation}</span>
-              <div className="flex gap-3 mt-5">
-                <Link href="/learn" className="px-4 py-2 bg-white rounded-xl text-sm font-semibold text-forest hover:shadow-md transition-shadow">
+              <span className="text-[10px] sm:text-xs text-forest-dark/60">{currentSecret.citation}</span>
+              <div className="flex gap-2 sm:gap-3 mt-4 sm:mt-5">
+                <Link href="/learn" className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold text-forest hover:shadow-md transition-shadow">
                   📖 Learn More
                 </Link>
-                <button className="px-4 py-2 bg-white rounded-xl text-sm font-semibold text-forest hover:shadow-md transition-shadow">
+                <button className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold text-forest hover:shadow-md transition-shadow">
                   📤 Share
                 </button>
               </div>
