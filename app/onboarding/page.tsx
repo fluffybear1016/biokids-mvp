@@ -8,7 +8,6 @@ function OnboardingForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
 
   // Form data
   const [birthDate, setBirthDate] = useState('');
@@ -28,19 +27,11 @@ function OnboardingForm() {
   // Check URL params on load for returning from Stripe
   useEffect(() => {
     const stepParam = searchParams.get('step');
-    const sessionId = searchParams.get('session_id');
 
-    if (stepParam === '3' && sessionId) {
-      // Returning from successful Stripe checkout
+    if (stepParam === '3') {
+      // Returning from Stripe checkout
       setStep(3);
       // Restore birthDate from localStorage if available
-      const savedBirthDate = localStorage.getItem('onboarding_birthDate');
-      if (savedBirthDate) {
-        setBirthDate(savedBirthDate);
-      }
-    } else if (stepParam === '2') {
-      // Returned from cancelled checkout
-      setStep(2);
       const savedBirthDate = localStorage.getItem('onboarding_birthDate');
       if (savedBirthDate) {
         setBirthDate(savedBirthDate);
@@ -48,35 +39,10 @@ function OnboardingForm() {
     }
   }, [searchParams]);
 
-  const handleStripeCheckout = async () => {
-    setLoading(true);
-
-    // Save birthDate to localStorage before redirecting
+  const handleStripeRedirect = () => {
+    // Save birthDate to localStorage before redirecting to Stripe
     localStorage.setItem('onboarding_birthDate', birthDate);
-
-    try {
-      const response = await fetch('/api/stripe/create-checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ birthDate }),
-      });
-
-      const { url, message } = await response.json();
-
-      if (url) {
-        window.location.href = url;
-      } else {
-        // Stripe not configured, skip to next step
-        console.log('Stripe not configured:', message);
-        setStep(3);
-      }
-    } catch (error) {
-      console.error('Checkout error:', error);
-      // On error, proceed anyway for development
-      setStep(3);
-    } finally {
-      setLoading(false);
-    }
+    window.location.href = 'https://buy.stripe.com/9B64gse7J8cS58u9hY2B200';
   };
 
   const handleComplete = () => {
@@ -168,15 +134,12 @@ function OnboardingForm() {
               <p className="text-white/90 font-mono text-xs sm:text-sm mb-2">Reserved for the first 100 families. As we add features and real-world data, pricing will increase—but your rate stays locked in for life.</p>
               <p className="text-white/70 font-mono text-xs sm:text-sm">Cancel anytime, online.</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button onClick={() => setStep(1)} className="px-6 py-3 sm:py-4 rounded-xl font-semibold text-black border-2 border-gray-300 hover:bg-gray-100 transition-colors order-2 sm:order-1">Back</button>
-              <button
-                onClick={() => window.location.href = 'https://buy.stripe.com/9B64gse7J8cS58u9hY2B200'}
-                className="flex-1 bg-forest text-white py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors order-1 sm:order-2"
-              >
-                Continue to secure my rate
-              </button>
-            </div>
+            <button
+              onClick={handleStripeRedirect}
+              className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors"
+            >
+              Continue to secure my rate
+            </button>
           </div>
         )}
 
