@@ -171,11 +171,10 @@ function OnboardingForm() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button onClick={() => setStep(1)} className="px-6 py-3 sm:py-4 rounded-xl font-semibold text-black border-2 border-gray-300 hover:bg-gray-100 transition-colors order-2 sm:order-1">Back</button>
               <button
-                onClick={handleStripeCheckout}
-                disabled={loading}
-                className="flex-1 bg-forest text-white py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors order-1 sm:order-2 disabled:opacity-50"
+                onClick={() => window.location.href = 'https://buy.stripe.com/9B64gse7J8cS58u9hY2B200'}
+                className="flex-1 bg-forest text-white py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors order-1 sm:order-2"
               >
-                {loading ? 'Loading...' : 'Continue to secure my rate'}
+                Continue to secure my rate
               </button>
             </div>
           </div>

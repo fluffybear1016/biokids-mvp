@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = process.env.STRIPE_SECRET_KEY
-  ? new Stripe(process.env.STRIPE_SECRET_KEY)
-  : null;
+// Only initialize Stripe if we have a real secret key (not placeholder)
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+const isPlaceholder = (key: string | undefined) =>
+  !key || key.includes('your_') || key.includes('_here') || key.includes('xxx');
+const isValidStripeKey = stripeKey && stripeKey.startsWith('sk_') && !isPlaceholder(stripeKey);
+const stripe = isValidStripeKey ? new Stripe(stripeKey) : null;
 
 export async function POST(request: Request) {
   try {
@@ -15,8 +18,9 @@ export async function POST(request: Request) {
     }
 
     const priceId = process.env.STRIPE_PRICE_ID;
+    const isValidPriceId = priceId && priceId.startsWith('price_') && !isPlaceholder(priceId);
 
-    if (!priceId) {
+    if (!isValidPriceId) {
       return NextResponse.json({ url: null, message: 'Stripe price not configured' });
     }
 
