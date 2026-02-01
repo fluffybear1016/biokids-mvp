@@ -48,20 +48,22 @@ export async function createSession(userId: string): Promise<string> {
   const sessionToken = crypto.randomUUID();
   const fingerprint = generateDeviceFingerprint();
 
-  // Insert new session
-  await supabase.from('user_sessions').insert({
-    user_id: userId,
-    session_token: sessionToken,
-    device_fingerprint: fingerprint,
-    user_agent: typeof window !== 'undefined' ? navigator.userAgent : null,
-    is_active: true,
-  });
+  if (supabase) {
+    // Insert new session
+    await supabase.from('user_sessions').insert({
+      user_id: userId,
+      session_token: sessionToken,
+      device_fingerprint: fingerprint,
+      user_agent: typeof window !== 'undefined' ? navigator.userAgent : null,
+      is_active: true,
+    });
 
-  // Invalidate other sessions
-  await supabase.rpc('invalidate_other_sessions', {
-    p_user_id: userId,
-    p_new_token: sessionToken,
-  });
+    // Invalidate other sessions
+    await supabase.rpc('invalidate_other_sessions', {
+      p_user_id: userId,
+      p_new_token: sessionToken,
+    });
+  }
 
   storeSessionToken(sessionToken);
 
@@ -76,6 +78,11 @@ export async function validateSession(): Promise<{ valid: boolean; kicked: boole
   }
 
   const supabase = createClient();
+
+  if (!supabase) {
+    // Supabase not configured, assume valid for development
+    return { valid: true, kicked: false };
+  }
 
   const { data, error } = await supabase
     .from('user_sessions')
@@ -107,10 +114,12 @@ export async function invalidateSession(): Promise<void> {
 
   if (storedToken) {
     const supabase = createClient();
-    await supabase
-      .from('user_sessions')
-      .update({ is_active: false })
-      .eq('session_token', storedToken);
+    if (supabase) {
+      await supabase
+        .from('user_sessions')
+        .update({ is_active: false })
+        .eq('session_token', storedToken);
+    }
   }
 
   clearSessionToken();

@@ -39,12 +39,6 @@ function OnboardingForm() {
     }
   }, [searchParams]);
 
-  const handleStripeRedirect = () => {
-    // Save birthDate to localStorage before redirecting to Stripe
-    localStorage.setItem('onboarding_birthDate', birthDate);
-    window.location.href = 'https://buy.stripe.com/9B64gse7J8cS58u9hY2B200';
-  };
-
   const handleComplete = () => {
     localStorage.setItem('onboarding_complete', 'true');
     localStorage.setItem('child_data', JSON.stringify({
@@ -135,7 +129,7 @@ function OnboardingForm() {
               <p className="text-white/70 font-mono text-xs sm:text-sm">Cancel anytime, online.</p>
             </div>
             <button
-              onClick={handleStripeRedirect}
+              onClick={() => { localStorage.setItem('onboarding_birthDate', birthDate); window.location.href = 'https://buy.stripe.com/9B64gse7J8cS58u9hY2B200'; }}
               className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors"
             >
               Continue to secure my rate

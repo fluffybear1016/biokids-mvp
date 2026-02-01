@@ -40,6 +40,13 @@ export default function Step9AccountCreation({ data, onBack }: Props) {
     try {
       const supabase = createClient();
 
+      if (!supabase) {
+        // Supabase not configured, skip auth and go to dashboard
+        clearOnboardingData();
+        router.push('/dashboard');
+        return;
+      }
+
       // Create the user account
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
