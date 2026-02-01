@@ -1,23 +1,17 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-export default function Onboarding() {
+function OnboardingForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
 
   // Form data
   const [birthDate, setBirthDate] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiration, setExpiration] = useState('');
-  const [cvc, setCvc] = useState('');
-  const [nameOnCard, setNameOnCard] = useState('');
 
   // Post-payment data
   const [childName, setChildName] = useState('');
@@ -29,14 +23,60 @@ export default function Onboarding() {
   const [heightCm, setHeightCm] = useState('');
   const [weightKg, setWeightKg] = useState('');
 
-  const totalSteps = 5;
+  const totalSteps = 4;
 
-  const handlePayment = async () => {
+  // Check URL params on load for returning from Stripe
+  useEffect(() => {
+    const stepParam = searchParams.get('step');
+    const sessionId = searchParams.get('session_id');
+
+    if (stepParam === '3' && sessionId) {
+      // Returning from successful Stripe checkout
+      setStep(3);
+      // Restore birthDate from localStorage if available
+      const savedBirthDate = localStorage.getItem('onboarding_birthDate');
+      if (savedBirthDate) {
+        setBirthDate(savedBirthDate);
+      }
+    } else if (stepParam === '2') {
+      // Returned from cancelled checkout
+      setStep(2);
+      const savedBirthDate = localStorage.getItem('onboarding_birthDate');
+      if (savedBirthDate) {
+        setBirthDate(savedBirthDate);
+      }
+    }
+  }, [searchParams]);
+
+  const handleStripeCheckout = async () => {
     setLoading(true);
-    setTimeout(() => {
+
+    // Save birthDate to localStorage before redirecting
+    localStorage.setItem('onboarding_birthDate', birthDate);
+
+    try {
+      const response = await fetch('/api/stripe/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ birthDate }),
+      });
+
+      const { url, message } = await response.json();
+
+      if (url) {
+        window.location.href = url;
+      } else {
+        // Stripe not configured, skip to next step
+        console.log('Stripe not configured:', message);
+        setStep(3);
+      }
+    } catch (error) {
+      console.error('Checkout error:', error);
+      // On error, proceed anyway for development
+      setStep(3);
+    } finally {
       setLoading(false);
-      setStep(4);
-    }, 1500);
+    }
   };
 
   const handleComplete = () => {
@@ -48,6 +88,7 @@ export default function Onboarding() {
       height: useMetric ? heightCm : `${heightFt}'${heightIn}"`,
       weight: useMetric ? weightKg : weight,
     }));
+    localStorage.removeItem('onboarding_birthDate');
     router.push('/dashboard');
   };
 
@@ -129,63 +170,18 @@ export default function Onboarding() {
             </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button onClick={() => setStep(1)} className="px-6 py-3 sm:py-4 rounded-xl font-semibold text-black border-2 border-gray-300 hover:bg-gray-100 transition-colors order-2 sm:order-1">Back</button>
-              <button onClick={() => setStep(3)} className="flex-1 bg-forest text-white py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors order-1 sm:order-2">Continue to secure my rate</button>
+              <button
+                onClick={handleStripeCheckout}
+                disabled={loading}
+                className="flex-1 bg-forest text-white py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors order-1 sm:order-2 disabled:opacity-50"
+              >
+                {loading ? 'Loading...' : 'Continue to secure my rate'}
+              </button>
             </div>
           </div>
         )}
 
         {step === 3 && (
-          <div className="space-y-6 sm:space-y-8">
-            <div>
-              <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Create your account and start.</h1>
-              <p className="font-mono text-sm sm:text-base text-black">One login for your child's complete growth hormone system.</p>
-            </div>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-black mb-1">Email</label>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" placeholder="you@example.com" />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-black mb-1">Password</label>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" placeholder="Create a password" />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-black mb-1">Confirm password</label>
-                <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" placeholder="Confirm your password" />
-              </div>
-              <hr className="my-4 sm:my-6 border-gray-300" />
-              <div>
-                <label className="block text-sm font-semibold text-black mb-1">Card number</label>
-                <input type="text" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" placeholder="1234 5678 9012 3456" />
-              </div>
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-black mb-1">Expiration</label>
-                  <input type="text" value={expiration} onChange={(e) => setExpiration(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" placeholder="MM/YY" />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-black mb-1">CVC</label>
-                  <input type="text" value={cvc} onChange={(e) => setCvc(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" placeholder="123" />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-black mb-1">Name on card</label>
-                <input type="text" value={nameOnCard} onChange={(e) => setNameOnCard(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" placeholder="Full name as shown on card" />
-              </div>
-            </div>
-            <div className="space-y-2 font-mono text-xs sm:text-sm text-black">
-              <p>Cancel anytime, online.</p>
-              <p>No hormones, no meds—education and systems only.</p>
-              <p>By creating an account, you agree to our <Link href="/terms" className="underline">Terms of Service</Link> and <Link href="/privacy" className="underline">Privacy Policy</Link>.</p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button onClick={() => setStep(2)} className="px-6 py-3 sm:py-4 rounded-xl font-semibold text-black border-2 border-gray-300 hover:bg-gray-100 transition-colors order-2 sm:order-1">Back</button>
-              <button onClick={handlePayment} disabled={loading || !email || !password || !confirmPassword || !cardNumber || !expiration || !cvc || !nameOnCard} className="flex-1 bg-forest text-white py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors order-1 sm:order-2">{loading ? 'Processing...' : 'Start optimizing'}</button>
-            </div>
-          </div>
-        )}
-
-        {step === 4 && (
           <div className="space-y-6 sm:space-y-8">
             <div>
               <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Add your child.</h1>
@@ -199,7 +195,7 @@ export default function Onboarding() {
               </div>
               <div>
                 <label className="block text-sm font-semibold text-black mb-1">Birth date</label>
-                <input type="date" value={birthDate} disabled className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl font-mono text-black text-base bg-gray-100" />
+                <input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl font-mono text-black text-base bg-gray-100" />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-black mb-2">Sex</label>
@@ -209,11 +205,11 @@ export default function Onboarding() {
                 </div>
               </div>
             </div>
-            <button onClick={() => setStep(5)} disabled={!childName || !sex} className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors">Continue</button>
+            <button onClick={() => setStep(4)} disabled={!childName || !sex} className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors">Continue</button>
           </div>
         )}
 
-        {step === 5 && (
+        {step === 4 && (
           <div className="space-y-6 sm:space-y-8">
             <div>
               <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Track their starting point.</h1>
@@ -253,5 +249,17 @@ export default function Onboarding() {
 
       </main>
     </div>
+  );
+}
+
+export default function Onboarding() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="text-forest font-mono">Loading...</div>
+      </div>
+    }>
+      <OnboardingForm />
+    </Suspense>
   );
 }

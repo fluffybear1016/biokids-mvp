@@ -7,7 +7,7 @@ const stripe = process.env.STRIPE_SECRET_KEY
 
 export async function POST(request: Request) {
   try {
-    const { email, onboardingSessionId } = await request.json();
+    const { birthDate } = await request.json();
 
     if (!stripe) {
       // Stripe not configured, return null to skip payment
@@ -31,11 +31,11 @@ export async function POST(request: Request) {
         },
       ],
       mode: 'subscription',
-      customer_email: email || undefined,
-      success_url: `${baseUrl}/onboarding?step=9&checkout=success`,
-      cancel_url: `${baseUrl}/onboarding?step=8&checkout=cancelled`,
+      allow_promotion_codes: true,
+      success_url: `${baseUrl}/onboarding?step=3&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/onboarding?step=2`,
       metadata: {
-        onboarding_session_id: onboardingSessionId || '',
+        birth_date: birthDate || '',
       },
     });
 
