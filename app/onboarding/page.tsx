@@ -22,16 +22,16 @@ function OnboardingForm() {
   const [heightCm, setHeightCm] = useState('');
   const [weightKg, setWeightKg] = useState('');
 
-  const totalSteps = 4;
+  const totalSteps = 5;
 
   // Check URL params on load for returning from Stripe
   useEffect(() => {
     const stepParam = searchParams.get('step');
 
     if (stepParam === '3') {
-      // Returning from Stripe checkout
+      // Returning from Stripe checkout - show welcome screen
       setStep(3);
-      // Restore birthDate from localStorage if available
+      // Restore birthDate from localStorage
       const savedBirthDate = localStorage.getItem('onboarding_birthDate');
       if (savedBirthDate) {
         setBirthDate(savedBirthDate);
@@ -138,6 +138,28 @@ function OnboardingForm() {
         )}
 
         {step === 3 && (
+          <div className="space-y-6 sm:space-y-8 text-center">
+            <div className="flex justify-center">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 bg-forest/10 rounded-full flex items-center justify-center">
+                <svg className="w-10 h-10 sm:w-12 sm:h-12 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Welcome to bioKids.</h1>
+              <p className="font-mono text-sm sm:text-base text-black">Your founding membership is active. Let's personalize the system for your child.</p>
+            </div>
+            <button
+              onClick={() => setStep(4)}
+              className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors"
+            >
+              Continue
+            </button>
+          </div>
+        )}
+
+        {step === 4 && (
           <div className="space-y-6 sm:space-y-8">
             <div>
               <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Add your child.</h1>
@@ -150,10 +172,6 @@ function OnboardingForm() {
                 <p className="text-xs sm:text-sm font-mono text-black mt-1">For privacy, you can use just their first initial.</p>
               </div>
               <div>
-                <label className="block text-sm font-semibold text-black mb-1">Birth date</label>
-                <input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl font-mono text-black text-base bg-gray-100" />
-              </div>
-              <div>
                 <label className="block text-sm font-semibold text-black mb-2">Sex</label>
                 <div className="flex gap-3 sm:gap-4">
                   <button onClick={() => setSex('female')} className={`flex-1 py-3 rounded-xl font-semibold border-2 transition-colors ${sex === 'female' ? 'bg-forest text-white border-forest' : 'bg-white text-black border-gray-300 hover:border-forest'}`}>Female</button>
@@ -161,11 +179,11 @@ function OnboardingForm() {
                 </div>
               </div>
             </div>
-            <button onClick={() => setStep(4)} disabled={!childName || !sex} className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors">Continue</button>
+            <button onClick={() => setStep(5)} disabled={!childName || !sex} className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors">Continue</button>
           </div>
         )}
 
-        {step === 4 && (
+        {step === 5 && (
           <div className="space-y-6 sm:space-y-8">
             <div>
               <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Track their starting point.</h1>
