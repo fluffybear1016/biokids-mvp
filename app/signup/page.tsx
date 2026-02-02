@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase';
 
 export default function Signup() {
   const router = useRouter();
@@ -13,25 +14,95 @@ export default function Signup() {
   const [birthDate, setBirthDate] = useState('');
   const [gender, setGender] = useState<'male' | 'female' | ''>('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [userId, setUserId] = useState<string | null>(null);
 
   const handleSubmitAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // TODO: Implement Supabase auth
-    setTimeout(() => {
+    setError('');
+
+    try {
+      const supabase = createClient();
+
+      if (!supabase) {
+        setError('Authentication not configured');
+        setLoading(false);
+        return;
+      }
+
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (signUpError) {
+        setError(signUpError.message);
+        setLoading(false);
+        return;
+      }
+
+      if (data.user) {
+        setUserId(data.user.id);
+        setStep(2);
+      }
+    } catch (err) {
+      console.error('Signup error:', err);
+      setError('An error occurred. Please try again.');
+    } finally {
       setLoading(false);
-      setStep(2);
-    }, 500);
+    }
   };
 
   const handleSubmitChild = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // TODO: Save child to Supabase
-    setTimeout(() => {
-      setLoading(false);
+    setError('');
+
+    try {
+      const supabase = createClient();
+
+      if (!supabase || !userId) {
+        // If no Supabase, save to localStorage and redirect
+        localStorage.setItem('onboarding_complete', 'true');
+        localStorage.setItem('child_data', JSON.stringify({
+          name: childName,
+          birthDate,
+          sex: gender,
+        }));
+        router.push('/dashboard');
+        return;
+      }
+
+      // Save child to Supabase
+      const { error: childError } = await supabase.from('children').insert({
+        user_id: userId,
+        name: childName,
+        birth_date: birthDate,
+        gender: gender || null,
+      });
+
+      if (childError) {
+        console.error('Error saving child:', childError);
+        // Continue anyway - child can be added later
+      }
+
+      // Save to localStorage as backup
+      localStorage.setItem('onboarding_complete', 'true');
+      localStorage.setItem('child_data', JSON.stringify({
+        name: childName,
+        birthDate,
+        sex: gender,
+      }));
+
       router.push('/dashboard');
-    }, 500);
+    } catch (err) {
+      console.error('Error saving child:', err);
+      // Continue anyway
+      router.push('/dashboard');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -48,6 +119,12 @@ export default function Signup() {
             <>
               <h1 className="font-display text-3xl text-gray-900 mb-2">Create your account</h1>
               <p className="text-gray-500 mb-8">Start optimizing your child's natural growth hormone today.</p>
+
+              {error && (
+                <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm mb-6">
+                  {error}
+                </div>
+              )}
 
               <form onSubmit={handleSubmitAuth} className="space-y-5">
                 <div>
@@ -73,8 +150,8 @@ export default function Signup() {
                     minLength={8}
                   />
                 </div>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="btn-primary w-full"
                   disabled={loading}
                 >
@@ -91,6 +168,12 @@ export default function Signup() {
             <>
               <h1 className="font-display text-3xl text-gray-900 mb-2">Add your child</h1>
               <p className="text-gray-500 mb-8">We'll personalize the protocol for their growth stage.</p>
+
+              {error && (
+                <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm mb-6">
+                  {error}
+                </div>
+              )}
 
               <form onSubmit={handleSubmitChild} className="space-y-5">
                 <div>
@@ -137,8 +220,8 @@ export default function Signup() {
                     ))}
                   </div>
                 </div>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="btn-primary w-full"
                   disabled={loading}
                 >
