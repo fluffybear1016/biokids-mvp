@@ -32,6 +32,12 @@ function LoginForm() {
       const supabase = createClient();
       const fingerprint = generateDeviceFingerprint();
 
+      if (!supabase) {
+        setError('Authentication is not configured. Please try again later.');
+        setLoading(false);
+        return;
+      }
+
       // Sign in with Supabase
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
