@@ -179,7 +179,7 @@ export default function Dashboard() {
         {/* Main Content */}
         <main className="flex-1 max-w-4xl mx-auto px-4 py-6 sm:py-12">
 
-        {/* Window Status Hero */}
+        {/* Stage Hero */}
         <section className="bg-gradient-to-br from-forest to-forest-light rounded-2xl sm:rounded-3xl p-5 sm:p-10 text-white mb-6 sm:mb-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-radial from-white/10 to-transparent opacity-50" />
 
@@ -188,23 +188,22 @@ export default function Dashboard() {
               <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-green-400 rounded-full animate-pulse-dot" />
               Window is OPEN
             </span>
-            <div className="text-right">
-              <div className="font-semibold text-sm sm:text-base">{child.name}</div>
-              <div className="text-xs sm:text-sm text-white/70">Age {formatAge(child.birth_date)}</div>
-            </div>
           </div>
 
           <div className="relative">
-            <div className="text-xs sm:text-sm uppercase tracking-wider text-white/70 mb-1 sm:mb-2">Stage</div>
-            <h1 className="font-display text-3xl sm:text-5xl mb-3 sm:mb-4">{stageData.label} Window</h1>
+            <div className="text-xs sm:text-sm text-white/70 mb-1 sm:mb-2">Where {child.name} is right now</div>
+            <h1 className="font-display text-3xl sm:text-5xl mb-2 sm:mb-3">{stageData.label}</h1>
+            <p className="text-sm sm:text-base text-white/60 mb-4 sm:mb-5">
+              You have time. {child.name} is in the optimal window.
+            </p>
             <p className="text-sm sm:text-lg text-white/90 max-w-lg">
-              This stage determines how much growth potential your child can actually use.
+              This is the highest-leverage stage for supporting natural growth. Small consistent actions now make a big difference.
             </p>
             <Link
               href="/stage"
               className="inline-flex items-center gap-2 bg-white text-forest px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold mt-4 sm:mt-6 hover:bg-cream transition-colors text-sm sm:text-base"
             >
-              Why this stage matters →
+              See what matters most →
             </Link>
           </div>
         </section>
