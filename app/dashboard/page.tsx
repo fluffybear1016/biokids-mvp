@@ -195,63 +195,35 @@ export default function Dashboard() {
           </div>
 
           <div className="relative">
-            <div className="text-xs sm:text-sm uppercase tracking-wider text-white/70 mb-1 sm:mb-2">Current Stage</div>
+            <div className="text-xs sm:text-sm uppercase tracking-wider text-white/70 mb-1 sm:mb-2">Stage</div>
             <h1 className="font-display text-3xl sm:text-5xl mb-3 sm:mb-4">{stageData.label} Window</h1>
             <p className="text-sm sm:text-lg text-white/90 max-w-lg">
-              This is the highest-leverage period for natural GH optimization. Growth plates are fully open and highly responsive to lifestyle inputs.
+              This stage determines how much growth potential your child can actually use.
             </p>
             <Link
-              href="/protocol"
+              href="/stage"
               className="inline-flex items-center gap-2 bg-white text-forest px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold mt-4 sm:mt-6 hover:bg-cream transition-colors text-sm sm:text-base"
             >
-              See Full Protocol
-              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
+              Why this stage matters →
             </Link>
           </div>
         </section>
 
-        {/* Eight Category Windows */}
-        <section className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
-          <Link href="/windows/baseline-screening" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-slate-400 to-slate-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🔬</div>
-            <h3 className="font-semibold text-sm sm:text-base">Baseline Screening</h3>
-          </Link>
-
-          <Link href="/windows/sleep-circadian" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🌙</div>
+        {/* Category Cards */}
+        <section className="grid grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <Link href="/windows/sleep-circadian" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6 flex flex-col items-center text-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3">🌙</div>
             <h3 className="font-semibold text-sm sm:text-base">Sleep/Circadian</h3>
           </Link>
 
-          <Link href="/windows/nutrition" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🥛</div>
+          <Link href="/windows/nutrition" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6 flex flex-col items-center text-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3">🥛</div>
             <h3 className="font-semibold text-sm sm:text-base">Nutrition</h3>
           </Link>
 
-          <Link href="/windows/body-composition" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">⚖️</div>
-            <h3 className="font-semibold text-sm sm:text-base">Body Comp</h3>
-          </Link>
-
-          <Link href="/windows/physical-activity" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🏃</div>
-            <h3 className="font-semibold text-sm sm:text-base">Physical Activity</h3>
-          </Link>
-
-          <Link href="/windows/psychological" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🧠</div>
-            <h3 className="font-semibold text-sm sm:text-base">Psychological</h3>
-          </Link>
-
-          <Link href="/windows/toxins" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🛡️</div>
-            <h3 className="font-semibold text-sm sm:text-base">Toxins</h3>
-          </Link>
-
-          <Link href="/windows/gut-health" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3">🦠</div>
-            <h3 className="font-semibold text-sm sm:text-base">Gut Health</h3>
+          <Link href="/windows/physical-activity" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6 flex flex-col items-center text-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3">🏃</div>
+            <h3 className="font-semibold text-sm sm:text-base">Movement</h3>
           </Link>
         </section>
 
