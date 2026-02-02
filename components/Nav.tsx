@@ -17,7 +17,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
     { href: '/dashboard', label: 'Home' },
     { href: '/protocol', label: 'A Simple Protocol to Follow' },
     { href: '/learn', label: 'Knowledge Hub' },
-    { href: '/jarvis', label: 'Ask AI' },
+    { href: '/jarvis', label: 'gH AI' },
   ];
 
   const isActive = (href: string) => pathname === href;
