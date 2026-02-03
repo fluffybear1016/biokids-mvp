@@ -413,32 +413,152 @@ const allStages: StageData[] = [
     ],
   },
   {
-    id: 'pre-puberty',
-    ageRange: 'Ages 8-11',
-    header: 'Pre-Puberty',
-    subhead: 'The highest-leverage window.',
-    supportive: "You have time. This is the optimal window for growth optimization.",
+    id: 'age-8',
+    ageRange: '8 years',
+    header: 'Age 8',
+    subhead: 'Deep in the optimal window.',
+    supportive: 'This is prime time. Small consistent actions compound here.',
     sections: [
       {
         title: 'How growth signals are made',
-        intro: 'GH is released primarily during deep sleep — about 70% of daily GH comes out in the first 3 hours after falling asleep.',
-        explanation: "Think of your child's brain as having a 'growth broadcast' that only turns on during deep sleep. The hypothalamus sends a signal (GHRH) that tells the pituitary to release a big pulse of growth hormone. But here's the catch — if there's insulin in the bloodstream from a recent meal, it jams the signal. The broadcast gets blocked. That's why eating before bed can cut GH release by up to 80%. Morning sunlight sets the timer for when this broadcast happens — miss the light, and the whole schedule drifts.",
-        flow: 'Morning light → Sets internal clock → Deep sleep triggers GH broadcast → (Insulin blocks it)',
+        intro: 'The GH broadcast is fully mature. What you control now is signal strength.',
+        explanation: "At 8, the growth hormone system has been running at full capacity for a year. The hypothalamus knows exactly when to fire GHRH, the pituitary responds on cue, and the pattern is locked to deep sleep. What separates high-output kids from low-output kids is entirely environmental. Three things control signal strength: when they fall asleep (earlier = catches more deep sleep cycles), how deeply they sleep (fragmented sleep = weaker pulses), and whether insulin is competing (food before bed = jammed signal). An 8-year-old sleeping 9pm-6am with no bedtime snack is running at maximum broadcast power. Move bedtime to 10:30pm with a bowl of cereal at 9pm, and you've cut GH output significantly — same hardware, worse software.",
+        flow: 'Sleep timing + Sleep depth + No late insulin → Maximum GH pulses → (Any disruption = reduced output)',
         citation: 'Van Cauter E. JAMA. 2000',
       },
       {
         title: 'How those signals reach the body',
-        intro: "GH receptors are mature and efficient. The key now is making sure each GH pulse 'counts.'",
-        explanation: "GH is the message, but your child's liver is the translator. When GH hits the liver, it flips a switch (JAK2-STAT5) that produces IGF-1 — the actual growth molecule that reaches bones and muscles. Protein is the raw material for this translation. Low protein = weak translation, even if GH is fine. Inflammation from junk food or excess body fat installs a 'dimmer switch' (called SOCS) that weakens the signal. This is why two kids with identical GH levels can grow at totally different rates.",
-        flow: 'GH → Liver switch (JAK2-STAT5) → IGF-1 production → (Protein amplifies; Inflammation dims)',
+        intro: 'The liver is a finely tuned IGF-1 factory. Protein is the throttle.',
+        explanation: "By 8, the JAK2-STAT5 signaling cascade operates at peak efficiency. When GH lands on liver receptors, the response is immediate and proportional — more GH signal in, more IGF-1 out. But here's the bottleneck: the liver needs amino acids to manufacture IGF-1. Think of protein as the raw material and GH as the work order. A big work order with no materials produces nothing. Studies at this age show clear dose-response: children consuming 1.2-1.5g/kg protein daily have measurably higher IGF-1 levels than those at minimum requirements. Dairy protein is particularly potent — milk essentially comes with a built-in IGF-1 amplifier. The system is waiting for inputs. Feed it.",
+        flow: 'GH arrives → JAK2-STAT5 fires → Liver needs amino acids → Protein intake = IGF-1 output',
         citation: 'Hoppe C. Am J Clin Nutr. 2004',
       },
       {
         title: 'How bones actually grow',
-        intro: 'Growth plates are fully open and highly responsive. Activity type matters — impact loading signals bones to grow.',
-        explanation: "Growth plates are like construction sites at the ends of bones. IGF-1 is the foreman telling workers (chondrocytes) to build. But there's a second signal: mechanical force. Every time your child jumps, sprints, or lands hard, sensors in the growth plate detect it and say 'we need more structure here.' That's why jumping and sprinting grow bones more than swimming or cycling — impact is information. The plates stay open until estrogen shows up and tells the workers to go home permanently. More body fat = more estrogen = earlier shutdown.",
-        flow: 'IGF-1 + Impact → Growth plate builds → Estrogen eventually closes the site (fat accelerates this)',
-        citation: 'Stokes KA. Sports Med. 2002; Nilsson O. Endocr Rev. 2005',
+        intro: 'Growth plates are wide open and highly sensitive. Impact activities send powerful growth signals.',
+        explanation: "At 8, the epiphyseal plates are in their most responsive state. Chondrocytes are primed to receive both hormonal signals (IGF-1) and physical signals from movement. When your child jumps, sprints, or lands from height, tiny microfractures form in the growth plate cartilage. This sounds alarming but it's actually the growth stimulus — the body responds by building back stronger and longer. The key is what happens immediately after: stretching while the bones are in repair mode encourages them to heal in an elongated position. Follow impact activities with 5-10 minutes of stretching, then milk mixed with honey — the protein and calcium support the repair process while the natural sugars help shuttle nutrients to the healing tissue. Swimming and cycling don't create this effect — only activities where feet hit ground.",
+        flow: 'Jumping/sprinting → Microfractures form → Stretching during repair → Bones heal elongated → Milk + honey delivers materials',
+        citation: 'Stokes KA. Sports Med. 2002',
+      },
+    ],
+  },
+  {
+    id: 'age-9',
+    ageRange: '9 years',
+    header: 'Age 9',
+    subhead: 'Prime optimization territory.',
+    supportive: "You're right in the sweet spot. Everything you do now matters.",
+    sections: [
+      {
+        title: 'How growth signals are made',
+        intro: 'Sleep is under siege from homework, screens, and social schedules. Each late night has a cost.',
+        explanation: "Nine-year-olds face increasing pressure on sleep from multiple directions: later homework, more screen time, social activities, and the cultural drift toward 'older kid' bedtimes. The biology doesn't care about any of this. The GH broadcast still happens during deep sleep in the early night hours, and it still requires adequate total sleep to complete all cycles. Every 30-minute delay in bedtime compresses the window. A 9-year-old who 'should' sleep 9-11 hours but actually sleeps 8 hours with a 10pm bedtime is losing 1-2 GH pulse cycles nightly. Over months, this compounds into measurable growth velocity differences. The social pressure to stay up later is biological sabotage disguised as maturity.",
+        flow: 'Later bedtime → Compressed sleep window → Fewer complete GH cycles → (Cumulative growth impact)',
+        citation: 'Van Cauter E. JAMA. 2000',
+      },
+      {
+        title: 'How those signals reach the body',
+        intro: 'IGF-1 production is running at capacity. Inflammation is the main threat to efficiency.',
+        explanation: "The GH-to-IGF-1 conversion pathway is fully optimized at 9. The only things that can reduce efficiency are inflammation and insulin resistance — and both are increasingly common in modern kids. Processed foods, excess sugar, and sedentary behavior create low-grade chronic inflammation. The body responds by upregulating SOCS proteins (suppressors of cytokine signaling), which literally install a dimmer switch on the JAK2-STAT5 pathway. Two 9-year-olds with identical GH levels can have vastly different IGF-1 output based on inflammatory status. The child eating whole foods and moving regularly runs at full brightness. The one subsisting on processed snacks runs dimmed. Same hardware, different metabolic environment.",
+        flow: 'GH → JAK2-STAT5 → IGF-1 → (Inflammation installs SOCS dimmer → Reduced output despite normal GH)',
+        citation: 'Hoppe C. Am J Clin Nutr. 2004',
+      },
+      {
+        title: 'How bones actually grow',
+        intro: 'Growth plates respond to variety. Different movements teach bones to grow in different ways.',
+        explanation: "At 9, many children specialize in single sports year-round. From a skeletal development perspective, this is suboptimal. Growth plates adapt to the physical signals they receive — but they adapt specifically to those signals only. A child who only plays soccer develops bone architecture optimized for running and kicking. A child who only swims gets almost no growth plate stimulation at all (no impact). Multi-sport kids or those with varied activities — jumping, climbing, sprinting, hanging — send diverse signals to their growth plates. The skeleton is asking 'what do you need me to do?' and variety gives a complete answer. After any high-impact play session, stretching for 5-10 minutes followed by milk with honey helps bones repair in their lengthened state.",
+        flow: 'Varied activities → Multiple growth signals → Comprehensive plate stimulation → Stretching + milk/honey → Elongated healing',
+        citation: 'Gunter K. Bone. 2008',
+      },
+    ],
+  },
+  {
+    id: 'age-10',
+    ageRange: '10 years',
+    header: 'Age 10',
+    subhead: 'The pre-puberty peak.',
+    supportive: "Maximum leverage before puberty. You're doing this at exactly the right time.",
+    sections: [
+      {
+        title: 'How growth signals are made',
+        intro: 'For some children, puberty hormones are beginning to stir. This amplifies GH — if sleep is protected.',
+        explanation: "Around age 10, especially in girls, the first hormonal whispers of puberty may begin. The hypothalamus starts releasing small pulses of GnRH (gonadotropin-releasing hormone), which eventually triggers sex hormone production. Here's what matters for growth: estrogen (even in tiny amounts) amplifies GH secretion. The pre-pubertal GH surge is beginning. But — and this is critical — this amplified GH is still released during sleep. A 10-year-old entering early puberty with excellent sleep habits will ride a wave of elevated GH. One with poor sleep habits will miss it. The stakes are rising precisely when sleep is most contested by social and academic pressures.",
+        flow: 'Early puberty signals → GH amplification begins → Still sleep-gated → (Good sleep = ride the wave; Poor sleep = miss it)',
+        citation: 'Martha PM Jr. J Clin Endocrinol Metab. 1992',
+      },
+      {
+        title: 'How those signals reach the body',
+        intro: 'Body composition starts to matter more. Excess fat creates resistance to growth signals.',
+        explanation: "At 10, the relationship between body fat and growth signaling becomes more consequential. Adipose tissue isn't passive storage — it's metabolically active. Fat cells produce inflammatory cytokines that upregulate SOCS proteins, dimming the JAK2-STAT5 pathway. Fat cells also contain aromatase, an enzyme that converts androgens to estrogen. More fat = more circulating estrogen = earlier maturation signaling. This creates a double penalty: GH signaling efficiency drops while puberty timing accelerates. Children who enter puberty early grow faster initially but stop sooner — the growth plates receive shutdown signals earlier. Maintaining healthy body composition at 10 isn't about aesthetics; it's about extending the growth window.",
+        flow: 'Excess fat → Inflammation + Aromatase → Reduced GH efficiency + Earlier puberty signaling → Shorter growth window',
+        citation: 'Veldhuis JD. J Clin Endocrinol. 1995',
+      },
+      {
+        title: 'How bones actually grow',
+        intro: 'The sprint-and-stretch protocol becomes highly effective. Short bursts followed by elongation.',
+        explanation: "At 10, children can effectively execute the growth protocol that research supports: sprint intervals followed immediately by stretching. Here's how it works — 6 all-out sprints of 30 seconds each (with rest between) triggers a massive GH spike through lactate accumulation. The sprinting also creates beneficial microfractures in growth plate cartilage. Immediately after, 10 minutes of full-body stretching — especially hanging, toe touches, and spinal lengthening — keeps the body in an elongated position while those microfractures begin healing. The bones repair themselves in whatever position they're held in. Finish with milk mixed with honey: the casein protein and calcium provide building materials, while honey's natural sugars help transport nutrients to the repair sites. This protocol takes 30 minutes and outperforms hours of moderate activity.",
+        flow: 'Sprint intervals → GH spike + Microfractures → Immediate stretching → Elongated healing position → Milk + honey delivers materials',
+        citation: 'Stokes KA. Sports Med. 2002',
+      },
+    ],
+  },
+  {
+    id: 'age-11',
+    ageRange: '11 years',
+    header: 'Age 11',
+    subhead: 'The transition approaches.',
+    supportive: "Puberty is near for many. You've built a strong foundation.",
+    sections: [
+      {
+        title: 'How growth signals are made',
+        intro: 'Puberty is amplifying GH secretion. This is the beginning of the growth spurt.',
+        explanation: "By 11, most girls and many boys show early pubertal signs. The hypothalamic-pituitary-gonadal axis is activating, and sex hormones are beginning to rise. Estrogen — present in both sexes, though higher in girls — has a direct amplifying effect on GH secretion. The pituitary releases larger GH pulses; the hypothalamus becomes more sensitive to GHRH. GH output can increase 2-3x from pre-pubertal baseline. This is the biological ramp into the growth spurt. But the fundamentals remain: GH is still released during sleep, following the same circadian rules. An 11-year-old capturing this amplified signal with solid sleep will grow faster than ever. One losing sleep to screens and social pressures will squander the surge.",
+        flow: 'Puberty activating → Estrogen amplifies GH → Larger sleep pulses → (Must still sleep to capture them)',
+        citation: 'Martha PM Jr. J Clin Endocrinol Metab. 1992',
+      },
+      {
+        title: 'How those signals reach the body',
+        intro: 'IGF-1 levels are climbing toward lifetime peaks. Nutrition demands are increasing.',
+        explanation: "As GH secretion rises, so does IGF-1 production — the liver is translating the amplified signal into amplified output. IGF-1 levels at 11 may be 50-100% higher than at age 7. But this elevated production requires elevated raw materials. Protein needs increase; caloric needs increase. Children who continue eating like 8-year-olds while their bodies demand more will see IGF-1 production limited by substrate availability, not by hormonal signal. Appetite often increases naturally — this is biological, not behavioral. Resisting it or restricting it limits growth. The system is ramping up production; it needs matching inputs to actually produce.",
+        flow: 'Amplified GH → Higher IGF-1 demand → Needs more protein and calories → (Undereating = production ceiling)',
+        citation: 'Rogol AD. J Clin Endocrinol Metab. 2002',
+      },
+      {
+        title: 'How bones actually grow',
+        intro: 'Growth plates are entering their final high-activity phase. Every month of movement counts.',
+        explanation: "At 11, especially in girls, growth plate biology shifts. The plates remain highly active — this is peak growth velocity for many girls — but the countdown to closure has begun. Estrogen receptors in the growth plate are increasingly occupied, and with each month of pubertal progression, the signal toward closure strengthens. The plates aren't closing yet, but the process that will close them is now underway. This makes the next 2-4 years a defined window rather than an indefinite opportunity. Jumping, sprinting, climbing, hanging — followed by stretching and milk with honey — maximizes what the plates can build before they close. Every active day is a building day. Every sedentary day is a missed opportunity that won't come back.",
+        flow: 'Puberty advancing → Closure clock started → Plates still open → Impact + Stretch + Milk/honey → Maximize remaining window',
+        citation: 'Nilsson O. Endocr Rev. 2005',
+      },
+    ],
+  },
+  {
+    id: 'age-12',
+    ageRange: '12 years',
+    header: 'Age 12',
+    subhead: 'Puberty in full swing.',
+    supportive: "The growth sprint is happening. You're supporting it at the right time.",
+    sections: [
+      {
+        title: 'How growth signals are made',
+        intro: 'GH secretion is at or near lifetime peak. This is maximum broadcast power.',
+        explanation: "At 12, most children are solidly in puberty, and GH secretion has reached its zenith. The combination of pubertal sex hormones amplifying the hypothalamic-pituitary axis produces GH pulses larger than at any other life stage. A 12-year-old may secrete 2-3x more GH per day than they did at 8, and 5-10x more than they will at 30. This is the biological sprint. The growth spurt — that dramatic 3-4+ inches per year — is driven by this hormonal surge. But the fundamentals remain: GH is still released during deep sleep. Sleep deprivation during puberty — increasingly common with social media, gaming, and academic pressure — directly truncates peak GH output. Protecting sleep at 12 isn't about rest; it's about capturing a once-in-a-lifetime hormonal peak.",
+        flow: 'Pubertal amplification → Maximum GH pulses → Still sleep-dependent → (Sleep deprivation = wasting the peak)',
+        citation: 'Martha PM Jr. J Clin Endocrinol Metab. 1992',
+      },
+      {
+        title: 'How those signals reach the body',
+        intro: 'IGF-1 reaches lifetime highs. The liver is running at maximum capacity.',
+        explanation: "With GH at peak levels, IGF-1 production follows. Serum IGF-1 at 12 may be the highest it will ever be — some children exceed adult reference ranges during this phase. The liver's JAK2-STAT5 machinery is running at full capacity, converting every GH pulse into IGF-1 output. The rate-limiting factor is purely nutritional: adequate protein, adequate calories, adequate micronutrients (especially zinc and vitamin D). Appetite increases significantly — a 12-year-old may eat like a small adult. This isn't overeating; it's the body demanding resources for rapid construction. Restricting food during the pubertal growth spurt directly limits height. Feed the system. It's building as fast as it can.",
+        flow: 'Peak GH → Peak IGF-1 potential → Needs maximum nutritional input → (Restriction = building slowdown)',
+        citation: 'Hoppe C. Am J Clin Nutr. 2004',
+      },
+      {
+        title: 'How bones actually grow',
+        intro: 'Growth velocity peaks for many. Plates are highly active but the closure countdown continues.',
+        explanation: "At 12, girls often hit peak height velocity — the fastest growth rate of their lives. Boys typically peak 1-2 years later. The growth plates are working at maximum speed: chondrocytes proliferating rapidly, enlarging dramatically, and being replaced by bone at the fastest rate since infancy. But here's the tension: the same estrogen that amplifies GH is also advancing the closure timeline. Every month of rapid growth is also a month closer to fusion. For girls, the majority of adult height is typically achieved by 14-15. For boys, 16-18. The window is finite and shrinking. Active movement — sprinting, jumping, climbing, playing — followed by stretching and milk with honey remains the protocol. No weights, no gym equipment. Just natural movement, elongation during repair, and the nutrients to build. Sedentary 12-year-olds are watching their window narrow while sitting still.",
+        flow: 'Peak velocity → Maximum plate activity → Estrogen advancing closure → Impact + Stretch + Milk/honey → Build before closure',
+        citation: 'Nilsson O. Endocr Rev. 2005',
       },
     ],
   },
@@ -458,7 +578,11 @@ function getStageFromAge(ageInMonths: number): string {
   if (ageInMonths < 72) return 'age-5';
   if (ageInMonths < 84) return 'age-6';
   if (ageInMonths < 96) return 'age-7';
-  return 'pre-puberty';
+  if (ageInMonths < 108) return 'age-8';
+  if (ageInMonths < 120) return 'age-9';
+  if (ageInMonths < 132) return 'age-10';
+  if (ageInMonths < 144) return 'age-11';
+  return 'age-12';
 }
 
 // Calculate age in months from birth date
@@ -470,7 +594,7 @@ function calculateAgeInMonths(birthDate: string): number {
 }
 
 export default function StagePage() {
-  const [currentStageId, setCurrentStageId] = useState<string>('pre-puberty');
+  const [currentStageId, setCurrentStageId] = useState<string>('age-8');
   const [openSection, setOpenSection] = useState<number>(0);
   const [showStages, setShowStages] = useState(false);
 
@@ -518,7 +642,11 @@ export default function StagePage() {
     { id: 'age-5', label: 'Age 5' },
     { id: 'age-6', label: 'Age 6' },
     { id: 'age-7', label: 'Age 7' },
-    { id: 'pre-puberty', label: 'Pre-Puberty (Ages 8-11)' },
+    { id: 'age-8', label: 'Age 8' },
+    { id: 'age-9', label: 'Age 9' },
+    { id: 'age-10', label: 'Age 10' },
+    { id: 'age-11', label: 'Age 11' },
+    { id: 'age-12', label: 'Age 12' },
   ];
 
   return (
