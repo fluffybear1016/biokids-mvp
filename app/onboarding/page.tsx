@@ -32,23 +32,31 @@ function OnboardingForm() {
       // Returning from Stripe checkout - show welcome screen
       setStep(3);
       // Restore birthDate from localStorage
-      const savedBirthDate = localStorage.getItem('onboarding_birthDate');
-      if (savedBirthDate) {
-        setBirthDate(savedBirthDate);
+      try {
+        const savedBirthDate = localStorage.getItem('onboarding_birthDate');
+        if (savedBirthDate) {
+          setBirthDate(savedBirthDate);
+        }
+      } catch {
+        // Ignore localStorage errors
       }
     }
   }, [searchParams]);
 
   const handleComplete = () => {
-    localStorage.setItem('onboarding_complete', 'true');
-    localStorage.setItem('child_data', JSON.stringify({
-      name: childName,
-      birthDate,
-      sex,
-      height: useMetric ? heightCm : `${heightFt}'${heightIn}"`,
-      weight: useMetric ? weightKg : weight,
-    }));
-    localStorage.removeItem('onboarding_birthDate');
+    try {
+      localStorage.setItem('onboarding_complete', 'true');
+      localStorage.setItem('child_data', JSON.stringify({
+        name: childName,
+        birthDate,
+        sex,
+        height: useMetric ? heightCm : `${heightFt}'${heightIn}"`,
+        weight: useMetric ? weightKg : weight,
+      }));
+      localStorage.removeItem('onboarding_birthDate');
+    } catch {
+      // Continue even if localStorage fails
+    }
     router.push('/dashboard');
   };
 
@@ -129,7 +137,7 @@ function OnboardingForm() {
               <p className="text-white/70 font-mono text-xs sm:text-sm">Cancel anytime, online.</p>
             </div>
             <button
-              onClick={() => { localStorage.setItem('onboarding_birthDate', birthDate); window.location.href = 'https://buy.stripe.com/9B64gse7J8cS58u9hY2B200'; }}
+              onClick={() => { try { localStorage.setItem('onboarding_birthDate', birthDate); } catch { /* continue */ } window.location.href = 'https://buy.stripe.com/9B64gse7J8cS58u9hY2B200'; }}
               className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors"
             >
               Continue to secure my rate

@@ -64,40 +64,38 @@ export default function Signup() {
 
       if (!supabase || !userId) {
         // If no Supabase, save to localStorage and redirect
-        localStorage.setItem('onboarding_complete', 'true');
-        localStorage.setItem('child_data', JSON.stringify({
-          name: childName,
-          birthDate,
-          sex: gender,
-        }));
+        try {
+          localStorage.setItem('onboarding_complete', 'true');
+          localStorage.setItem('child_data', JSON.stringify({
+            name: childName,
+            birthDate,
+            sex: gender,
+          }));
+        } catch { /* continue */ }
         router.push('/dashboard');
         return;
       }
 
       // Save child to Supabase
-      const { error: childError } = await supabase.from('children').insert({
+      await supabase.from('children').insert({
         user_id: userId,
         name: childName,
         birth_date: birthDate,
         gender: gender || null,
       });
 
-      if (childError) {
-        console.error('Error saving child:', childError);
-        // Continue anyway - child can be added later
-      }
-
       // Save to localStorage as backup
-      localStorage.setItem('onboarding_complete', 'true');
-      localStorage.setItem('child_data', JSON.stringify({
-        name: childName,
-        birthDate,
-        sex: gender,
-      }));
+      try {
+        localStorage.setItem('onboarding_complete', 'true');
+        localStorage.setItem('child_data', JSON.stringify({
+          name: childName,
+          birthDate,
+          sex: gender,
+        }));
+      } catch { /* continue */ }
 
       router.push('/dashboard');
-    } catch (err) {
-      console.error('Error saving child:', err);
+    } catch {
       // Continue anyway
       router.push('/dashboard');
     } finally {

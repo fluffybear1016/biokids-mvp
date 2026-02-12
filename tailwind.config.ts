@@ -28,8 +28,10 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['DM Serif Display', 'serif'],
-        body: ['Plus Jakarta Sans', 'sans-serif'],
+        display: ["'Courier New'", 'Courier', 'monospace'],
+        body: ["'Courier New'", 'Courier', 'monospace'],
+        sans: ["'Courier New'", 'Courier', 'monospace'],
+        mono: ["'Courier New'", 'Courier', 'monospace'],
       },
     },
   },

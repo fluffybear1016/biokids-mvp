@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Suspense, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Nav from '@/components/Nav';
 import { Child } from '@/lib/supabase';
 
@@ -30,7 +31,16 @@ const suggestedQuestions = [
   "How does morning sunlight help?",
 ];
 
-export default function Jarvis() {
+export default function JarvisPage() {
+  return (
+    <Suspense>
+      <Jarvis />
+    </Suspense>
+  );
+}
+
+function Jarvis() {
+  const searchParams = useSearchParams();
   const [child] = useState<Child>(mockChild);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -42,6 +52,7 @@ export default function Jarvis() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const hasProcessedQuery = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -52,14 +63,16 @@ export default function Jarvis() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
+  // Calculate child age in years
+  const childAge = Math.floor(
+    (Date.now() - new Date(child.birth_date).getTime()) / (365.25 * 24 * 60 * 60 * 1000)
+  );
 
+  const processMessage = useCallback(async (question: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
-      content: input.trim(),
+      content: question.trim(),
       timestamp: new Date(),
     };
 
@@ -67,44 +80,96 @@ export default function Jarvis() {
     setInput('');
     setIsLoading(true);
 
-    // TODO: Replace with actual API call to Jarvis backend
-    setTimeout(() => {
-      const responses: Record<string, string> = {
-        'bedtime': `Great question! The 8:30pm bedtime is critical because growth hormone is released in pulses during deep sleep, with **70% of daily GH secretion** occurring in the first 3 hours after sleep onset.\n\nIf ${mockChild.name} falls asleep by 9pm, they'll hit the peak GH window between 10pm-1am when secretion is highest.\n\n**Key insight:** It's not just about total sleep duration — it's about *when* that sleep happens. A child sleeping 9pm-6am will have significantly higher GH output than one sleeping 11pm-8am, even though both get 9 hours.\n\n📚 [Van Cauter E. Sleep. 2000]`,
-        'food': `For GH optimization, focus on these **Power Foods**:\n\n🥛 **Raw milk or A2 organic** (2-3 cups daily)\n- Contains IGF-1 precursors and A2 casein\n- The Dutch drink more milk than anyone and are the tallest\n\n🥚 **Pasture-raised eggs** (2-3 daily)\n- Complete amino acid profile for protein synthesis\n\n🐟 **Wild-caught salmon** (2x/week)\n- Omega-3s support GH receptor sensitivity\n\n🍖 **Beef liver** (1x/week)\n- Zinc and vitamin A are essential for GH signaling\n\n🦴 **Bone broth**\n- Glycine and collagen for growth plate support\n\n**Timing matters too:** Avoid food 2-3 hours before bed — insulin suppresses GH release.`,
-        'sprint': `Sprints are one of the most powerful GH triggers available!\n\n**The Science:**\nHigh-intensity exercise causes acute GH release up to **771% above baseline** [Stokes KA. Sports Med. 2002]. This is dramatically higher than steady-state cardio.\n\n**The Protocol for ${mockChild.name}:**\n- 6 x 30-second all-out sprints\n- 90 seconds rest between sprints\n- 3x per week (not daily — recovery matters)\n- Best done in afternoon, not close to bedtime\n\n**Why it works:**\nHigh-intensity exercise creates metabolic stress that signals the pituitary to release GH. The effect is intensity-dependent — walking doesn't cut it.\n\n**Alternatives:** Swimming sprints, bike sprints, jump rope intervals, or basketball/soccer with sprint elements.`,
-        'milk': `This is a nuanced one! **It depends on timing.**\n\n✅ **Milk 30 minutes before bed = GOOD**\n- Casein protein releases tryptophan slowly over 3-7 hours\n- Tryptophan converts to serotonin → melatonin\n- Supports sleep architecture for GH release\n- [Madziva MT. Nutrients. 2023]\n\n❌ **Milk right at bedtime = NOT IDEAL**\n- Any food close to sleep spikes insulin\n- Insulin directly suppresses GH secretion\n\n**The Sweet Spot:**\nGive ${mockChild.name} 6oz of milk about 30 minutes before the target bedtime. This allows insulin to settle before the GH window opens.\n\n**Best milk:** Raw or A2 organic if available. A2 casein is easier to digest than conventional A1 milk.`,
-        'insulin': `The **insulin-GH antagonism** is one of the most important concepts for height optimization.\n\n**How it works:**\n1. When you eat, blood sugar rises\n2. Pancreas releases insulin to clear the sugar\n3. Insulin directly suppresses GH secretion from the pituitary\n4. This suppression lasts 2-3 hours\n\n**The Problem:**\nIf ${mockChild.name} eats within 2-3 hours of sleep, insulin is elevated right when the body should be releasing its biggest GH pulses.\n\n**The Data:**\nEating before bed can blunt nocturnal GH release by up to **80%** [Ho KY. J Clin Endocrinol Metab. 1988]\n\n**The Fix:**\n- Dinner by 6pm for an 8:30pm bedtime\n- If hungry later, small protein-only snack (no carbs/sugar)\n- The bedtime milk protocol (30 min before) is an exception because the tryptophan benefits outweigh the insulin cost`,
-        'sunlight': `Morning sunlight is the **master reset button** for the entire GH system!\n\n**The Mechanism:**\n1. Light hits melanopsin receptors in the eye\n2. Signals the SCN (suprachiasmatic nucleus) — the master clock\n3. SCN sets timing for melatonin release ~14 hours later\n4. Melatonin gates GH release during sleep\n\n**Without morning light:**\n- Circadian rhythm drifts\n- Melatonin timing shifts\n- GH pulses become misaligned with sleep\n- Growth optimization suffers\n\n**The Protocol for ${mockChild.name}:**\n- 10-30 minutes of outdoor light within 30 min of waking\n- Cloudy days still work (outdoor light >> indoor light)\n- Don't look directly at sun — peripheral exposure is fine\n- Consistent wake time matters (±30 min)\n\n📚 [Roenneberg T. Curr Biol. 2007]`,
-      };
+    // Build conversation history for API (exclude the welcome message)
+    const apiMessages = [...messages.filter(m => m.id !== '1'), userMessage].map(m => ({
+      role: m.role,
+      content: m.content,
+    }));
 
-      let response = "I can help with that! Could you be more specific about what aspect of GH optimization you'd like to know about? I'm knowledgeable about sleep timing, nutrition, exercise protocols, and the science behind growth hormone.";
-      
-      const lowerInput = userMessage.content.toLowerCase();
-      if (lowerInput.includes('bedtime') || lowerInput.includes('8:30') || lowerInput.includes('sleep time')) {
-        response = responses['bedtime'];
-      } else if (lowerInput.includes('food') || lowerInput.includes('eat') || lowerInput.includes('nutrition') || lowerInput.includes('diet')) {
-        response = responses['food'];
-      } else if (lowerInput.includes('sprint') || lowerInput.includes('exercise') || lowerInput.includes('height')) {
-        response = responses['sprint'];
-      } else if (lowerInput.includes('milk') && lowerInput.includes('bed')) {
-        response = responses['milk'];
-      } else if (lowerInput.includes('insulin') || lowerInput.includes('connection')) {
-        response = responses['insulin'];
-      } else if (lowerInput.includes('sunlight') || lowerInput.includes('morning light') || lowerInput.includes('sun')) {
-        response = responses['sunlight'];
+    try {
+      const response = await fetch('/api/jarvis', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: apiMessages,
+          childName: child.name,
+          childAge,
+        }),
+      });
+
+      if (!response.ok) {
+        const errBody = await response.json().catch(() => ({}));
+        throw new Error(errBody.details || errBody.error || `API error ${response.status}`);
       }
 
-      const assistantMessage: Message = {
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error('No reader');
+
+      const decoder = new TextDecoder();
+      const assistantId = (Date.now() + 1).toString();
+      let fullText = '';
+
+      // Add empty assistant message to stream into
+      setMessages(prev => [...prev, {
+        id: assistantId,
+        role: 'assistant',
+        content: '',
+        timestamp: new Date(),
+      }]);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = line.slice(6);
+            if (data === '[DONE]') break;
+            try {
+              const parsed = JSON.parse(data);
+              if (parsed.text) {
+                fullText += parsed.text;
+                const currentText = fullText;
+                setMessages(prev =>
+                  prev.map(m => m.id === assistantId ? { ...m, content: currentText } : m)
+                );
+              }
+            } catch {
+              // skip malformed chunks
+            }
+          }
+        }
+      }
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Unknown error';
+      setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: response,
+        content: `Sorry, I had trouble connecting: ${errorMsg}`,
         timestamp: new Date(),
-      };
+      }]);
+    }
 
-      setMessages(prev => [...prev, assistantMessage]);
-      setIsLoading(false);
-    }, 1000);
+    setIsLoading(false);
+  }, [messages, child.name, childAge]);
+
+  // Auto-submit query from URL param
+  useEffect(() => {
+    const q = searchParams.get('q');
+    if (q && q.trim() && !hasProcessedQuery.current) {
+      hasProcessedQuery.current = true;
+      processMessage(q);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    processMessage(input);
   };
 
   const handleSuggestionClick = (question: string) => {
@@ -114,9 +179,9 @@ export default function Jarvis() {
   return (
     <div className="min-h-screen bg-cream flex flex-col">
       <Nav currentChild={child} />
-      
+
       <main className="flex-1 flex flex-col max-w-3xl mx-auto w-full px-4 py-6">
-        
+
         {/* Header */}
         <header className="text-center mb-6">
           <div className="w-16 h-16 bg-forest rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
@@ -146,7 +211,7 @@ export default function Jarvis() {
               </div>
             </div>
           ))}
-          {isLoading && (
+          {isLoading && messages[messages.length - 1]?.role === 'user' && (
             <div className="flex justify-start">
               <div className="bg-white shadow-sm rounded-2xl px-5 py-4">
                 <div className="flex gap-1">

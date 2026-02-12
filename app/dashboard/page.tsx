@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Nav from '@/components/Nav';
-import { Child, GrowthWindow, getGrowthStage, stageInfo, formatAge } from '@/lib/supabase';
+import { Child, GrowthWindow, getGrowthStage, stageInfo } from '@/lib/supabase';
 
 // Right sidebar secrets - rotates daily
 const sidebarSecrets = [
@@ -85,15 +86,11 @@ const mockGrowthWindow: GrowthWindow = {
 };
 
 export default function Dashboard() {
+  const router = useRouter();
   const [child, setChild] = useState<Child>(mockChild);
   const [growthWindow, setGrowthWindow] = useState<GrowthWindow>(mockGrowthWindow);
-  const [todayProtocol, setTodayProtocol] = useState({
-    morning_protein: true,
-    sprints: false,
-    dinner_early: false,
-    lights_out: false,
-  });
   const [currentHour, setCurrentHour] = useState(new Date().getHours());
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Time-based active phase data
   const getActivePhase = (hour: number) => {
@@ -165,12 +162,6 @@ export default function Dashboard() {
   const stage = getGrowthStage(child.birth_date);
   const stageData = stageInfo[stage];
 
-  const toggleProtocol = (key: keyof typeof todayProtocol) => {
-    setTodayProtocol(prev => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  const completedCount = Object.values(todayProtocol).filter(Boolean).length;
-
   return (
     <div className="min-h-screen bg-cream">
       <Nav currentChild={child} />
@@ -178,6 +169,20 @@ export default function Dashboard() {
       <div className="flex">
         {/* Main Content */}
         <main className="flex-1 max-w-4xl mx-auto px-4 py-6 sm:py-12">
+
+        {/* Search Bar */}
+        <form
+          onSubmit={(e) => { e.preventDefault(); if (searchQuery.trim()) router.push(`/jarvis?q=${encodeURIComponent(searchQuery.trim())}`); }}
+          style={{ marginBottom: 24 }}
+        >
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Ask anything about growth optimization..."
+            style={{ width: '100%', padding: '14px 16px', fontSize: 14, color: '#1B4332', background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, outline: 'none' }}
+          />
+        </form>
 
         {/* Stage Hero */}
         <section className="bg-gradient-to-br from-forest to-forest-light rounded-2xl sm:rounded-3xl p-5 sm:p-10 text-white mb-6 sm:mb-8 relative overflow-hidden">
@@ -210,65 +215,15 @@ export default function Dashboard() {
 
         {/* Category Cards */}
         <section className="grid grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
-          <Link href="/windows/sleep-circadian" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6 flex flex-col items-center text-center">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3">🌙</div>
-            <h3 className="font-semibold text-sm sm:text-base">Sleep/Circadian</h3>
+          <Link href="/windows/sleep-circadian" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: 14, fontWeight: 600, color: '#1B4332', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-1">
+            Sleep
           </Link>
-
-          <Link href="/windows/nutrition" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6 flex flex-col items-center text-center">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3">🥛</div>
-            <h3 className="font-semibold text-sm sm:text-base">Nutrition</h3>
+          <Link href="/windows/nutrition" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: 14, fontWeight: 600, color: '#1B4332', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-1">
+            Nutrition
           </Link>
-
-          <Link href="/windows/physical-activity" className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer p-4 sm:p-6 flex flex-col items-center text-center">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3">🏃</div>
-            <h3 className="font-semibold text-sm sm:text-base">Movement</h3>
+          <Link href="/windows/physical-activity" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: 14, fontWeight: 600, color: '#1B4332', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-1">
+            Movement
           </Link>
-        </section>
-
-        {/* Today's Protocol */}
-        <section className="card mb-6 sm:mb-8 p-4 sm:p-6">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
-            <h2 className="font-display text-xl sm:text-2xl">Today's Protocol</h2>
-            <div className="flex items-center gap-3">
-              <span className="text-xs sm:text-sm text-gray-500">{completedCount} of 4 done</span>
-              <div className="w-20 sm:w-24 progress-bar">
-                <div
-                  className="progress-bar-fill bg-green-500"
-                  style={{ width: `${(completedCount / 4) * 100}%` }}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-2 sm:space-y-3">
-            {[
-              { key: 'morning_protein', icon: '🥛', title: 'Morning protein + raw milk', desc: 'A2 casein + amino acids support IGF-1 axis', time: 'Morning' },
-              { key: 'sprints', icon: '🏃', title: 'Sprint intervals (6x30sec)', desc: 'High-intensity triggers 771% GH spike', time: 'After school' },
-              { key: 'dinner_early', icon: '🍽️', title: 'Finish dinner by 6:00pm', desc: '2.5hr fast before bed preserves nocturnal GH', time: '6:00 PM' },
-              { key: 'lights_out', icon: '🌙', title: 'Lights out by 8:30pm', desc: 'Catch the 10pm-1am deep sleep GH surge', time: '8:30 PM' },
-            ].map((item) => (
-              <div
-                key={item.key}
-                onClick={() => toggleProtocol(item.key as keyof typeof todayProtocol)}
-                className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-5 bg-cream rounded-xl sm:rounded-2xl cursor-pointer transition-all hover:bg-cream-dark ${
-                  todayProtocol[item.key as keyof typeof todayProtocol] ? 'opacity-60' : ''
-                }`}
-              >
-                <div className={`checkbox-custom flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 ${todayProtocol[item.key as keyof typeof todayProtocol] ? 'checked' : ''}`}>
-                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <div className="w-9 h-9 sm:w-11 sm:h-11 bg-white rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl flex-shrink-0">{item.icon}</div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-sm sm:text-base truncate">{item.title}</div>
-                  <div className="text-xs sm:text-sm text-gray-500 truncate">{item.desc}</div>
-                </div>
-                <span className="hidden sm:inline text-sm font-semibold text-forest bg-white px-3 py-1.5 rounded-full flex-shrink-0">{item.time}</span>
-              </div>
-            ))}
-          </div>
         </section>
 
         {/* Bottom Row */}
@@ -303,25 +258,23 @@ export default function Dashboard() {
             </div>
           </section>
 
-          {/* Growth Secret */}
-          <section className="bg-gradient-to-br from-amber-light to-amber rounded-2xl sm:rounded-3xl p-5 sm:p-7 relative overflow-hidden">
-            <div className="absolute bottom-0 right-0 text-6xl sm:text-8xl opacity-15">{currentSecret.icon}</div>
-            <div className="relative">
-              <div className="text-[10px] sm:text-xs font-bold text-forest-dark uppercase tracking-wider mb-2 sm:mb-3">🔬 Growth Secret</div>
-              <h3 className="font-display text-xl sm:text-2xl text-forest-dark mb-2 sm:mb-3">{currentSecret.title}</h3>
-              <p className="text-xs sm:text-sm text-forest-dark/85 leading-relaxed mb-2 sm:mb-3">
-                {currentSecret.text}
-              </p>
-              <span className="text-[10px] sm:text-xs text-forest-dark/60">{currentSecret.citation}</span>
-              <div className="flex gap-2 sm:gap-3 mt-4 sm:mt-5">
-                <Link href="/learn" className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold text-forest hover:shadow-md transition-shadow">
-                  📖 Learn More
-                </Link>
-                <button className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold text-forest hover:shadow-md transition-shadow">
-                  📤 Share
-                </button>
-              </div>
-            </div>
+          {/* Article Cards */}
+          <section className="flex flex-col gap-3">
+            <Link href="/learn" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '14px 16px', textDecoration: 'none', color: '#1B4332', display: 'block', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-0.5">
+              <div style={{ fontSize: 10, color: '#999', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 6 }}>bioKids Article</div>
+              <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>14 Growth Blockers to Avoid</div>
+              <div style={{ fontSize: 12, color: '#666' }}>Common factors that limit growth potential — and how to eliminate them.</div>
+            </Link>
+            <Link href="/learn" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '14px 16px', textDecoration: 'none', color: '#1B4332', display: 'block', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-0.5">
+              <div style={{ fontSize: 10, color: '#999', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 6 }}>bioKids Article</div>
+              <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>Why the Dutch Are the Tallest People on Earth</div>
+              <div style={{ fontSize: 12, color: '#666' }}>A2 milk proteins support IGF-1 production. The milk flooding protocol.</div>
+            </Link>
+            <Link href="/learn" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '14px 16px', textDecoration: 'none', color: '#1B4332', display: 'block', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-0.5">
+              <div style={{ fontSize: 10, color: '#999', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 6 }}>bioKids Article</div>
+              <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>The 771% GH Sprint Protocol</div>
+              <div style={{ fontSize: 12, color: '#666' }}>30-second sprints trigger massive growth hormone spikes steady cardio can&apos;t match.</div>
+            </Link>
           </section>
         </div>
 

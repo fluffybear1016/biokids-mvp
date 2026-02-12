@@ -1,27 +1,191 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import { Child } from '@/lib/supabase';
-
-const mockChild: Child = {
-  id: '1',
-  user_id: '1',
-  name: 'Emma',
-  birth_date: '2017-03-15',
-  gender: 'female',
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString(),
-};
+import { NutritionHomeTab } from '@/components/HomeTabs';
 
 export default function NutritionWindow() {
-  const child = mockChild;
+  const [child, setChild] = useState<Child | null>(null);
+  const [ageInMonths, setAgeInMonths] = useState(96); // Default 8 years
+  const [activeTab, setActiveTab] = useState<'home' | 'today' | 'milk' | 'foods' | 'mechanisms' | 'science'>('home');
+  const [expandedLever, setExpandedLever] = useState<string | null>(null);
+  const [expandedFood, setExpandedFood] = useState<string | null>(null);
+  const [expandedMech, setExpandedMech] = useState<number | null>(null);
+  const [expandedMilkSection, setExpandedMilkSection] = useState<number | null>(null);
+  const [expandedSupp, setExpandedSupp] = useState<number | null>(null);
+  const [expandedStageLever, setExpandedStageLever] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('biokids_children');
+      if (stored) {
+        const children = JSON.parse(stored);
+        if (Array.isArray(children) && children.length > 0) {
+          const firstChild = children[0];
+          setChild(firstChild);
+          const birthDate = new Date(firstChild.birth_date);
+          if (!isNaN(birthDate.getTime())) {
+            const now = new Date();
+            const months = (now.getFullYear() - birthDate.getFullYear()) * 12 + (now.getMonth() - birthDate.getMonth());
+            setAgeInMonths(Math.max(0, months));
+          }
+        }
+      }
+    } catch {
+      // Ignore localStorage errors
+    }
+  }, []);
+
+  const ageInYears = ageInMonths / 12;
+
+  const getCLO = () => {
+    if (ageInYears < 0.75) return "NONE";
+    if (ageInYears <= 1) return "1/4 tsp";
+    if (ageInYears <= 3) return "1/4-1/2 tsp";
+    if (ageInYears <= 12) return "1/2-1 tsp";
+    return "1 tsp";
+  };
+
+  const getProtein = () => {
+    if (ageInYears <= 3) return "0.9-1.2 g/kg";
+    if (ageInYears <= 12) return "1.2-1.5 g/kg";
+    return "1.5+ g/kg";
+  };
+
+  const getMilkAmount = () => {
+    if (ageInYears <= 2) return "16oz (2 cups)";
+    if (ageInYears <= 5) return "16-20oz (2-2.5 cups)";
+    if (ageInYears <= 12) return "20-24oz (2.5-3 cups)";
+    return "24oz (3 cups)";
+  };
+
+  // Highlight function for milk dosing table
+  const getMilkAgeHighlight = () => {
+    if (ageInYears >= 1 && ageInYears <= 2) return '1-2 years';
+    if (ageInYears > 2 && ageInYears <= 5) return '2-5 years';
+    if (ageInYears > 5 && ageInYears <= 12) return '6-12 years';
+    if (ageInYears > 12) return '13-18 years';
+    return '';
+  };
+
+  // ─── ALL 16 MECHANISMS IN RANKED ORDER ───
+  const mechanisms = [
+    { rank: 1, title: "Energy & Protein Sufficiency", subtitle: "mTOR / AMPK — the \"Growth vs. Survival\" switch", icon: "battery-100", color: "forest", parentLever: "Eat enough. Calorie surplus 300-1,000 kcal/day for active youth. Protein 0.9-1.5 g/kg/day.", content: `Without enough calories and protein, the liver and growth plate switch into survival mode, not growth mode.\n\nYour child's body has two nutrient sensors:\n- mTOR (growth mode) — activated by leucine and adequate calories. When on, chondrocytes in growth plates proliferate and grow taller.\n- AMPK (survival mode) — activated when energy is low. Shuts down mTOR and causes functional GH resistance.\n\nA child who is even mildly calorie-restricted can have plenty of GH but zero growth response. Everything else in this protocol sits on top of this.` },
+    { rank: 2, title: "GH Receptor Signaling (JAK2-STAT5)", subtitle: "The main conversion step at the liver", icon: "heart", color: "amber", parentLever: "Zinc (oysters, beef, pumpkin seeds), Vitamin D (salmon, CLO, sunlight), adequate protein, low inflammation.", content: `This is the central machinery: GH arrives at the liver, binds its receptor, and activates the JAK2-STAT5 signaling cascade — which actually transcribes IGF-1.\n\nGood state: GH receptor expressed, zinc and vitamin D sufficient, SOCS proteins low → JAK2-STAT5 runs cleanly → IGF-1 produced.\n\nBad state: Zinc deficiency, vitamin D deficiency, chronic inflammation → SOCS upregulated → GH receptor blunted → low IGF-1 even with normal GH.` },
+    { rank: 3, title: "The Insulin-GH Seesaw", subtitle: "Insulin present, not spiked — temporal separation", icon: "scale", color: "coral", parentLever: "Balanced meals with whole-food carbs. No sugar spikes. No vinegar around meals. Post-exercise milk + honey.", content: `Insulin and GH fight each other at the pituitary — when blood sugar spikes, insulin rises and GH drops by up to 80%. But the liver NEEDS insulin to activate STAT5 and produce IGF-1.\n\nSo the strategy is timing separation:\n- Phase 1 (GH release): Low insulin, low glucose, low somatostatin → sleep, overnight fasting, sprints\n- Phase 2 (IGF-1 conversion): Insulin rises into a permissive range\n\nRegular whole-food carbs provide the insulin the liver needs. Sugar suppresses GH when it matters most.` },
+    { rank: 4, title: "Somatostatin: The GH Brake", subtitle: "The master \"off switch\" on GH pulses", icon: "stop-circle", color: "coral", parentLever: "Arginine-rich foods (pumpkin seeds, turkey, eggs). Fermented foods. Fava beans occasionally. Bone broth at night.", content: `Somatostatin tells the pituitary to STOP releasing growth hormone. When somatostatin is high, GH pulses are smaller and less frequent.\n\nFoods that take this brake off:\n- Arginine-rich foods → compete with somatostatin signaling\n- Dopamine (fava beans L-DOPA) → decreases somatostatin\n- GABA (fermented foods) → reduces somatostatin during slow-wave sleep\n- Niacin (unroasted peanuts) → suppresses free fatty acids that brake GH\n- Glycine (bone broth, gelatin) → deeper SWS → reduced somatostatin` },
+    { rank: 5, title: "Sleep Architecture & Melatonin", subtitle: "The GH pulse generator + anti-aromatase", icon: "moon", color: "purple", parentLever: "See the Sleep & Circadian card for the full protocol. Tart cherries, raspberries, milk before bed, bone broth.", content: `60-80% of daily GH is released in the first 3 hours of deep sleep. Melatonin helps synchronize and deepen those pulses.\n\nMelatonin also inhibits aromatase — the enzyme that converts testosterone to estrogen, which closes growth plates. So melatonin-supporting foods serve a dual purpose:\n1. Enhance GH pulses during sleep\n2. Slow estrogen-driven growth plate closure\n\nFoods: tart cherries (strongest), raspberries, oats, walnuts, tomatoes. Milk before bed provides alpha-lactalbumin — the highest tryptophan food protein.` },
+    { rank: 6, title: "Inflammation & SOCS Pathway", subtitle: "The \"dimmer switch\" that mutes the GH-IGF-1 axis", icon: "flame", color: "coral", parentLever: "Wild salmon, olive oil, berries, turmeric (+ pepper + fat), leafy greens. Avoid UPFs, seed oils, sugar.", content: `SOCS proteins act like a dimmer switch on GH signaling at the liver. When inflammation is chronic, SOCS ramps up and blocks JAK2-STAT5.\n\nWhat drives SOCS up: Ultra-processed foods, obesity, gut inflammation, chronic illness. These raise IL-6 and TNF-alpha.\n\nWhat drives SOCS down: Anti-inflammatory diet — omega-3 fish, olive oil, berries, cruciferous vegetables, turmeric with black pepper.` },
+    { rank: 7, title: "IGF-Binding Proteins (IGFBPs)", subtitle: "The delivery system — how IGF-1 reaches growth plates", icon: "package", color: "teal", parentLever: "Oysters (increase IGFBP-3). Adequate protein. Zinc sufficiency.", content: `IGFBP-3 controls the stability, half-life, and tissue delivery of IGF-1. Think of it as the shipping container.\n\nFermented oysters specifically increase both IGF-1 AND IGFBP-3, and are linked to greater growth-plate thickness. Production without delivery is wasted.` },
+    { rank: 8, title: "Local vs. Systemic IGF-1", subtitle: "Growth plates make their own IGF-1 — exercise drives it", icon: "running", color: "blue", parentLever: "Sprints, jumping, active outdoor play → local IGF-1 at growth plates. Nutrition → systemic IGF-1 from liver.", content: `There are two sources of IGF-1:\n\n- Systemic IGF-1: Produced by the liver, travels through bloodstream. This is what diet influences.\n- Local IGF-1: Produced directly at the growth plate. Responds to mechanical loading — sprints, jumping, climbing.\n\nA child who eats perfectly but is sedentary misses the local IGF-1 stimulation. You need both.` },
+    { rank: 9, title: "Micronutrient Axis", subtitle: "Zinc, Vitamin D, Calcium, Magnesium, A, K2, Iron, Iodine", icon: "gem", color: "gray", parentLever: "Oysters/beef (zinc), salmon/CLO (D), dairy (Ca), greens (Mg), liver (A, iron), natto/K2, seaweed (iodine).", content: `These are the locks and keys on the growth machinery. A deficiency in any single one can flatten growth even when GH and calories are normal.\n\n- Zinc → GH receptor function. Deficiency = functional GH resistance.\n- Vitamin D → GH receptor expression + calcium absorption.\n- Calcium & Phosphorus → bone matrix mineralization.\n- Magnesium → supports IGF-1 production, sleep depth.\n- Vitamin A → regulates chondrocyte differentiation.\n- Vitamin K2 → directs calcium to bones, not arteries.\n- Iron → hemoglobin, oxygen delivery. Deficiency causes PERSISTENT lags.\n- Iodine → thyroid function → GH/IGF-1 axis.` },
+    { rank: 10, title: "Ghrelin: The Hunger-GH Link", subtitle: "Why meal timing and overnight fasting matter", icon: "clock", color: "brown", parentLever: "No food 2-3h before bed. Fresh ginger in meals. Regular meal schedule during the day.", content: `Ghrelin — the \"hunger hormone\" — is also a potent natural GH secretagogue. It binds directly to GHS-R1a receptors on pituitary cells.\n\nNormal daytime meals + no late-night grazing allows ghrelin to rise naturally at night → stronger GH pulses during sleep.\n\nFresh ginger acutely increases ghrelin, which is why it's in the protocol.` },
+    { rank: 11, title: "The Cholinergic Pathway", subtitle: "Why eggs before sprints matter — the signal amplifier", icon: "brain", color: "forest", parentLever: "Eggs (147mg choline) and beef liver (431mg) pre-exercise. Salmon (90mg), chicken (72mg).", content: `Choline converts to acetylcholine — a neurotransmitter that carries signals between hypothalamus and pituitary. This is the communication highway for GH release.\n\nPre-sprint eggs load acetylcholine into the system, making the pituitary \"permissive\" — ready to fire a maximum-amplitude GH pulse.` },
+    { rank: 12, title: "Arachidonic Acid & Prostaglandins", subtitle: "Why egg yolks matter beyond protein", icon: "egg", color: "amber", parentLever: "Whole egg yolks (not just whites), quality animal fats.", content: `Arachidonic acid (ARA) in egg yolks converts to prostaglandin E2 (PGE2), which modulates pituitary GH secretion and plays roles in bone remodeling.\n\nThis is why whole egg yolks matter, not just whites. Quality animal fats are signal molecules for growth.` },
+    { rank: 13, title: "Colostrum & Proline-Rich Polypeptides", subtitle: "Growth factors from nature's first food", icon: "dna", color: "gray", parentLever: "Bovine colostrum supplement/food. HGH cocktail: colostrum + goji berries + raw honey.", content: `Bovine colostrum contains Proline-Rich Polypeptides (PRPs) that support growth signaling, plus IGF-1 and immune modulators.\n\nIn older, well-nourished children, colostrum is more about recovery and gut health than centimeters. But gut health feeds directly into the SOCS/inflammation pathway.` },
+    { rank: 14, title: "HPG Axis & Growth Plate Protection", subtitle: "Controls when growth STOPS — extending the runway", icon: "shield", color: "forest", parentLever: "Beans/lentils DAILY (plant protein → later puberty). Cruciferous veg. Tart cherries (anti-aromatase). No soy.", content: `This controls when growth stops, not how fast it happens day-to-day.\n\nThe timeline: GnRH → LH/FSH → sex steroids rise → testosterone converts to estrogen via aromatase → estrogen closes growth plates permanently.\n\nPediatric cohorts show: higher plant protein (beans/legumes daily at ages 3-6) → later puberty onset. This extends the genetic height runway.\n\nAdditional protectors: cruciferous vegetables, melatonin-rich foods (inhibit aromatase directly).` },
+    { rank: 15, title: "Epigenetics & The Microbiome", subtitle: "Long-term programming of the growth axis", icon: "flask", color: "brown", parentLever: "Early-life diet quality. Fermented foods. Fiber. Avoid UPFs and EDCs from the start.", content: `Nutrition changes which genes are expressed.\n\nEpigenetics: Early nutrition, obesity, and metabolic stress change methylation patterns at growth-related genes. Effects persist for years.\n\nMicrobiome: Gut-brain and gut-liver signaling through SCFAs directly modulate GH secretion and IGF-1 production. Certain microbiota profiles can increase IGF-1 even under suboptimal nutrition.` },
+    { rank: 16, title: "Environmental Disruptors", subtitle: "The background antagonists eroding your gains", icon: "alert-triangle", color: "coral", parentLever: "All organic when possible. No UPFs. Wild-caught fish. Pasture-raised eggs/meat. Avoid Dirty Dozen.", content: `EDCs interfere with hypothalamic-pituitary signaling, sex-steroid balance, thyroid function, and IGF systems.\n\nBiggest offenders:\n- Glyphosate on non-organic produce\n- Ultra-processed food diets\n- Saturated fatty acids in excess\n- Obesogenic diets\n\nThey won't make a tall child short alone, but they erode the gains from every other lever.` },
+  ];
+
+  // ─── SOMATOSTATIN TABLE ───
+  const somatostatinTable = [
+    { mechanism: "Amino acid competition", how: "Arginine, ornithine, and lysine compete with and suppress somatostatin signaling at the pituitary", foods: "Pumpkin seeds, turkey, eggs, beef, lentils, chickpeas", icon: "muscle" },
+    { mechanism: "Dopamine signaling", how: "Dopamine directly inhibits somatostatin release — it tells the brake to let go", foods: "Fava beans (L-DOPA), beets, bananas", icon: "brain" },
+    { mechanism: "GABAergic tone", how: "GABA reduces somatostatin \"noise\" and improves sleep-GH coupling", foods: "Fermented foods: kimchi, sauerkraut, kefir, yogurt", icon: "moon" },
+    { mechanism: "FFA suppression", how: "Free fatty acids independently brake GH. Niacin (B3) suppresses FFAs", foods: "Unroasted peanuts, organ meats, tuna, turkey", icon: "peanut" },
+    { mechanism: "Thermal regulation", how: "Lower core body temp → deeper SWS → reduced somatostatin during GH window", foods: "Bone broth and gelatin (glycine lowers core temp)", icon: "thermometer" },
+  ];
+
+  // ─── TIER 1 FOODS ───
+  const tier1Foods = [
+    { name: "Eggs (pasture-raised)", emoji: "🥚", target: "2-3 daily", when: "Morning + Pre-Sprint + Dinner", combine: "WITH: Coconut oil pre-sprint. Gelatin (balance amino profile). Pineapple with meats. AVOID: High-calcium foods at same time.", why: "Top amino acid profile: lysine, leucine, isoleucine, valine, methionine, cysteine, tryptophan. Choline (147mg/egg) = A-GPC analog for cholinergic pathway. ARA in yolks. Arginine suppresses somatostatin. Zinc for liver GH receptor. K2 directs calcium to growth plates.", suppCorollary: "Food version of A-GPC (44-fold GH) — same cholinergic pathway, sustained tone instead of acute bolus." },
+    { name: "Raw / A2 Milk & Full-Fat Dairy", emoji: "🥛", target: "2-3 cups daily", when: "Morning + Post-Sprint + Pre-Bed", combine: "Includes: cream-line milk, grass-fed yogurt, cheese, kefir. Post-sprint: + raw honey. Bedtime: plain only. AVOID: A1 milk (BCM-7 inflammatory). Vinegar near meals.", why: "All 20 AAs, 22 minerals, ~60 enzymes. Lysine, BCAAs, glutamine, alpha-lactalbumin (highest tryptophan → sleep). Calcium, lactoferrin. Each 8oz/day = +0.39cm height.", suppCorollary: "Food version of GABA (400%) + Melatonin (157%) — tryptophan → melatonin at bedtime, GABA via gut-brain signaling." },
+    { name: "Bone Broth / Gelatin / Collagen Cuts", emoji: "🍖", target: "Daily — as much as practical", when: "Dinner (2-3h pre-bed) + anytime", combine: "Includes: bone broth, gelatin, oxtail, shank, fish skin. WITH: Anything — smoothies, soups, jello desserts. Pair with eggs.", why: "Glycine + proline for collagen framework. Glycine lowers core body temp → deeper SWS → larger GH pulses. One of the ONLY foods rivaling supplements for sleep-GH coupling. Activates mTORC1.", suppCorollary: "Food version of GABA (400%) — glycine achieves comparable sleep-GH coupling through thermoregulation." },
+    { name: "Pumpkin Seeds", emoji: "🎃", target: "Daily snack", when: "Snack + Dinner + Pre-Bed", combine: "WITH: Lentils (best plant GH combo). PREP: Soak 30 min before eating. AVOID: High-calcium foods (zinc-calcium competition).", why: "Highest practical food arginine (~7g/cup) → suppresses somatostatin. Tryptophan (~0.6g/cup) → melatonin → SWS. Zinc = GH receptor cofactor. Copenhagen: 2.8-3.2g/day arginine = +0.33 cm/yr in 7-13yr olds.", suppCorollary: "Food version of IV Arginine (20-fold GH)." },
+    { name: "Grass-fed Beef (Muscle Meat)", emoji: "🥩", target: "Several times/week", when: "Midday + Recovery", combine: "Includes: steak, ground beef, roasts. WITH: Leafy greens, pineapple (bromelain). AVOID: Not as large meal before bed.", why: "Steak uniquely synthesizes L-ornithine → 4x GH baseline. Arginine, ornithine, leucine/BCAAs, glutamine. Zinc for JAK2-STAT5. Iron. Complete protein + leucine for mTOR.", suppCorollary: "Food version of L-Ornithine (300%) — steak IS the ornithine supplement." },
+    { name: "Wild-Caught Fatty Fish", emoji: "🐟", target: "2-3x/week", when: "Midday", combine: "Includes: salmon, mackerel, sardines (with bones). WITH: Leafy greens, lemon. AVOID: Never farmed fish. Don't overcook.", why: "Complete protein, omega-3 → reduces SOCS. Vitamin D (271% RDA salmon) → GH receptor expression. Choline. Sardines add calcium + vitamin D synergy.", suppCorollary: "Supports Niacin + Exercise pathway (600-1500%) — B3 suppresses FFAs that brake GH." },
+    { name: "Legumes (High-Priority Mix)", emoji: "🫘", target: "DAILY", when: "Midday + Evening", combine: "Includes: lentils, chickpeas, black beans, kidney beans, navy beans, split peas. WITH: Any grain-free carb. Vitamin C for iron.", why: "CRITICAL for puberty timing — plant protein keeps HPG axis quiet → later puberty = longer growth window. Lysine (~1.7g/cup lentils), arginine, glutamine, threonine. Magnesium + fiber. Reduced CRP.", suppCorollary: "The long-game strategy supplements cannot replicate: IGF-1 maintained while growth window EXTENDED." },
+    { name: "Collard Greens", emoji: "🥬", target: "Daily — Tier 1 leafy", when: "Midday + Evening", combine: "WITH: Lemon for iron absorption. Olive oil for fat-soluble vitamins. AVOID: None — universally safe.", why: "Lower oxalate than spinach — promoted as primary leafy green. Magnesium → deeper sleep → more GH. Vitamin K for bone. Calcium (better absorbed than spinach). Nitrate → NO → hypothalamic signaling.", suppCorollary: "Supports GABA sleep-depth pathway — Mg deepens the SWS where 70% of GH is released." },
+    { name: "Fermented Dairy & Fermented Cabbage", emoji: "🫙", target: "Daily", when: "Evening + anytime", combine: "Includes: yogurt, kefir, sauerkraut, red cabbage. WITH: Berries (polyphenol + probiotic synergy). Full-fat, grass-fed only.", why: "Protein (yogurt), glutamine (red cabbage = highest plant source), GABA from LAB. Probiotics → gut-brain-liver signaling. IGFBP-3 support. Polyphenols from red cabbage.", suppCorollary: "THE food version of GABA (400%) — chronic somatostatin reduction via gut-brain axis." },
+    { name: "Unroasted Peanuts", emoji: "🥜", target: "Daily / pre-sprint snack", when: "Snack + Pre-Sprint", combine: "WITH: Pre-sprint eggs (choline + niacin stack). AVOID: Roasted (destroys niacin). Watch allergy.", why: "Highest niacin food → FFA suppression. High arginine (~3.7g/cup). Phenylalanine (highest plant source) → dopamine. Key food-level niacin + exercise lever.", suppCorollary: "THE food version of Niacin + Exercise (600-1500%). Pre-sprint peanuts = the food protocol." },
+    { name: "Beef Liver (Strictly Limited)", emoji: "🫀", target: "1x/week", when: "Midday (liver day)", combine: "WITH: Vitamin C foods for iron absorption. AVOID: SKIP CLO same day. SKIP heavy carrots. Vitamin A toxicity risk.", why: "ALL B vitamins score 100. Choline (431mg) = highest food for cholinergic pathway. Zinc + iron. Vitamin A (7,740 mcg) for bone cell differentiation. GH/IGF-1 cofactor bomb with safety caps.", suppCorollary: "Food version of A-GPC (44-fold) — highest food choline + Niacin pathway + cofactors for ALL pathways." },
+    { name: "Cod Liver Oil", emoji: "💧", target: getCLO() + " daily", when: "Morning with food", combine: "WITH: Fatty meal. AVOID: NEVER on beef liver day. NEVER heavy carrot day. Liver 1-2x/wk, CLO all other days.", why: "Vitamin A (4,080 mcg/tbsp) for osteoblasts/osteoclasts. Vitamin D → GH receptor expression. Omega-3 → SOCS reduction. The only food combining retinol + D3 + omega-3.", suppCorollary: "No direct equivalent — supports the ENVIRONMENT for all pathways." },
+  ];
+
+  // ─── TIER 2 FOODS ───
+  const tier2Foods = [
+    { name: "Fava Beans (Occasional)", emoji: "🫘", target: "Evening, not daily", when: "Evening", combine: "WITH: Any grain-free carb. AVOID: G6PD deficiency. Not daily — occasional.", why: "L-DOPA → dopamine → DIRECTLY inhibits somatostatin. Most potent food-based somatostatin suppressor. Kobe University: L-DOPA used in clinical GH stimulation testing.", suppCorollary: "Unique — no other food provides dopaminergic somatostatin suppression." },
+    { name: "Oysters (age 2+)", emoji: "🦪", target: "~1x/week", when: "Midday", combine: "WITH: Lemon (zinc absorption). AVOID: Raw for children.", why: "Highest zinc source → GH receptor function. Fermented oysters → increase IGF-1 AND IGFBP-3 → growth plate thickness. Mineral density.", suppCorollary: "ENABLES all pathways — zinc deficiency mimics the failure state supplements try to overcome." },
+    { name: "Fresh Ginger", emoji: "🫚", target: "In meals + tea", when: "With meals", combine: "WITH: Meals. As tea. AVOID: Excess on empty stomach.", why: "Acutely increases ghrelin → natural GH secretagogue. Appetite support. GH-permissive timing.", suppCorollary: "Food version of fasting's GH mechanism (+287%) — ghrelin stimulation WITHOUT lowering IGF-1." },
+    { name: "Tart Cherries / Tart Cherry Juice", emoji: "🍒", target: "30-45 min pre-bed", when: "Evening / Bedtime", combine: "WITH: Walnuts. AVOID: Sugar in juice — dilute. Tart not sweet.", why: "DUAL: Natural melatonin → stronger GH pulses. ALSO inhibits aromatase → delays growth plate closure. One of the only foods working on two critical pathways.", suppCorollary: "THE food version of Melatonin (157% + aromatase inhibition)." },
+    { name: "Pineapple", emoji: "🍍", target: "With meats + evening", when: "Evening + with meats", combine: "WITH: Quality meats (bromelain aids AA digestion). AVOID: Alone on empty stomach.", why: "Serotonin support → sleep. Bromelain aids amino acid extraction → better arginine, lysine, leucine bioavailability. Manganese for bone.", suppCorollary: "Enhances bioavailability of amino acids that supplements provide synthetically." },
+    { name: "Watermelon", emoji: "🍉", target: "Snack / smoothie", when: "Snack", combine: "WITH: Goji, pineapple. AVOID: Not before bed.", why: "Citrulline → arginine. Better oral bioavailability than arginine itself for raising plasma levels.", suppCorollary: "Food version of oral arginine (2-4.5x GH) via superior citrulline delivery." },
+    { name: "Coconut Oil", emoji: "🥥", target: "Pre-sprint (1g/kg)", when: "Pre-Sprint", combine: "WITH: Eggs (pre-workout stack). AVOID: Not bedtime. Not excessive daily.", why: "Short-term HGH boost up to 4 hours (J Endocrinology). Quick fuel. Stacks with sprint GH pulse.", suppCorollary: "Synergistic with Niacin + Exercise — amplifies the exercise GH window." },
+    { name: "Bovine Colostrum", emoji: "🧬", target: "Morning / post-sprint", when: "Morning / Post-Sprint", combine: "WITH: Goji + honey. No conflicts.", why: "PRPs for growth signaling. IGF-1 + immune modulators. Gut health → feeds into SOCS/inflammation pathway.", suppCorollary: "Multi-pathway: SeroVital-like (600-700%) + immune modulation." },
+    { name: "Spirulina + Chlorella", emoji: "🌿", target: "Morning smoothie", when: "Morning", combine: "WITH: Each other (synergistic). In smoothie. AVOID: Tested brands only.", why: "Together boost HGH. Reduce IL-6, TNF-alpha → SOCS reduction → liver hears GH signal. Antioxidant for growth plates.", suppCorollary: "Clears metabolic noise blocking the same pathways GABA and niacin activate." },
+    { name: "Cruciferous Veg", emoji: "🥦", target: "Several times per week", when: "Any", combine: "Includes: broccoli, kale, cauliflower, red cabbage. WITH: Fat for absorption of fat-soluble compounds.", why: "I3C and sulforaphane modify estrogen metabolism → theoretical growth-plate protection. Red cabbage adds glutamine (highest plant source) + polyphenols.", suppCorollary: "Complementary to melatonin's aromatase inhibition — different mechanism, same goal." },
+  ];
+
+  // ─── TIER 3 — SIGNALING & EXTRAS ───
+  const tier3Foods = [
+    { name: "Fermented Veg (Kimchi, Natto)", emoji: "🥒", when: "Evening", why: "GABA via gut-brain axis. Natto = K2 for growth plates. Probiotics → microbiome → GH/IGF-1 signaling. Sleep-GH coupling.", suppCorollary: "GABA (400%): sustained gut-brain pathway > acute supplement spike." },
+    { name: "Berries (Raspberries, Blueberries)", emoji: "🫐", when: "Morning + Evening", why: "Polyphenols, vitamin C. Cortisol buffer — GH is cortisol-sensitive. Raspberries = best melatonin support. Antioxidant protection for growth plates.", suppCorollary: "Raspberries: melatonin. All berries: cortisol reduction → permissive GH environment." },
+    { name: "Quinoa / Buckwheat / Hemp", emoji: "🌾", when: "Any", why: "Complete/near-complete plant proteins. Low-GI carbs supporting IGF-1 without bread/rice/oats. mTOR support. Clean carb-protein bases.", suppCorollary: "Natural multi-amino profile similar to SeroVital." },
+    { name: "Turmeric + Black Pepper + Fat", emoji: "🟡", when: "Any", why: "Anti-SOCS. Curcumin lowers IL-6, TNF-alpha, CRP → liver hears GH signal. Must combine with pepper (2000% absorption) and fat for bioavailability.", suppCorollary: "Clears metabolic noise. Different mechanism, same outcome: liver sensitivity to GH." },
+    { name: "Seaweed", emoji: "🌊", when: "Occasional", why: "Iodine → thyroid support → GH/IGF-1 axis. Iodine deficiency = 10-13.5 IQ point drop. Glycine content. Moderate intake — excess iodine is also harmful.", suppCorollary: "Micronutrient axis support for thyroid-mediated growth signaling." },
+  ];
+
+  // ─── SUPPLEMENT MAP ───
+  const suppMap = [
+    { supp: "IV Arginine", spike: "20-fold GH", spikeDose: "IV ~0.5g/kg; oral boluses 2-4.5x", mechanism: "Suppresses somatostatin at the pituitary, releasing the brake on GH pulses", when: "Daily snacks + pre-bed + pre-sprint", why: "Copenhagen Study: habitual 2.8-3.2g/day arginine = +0.33 cm/yr in 7-13yr olds. Chronic somatostatin suppression from food > single acute IV spike.", top3: [ { rank: 1, food: "Pumpkin seeds", detail: "Highest plant arginine (~7g/cup). Also zinc + tryptophan.", freq: "Daily" }, { rank: 2, food: "Turkey / chicken breast", detail: "Very high arginine per gram of protein. Lean, versatile.", freq: "Daily / several times per week" }, { rank: 3, food: "Beef — steak, ground, roasts", detail: "Substantial arginine + zinc + iron.", freq: "Several times per week" }, ] },
+    { supp: "L-Ornithine", spike: "~300% GH", spikeDose: "2-10g isolated supplement", mechanism: "Synergizes with arginine via the urea cycle; direct GH secretagogue effect", when: "Midday / dinner protein", why: "University of Houston: beef-derived ornithine elevates GH 4x baseline. Steak IS the ornithine supplement.", top3: [ { rank: 1, food: "Beef — steak, chuck, round", detail: "Strong ornithine + arginine + glutamine + zinc.", freq: "Several times per week" }, { rank: 2, food: "Chicken / turkey", detail: "Ornithine levels similar to other meats. Very practical.", freq: "Daily / several times per week" }, { rank: 3, food: "Fish — tuna, salmon", detail: "Good ornithine + omega-3 anti-inflammatory benefit.", freq: "2-3x per week" }, ] },
+    { supp: "GABA", spike: "~400% GH", spikeDose: "3-5g isolated supplement", mechanism: "Reduces somatostatin tone; improves sleep-GH coupling via gut-brain axis", when: "Evening + daily", why: "Food GABA via gut-brain axis achieves chronic somatostatin reduction — the sustained environment — rather than a single acute spike.", top3: [ { rank: 1, food: "Kimchi", detail: "High GABA from GABA-producing lactic acid bacteria. Small amounts regularly.", freq: "Daily (small amounts)" }, { rank: 2, food: "GABA-rich yogurt / kefir", detail: "Fermented with GABA-producing LAB. Core child-friendly source.", freq: "Daily" }, { rank: 3, food: "Sauerkraut / fermented vegetables", detail: "Variable but meaningful GABA + strong microbiome support.", freq: "Daily" }, ] },
+    { supp: "Melatonin", spike: "157% GH + aromatase inhibition", spikeDose: "Supplemental melatonin (various doses)", mechanism: "Deepens SWS for larger GH pulses AND inhibits aromatase (delays growth plate closure)", when: "Evening / bedtime", why: "DUAL benefit: GH stimulation during sleep + aromatase inhibition protecting growth plates. Rhythm entrainment via food is superior to pharmacologic dosing.", top3: [ { rank: 1, food: "Tart cherries / tart cherry juice", detail: "Highest melatonin among common fruits. Improves sleep onset.", freq: "Evening, 3-4x/week (diluted juice)" }, { rank: 2, food: "Tomatoes", detail: "Contain melatonin and precursors. Part of the circadian foods stack.", freq: "Daily" }, { rank: 3, food: "Oats (steel-cut or rolled)", detail: "Tryptophan + B-vitamins support serotonin → melatonin conversion.", freq: "Daily" }, ] },
+    { supp: "Niacin + Exercise", spike: "600-1,500% GH", spikeDose: "500-3,000mg niacin + high-intensity exercise", mechanism: "Niacin suppresses free fatty acids (FFAs) which independently brake GH; exercise triggers the GH pulse", when: "Pre-sprint (peanuts/liver) → sprint → post-sprint nutrition", why: "MENS stack: Melatonin + Exercise + Niacin + Sleep. Food-level niacin + sprints = the food version of this protocol.", top3: [ { rank: 1, food: "Raw / unroasted peanuts", detail: "Very high niacin (B3) + high arginine. Cornerstone of food-niacin approach.", freq: "Daily / several times per week" }, { rank: 2, food: "Beef liver (limited)", detail: "Extremely dense niacin and all B-vitamins. Constrained by vitamin A.", freq: "1-2x per week max" }, { rank: 3, food: "Tuna / turkey / chicken", detail: "High niacin per 100g. Safe for frequent use.", freq: "Daily / several times per week" }, ] },
+    { supp: "A-GPC", spike: "44-fold peak GH", spikeDose: "600mg pre-exercise", mechanism: "Choline → acetylcholine → primes hypothalamus-pituitary communication for GH release", when: "Pre-sprint (eggs + liver on liver day)", why: "Same cholinergic pathway. Food choline provides sustained neurotransmitter tone — keeping the pituitary \"permissive\".", top3: [ { rank: 1, food: "Eggs (pasture-raised)", detail: "~147mg choline per egg. \"Eggs before sprints\" protocol built on this.", freq: "Daily (2-3)" }, { rank: 2, food: "Beef liver (limited)", detail: "~350+ mg choline per 3oz — highest food source.", freq: "1-2x per week max" }, { rank: 3, food: "Salmon / chicken breast", detail: "Salmon ~75-90mg/3oz, chicken ~72mg/3oz. Good regular background.", freq: "Several times per week" }, ] },
+  ];
+
+  // ─── NUTRITION LEVERS (TODAY TAB) ───
+  const nutritionLevers = [
+    { rank: 1, title: "Eat enough", color: "forest", what: "Calorie surplus of 300-1,000 kcal above maintenance. If your child is hungry between meals, portions are too small.", why: "Without enough energy, AMPK activates survival mode and shuts down ALL growth signaling. Nothing else on this list matters if calories are insufficient. This overrides every other lever.", timing: "Every meal, every day. Never skip meals. Never restrict calories in a growing child." },
+    { rank: 2, title: "Bedtime milk", color: "forest", what: `1 cup warm A2/raw milk, plain, ${ageInYears <= 5 ? "at bedtime" : "30 min before lights out"}. Every night.`, why: "Casein curds digest over 3-7 hours, slowly releasing tryptophan → melatonin → deeper sleep. 70% of daily GH releases in the first 3 hours of deep sleep. Bedtime milk amplifies this 20-50%. The Dutch, Dinka, and Serbians — three tallest populations — all do this.", timing: "30 minutes before lights out. Plain only — no sweetener. Warm, not hot. This is the single highest-impact nutrition habit." },
+    { rank: 3, title: `Raw milk or A2 organic — ${getMilkAmount()} daily`, color: "blue", what: `Split across morning, afternoon, and bedtime. Never A1 Holstein.`, why: "Each 8oz of milk per day = +0.39cm height — the most replicated finding in pediatric nutrition. Milk contains all 20 amino acids, 22 minerals, ~60 enzymes. Milk stimulates endogenous GH with little to NO effect on testosterone — critical for growth without accelerating puberty.", timing: `Morning: 1 cup with breakfast. ${ageInYears >= 6 ? "Post-sprint: 1 cup + honey. " : "Afternoon: 1 cup with snack. "}Bedtime: 1 cup warm, plain.` },
+    { rank: 4, title: "Enough protein", color: "forest", what: `${getProtein()} daily. Both animal (eggs, beef, fish, dairy) and plant (beans, lentils, pumpkin seeds).`, why: "IGF-1 is a protein — you need amino acids to build it. Leucine activates mTOR (the growth switch). Dairy protein stimulates IGF-1 more effectively than any other source due to bioactive peptides enhancing JAK2-STAT5 signaling.", timing: "Protein at every meal. Spread it — the body can only use ~25-30g per sitting for synthesis." },
+    { rank: 5, title: "Beans or lentils every day", color: "forest", what: "Lentils, chickpeas, black beans, kidney beans, navy beans, or split peas. At least one serving daily.", why: "The long game. Pediatric cohorts show higher plant protein ages 3-6 = later puberty onset. Later puberty = more years of open growth plates = more total height. This extends the entire growth window.", timing: "Lunch and/or dinner. Every day. Non-negotiable from age 2 onward." },
+    { rank: 6, title: "Eggs — the daily anchor", color: "amber", what: `${ageInYears <= 5 ? "2" : "2-3"} pasture-raised eggs daily.`, why: "Best amino acid profile of any single food: lysine, leucine, tryptophan, methionine, cysteine. Choline (147mg/egg) primes the pituitary for GH release. ARA in yolks modulates growth signaling. Zinc for the GH receptor.", timing: "Morning (with CLO). Pre-exercise if age 6+ (choline loading). Versatile — any meal works." },
+    { rank: 7, title: "Finish dinner 2-3 hours before bed", color: "coral", what: "Last food (except bedtime milk) finishes 2-3 hours before sleep.", why: "Ghrelin (the hunger hormone that triggers GH) rises during the overnight fast. Late eating suppresses ghrelin AND elevates insulin — both directly suppress GH during the 10pm-2am pulse window.", timing: "Dinner at 6pm for a 9pm bedtime. Bedtime milk at 8:30pm is the exception — casein digests differently." },
+    { rank: 8, title: "Cod liver oil every morning", color: "blue", what: `${getCLO()} daily with a fatty breakfast.`, why: "The only food combining retinol + vitamin D + omega-3 in one source. Vitamin D upregulates GH receptor expression. Vitamin A drives bone cell differentiation. Omega-3 reduces SOCS.", timing: "Morning with food (needs fat for absorption). Skip on beef liver day to avoid vitamin A excess." },
+    { rank: 9, title: "Pumpkin seeds daily", color: "brown", what: "Handful as snack, in trail mix, on yogurt, or before bed.", why: "Highest practical food arginine (~7g/cup) — the amino acid that suppresses somatostatin (the GH brake). Also zinc (GH receptor cofactor) and tryptophan (sleep support). Copenhagen Study: +0.33 cm/yr in 7-13yr olds.", timing: "Anytime. Soak 30 min before eating for better mineral absorption. Small amount before bed is fine." },
+    { rank: 10, title: "Bone broth at dinner", color: "purple", what: "A cup of bone broth with or before dinner. Or gelatin in desserts, smoothies, gummies.", why: "Glycine lowers core body temperature → deeper slow-wave sleep → larger GH pulses. One of the only foods that rivals supplements for sleep-GH coupling. Also provides the collagen scaffold for bones.", timing: "Dinner or 2-3h before bed. The glycine needs time to lower core temp before the sleep window opens." },
+    { rank: 11, title: "No sugar after lunch", color: "coral", what: "Zero added sugar in the afternoon and evening. No juice, candy, desserts, or sweetened anything after midday.", why: "Sugar spikes insulin → GH suppressed by 80%. Even moderate sugar in the evening window directly shrinks the overnight GH pulses. This is the single biggest destroyer of the sleep-growth window.", timing: "Morning sugar is less damaging (GH pulses are overnight). But evening sugar is a direct GH killer. Raw honey post-sprint is the only exception." },
+  ];
+
+  // ─── MILK PRIMER SECTIONS ───
+  const milkSections = [
+    { id: "a2a1", title: "A2 vs A1 Milk — Why It Matters", icon: "cow", content: `A1 beta-casein (70-80% of US Holstein milk) has histidine at position 67, releasing beta-casomorphin-7 (BCM-7) during digestion — an inflammatory opioid peptide linked to gut permeability, bloating, allergies/eczema, and chronic low-grade inflammation.\n\nA2 beta-casein (80-90% of French/European Jersey/Guernsey milk) has proline at position 67, preventing BCM-7 release. Digested cleanly like human breast milk: intact gut barriers, minimal inflammation, better tolerance, superior nutrient delivery.\n\nThis is why French children tend to outgrow American children on equivalent dairy intake. The milk itself is different at the molecular level.\n\nBottom line: A2 or raw milk. Never conventional A1 Holstein.` },
+    { id: "ranking", title: "Milk Ranking — Best to Worst", icon: "trophy", content: `Tier 1 — Optimal: Human breast milk (gold standard for infants)\nTier 2 — Excellent: Raw camel milk, raw sheep milk, raw goat milk, raw cow milk (A2)\nTier 3 — Good: Organic pasteurized grass-fed (camel/sheep/goat/cow)\nTier 4 — Acceptable: Organic ultra-pasteurized grass-fed cow milk\nTier 5 — Avoid: Conventional pasteurized A1 milk (hormones, antibiotics, pesticides)\n\nWhy raw > pasteurized: Pasteurization dramatically reduces the six key growth proteins. Raw preserves enzymes, lactoferrin, immunoglobulins, and bioavailable IGF-1 (20-50% higher).\n\nWhy grass-fed > grain-fed: Better fatty acid profile, higher fat-soluble vitamins (A, D, K2).\n\nFull-fat ALWAYS for children — never low-fat or skim.` },
+    { id: "proteins", title: "The Six Growth Proteins in Milk", icon: "dna", content: `#1 Serum Albumin — Transports hormones and growth factors. Critical for delivering growth signals throughout the body.\n\n#2 alpha-Lactalbumin — Highest tryptophan content of ANY protein (serotonin → melatonin → GH). This is why bedtime milk works for sleep.\n\n#3 Casein — 80% of milk protein. Forms curds in stomach → slow 3-7 hour digestion → sustained amino acid release overnight.\n\n#4 Lactoferrin — Aids iron absorption. Anti-inflammatory. Studies: lactoferrin supplementation = greater gains in height AND weight.\n\n#5 Lysozyme — Antimicrobial. Supports gut health and immune function.\n\n#6 Secretory IgA — Immune function. Maintains gut health. Reduces inflammation → frees energy for growth.\n\nKey insight: These proteins are DRAMATICALLY reduced in pasteurized milk.` },
+    { id: "bedtime", title: "The Bedtime Milk Secret", icon: "moon", content: `Why 30 minutes before bed — the mechanism:\n\nCasein is a slow-digesting protein. It forms curds in the stomach. These curds release amino acids slowly over 3-7 hours — the exact duration of the deepest sleep cycles.\n\nTryptophan (highest in alpha-lactalbumin) converts: Tryptophan → Serotonin → Melatonin. This deepens slow-wave sleep. 70% of daily growth hormone is released during deep sleep. Bedtime milk amplifies this by 20-50%.\n\nThe Dinka of South Sudan — the world's tallest ethnic group (men average 6'4\") — raise children in cattle camps where they primarily consume raw milk, including before sleep.\n\nThe protocol: Warm, plain A2 or raw milk. No sweetener. 30 minutes before lights out. Every night.` },
+    { id: "casestudies", title: "The Evidence: Netherlands, Dinka, Serbia, France", icon: "globe", content: `Netherlands — World's tallest country (men 182.53cm / 5'11.86\"). Consume 25% more dairy than Americans. Raw milk vending machines throughout the country. Their milk has NO rBGH, no antibiotics, strict pesticide limits.\n\nDinka of South Sudan — World's tallest ethnic group (men 6'4\" / 193cm). Diet dominated by raw milk. Children sent to cattle camps (toc tradition) where they drink up to 3 gallons/day.\n\nSerbia — Average men 182cm. Traditional diet: daily fresh milk/cheese, grilled meats, fermented dairy (kajmak, sir). Tight-knit families enforce early bedtimes. Dairy + sleep + movement = height.\n\nFrance — A2 milk dominant (80-90% Jersey/Guernsey breeds). French children outgrow American children on equivalent dairy volume.` },
+    { id: "safety", title: "Caps, Cautions & Pairing", icon: "alert", content: `Maximum recommendations:\n- School-age: Cap at 24oz (calcium competes with iron absorption → anemia risk)\n- Teens: Cap at 32oz\n- Always pair with varied diet — not milk-only nutrition\n\nIron pairing: Don't serve milk with iron-rich foods at the same meal. Serve milk between meals or at bedtime. Serve iron foods (beef, liver, lentils) with vitamin C foods instead.\n\nQuality hierarchy: Raw A2 > Raw cow > Organic pasteurized grass-fed A2 > Organic pasteurized grass-fed > Conventional (avoid).\n\nFull-fat ALWAYS. Never low-fat or skim for children.` },
+  ];
+
+  // Dosing table by age
+  const milkDosingTable = [
+    { age: "1-2 years", amount: "16oz (2 cups)", timing: "Morning + Bedtime", benefit: "Reverses stunting. 15-30% IGF-1 boost. Bedtime cup deepens sleep for GH." },
+    { age: "2-5 years", amount: "16-20oz (2-2.5 cups)", timing: "Morning + Snack + Bedtime", benefit: "Peak bone mass accrual. Calcium/IGF-1 absorption 20% better in A2. MFGM for brain myelination." },
+    { age: "6-12 years", amount: "20-24oz (2.5-3 cups)", timing: "Breakfast + After school + Bedtime", benefit: "Height velocity (+0.5-1cm/yr edge). Stable energy. IQ via reduced brain fog. Cap 24oz (iron competition)." },
+    { age: "13-18 years", amount: "24oz (3 cups)", timing: "Breakfast + Post-school + Bedtime", benefit: "Final growth spurts. Peak bone mass. Boys: supports last 4-8cm gains. Girls: density against estrogen-driven fusion." },
+  ];
 
   return (
     <div className="min-h-screen bg-cream">
       <Nav currentChild={child} />
 
-      <main className="max-w-3xl mx-auto px-4 py-12">
+      <main className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
 
         {/* Back Link */}
         <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-forest mb-6">
@@ -32,144 +196,598 @@ export default function NutritionWindow() {
         </Link>
 
         {/* Header */}
-        <header className="bg-gradient-to-br from-green-500 to-green-600 rounded-3xl p-10 text-white mb-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 text-[150px] opacity-15">🥛</div>
+        <header className="bg-gradient-to-br from-green-600 to-green-700 rounded-3xl p-8 sm:p-10 text-white mb-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 text-[120px] sm:text-[150px] opacity-15">🥛</div>
           <div className="flex justify-between items-start mb-5 relative">
-            <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-semibold">🥛 Nutrition</span>
+            <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-semibold">Nutrition Window</span>
             <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
               <span className="w-2 h-2 bg-green-300 rounded-full" />
-              Good
+              Optimal
             </span>
           </div>
-          <h1 className="font-display text-5xl mb-4 relative">Nutrition</h1>
-          <p className="text-lg text-white/90 max-w-xl relative">
-            Protein provides building blocks for IGF-1. Specific amino acids (arginine, ornithine) stimulate GH release. Minerals like zinc are essential cofactors.
+          <h1 className="font-display text-4xl sm:text-5xl mb-4 relative">Nutrition & GH→IGF-1</h1>
+          <p className="text-base sm:text-lg text-white/90 max-w-xl relative">
+            Every meal is a signal to the growth hormone axis. Your job: provide the right nutrients at the right time so the pituitary releases GH, the liver converts it to IGF-1, and the growth plates respond. <em>Timing beats stimulation.</em>
           </p>
-          <div className="flex gap-8 mt-8 pt-6 border-t border-white/20">
+          <div className="flex flex-wrap gap-4 sm:gap-6 mt-8 pt-6 border-t border-white/20">
             <div>
-              <span className="font-display text-4xl">1.2-1.5g</span>
-              <span className="text-sm text-white/80 ml-2">protein/kg</span>
+              <span className="font-display text-3xl sm:text-4xl">3 stages</span>
+              <span className="text-sm text-white/80 block sm:inline sm:ml-2">Pituitary → Liver → Plate</span>
             </div>
             <div>
-              <span className="font-display text-4xl">A2</span>
-              <span className="text-sm text-white/80 ml-2">milk protein</span>
+              <span className="font-display text-3xl sm:text-4xl">+0.39cm</span>
+              <span className="text-sm text-white/80 block sm:inline sm:ml-2">per 8oz milk/day</span>
+            </div>
+            <div>
+              <span className="font-display text-3xl sm:text-4xl">70%</span>
+              <span className="text-sm text-white/80 block sm:inline sm:ml-2">GH during deep sleep</span>
             </div>
           </div>
         </header>
 
-        {/* Child Status */}
-        <section className="card border-2 border-blue-100 mb-6">
-          <div className="flex items-center gap-4 mb-5">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-light to-amber rounded-xl flex items-center justify-center text-2xl">
-              {child.gender === 'female' ? '👧' : '👦'}
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-lg">{child.name}'s Nutrition Status</h3>
-              <p className="text-sm text-gray-500">Pre-Puberty Window · Age 8</p>
-            </div>
-            <span className="badge-good">Good</span>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            {[
-              { value: '85%', label: 'Protocol Adherence', note: null },
-              { value: '38g', label: 'Daily Protein', note: '↑ Target: 42g' },
-              { value: '✓', label: 'Raw Milk', note: 'A2 source' },
-            ].map((stat) => (
-              <div key={stat.label} className="bg-cream rounded-xl p-4 text-center">
-                <div className="font-display text-2xl text-forest">{stat.value}</div>
-                <div className="text-xs text-gray-500">{stat.label}</div>
-                {stat.note && <div className="text-xs text-green-600 font-semibold mt-1">{stat.note}</div>}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* The Science */}
-        <section className="card mb-6">
-          <h2 className="font-display text-2xl mb-4">The Science</h2>
-          <p className="text-gray-600 mb-6">
-            Understanding how nutrition directly influences growth hormone and IGF-1 production.
-          </p>
-          <div className="bg-green-50 rounded-2xl p-6">
-            <div className="text-xs font-bold text-green-600 uppercase tracking-wider mb-2">Mechanism</div>
-            <p className="text-gray-800 leading-relaxed">
-              Dietary protein provides amino acids that stimulate IGF-1 production in the liver. Specific amino acids like arginine and ornithine can directly stimulate GH release from the pituitary.
-              The Dutch are the tallest people on Earth — and have the highest dairy consumption. A2 casein proteins from raw/A2 milk support IGF-1 without the inflammatory effects of A1 casein.
-              Zinc is essential for GH receptor signaling. Deficiency blunts GH response even when levels are adequate.
-            </p>
-          </div>
-        </section>
-
-        {/* How to Optimize */}
-        <section className="card mb-6">
-          <h2 className="font-display text-2xl mb-6">How to Optimize</h2>
-          <div className="space-y-4">
-            {[
-              { text: 'Protein 1.2-1.5g/kg daily — building blocks for IGF-1', citation: '[Hoppe C. Am J Clin Nutr. 2004]' },
-              { text: 'Raw or A2 milk daily — supports IGF-1 without inflammation', citation: '[Melnik BC. Nutr Metab. 2012]' },
-              { text: 'Zinc-rich foods (beef, pumpkin seeds) — GH receptor cofactor', citation: '[Prasad AS. Nutrition. 1998]' },
-              { text: 'Morning protein within 1 hour of waking — primes IGF-1 axis', citation: '[Kerstetter JE. Am J Clin Nutr. 2003]' },
-              { text: 'Bone broth and collagen — provides glycine for growth', citation: '[de Paz-Lugo P. Amino Acids. 2018]' },
-            ].map((item) => (
-              <div key={item.text} className="flex items-start gap-4 p-4 bg-cream rounded-xl hover:bg-cream-dark transition-colors">
-                <div className="w-6 h-6 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="font-medium">{item.text}</div>
-                  <div className="text-sm text-forest font-medium">{item.citation}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Avoid */}
-        <section className="bg-coral-light rounded-3xl p-8 mb-6">
-          <div className="text-sm font-bold text-coral uppercase tracking-wider mb-5">⚠️ Avoid</div>
-          <div className="space-y-3">
-            {[
-              'Sugar and refined carbs — spike insulin, suppress GH',
-              'Eating within 2 hours of bed — insulin blocks nocturnal GH',
-              'Low protein intake — limits IGF-1 production',
-              'Seed oils — inflammatory, may affect hormone signaling',
-              'Ultra-processed foods — empty calories, additives',
-            ].map((item) => (
-              <div key={item} className="flex items-start gap-3">
-                <div className="w-5 h-5 bg-coral rounded-md flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </div>
-                <span className="text-gray-800">{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Actions */}
-        <div className="flex justify-end gap-3 pt-6 border-t border-cream-dark">
-          <button className="flex items-center gap-2 px-5 py-3 bg-cream rounded-xl text-sm font-semibold hover:bg-cream-dark transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-            </svg>
-            Save
-          </button>
-          <button className="flex items-center gap-2 px-5 py-3 bg-cream rounded-xl text-sm font-semibold hover:bg-cream-dark transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-            </svg>
-            Share
-          </button>
-          <button className="flex items-center gap-2 px-5 py-3 bg-forest text-white rounded-xl text-sm font-semibold hover:bg-forest-dark transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-            Ask Jarvis
-          </button>
+        {/* Age-based recommendations bar */}
+        <div className="bg-white rounded-2xl p-4 shadow-sm mb-6 flex flex-wrap items-center gap-3 sm:gap-6">
+          <span className="text-sm font-semibold text-gray-600">
+            {child ? `${child.name}'s targets` : 'Age-based targets'}:
+          </span>
+          <span className="text-sm bg-forest/10 text-forest px-3 py-1 rounded-full font-medium">
+            Age {Math.floor(ageInYears)}
+          </span>
+          <span className="text-sm bg-forest/10 text-forest px-3 py-1 rounded-full font-medium">
+            Protein: <strong>{getProtein()}</strong>
+          </span>
+          <span className="text-sm bg-forest/10 text-forest px-3 py-1 rounded-full font-medium">
+            CLO: <strong>{getCLO()}</strong>
+          </span>
+          <span className="text-sm bg-forest/10 text-forest px-3 py-1 rounded-full font-medium">
+            Milk: <strong>{getMilkAmount()}</strong>
+          </span>
         </div>
+
+        {/* Tabs */}
+        <div className="flex flex-wrap gap-1 mb-0">
+          {[
+            { id: 'home', label: 'Home' },
+            { id: 'today', label: 'Levers' },
+            { id: 'milk', label: 'Milk' },
+            { id: 'foods', label: 'Foods' },
+            { id: 'mechanisms', label: 'Why' },
+            { id: 'science', label: 'Science' },
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as typeof activeTab)}
+              className={`px-4 py-2.5 text-sm font-semibold rounded-t-xl transition-all flex-1 sm:flex-initial ${
+                activeTab === tab.id
+                  ? 'bg-white text-forest shadow-sm'
+                  : 'bg-cream-dark text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* ═══ TAB: HOME ═══ */}
+        {activeTab === 'home' && (
+          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
+            <NutritionHomeTab age={Math.floor(ageInMonths / 12)} />
+          </div>
+        )}
+
+        {/* ═══ TAB: TODAY ═══ */}
+        {activeTab === 'today' && (
+          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
+            <div className="text-center mb-6">
+              <h2 className="font-display text-2xl text-gray-900 mb-1">Nutrition Levers</h2>
+              <p className="text-sm text-gray-500">Ranked by impact on height. Do #1 first.</p>
+            </div>
+
+            <div className="space-y-3">
+              {nutritionLevers.map((lever, i) => {
+                const isExpanded = expandedLever === `today-${i}`;
+                return (
+                  <div key={i}>
+                    <button
+                      onClick={() => setExpandedLever(isExpanded ? null : `today-${i}`)}
+                      className={`w-full text-left p-4 rounded-xl border transition-all ${
+                        isExpanded ? 'bg-forest/5 border-forest/20' : 'bg-cream border-cream hover:border-forest/20'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm ${
+                          i < 3 ? 'bg-forest' : i < 6 ? 'bg-forest/80' : 'bg-forest/60'
+                        }`}>
+                          {lever.rank}
+                        </span>
+                        <div className="flex-1">
+                          <div className="font-semibold text-gray-900">{lever.title}</div>
+                          <div className="text-sm text-gray-500 mt-0.5">{lever.what}</div>
+                        </div>
+                        <span className="text-forest text-sm">{isExpanded ? '▲' : '▼'}</span>
+                      </div>
+                    </button>
+                    {isExpanded && (
+                      <div className="px-4 pb-4 pt-2 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20">
+                        <p className="text-sm text-gray-700 leading-relaxed mb-3">{lever.why}</p>
+                        <div className="text-sm bg-forest/10 text-forest px-3 py-2 rounded-lg font-medium">
+                          Timing: {lever.timing}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Never section */}
+            <div className="mt-8 bg-coral-light rounded-2xl p-6">
+              <div className="text-sm font-bold text-coral uppercase tracking-wider mb-4">Never</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {[
+                  "A1 milk (inflammatory BCM-7)",
+                  "Sugar after lunch",
+                  "Food 2-3h before bed (except milk)",
+                  "Ultra-processed foods",
+                  "Skipping meals / under-eating",
+                  "Vinegar around meals",
+                  "Soy",
+                  "Bread, pasta, rice, oats",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
+                    <span className="text-coral font-bold">✕</span>
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ═══ TAB: MILK ═══ */}
+        {activeTab === 'milk' && (
+          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
+            <h2 className="font-display text-2xl text-gray-900 mb-2">The Milk Primer</h2>
+            <p className="text-sm text-gray-500 mb-6">Milk is the single most studied food for child growth. This is everything you need to know.</p>
+
+            {/* Hero stat */}
+            <div className="bg-gradient-to-br from-forest to-forest-dark rounded-2xl p-6 text-white mb-6">
+              <div className="font-display text-4xl sm:text-5xl">+0.39cm</div>
+              <div className="text-white/90 mt-2">per 8oz of milk per day — the most replicated finding in pediatric growth nutrition.</div>
+              <div className="text-xs text-white/60 mt-3">Hoppe C. Am J Clin Nutr. 2004 | Netherlands 25% more dairy = world's tallest country</div>
+            </div>
+
+            {/* Dosing by age */}
+            <h3 className="font-display text-lg text-gray-900 mb-4 pb-2 border-b-2 border-forest/20">How Much — By Age</h3>
+            <div className="space-y-3 mb-8">
+              {milkDosingTable.map((row, i) => {
+                const isHighlighted = getMilkAgeHighlight() === row.age;
+                return (
+                  <div
+                    key={i}
+                    className={`p-4 rounded-xl border-2 transition-all ${
+                      isHighlighted ? 'bg-forest/5 border-forest' : 'bg-cream border-transparent'
+                    }`}
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <span className={`font-semibold ${isHighlighted ? 'text-forest' : 'text-gray-600'}`}>{row.age}</span>
+                      <span className={`font-bold ${isHighlighted ? 'text-forest' : 'text-gray-500'}`}>{row.amount}</span>
+                    </div>
+                    <div className={`text-xs mb-1 ${isHighlighted ? 'text-forest' : 'text-gray-400'}`}>{row.timing}</div>
+                    <div className={`text-sm ${isHighlighted ? 'text-gray-700' : 'text-gray-500'}`}>{row.benefit}</div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Expandable sections */}
+            <div className="space-y-2">
+              {milkSections.map((section, i) => {
+                const isExpanded = expandedMilkSection === i;
+                return (
+                  <div key={i}>
+                    <button
+                      onClick={() => setExpandedMilkSection(isExpanded ? null : i)}
+                      className={`w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between ${
+                        isExpanded ? 'bg-forest/5 border-forest/20' : 'bg-cream border-cream hover:border-forest/20'
+                      }`}
+                    >
+                      <span className="font-semibold text-gray-900">{section.title}</span>
+                      <span className="text-forest text-sm">{isExpanded ? '▲' : '▼'}</span>
+                    </button>
+                    {isExpanded && (
+                      <div className="px-4 pb-4 pt-3 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20">
+                        <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{section.content}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ═══ TAB: FOODS ═══ */}
+        {activeTab === 'foods' && (
+          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
+            <h2 className="font-display text-2xl text-gray-900 mb-2">Master Food Chart</h2>
+            <p className="text-sm text-gray-500 mb-6">Every food ranked with timing, combinations, and which pathway it activates. Tap any food to expand.</p>
+
+            {/* Tier 1 */}
+            <h3 className="font-display text-lg text-forest mb-3 pb-2 border-b-2 border-forest/30">Tier 1 — Daily Anchors</h3>
+            <p className="text-xs text-gray-500 mb-4">Strong evidence. Non-negotiables.</p>
+            <div className="space-y-2 mb-8">
+              {tier1Foods.map((food, i) => {
+                const isExpanded = expandedFood === food.name;
+                return (
+                  <div key={i}>
+                    <button
+                      onClick={() => setExpandedFood(isExpanded ? null : food.name)}
+                      className={`w-full text-left p-4 rounded-xl border transition-all ${
+                        isExpanded ? 'bg-forest/5 border-forest/20' : 'bg-cream border-cream hover:border-forest/20'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{food.emoji}</span>
+                        <div className="flex-1">
+                          <span className="font-semibold text-gray-900">{food.name}</span>
+                          {food.target && <span className="text-xs text-gray-500 ml-2">({food.target})</span>}
+                        </div>
+                        <span className="text-xs text-forest font-medium">{food.when} {isExpanded ? '▲' : '▼'}</span>
+                      </div>
+                    </button>
+                    {isExpanded && (
+                      <div className="px-4 pb-4 pt-3 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20 text-sm space-y-3">
+                        <div><strong className="text-gray-700">How to combine:</strong> <span className="text-gray-600">{food.combine}</span></div>
+                        <div><strong className="text-gray-700">Why it works:</strong> <span className="text-gray-600">{food.why}</span></div>
+                        <div className="bg-purple-50 border-l-4 border-purple-400 p-3 rounded-r-lg">
+                          <strong className="text-purple-700 text-xs">Replaces this supplement:</strong> <span className="text-gray-600 text-xs">{food.suppCorollary}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Tier 2 */}
+            <h3 className="font-display text-lg text-amber mb-3 pb-2 border-b-2 border-amber/30">Tier 2 — Power Adds</h3>
+            <p className="text-xs text-gray-500 mb-4">Moderate evidence. Rotate these in weekly.</p>
+            <div className="space-y-2 mb-8">
+              {tier2Foods.map((food, i) => {
+                const isExpanded = expandedFood === food.name;
+                return (
+                  <div key={i}>
+                    <button
+                      onClick={() => setExpandedFood(isExpanded ? null : food.name)}
+                      className={`w-full text-left p-4 rounded-xl border transition-all ${
+                        isExpanded ? 'bg-amber/5 border-amber/20' : 'bg-cream border-cream hover:border-amber/20'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{food.emoji}</span>
+                        <div className="flex-1">
+                          <span className="font-semibold text-gray-900">{food.name}</span>
+                          {food.target && <span className="text-xs text-gray-500 ml-2">({food.target})</span>}
+                        </div>
+                        <span className="text-xs text-amber font-medium">{food.when} {isExpanded ? '▲' : '▼'}</span>
+                      </div>
+                    </button>
+                    {isExpanded && (
+                      <div className="px-4 pb-4 pt-3 bg-amber/5 rounded-b-xl -mt-2 border border-t-0 border-amber/20 text-sm space-y-3">
+                        <div><strong className="text-gray-700">How to combine:</strong> <span className="text-gray-600">{food.combine}</span></div>
+                        <div><strong className="text-gray-700">Why it works:</strong> <span className="text-gray-600">{food.why}</span></div>
+                        <div className="bg-purple-50 border-l-4 border-purple-400 p-3 rounded-r-lg">
+                          <strong className="text-purple-700 text-xs">Replaces this supplement:</strong> <span className="text-gray-600 text-xs">{food.suppCorollary}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Tier 3 */}
+            <h3 className="font-display text-lg text-blue-600 mb-3 pb-2 border-b-2 border-blue-600/30">Tier 3 — Signaling & Extras</h3>
+            <p className="text-xs text-gray-500 mb-4">Niche or indirect — helpful but not core.</p>
+            <div className="space-y-2 mb-8">
+              {tier3Foods.map((food, i) => {
+                const isExpanded = expandedFood === food.name;
+                return (
+                  <div key={i}>
+                    <button
+                      onClick={() => setExpandedFood(isExpanded ? null : food.name)}
+                      className={`w-full text-left p-4 rounded-xl border transition-all ${
+                        isExpanded ? 'bg-blue-50 border-blue-200' : 'bg-cream border-cream hover:border-blue-200'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{food.emoji}</span>
+                        <div className="flex-1">
+                          <span className="font-semibold text-gray-900">{food.name}</span>
+                        </div>
+                        <span className="text-xs text-blue-600 font-medium">{food.when} {isExpanded ? '▲' : '▼'}</span>
+                      </div>
+                    </button>
+                    {isExpanded && (
+                      <div className="px-4 pb-4 pt-3 bg-blue-50 rounded-b-xl -mt-2 border border-t-0 border-blue-200 text-sm space-y-3">
+                        <div><strong className="text-gray-700">Why it works:</strong> <span className="text-gray-600">{food.why}</span></div>
+                        <div className="bg-purple-50 border-l-4 border-purple-400 p-3 rounded-r-lg">
+                          <strong className="text-purple-700 text-xs">Replaces this supplement:</strong> <span className="text-gray-600 text-xs">{food.suppCorollary}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Avoid section */}
+            <h3 className="font-display text-lg text-coral mb-3 pb-2 border-b-2 border-coral/30">What to Avoid</h3>
+            <div className="space-y-2">
+              {[
+                ["Sugar / high-glycemic carbs", "Spikes insulin → suppresses GH up to 80%"],
+                ["Ultra-processed foods", "DIRECTLY damage growth plates and chondrocytes"],
+                ["Seed oils", "Inflammatory; affect hormone signaling"],
+                ["Late-night eating", "Elevates insulin during the 10pm-2am GH window"],
+                ["Large protein meals before bed", "Glass of milk OK; full steak NOT"],
+                ["Vinegar", "Inhibits insulin presence the liver needs for IGF-1"],
+                ["A1 conventional milk", "BCM-7 inflammatory peptide → gut permeability"],
+                ["Farmed fish", "Grain-fed, antibiotics, contaminants"],
+                ["Non-organic Dirty Dozen", "Pesticide residues = endocrine disruptors"],
+                ["Keto / very low-carb", "Liver REQUIRES insulin (from carbs) to make IGF-1"],
+                ["Soy", "Phytoestrogen concerns per framework"],
+                ["Caffeine", "Disrupts deep sleep architecture"],
+              ].map(([item, reason], i) => (
+                <div key={i} className={`text-sm p-3 rounded-lg flex gap-2 ${i % 2 === 0 ? 'bg-coral-light' : 'bg-red-50'}`}>
+                  <span className="text-coral font-bold">✕</span>
+                  <span><strong>{item}</strong> — {reason}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Supplement Map */}
+            <h3 className="font-display text-lg text-purple-600 mt-10 mb-3 pb-2 border-b-2 border-purple-600/30">Supplement → Food Replacement Map</h3>
+            <div className="bg-purple-50 border-l-4 border-purple-400 p-4 rounded-r-xl mb-4">
+              <p className="text-sm text-gray-700 leading-relaxed">
+                According to peer-reviewed research, these compounds can produce 157% to 44-fold increases in growth hormone — but those results come from isolated, pharmacologic-dose supplements. For children, <strong>making it a lifestyle through food is superior</strong>. Whole foods deliver the same active compounds alongside cofactors, minerals, and complementary nutrients. A food-based lifestyle creates the <em>environment</em> for growth day after day, month after month.
+              </p>
+            </div>
+            <div className="space-y-2">
+              {suppMap.map((supp, i) => {
+                const isExpanded = expandedSupp === i;
+                return (
+                  <div key={i}>
+                    <button
+                      onClick={() => setExpandedSupp(isExpanded ? null : i)}
+                      className={`w-full text-left p-4 rounded-xl border transition-all ${
+                        isExpanded ? 'bg-purple-50 border-purple-200' : 'bg-cream border-cream hover:border-purple-200'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="bg-coral/10 text-coral text-xs font-bold px-2 py-1 rounded">{supp.spike}</span>
+                        <span className="font-semibold text-gray-900">{supp.supp}</span>
+                        <span className="text-purple-600 text-sm ml-auto">{isExpanded ? '▲' : '▼'}</span>
+                      </div>
+                      <div className="text-xs text-gray-500 mt-1 ml-16">{supp.mechanism}</div>
+                    </button>
+                    {isExpanded && (
+                      <div className="px-4 pb-4 pt-3 bg-purple-50 rounded-b-xl -mt-2 border border-t-0 border-purple-200 text-sm space-y-4">
+                        <div className="text-xs text-gray-500">Supplement dose: {supp.spikeDose}</div>
+                        <div className="font-semibold text-forest">Top 3 Food Replacements</div>
+                        {supp.top3.map((t, ti) => (
+                          <div key={ti} className={`p-3 rounded-lg ${ti === 0 ? 'bg-forest/10 border border-forest/20' : 'bg-white border border-gray-100'}`}>
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold ${
+                                ti === 0 ? 'bg-forest' : ti === 1 ? 'bg-forest/70' : 'bg-forest/50'
+                              }`}>{t.rank}</span>
+                              <span className="font-semibold">{t.food}</span>
+                            </div>
+                            <div className="text-xs text-gray-600 ml-8">{t.detail}</div>
+                            <div className="text-xs text-forest ml-8 mt-1">{t.freq}</div>
+                          </div>
+                        ))}
+                        <div className="bg-white p-3 rounded-lg border border-gray-100">
+                          <div className="text-xs text-gray-500 mb-1"><strong>When:</strong> {supp.when}</div>
+                          <div className="text-xs text-forest"><strong>Why food is better:</strong> {supp.why}</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ═══ TAB: MECHANISMS ═══ */}
+        {activeTab === 'mechanisms' && (
+          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
+            <h2 className="font-display text-2xl text-gray-900 mb-2">Mechanisms & Pathways</h2>
+            <p className="text-sm text-gray-500 mb-6">What to do at each stage — and why it works. Tap any food lever to see the science behind it.</p>
+
+            {/* Three Stage Model */}
+            <h3 className="font-display text-lg text-gray-900 mb-4 pb-2 border-b-2 border-forest/20">The Three-Stage Model</h3>
+            {[
+              { stage: "Stage 1: Pituitary", sub: "Release the GH pulse", color: "forest", icon: "🧠", levers: [
+                { food: "Pumpkin seeds, turkey, eggs, beef, lentils", action: "Suppress somatostatin (the GH brake)", science: "Arginine, ornithine, and lysine compete with somatostatin signaling. Copenhagen Study: habitual 2.8-3.2g/day arginine = +0.33 cm/yr." },
+                { food: "Eggs before sprints (2-3 daily)", action: "Prime the pituitary communication highway", science: "Choline (147mg/egg) → acetylcholine → the neurotransmitter that carries GH-release signals. Pre-exercise eggs make the pituitary \"permissive\" for max GH amplitude." },
+                { food: "Fermented foods (yogurt, kefir, kimchi)", action: "Reduce somatostatin via gut-brain GABA", science: "GABA-producing lactic acid bacteria reduce somatostatin \"noise\" through the gut-brain axis. Sustained somatostatin suppression during the sleep-GH window." },
+                { food: "Bone broth / gelatin (evening, 2-3h pre-bed)", action: "Deeper sleep → bigger GH pulses", science: "Glycine lowers core body temperature → deeper slow-wave sleep → reduced somatostatin during the GH pulse window." },
+              ]},
+              { stage: "Stage 2: Liver", sub: "Convert GH → IGF-1 via JAK2-STAT5", color: "amber", icon: "🫀", levers: [
+                { food: "Eat enough calories (surplus 300-1000 kcal/day)", action: "#1 priority — without this, nothing else works", science: "Low energy activates AMPK (survival mode), which shuts down mTORC1 and causes functional GH resistance. Adequate calories normalize AMPK and allow growth signaling." },
+                { food: "Adequate protein (0.9-1.5 g/kg/day)", action: "Building blocks for IGF-1 + mTOR activation", science: "IGF-1 is a protein — you need amino acids to build it. Leucine specifically activates mTOR. UK Biobank: both animal and plant protein contribute to IGF-1." },
+                { food: "Zinc-rich foods (oysters, beef, pumpkin seeds)", action: "GH receptor REQUIRES zinc to function", science: "Zinc is the cofactor for GH receptor signaling and IGF-1 gene expression. Without sufficient zinc, JAK2-STAT5 can't activate properly." },
+                { food: "Salmon, CLO, sunlight (Vitamin D)", action: "GH receptor expression + calcium absorption", science: "Vitamin D upregulates GH receptor expression at the liver — more receptors = more GH signal captured." },
+              ]},
+              { stage: "Stage 3: Growth Plate", sub: "IGF-1 → actual bone growth", color: "blue", icon: "🦴", levers: [
+                { food: "Sprints + jumping + active play (3x/week)", action: "Local IGF-1 production directly at growth plates", science: "Growth plates produce their own IGF-1 in response to mechanical load. A child who eats perfectly but is sedentary misses this local IGF-1 stimulation." },
+                { food: "Dairy, leafy greens, sardines (calcium)", action: "Bone matrix mineralization", science: "Calcium and phosphorus provide the mineral component of bone matrix. Fermented dairy has the highest calcium bioavailability." },
+                { food: "Beans / lentils DAILY + cruciferous veg", action: "Keep growth plates OPEN longer (delay puberty)", science: "Higher plant protein ages 3-6 = later puberty onset. Cruciferous vegetables modify estrogen metabolism. This extends the genetic height runway." },
+                { food: "Tart cherries, raspberries, oats, walnuts", action: "Support melatonin — dual GH + anti-aromatase", science: "Melatonin both deepens SWS for larger GH pulses AND inhibits aromatase (delays growth plate closure)." },
+              ]},
+            ].map((stage, si) => (
+              <div key={si} className={`mb-4 rounded-2xl p-5 border ${
+                stage.color === 'forest' ? 'bg-forest/5 border-forest/20' :
+                stage.color === 'amber' ? 'bg-amber/5 border-amber/20' :
+                'bg-blue-50 border-blue-200'
+              }`}>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">{stage.icon}</span>
+                  <div>
+                    <span className={`font-bold ${
+                      stage.color === 'forest' ? 'text-forest' :
+                      stage.color === 'amber' ? 'text-amber' :
+                      'text-blue-600'
+                    }`}>{stage.stage}</span>
+                    <span className="text-gray-500 text-sm ml-2">{stage.sub}</span>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  {stage.levers.map((lever, li) => {
+                    const leverId = `${si}-${li}`;
+                    const isExpanded = expandedStageLever === leverId;
+                    return (
+                      <div key={li}>
+                        <button
+                          onClick={() => setExpandedStageLever(isExpanded ? null : leverId)}
+                          className={`w-full text-left p-3 rounded-lg transition-all ${
+                            isExpanded ? 'bg-white shadow-sm' : 'bg-white/50 hover:bg-white'
+                          }`}
+                        >
+                          <div className="font-medium text-gray-900 text-sm">{lever.food}</div>
+                          <div className={`text-xs font-medium mt-0.5 ${
+                            stage.color === 'forest' ? 'text-forest' :
+                            stage.color === 'amber' ? 'text-amber' :
+                            'text-blue-600'
+                          }`}>{lever.action}</div>
+                        </button>
+                        {isExpanded && (
+                          <div className="bg-white p-3 rounded-b-lg -mt-1 text-sm text-gray-600 leading-relaxed">
+                            {lever.science}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {/* Somatostatin explainer */}
+            <div className="bg-coral-light border-l-4 border-coral rounded-r-xl p-5 my-6">
+              <div className="font-bold text-coral mb-2">Somatostatin: Why It Matters</div>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                Somatostatin is a hormone that tells the pituitary to <strong>stop releasing growth hormone</strong>. Think of it as the brake pedal. When somatostatin is high, GH pulses are smaller and less frequent — even if everything else is perfect.
+              </p>
+              <p className="text-sm text-gray-700 leading-relaxed mt-3">
+                If somatostatin is chronically elevated from poor diet, inflammation, or disrupted sleep, the brake is on and GH can't flow freely. The good news: <strong>specific foods naturally reduce somatostatin</strong>, releasing the brake.
+              </p>
+            </div>
+
+            {/* 5 ways to suppress somatostatin */}
+            <h3 className="font-display text-lg text-coral mb-3">Removing the Brakes — 5 Ways Food Suppresses Somatostatin</h3>
+            <div className="space-y-2 mb-8">
+              {somatostatinTable.map((row, i) => (
+                <div key={i} className={`p-4 rounded-xl ${i % 2 === 0 ? 'bg-cream' : 'bg-white'}`}>
+                  <div className="font-semibold text-gray-900 mb-1">{row.mechanism}</div>
+                  <div className="text-sm text-gray-600 mb-2">{row.how}</div>
+                  <div className="text-sm text-forest"><strong>Foods:</strong> {row.foods}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* All 16 Pathways */}
+            <h3 className="font-display text-lg text-gray-900 mb-3 pb-2 border-b-2 border-forest/20">Deep Dive: All 16 Pathways — Ranked by Impact</h3>
+            <p className="text-xs text-gray-500 mb-4">The complete science behind each recommendation, ranked by real impact on height.</p>
+            <div className="space-y-2">
+              {mechanisms.map((m, i) => {
+                const isExpanded = expandedMech === i;
+                return (
+                  <div key={i}>
+                    <button
+                      onClick={() => setExpandedMech(isExpanded ? null : i)}
+                      className={`w-full text-left p-4 rounded-xl border transition-all ${
+                        isExpanded ? 'bg-forest/5 border-forest/20' : 'bg-cream border-cream hover:border-forest/20'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold ${
+                          m.rank <= 3 ? 'bg-forest' : m.rank <= 8 ? 'bg-forest/70' : 'bg-forest/50'
+                        }`}>{m.rank}</span>
+                        <div className="flex-1">
+                          <div className="font-semibold text-gray-900">{m.title}</div>
+                          <div className="text-xs text-gray-500">{m.subtitle}</div>
+                        </div>
+                        <span className="text-forest text-sm">{isExpanded ? '▲' : '▼'}</span>
+                      </div>
+                    </button>
+                    {isExpanded && (
+                      <div className="px-4 pb-4 pt-3 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20 text-sm space-y-3">
+                        <div className="bg-forest/10 px-3 py-2 rounded-lg">
+                          <strong className="text-forest">Parent lever:</strong> {m.parentLever}
+                        </div>
+                        <p className="text-gray-700 leading-relaxed whitespace-pre-line">{m.content}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ═══ TAB: SCIENCE ═══ */}
+        {activeTab === 'science' && (
+          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
+            <h2 className="font-display text-2xl text-gray-900 mb-2">The Science</h2>
+            <p className="text-sm text-gray-500 mb-6">Understanding the GH-IGF-1 connection and how nutrition controls the conversion cascade.</p>
+
+            {/* Mechanism */}
+            <div className="bg-forest/5 border-l-4 border-forest rounded-r-xl p-5 mb-6">
+              <div className="font-bold text-forest mb-3">Mechanism</div>
+              <p className="text-sm text-gray-700 leading-relaxed mb-4">
+                Growth hormone (GH) is released in pulses from the pituitary gland, primarily during deep slow-wave sleep (SWS), with 60-80% of daily secretion in the first 3 hours after sleep onset. GH alone does not cause bones to grow. The liver must convert GH into Insulin-like Growth Factor 1 (IGF-1), which is the actual mediator of longitudinal bone growth.
+              </p>
+              <p className="text-sm text-gray-700 leading-relaxed mb-4">
+                Before the liver releases IGF-1, it checks multiple signals simultaneously: blood glucose must be adequate, insulin must be present in a permissive range (not spiked), amino acids must be available, thyroid hormone must be sufficient, and inflammation must be low. Think of the liver asking: <em>"Is this a safe time to build a bigger body?"</em> Only when all conditions are favorable does it produce IGF-1.
+              </p>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                In children, GH is already abundant. The constraint is sleep quality, nutrient sufficiency, and timing — not stimulation. The growth plate problem compounds this: testosterone rises during puberty → converts to estrogen via aromatase → estrogen closes growth plates permanently. This creates a finite window where optimizing the GH→IGF-1 axis matters most.
+              </p>
+            </div>
+
+            {/* Five Levers */}
+            <div className="bg-blue-50 border-l-4 border-blue-600 rounded-r-xl p-5 mb-6">
+              <div className="font-bold text-blue-600 mb-3">The Five Levers That Actually Matter</div>
+              <div className="space-y-3 text-sm">
+                {[
+                  ["Eat enough calories", "The #1 priority. Under-eating = low IGF-1 regardless of food quality. Surplus 300-1000 kcal/day for active youth. AMPK overrides ALL growth signals when energy is low."],
+                  ["Eat enough protein", "IGF-1 is a protein — you need building blocks to make it. 0.9-1.5 g/kg/day. Both animal and plant protein contribute to IGF-1. Plant protein = later puberty (bonus)."],
+                  ["Insulin: present but not spiked", "The liver REQUIRES insulin for IGF-1 — very low-carb diets stunt growth. But sugar suppresses GH 80%. Solution: balanced meals."],
+                  ["Keep inflammation low", "Inflammation activates SOCS proteins — a \"dimmer switch\" that blocks the liver from hearing GH. Anti-inflammatory foods keep the dimmer off."],
+                  ["Optimize sleep", "70% of GH released during deep sleep. Sleep quality is the #1 modifiable factor. Everything else optimizes around this window."],
+                ].map(([title, desc], i) => (
+                  <div key={i}>
+                    <strong className="text-gray-900">{title}:</strong> <span className="text-gray-700">{desc}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Pathway */}
+            <div className="bg-forest/5 border-l-4 border-forest rounded-r-xl p-5">
+              <div className="font-bold text-forest mb-3">Pathway</div>
+              <p className="text-sm text-gray-600 italic leading-relaxed">
+                Pituitary releases GH during deep sleep → GH travels to liver → Liver checks: insulin permissive? amino acids available? zinc sufficient? inflammation low? → If yes: JAK2-STAT5 signaling activates → IGF-1 produced → IGFBP-3 carries IGF-1 to growth plates → mTOR activates chondrocyte proliferation → Bones grow → Local IGF-1 from exercise adds to systemic → Estrogen eventually closes plates → Growth window is finite → <strong className="not-italic">Timing beats stimulation</strong>
+              </p>
+              <p className="text-xs text-gray-400 mt-4">
+                Van Cauter E. Sleep. 2000; Hoppe C. Am J Clin Nutr. 2004; Prasad AS. Nutrition. 1998; Iannotti LL. Pediatrics. 2017; Copenhagen Study; UK Biobank
+              </p>
+            </div>
+          </div>
+        )}
 
       </main>
     </div>
