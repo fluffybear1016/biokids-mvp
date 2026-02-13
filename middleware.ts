@@ -39,11 +39,17 @@ export async function middleware(request: NextRequest) {
   }
 
   // Check subscription status
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('user_profiles')
     .select('subscription_status')
     .eq('id', user.id)
     .single();
+
+  // If the query fails (RLS issue, no row, etc.), let authenticated users through
+  // rather than blocking paying customers
+  if (profileError) {
+    return response;
+  }
 
   const status = profile?.subscription_status;
 

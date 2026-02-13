@@ -122,7 +122,13 @@ function OnboardingForm() {
                 setCheckoutLoading(true);
                 try {
                   const supabase = createClient();
-                  const { data: { user } } = await supabase!.auth.getUser();
+
+                  if (!supabase) {
+                    router.push('/signup');
+                    return;
+                  }
+
+                  const { data: { user } } = await supabase.auth.getUser();
 
                   if (!user) {
                     router.push('/signup');
@@ -139,13 +145,16 @@ function OnboardingForm() {
                     }),
                   });
 
-                  const { url } = await res.json();
-                  if (url) {
-                    window.location.href = url;
+                  const data = await res.json();
+
+                  if (data.url) {
+                    window.location.href = data.url;
                   } else {
+                    console.error('Checkout error:', data.error || data.message);
                     setCheckoutLoading(false);
                   }
-                } catch {
+                } catch (err) {
+                  console.error('Checkout error:', err);
                   setCheckoutLoading(false);
                 }
               }}

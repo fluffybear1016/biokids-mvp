@@ -68,8 +68,21 @@ function LoginForm() {
           storeSessionToken(result.sessionToken);
         }
 
-        const redirectTo = searchParams.get('redirect') || '/dashboard';
-        router.push(redirectTo);
+        // Check subscription status to determine redirect
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('subscription_status')
+          .eq('id', authData.user.id)
+          .single();
+
+        const status = profile?.subscription_status;
+
+        if (status === 'active' || status === 'trial') {
+          const redirectTo = searchParams.get('redirect') || '/dashboard';
+          router.push(redirectTo);
+        } else {
+          router.push('/onboarding');
+        }
       }
     } catch (err) {
       console.error('Login error:', err);
