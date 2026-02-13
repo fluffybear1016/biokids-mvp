@@ -68,18 +68,28 @@ function LoginForm() {
           storeSessionToken(result.sessionToken);
         }
 
-        // Check subscription status to determine redirect
-        const { data: profile } = await supabase
-          .from('user_profiles')
-          .select('subscription_status')
-          .eq('id', authData.user.id)
-          .single();
+        // Check user state to determine redirect
+        const [{ data: profile }, { data: children }] = await Promise.all([
+          supabase
+            .from('user_profiles')
+            .select('subscription_status')
+            .eq('id', authData.user.id)
+            .single(),
+          supabase
+            .from('children')
+            .select('id')
+            .eq('user_id', authData.user.id)
+            .limit(1),
+        ]);
 
-        const status = profile?.subscription_status;
+        const hasSubscription = profile?.subscription_status === 'active' || profile?.subscription_status === 'trial';
+        const hasChild = children && children.length > 0;
 
-        if (status === 'active' || status === 'trial') {
+        if (hasChild && hasSubscription) {
           const redirectTo = searchParams.get('redirect') || '/dashboard';
           router.push(redirectTo);
+        } else if (hasChild && !hasSubscription) {
+          router.push('/onboarding?step=2');
         } else {
           router.push('/onboarding');
         }
