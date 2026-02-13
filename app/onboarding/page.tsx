@@ -227,6 +227,10 @@ function OnboardingForm() {
                 <p className="text-xs sm:text-sm font-mono text-black mt-1">For privacy, you can use just their first initial.</p>
               </div>
               <div>
+                <label className="block text-sm font-semibold text-black mb-1">Birth date</label>
+                <input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" />
+              </div>
+              <div>
                 <label className="block text-sm font-semibold text-black mb-2">Sex</label>
                 <div className="flex gap-3 sm:gap-4">
                   <button onClick={() => setSex('female')} className={`flex-1 py-3 rounded-xl font-semibold border-2 transition-colors ${sex === 'female' ? 'bg-forest text-white border-forest' : 'bg-white text-black border-gray-300 hover:border-forest'}`}>Female</button>
@@ -234,7 +238,7 @@ function OnboardingForm() {
                 </div>
               </div>
             </div>
-            <button onClick={() => setStep(5)} disabled={!childName || !sex} className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors">Continue</button>
+            <button onClick={() => setStep(5)} disabled={!childName || !sex || !birthDate} className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors">Continue</button>
           </div>
         )}
 
