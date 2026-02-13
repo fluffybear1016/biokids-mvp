@@ -25,47 +25,69 @@ function OnboardingForm() {
 
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
+  const [userId, setUserId] = useState<string | null>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const totalSteps = 5;
 
-  // Check URL params on load for returning from Stripe or login redirect
+  // Fetch user on mount + handle step param
   useEffect(() => {
     const stepParam = searchParams.get('step');
+    if (stepParam === '3') setStep(3);
+    else if (stepParam === '4') setStep(4);
 
-    if (stepParam === '3') {
-      setStep(3);
-    } else if (stepParam === '4') {
-      setStep(4);
+    // Get user ID from Supabase auth
+    const supabase = createClient();
+    if (supabase) {
+      supabase.auth.getUser().then(({ data: { user } }) => {
+        if (user) {
+          setUserId(user.id);
+          setUserEmail(user.email ?? null);
+        }
+      });
     }
   }, [searchParams]);
 
-  const handleSaveChild = async () => {
+  const handleSaveChild = async (): Promise<boolean> => {
     setSaving(true);
+    setSaveError('');
     try {
-      const supabase = createClient();
-      if (!supabase) return;
+      if (!userId) {
+        setSaveError('Not logged in. Please log in and try again.');
+        return false;
+      }
 
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
-      await fetch('/api/children', {
+      const res = await fetch('/api/children', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          accountId: user.id,
+          accountId: userId,
           name: childName,
           birthDate,
         }),
       });
+
+      if (!res.ok) {
+        const data = await res.json();
+        setSaveError(data.error || 'Failed to save. Please try again.');
+        return false;
+      }
+
+      return true;
     } catch (err) {
       console.error('Save child error:', err);
+      setSaveError('Something went wrong. Please try again.');
+      return false;
     } finally {
       setSaving(false);
     }
   };
 
   const handleComplete = async () => {
-    await handleSaveChild();
-    router.push('/dashboard');
+    const saved = await handleSaveChild();
+    if (saved) {
+      router.push('/dashboard');
+    }
   };
 
   return (
@@ -149,16 +171,7 @@ function OnboardingForm() {
               onClick={async () => {
                 setCheckoutLoading(true);
                 try {
-                  const supabase = createClient();
-
-                  if (!supabase) {
-                    router.push('/signup');
-                    return;
-                  }
-
-                  const { data: { user } } = await supabase.auth.getUser();
-
-                  if (!user) {
+                  if (!userId) {
                     router.push('/signup');
                     return;
                   }
@@ -167,8 +180,8 @@ function OnboardingForm() {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                      userId: user.id,
-                      email: user.email,
+                      userId,
+                      email: userEmail,
                       birthDate,
                     }),
                   });
@@ -274,6 +287,9 @@ function OnboardingForm() {
               </div>
               <p className="text-xs sm:text-sm font-mono text-black">These fields are optional. You can skip and add later.</p>
             </div>
+            {saveError && (
+              <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm">{saveError}</div>
+            )}
             <div className="space-y-3">
               <button disabled={saving} onClick={handleComplete} className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Continue'}</button>
               <button disabled={saving} onClick={handleComplete} className="w-full text-black font-mono underline py-2 text-sm sm:text-base">Skip for now</button>
