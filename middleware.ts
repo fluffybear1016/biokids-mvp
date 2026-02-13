@@ -16,10 +16,17 @@ function isProtectedRoute(pathname: string): boolean {
   );
 }
 
+// Routes where logged-in users with active subscriptions should be redirected to /dashboard
+const REDIRECT_IF_AUTHED = ['/', '/login', '/signup'];
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (!isProtectedRoute(pathname)) {
+  const isProtected = isProtectedRoute(pathname);
+  const shouldRedirectIfAuthed = REDIRECT_IF_AUTHED.includes(pathname);
+
+  // Skip routes that don't need any auth check
+  if (!isProtected && !shouldRedirectIfAuthed) {
     return NextResponse.next();
   }
 
@@ -32,6 +39,26 @@ export async function middleware(request: NextRequest) {
   // Validate session server-side (also refreshes expired tokens)
   const { data: { user }, error } = await supabase.auth.getUser();
 
+  // For public pages: if not logged in, just show the page
+  if (shouldRedirectIfAuthed) {
+    if (!user || error) return response;
+
+    // User is logged in — check if they have an active subscription
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('subscription_status')
+      .eq('id', user.id)
+      .single();
+
+    const status = profile?.subscription_status;
+    if (status === 'active' || status === 'trial') {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
+
+    return response;
+  }
+
+  // For protected pages: require auth + subscription
   if (!user || error) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
