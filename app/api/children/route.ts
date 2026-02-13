@@ -12,6 +12,38 @@ function getSupabaseAdmin() {
   return createClient(url, key);
 }
 
+export async function GET(request: Request) {
+  try {
+    const supabase = getSupabaseAdmin();
+
+    if (!supabase) {
+      return NextResponse.json({ error: 'Server not configured' }, { status: 503 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const accountId = searchParams.get('accountId');
+
+    if (!accountId) {
+      return NextResponse.json({ error: 'Missing accountId' }, { status: 400 });
+    }
+
+    const { data, error } = await supabase
+      .from('children')
+      .select('*')
+      .eq('account_id', accountId);
+
+    if (error) {
+      console.error('Fetch children error:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ children: data });
+  } catch (error) {
+    console.error('Fetch children error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const supabase = getSupabaseAdmin();

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Nav from '@/components/Nav';
-import { Child, GrowthWindow, getGrowthStage, stageInfo } from '@/lib/supabase';
+import { Child, GrowthWindow, getGrowthStage, stageInfo, createClient } from '@/lib/supabase';
 
 // Right sidebar secrets - rotates daily
 const sidebarSecrets = [
@@ -91,6 +91,32 @@ export default function Dashboard() {
   const [growthWindow, setGrowthWindow] = useState<GrowthWindow>(mockGrowthWindow);
   const [currentHour, setCurrentHour] = useState(new Date().getHours());
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Fetch real child data from database
+  useEffect(() => {
+    const supabase = createClient();
+    if (!supabase) return;
+
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) return;
+
+      fetch(`/api/children?accountId=${user.id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.children && data.children.length > 0) {
+            const c = data.children[0];
+            setChild({
+              ...mockChild,
+              id: c.id,
+              name: c.name,
+              birth_date: c.birth_date,
+              gender: c.gender ?? mockChild.gender,
+            });
+          }
+        })
+        .catch(err => console.error('Fetch child error:', err));
+    });
+  }, []);
 
   // Time-based active phase data
   const getActivePhase = (hour: number) => {
