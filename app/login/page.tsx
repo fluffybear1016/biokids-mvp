@@ -89,8 +89,8 @@ function LoginForm() {
           const redirectTo = searchParams.get('redirect') || '/dashboard';
           router.push(redirectTo);
         } else if (hasSubscription && !hasChild) {
-          // Paid but no child added yet — skip to post-payment welcome
-          router.push('/onboarding?step=3');
+          // Paid but no child added yet — go straight to add child
+          router.push('/onboarding?step=4');
         } else if (hasChild && !hasSubscription) {
           // Has child but hasn't paid — show payment step
           router.push('/onboarding?step=2');

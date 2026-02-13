@@ -27,13 +27,14 @@ function OnboardingForm() {
   const [saving, setSaving] = useState(false);
   const totalSteps = 5;
 
-  // Check URL params on load for returning from Stripe
+  // Check URL params on load for returning from Stripe or login redirect
   useEffect(() => {
     const stepParam = searchParams.get('step');
 
     if (stepParam === '3') {
-      // Returning from Stripe checkout - show welcome screen
       setStep(3);
+    } else if (stepParam === '4') {
+      setStep(4);
     }
   }, [searchParams]);
 
