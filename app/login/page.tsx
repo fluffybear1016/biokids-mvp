@@ -68,7 +68,8 @@ function LoginForm() {
           storeSessionToken(result.sessionToken);
         }
 
-        router.push('/dashboard');
+        const redirectTo = searchParams.get('redirect') || '/dashboard';
+        router.push(redirectTo);
       }
     } catch (err) {
       console.error('Login error:', err);

@@ -63,16 +63,8 @@ export default function Signup() {
       const supabase = createClient();
 
       if (!supabase || !userId) {
-        // If no Supabase, save to localStorage and redirect
-        try {
-          localStorage.setItem('onboarding_complete', 'true');
-          localStorage.setItem('child_data', JSON.stringify({
-            name: childName,
-            birthDate,
-            sex: gender,
-          }));
-        } catch { /* continue */ }
-        router.push('/dashboard');
+        setError('Authentication is not available. Please try again later.');
+        setLoading(false);
         return;
       }
 
@@ -84,20 +76,9 @@ export default function Signup() {
         gender: gender || null,
       });
 
-      // Save to localStorage as backup
-      try {
-        localStorage.setItem('onboarding_complete', 'true');
-        localStorage.setItem('child_data', JSON.stringify({
-          name: childName,
-          birthDate,
-          sex: gender,
-        }));
-      } catch { /* continue */ }
-
-      router.push('/dashboard');
+      router.push('/onboarding');
     } catch {
-      // Continue anyway
-      router.push('/dashboard');
+      setError('Failed to save child data. Please try again.');
     } finally {
       setLoading(false);
     }

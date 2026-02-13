@@ -10,11 +10,14 @@ const stripe = isValidStripeKey ? new Stripe(stripeKey) : null;
 
 export async function POST(request: Request) {
   try {
-    const { birthDate } = await request.json();
+    const { birthDate, userId, email } = await request.json();
 
     if (!stripe) {
-      // Stripe not configured, return null to skip payment
       return NextResponse.json({ url: null, message: 'Stripe not configured' });
+    }
+
+    if (!userId) {
+      return NextResponse.json({ error: 'User must be authenticated' }, { status: 401 });
     }
 
     const priceId = process.env.STRIPE_PRICE_ID;
@@ -28,6 +31,7 @@ export async function POST(request: Request) {
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
+      customer_email: email || undefined,
       line_items: [
         {
           price: priceId,
@@ -39,6 +43,7 @@ export async function POST(request: Request) {
       success_url: `${baseUrl}/onboarding?step=3&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/onboarding?step=2`,
       metadata: {
+        user_id: userId,
         birth_date: birthDate || '',
       },
     });

@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { createClient } from '@/lib/supabase';
 
 function OnboardingForm() {
   const router = useRouter();
@@ -22,6 +23,7 @@ function OnboardingForm() {
   const [heightCm, setHeightCm] = useState('');
   const [weightKg, setWeightKg] = useState('');
 
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const totalSteps = 5;
 
   // Check URL params on load for returning from Stripe
@@ -31,32 +33,10 @@ function OnboardingForm() {
     if (stepParam === '3') {
       // Returning from Stripe checkout - show welcome screen
       setStep(3);
-      // Restore birthDate from localStorage
-      try {
-        const savedBirthDate = localStorage.getItem('onboarding_birthDate');
-        if (savedBirthDate) {
-          setBirthDate(savedBirthDate);
-        }
-      } catch {
-        // Ignore localStorage errors
-      }
     }
   }, [searchParams]);
 
   const handleComplete = () => {
-    try {
-      localStorage.setItem('onboarding_complete', 'true');
-      localStorage.setItem('child_data', JSON.stringify({
-        name: childName,
-        birthDate,
-        sex,
-        height: useMetric ? heightCm : `${heightFt}'${heightIn}"`,
-        weight: useMetric ? weightKg : weight,
-      }));
-      localStorage.removeItem('onboarding_birthDate');
-    } catch {
-      // Continue even if localStorage fails
-    }
     router.push('/dashboard');
   };
 
@@ -137,10 +117,41 @@ function OnboardingForm() {
               <p className="text-white/70 font-mono text-xs sm:text-sm">Cancel anytime, online.</p>
             </div>
             <button
-              onClick={() => { try { localStorage.setItem('onboarding_birthDate', birthDate); } catch { /* continue */ } window.location.href = 'https://buy.stripe.com/9B64gse7J8cS58u9hY2B200'; }}
-              className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors"
+              disabled={checkoutLoading}
+              onClick={async () => {
+                setCheckoutLoading(true);
+                try {
+                  const supabase = createClient();
+                  const { data: { user } } = await supabase!.auth.getUser();
+
+                  if (!user) {
+                    router.push('/signup');
+                    return;
+                  }
+
+                  const res = await fetch('/api/stripe/create-checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      userId: user.id,
+                      email: user.email,
+                      birthDate,
+                    }),
+                  });
+
+                  const { url } = await res.json();
+                  if (url) {
+                    window.location.href = url;
+                  } else {
+                    setCheckoutLoading(false);
+                  }
+                } catch {
+                  setCheckoutLoading(false);
+                }
+              }}
+              className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors disabled:opacity-50"
             >
-              Continue to secure my rate
+              {checkoutLoading ? 'Redirecting to checkout...' : 'Continue to secure my rate'}
             </button>
           </div>
         )}
