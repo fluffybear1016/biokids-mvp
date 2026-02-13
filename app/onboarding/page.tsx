@@ -24,6 +24,7 @@ function OnboardingForm() {
   const [weightKg, setWeightKg] = useState('');
 
   const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const totalSteps = 5;
 
   // Check URL params on load for returning from Stripe
@@ -36,7 +37,33 @@ function OnboardingForm() {
     }
   }, [searchParams]);
 
-  const handleComplete = () => {
+  const handleSaveChild = async () => {
+    setSaving(true);
+    try {
+      const supabase = createClient();
+      if (!supabase) return;
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      await fetch('/api/children', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          accountId: user.id,
+          name: childName,
+          birthDate,
+        }),
+      });
+    } catch (err) {
+      console.error('Save child error:', err);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleComplete = async () => {
+    await handleSaveChild();
     router.push('/dashboard');
   };
 
@@ -243,8 +270,8 @@ function OnboardingForm() {
               <p className="text-xs sm:text-sm font-mono text-black">These fields are optional. You can skip and add later.</p>
             </div>
             <div className="space-y-3">
-              <button onClick={handleComplete} className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors">Continue</button>
-              <button onClick={handleComplete} className="w-full text-black font-mono underline py-2 text-sm sm:text-base">Skip for now</button>
+              <button disabled={saving} onClick={handleComplete} className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Continue'}</button>
+              <button disabled={saving} onClick={handleComplete} className="w-full text-black font-mono underline py-2 text-sm sm:text-base">Skip for now</button>
             </div>
           </div>
         )}

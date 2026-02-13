@@ -43,6 +43,13 @@ export default function Signup() {
       }
 
       if (data.user) {
+        // Create profile row via server API (bypasses RLS)
+        await fetch('/api/auth/create-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: data.user.id, email }),
+        });
+
         setUserId(data.user.id);
         setStep(2);
       }
@@ -68,12 +75,21 @@ export default function Signup() {
         return;
       }
 
-      // Save child to Supabase
-      await supabase.from('children').insert({
-        account_id: userId,
-        name: childName,
-        birth_date: birthDate,
+      // Save child via server API (bypasses RLS)
+      const childRes = await fetch('/api/children', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          accountId: userId,
+          name: childName,
+          birthDate,
+        }),
       });
+
+      if (!childRes.ok) {
+        const err = await childRes.json();
+        throw new Error(err.error || 'Failed to save child');
+      }
 
       router.push('/onboarding');
     } catch {
