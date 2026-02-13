@@ -70,10 +70,9 @@ export default function Signup() {
 
       // Save child to Supabase
       await supabase.from('children').insert({
-        user_id: userId,
+        account_id: userId,
         name: childName,
         birth_date: birthDate,
-        gender: gender || null,
       });
 
       router.push('/onboarding');

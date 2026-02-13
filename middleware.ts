@@ -40,7 +40,7 @@ export async function middleware(request: NextRequest) {
 
   // Check subscription status
   const { data: profile, error: profileError } = await supabase
-    .from('user_profiles')
+    .from('profiles')
     .select('subscription_status')
     .eq('id', user.id)
     .single();

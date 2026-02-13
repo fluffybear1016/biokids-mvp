@@ -71,14 +71,14 @@ function LoginForm() {
         // Check user state to determine redirect
         const [{ data: profile }, { data: children }] = await Promise.all([
           supabase
-            .from('user_profiles')
+            .from('profiles')
             .select('subscription_status')
             .eq('id', authData.user.id)
             .single(),
           supabase
             .from('children')
             .select('id')
-            .eq('user_id', authData.user.id)
+            .eq('account_id', authData.user.id)
             .limit(1),
         ]);
 

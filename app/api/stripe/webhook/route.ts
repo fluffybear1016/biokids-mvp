@@ -6,7 +6,6 @@ const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY)
   : null;
 
-// Lazy initialization of Supabase client
 function getSupabaseClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -46,22 +45,15 @@ export async function POST(request: Request) {
   }
 
   try {
-    // Only process if Supabase is configured
     if (supabase) {
       switch (event.type) {
         case 'checkout.session.completed': {
           const session = event.data.object as Stripe.Checkout.Session;
 
-          // If we have a user_id in metadata, update their profile
           if (session.metadata?.user_id) {
             await supabase
-              .from('user_profiles')
-              .update({
-                stripe_customer_id: session.customer as string,
-                stripe_subscription_id: session.subscription as string,
-                subscription_status: 'active',
-                updated_at: new Date().toISOString(),
-              })
+              .from('profiles')
+              .update({ subscription_status: 'active' })
               .eq('id', session.metadata.user_id);
           }
           break;
@@ -72,26 +64,25 @@ export async function POST(request: Request) {
           const status = subscription.status === 'active' ? 'active' :
                          subscription.status === 'past_due' ? 'past_due' : 'cancelled';
 
-          await supabase
-            .from('user_profiles')
-            .update({
-              subscription_status: status,
-              updated_at: new Date().toISOString(),
-            })
-            .eq('stripe_subscription_id', subscription.id);
+          // Match by metadata user_id stored during checkout
+          if (subscription.metadata?.user_id) {
+            await supabase
+              .from('profiles')
+              .update({ subscription_status: status })
+              .eq('id', subscription.metadata.user_id);
+          }
           break;
         }
 
         case 'customer.subscription.deleted': {
           const subscription = event.data.object as Stripe.Subscription;
 
-          await supabase
-            .from('user_profiles')
-            .update({
-              subscription_status: 'cancelled',
-              updated_at: new Date().toISOString(),
-            })
-            .eq('stripe_subscription_id', subscription.id);
+          if (subscription.metadata?.user_id) {
+            await supabase
+              .from('profiles')
+              .update({ subscription_status: 'cancelled' })
+              .eq('id', subscription.metadata.user_id);
+          }
           break;
         }
       }

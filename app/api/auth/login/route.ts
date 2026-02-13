@@ -21,7 +21,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Supabase not configured' }, { status: 503 });
     }
 
-    const { email, password, deviceFingerprint } = await request.json();
+    const { email, password } = await request.json();
 
     // Authenticate with Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
@@ -37,46 +37,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Login failed' }, { status: 401 });
     }
 
-    const userId = authData.user.id;
-    const sessionToken = crypto.randomUUID();
-
-    // Get request IP
-    const forwarded = request.headers.get('x-forwarded-for');
-    const ip = forwarded ? forwarded.split(',')[0].trim() : '127.0.0.1';
-
-    // Invalidate all other sessions
+    // Ensure user profile exists
     await supabase
-      .from('user_sessions')
-      .update({ is_active: false })
-      .eq('user_id', userId)
-      .eq('is_active', true);
-
-    // Create new session
-    await supabase.from('user_sessions').insert({
-      user_id: userId,
-      session_token: sessionToken,
-      device_fingerprint: deviceFingerprint || null,
-      ip_address: ip,
-      user_agent: request.headers.get('user-agent'),
-      is_active: true,
-    });
-
-    // Update user profile
-    await supabase
-      .from('user_profiles')
+      .from('profiles')
       .upsert({
-        id: userId,
-        active_session_token: sessionToken,
-        last_login_ip: ip,
-        last_device_fingerprint: deviceFingerprint || null,
-        last_login_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      });
+        id: authData.user.id,
+        email: authData.user.email,
+      }, { onConflict: 'id' });
 
     return NextResponse.json({
       user: authData.user,
       session: authData.session,
-      sessionToken,
     });
   } catch (error) {
     console.error('Login error:', error);
