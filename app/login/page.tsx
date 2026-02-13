@@ -88,9 +88,14 @@ function LoginForm() {
         if (hasChild && hasSubscription) {
           const redirectTo = searchParams.get('redirect') || '/dashboard';
           router.push(redirectTo);
+        } else if (hasSubscription && !hasChild) {
+          // Paid but no child added yet — skip to post-payment welcome
+          router.push('/onboarding?step=3');
         } else if (hasChild && !hasSubscription) {
+          // Has child but hasn't paid — show payment step
           router.push('/onboarding?step=2');
         } else {
+          // New user — start from beginning
           router.push('/onboarding');
         }
       }
