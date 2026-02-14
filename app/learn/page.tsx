@@ -1,18 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Nav from '@/components/Nav';
-import { Child } from '@/lib/supabase';
-
-const mockChild: Child = {
-  id: '1',
-  user_id: '1',
-  name: 'Emma',
-  birth_date: '2017-03-15',
-  gender: 'female',
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString(),
-};
 
 const articles = [
   {
@@ -68,6 +58,15 @@ const articles = [
     readTime: '5 min',
     icon: '⚖️',
     citation: '[Nilsson O. Endocr Rev. 2005]',
+  },
+  {
+    slug: 'raw-milk-tallest-people',
+    title: 'Raw Milk and the Tallest People on Earth',
+    summary: 'Why elite athletes and the world\'s tallest populations share one common childhood factor — raw milk access during their growth years.',
+    category: 'nutrition',
+    readTime: '8 min',
+    icon: '🥛',
+    citation: '[Hoppe C. Eur J Clin Nutr. 2004]',
   },
   {
     slug: 'milk-flooding-protocol',
@@ -127,7 +126,6 @@ const categories = [
 ];
 
 export default function Learn() {
-  const [child] = useState<Child>(mockChild);
   const [activeCategory, setActiveCategory] = useState('all');
 
   const filteredArticles = activeCategory === 'all' 
@@ -136,7 +134,7 @@ export default function Learn() {
 
   return (
     <div className="min-h-screen bg-cream">
-      <Nav currentChild={child} />
+      <Nav />
       
       <main className="max-w-5xl mx-auto px-4 py-12">
         
@@ -180,9 +178,10 @@ export default function Learn() {
         {/* Articles Grid */}
         <div className="grid md:grid-cols-2 gap-5">
           {filteredArticles.map((article) => (
-            <article 
+            <Link
               key={article.slug}
-              className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer group"
+              href={`/learn/${article.slug}`}
+              className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer group block no-underline"
             >
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-cream rounded-xl flex items-center justify-center text-2xl flex-shrink-0 group-hover:scale-110 transition-transform">
@@ -207,7 +206,7 @@ export default function Learn() {
                   )}
                 </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
 
