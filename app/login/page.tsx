@@ -68,34 +68,21 @@ function LoginForm() {
           storeSessionToken(result.sessionToken);
         }
 
-        // Check user state to determine redirect
-        const [{ data: profile }, { data: children }] = await Promise.all([
-          supabase
-            .from('profiles')
-            .select('subscription_status')
-            .eq('id', authData.user.id)
-            .single(),
-          supabase
-            .from('children')
-            .select('id')
-            .eq('account_id', authData.user.id)
-            .limit(1),
-        ]);
+        // Check user state via server API (bypasses RLS)
+        const stateRes = await fetch(`/api/auth/user-state?userId=${authData.user.id}`);
+        const state = await stateRes.json();
 
-        const hasSubscription = profile?.subscription_status === 'active' || profile?.subscription_status === 'trial';
-        const hasChild = children && children.length > 0;
+        const hasSubscription = state.profile?.subscription_status === 'active' || state.profile?.subscription_status === 'trial';
+        const hasChild = state.children && state.children.length > 0;
 
         if (hasChild && hasSubscription) {
           const redirectTo = searchParams.get('redirect') || '/dashboard';
           router.push(redirectTo);
         } else if (hasSubscription && !hasChild) {
-          // Paid but no child added yet — go straight to add child
           router.push('/onboarding?step=4');
         } else if (hasChild && !hasSubscription) {
-          // Has child but hasn't paid — show payment step
           router.push('/onboarding?step=2');
         } else {
-          // New user — start from beginning
           router.push('/onboarding');
         }
       }

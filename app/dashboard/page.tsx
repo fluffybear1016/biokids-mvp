@@ -56,18 +56,7 @@ const growthSecrets = [
   },
 ];
 
-// Mock data for now - will be replaced with Supabase
-const mockChild: Child = {
-  id: '1',
-  user_id: '1',
-  name: 'Emma',
-  birth_date: '2017-03-15',
-  gender: 'female',
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString(),
-};
-
-const mockGrowthWindow: GrowthWindow = {
+const defaultGrowthWindow: GrowthWindow = {
   id: '1',
   child_id: '1',
   sleep_avg_hours: 9.2,
@@ -87,34 +76,38 @@ const mockGrowthWindow: GrowthWindow = {
 
 export default function Dashboard() {
   const router = useRouter();
-  const [child, setChild] = useState<Child>(mockChild);
-  const [growthWindow, setGrowthWindow] = useState<GrowthWindow>(mockGrowthWindow);
+  const [child, setChild] = useState<Child | null>(null);
+  const [growthWindow, setGrowthWindow] = useState<GrowthWindow>(defaultGrowthWindow);
   const [currentHour, setCurrentHour] = useState(new Date().getHours());
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  // Fetch real child data from database
+  // Fetch child data via server API
   useEffect(() => {
     const supabase = createClient();
-    if (!supabase) return;
+    if (!supabase) { setLoading(false); return; }
 
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) return;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session?.user) { setLoading(false); return; }
 
-      fetch(`/api/children?accountId=${user.id}`)
+      fetch(`/api/auth/user-state?userId=${session.user.id}`)
         .then(res => res.json())
         .then(data => {
           if (data.children && data.children.length > 0) {
             const c = data.children[0];
             setChild({
-              ...mockChild,
               id: c.id,
+              user_id: session.user.id,
               name: c.name,
               birth_date: c.birth_date,
-              gender: c.gender ?? mockChild.gender,
+              gender: null,
+              created_at: c.created_at,
+              updated_at: c.created_at,
             });
           }
         })
-        .catch(err => console.error('Fetch child error:', err));
+        .catch(err => console.error('Fetch child error:', err))
+        .finally(() => setLoading(false));
     });
   }, []);
 
@@ -185,8 +178,17 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  const stage = getGrowthStage(child.birth_date);
+  const stage = child ? getGrowthStage(child.birth_date) : 'pre-puberty';
   const stageData = stageInfo[stage];
+  const childName = child?.name || 'Your child';
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="text-forest font-mono">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-cream">
@@ -222,10 +224,10 @@ export default function Dashboard() {
           </div>
 
           <div className="relative">
-            <div className="text-xs sm:text-sm text-white/70 mb-1 sm:mb-2">Where {child.name} is right now</div>
+            <div className="text-xs sm:text-sm text-white/70 mb-1 sm:mb-2">Where {childName} is right now</div>
             <h1 className="font-display text-3xl sm:text-5xl mb-2 sm:mb-3">{stageData.label}</h1>
             <p className="text-sm sm:text-base text-white/60 mb-4 sm:mb-5">
-              You have time. {child.name} is in the optimal window.
+              You have time. {childName} is in the optimal window.
             </p>
             <p className="text-sm sm:text-lg text-white/90 max-w-lg">
               This is the highest-leverage stage for supporting natural growth. Small consistent actions now make a big difference.
