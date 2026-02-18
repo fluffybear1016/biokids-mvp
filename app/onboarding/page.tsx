@@ -348,6 +348,75 @@ export default function Onboarding() {
               {name}'s Natural Growth Protocol is Ready
             </h2>
 
+            {/* Growth Trajectory Graph */}
+            <div className="bg-stone-50 rounded-2xl p-4 sm:p-6 mb-6 text-left">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4">
+                <h3 className="font-semibold text-stone-900 text-sm sm:text-base">Growth Trajectory</h3>
+                <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-stone-700 font-medium">
+                  <span className="flex items-center gap-1.5 sm:gap-2">
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-gray-400 rounded-full"></span>
+                    Average Child
+                  </span>
+                  <span className="flex items-center gap-1.5 sm:gap-2">
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-emerald-600 rounded-full"></span>
+                    bioKid
+                  </span>
+                </div>
+              </div>
+
+              <div className="relative h-48 sm:h-56">
+                <svg viewBox="0 0 400 200" className="w-full h-full" preserveAspectRatio="none">
+                  <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e7e5e4" strokeWidth="1"/>
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#grid)" />
+
+                  {/* Average child curve */}
+                  <path
+                    d="M 20 180 Q 50 170, 80 155 Q 120 135, 180 115 Q 250 95, 320 85 Q 360 82, 380 80"
+                    fill="none"
+                    stroke="#d1d5db"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
+
+                  {/* bioKid curve */}
+                  <path
+                    d="M 20 180 Q 50 165, 80 140 Q 120 100, 180 60 Q 250 30, 320 18 Q 360 12, 380 10"
+                    fill="none"
+                    stroke="#059669"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
+
+                  {/* Start point */}
+                  <circle cx="20" cy="180" r="6" fill="#059669" />
+
+                  {/* End points */}
+                  <circle cx="380" cy="80" r="5" fill="#d1d5db" />
+                  <circle cx="380" cy="10" r="6" fill="#059669" />
+                </svg>
+
+                <div className="absolute bottom-0 left-0 right-0 flex justify-between text-[10px] sm:text-xs text-stone-500 px-2 sm:px-4">
+                  <span>Birth</span>
+                  <span className="hidden sm:inline">Age 5</span>
+                  <span className="sm:hidden">5</span>
+                  <span className="hidden sm:inline">Age 10</span>
+                  <span className="sm:hidden">10</span>
+                  <span className="hidden sm:inline">Age 15</span>
+                  <span className="sm:hidden">15</span>
+                  <span className="hidden sm:inline">Age 25</span>
+                  <span className="sm:hidden">25</span>
+                </div>
+              </div>
+
+              <p className="text-center text-xs sm:text-sm text-stone-500 mt-4">
+                Same genes, different environment: a structured growth hormone-supportive system changes the growth curve.
+              </p>
+            </div>
+
             <p className="text-stone-600 mb-6 leading-relaxed">
               Most parents don't know that 70-80% of daily growth hormone pulses occur during slow-wave sleep (usually in the first 3 hours of sleep), or that a set of 30-second sprints can boost growth hormone by 700%, or that fava beans are one of the strongest natural growth hormone stimulators.
             </p>
