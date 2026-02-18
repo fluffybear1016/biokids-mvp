@@ -18,9 +18,11 @@ export default function Onboarding() {
 
   // Step 2: Questions
   const [sleepHours, setSleepHours] = useState('');
+  const [bedtime, setBedtime] = useState('');
   const [dairy, setDairy] = useState('');
   const [exercise, setExercise] = useState('');
   const [screenTime, setScreenTime] = useState('');
+  const [processedFoods, setProcessedFoods] = useState('');
 
   // Generate year options (current year down to 25 years ago)
   const currentYear = new Date().getFullYear();
@@ -55,9 +57,11 @@ export default function Onboarding() {
   const handleStep2Submit = (e: React.FormEvent) => {
     e.preventDefault();
     localStorage.setItem('sleepHours', sleepHours);
+    localStorage.setItem('bedtime', bedtime);
     localStorage.setItem('dairy', dairy);
     localStorage.setItem('exercise', exercise);
     localStorage.setItem('screenTime', screenTime);
+    localStorage.setItem('processedFoods', processedFoods);
     setStep(3);
   };
 
@@ -217,6 +221,28 @@ export default function Onboarding() {
 
               <div>
                 <label className="block text-sm font-medium text-stone-700 mb-2">
+                  What time does {name} usually go to bed?
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {['Before 8pm', '8-9pm', 'After 9pm'].map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => setBedtime(option)}
+                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
+                        bedtime === option
+                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
+                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-2">
                   Does {name} consume dairy daily?
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -280,11 +306,33 @@ export default function Onboarding() {
                   ))}
                 </div>
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-2">
+                  How often does {name} eat processed/packaged foods?
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {['Rarely', 'Sometimes', 'Often'].map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => setProcessedFoods(option)}
+                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
+                        processedFoods === option
+                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
+                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <button
               type="submit"
-              disabled={!sleepHours || !dairy || !exercise || !screenTime}
+              disabled={!sleepHours || !bedtime || !dairy || !exercise || !screenTime || !processedFoods}
               className="w-full mt-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
             >
               Continue
