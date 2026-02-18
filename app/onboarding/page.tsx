@@ -1,22 +1,42 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Script from 'next/script';
 import { createClient } from '@/lib/supabase';
 
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+const currentYear = new Date().getFullYear();
+const YEARS = Array.from({ length: 26 }, (_, i) => currentYear - i);
+
+// CDC BMI-for-age obesity threshold (simplified: >= 95th percentile)
+// Uses approximate 95th percentile BMI cutoffs by age
+function isObeseByCDC(ageYears: number, bmi: number): boolean {
+  const thresholds: Record<number, number> = {
+    2: 19.3, 3: 18.2, 4: 17.8, 5: 17.9, 6: 18.4, 7: 19.2,
+    8: 20.1, 9: 21.0, 10: 22.1, 11: 23.2, 12: 24.2, 13: 25.1,
+    14: 25.9, 15: 26.8, 16: 27.5, 17: 28.2, 18: 28.9, 19: 29.7,
+    20: 30.0, 21: 30.0, 22: 30.0, 23: 30.0, 24: 30.0, 25: 30.0,
+  };
+  const closest = Object.keys(thresholds)
+    .map(Number)
+    .reduce((prev, curr) => Math.abs(curr - ageYears) < Math.abs(prev - ageYears) ? curr : prev);
+  return bmi >= thresholds[closest];
+}
+
 function OnboardingForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
 
-  // Form data
-  const [birthDate, setBirthDate] = useState('');
-
-  // Post-payment data
+  // Step 1: Child info
   const [childName, setChildName] = useState('');
-  const [sex, setSex] = useState('');
+  const [birthMonth, setBirthMonth] = useState('');
+  const [birthYear, setBirthYear] = useState('');
   const [heightFt, setHeightFt] = useState('');
   const [heightIn, setHeightIn] = useState('');
   const [weight, setWeight] = useState('');
@@ -24,71 +44,96 @@ function OnboardingForm() {
   const [heightCm, setHeightCm] = useState('');
   const [weightKg, setWeightKg] = useState('');
 
-  const [saving, setSaving] = useState(false);
-  const [saveError, setSaveError] = useState('');
-  const [userId, setUserId] = useState<string | null>(null);
-  const [userEmail, setUserEmail] = useState<string | null>(null);
-  const totalSteps = 5;
+  // Step 2: Quick questions
+  const [sleepHours, setSleepHours] = useState('');
+  const [dairy, setDairy] = useState('');
+  const [activity, setActivity] = useState('');
+  const [screenTime, setScreenTime] = useState('');
 
-  // Fetch user on mount + handle step param
+  const [userId, setUserId] = useState<string | null>(null);
+  const totalSteps = 4;
+
   useEffect(() => {
     const stepParam = searchParams.get('step');
-    if (stepParam === '3') setStep(3);
-    else if (stepParam === '4') setStep(4);
+    if (stepParam) {
+      const n = parseInt(stepParam);
+      if (n >= 1 && n <= totalSteps) setStep(n);
+    }
 
-    // Get user ID from Supabase auth
     const supabase = createClient();
     if (supabase) {
       supabase.auth.getUser().then(({ data: { user } }) => {
-        if (user) {
-          setUserId(user.id);
-          setUserEmail(user.email ?? null);
-        }
+        if (user) setUserId(user.id);
       });
     }
   }, [searchParams]);
 
-  const handleSaveChild = async (): Promise<boolean> => {
-    setSaving(true);
-    setSaveError('');
-    try {
-      if (!userId) {
-        setSaveError('Not logged in. Please log in and try again.');
-        return false;
-      }
+  // Compute BMI internally
+  const computeBMI = (): { bmi: number; obese: boolean } | null => {
+    let heightInches = 0;
+    let weightLbs = 0;
 
-      const res = await fetch('/api/children', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          accountId: userId,
-          name: childName,
-          birthDate,
-        }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        setSaveError(data.error || 'Failed to save. Please try again.');
-        return false;
-      }
-
-      return true;
-    } catch (err) {
-      console.error('Save child error:', err);
-      setSaveError('Something went wrong. Please try again.');
-      return false;
-    } finally {
-      setSaving(false);
+    if (useMetric) {
+      if (!heightCm || !weightKg) return null;
+      heightInches = parseFloat(heightCm) / 2.54;
+      weightLbs = parseFloat(weightKg) * 2.205;
+    } else {
+      if (!heightFt || !weight) return null;
+      heightInches = parseFloat(heightFt) * 12 + (parseFloat(heightIn) || 0);
+      weightLbs = parseFloat(weight);
     }
+
+    if (heightInches <= 0 || weightLbs <= 0) return null;
+    const bmi = (weightLbs / (heightInches * heightInches)) * 703;
+
+    let ageYears = 8;
+    if (birthYear) {
+      const monthNum = birthMonth ? MONTHS.indexOf(birthMonth) : 0;
+      const birthDate = new Date(parseInt(birthYear), monthNum, 15);
+      ageYears = (Date.now() - birthDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000);
+    }
+
+    return { bmi: Math.round(bmi * 10) / 10, obese: isObeseByCDC(Math.round(ageYears), bmi) };
   };
 
-  const handleComplete = async () => {
-    const saved = await handleSaveChild();
-    if (saved) {
-      router.push('/dashboard');
-    }
+  const handleStep1Continue = () => {
+    // Store child data + BMI to localStorage for personalization
+    const bmiData = computeBMI();
+    const data = {
+      name: childName,
+      birthMonth,
+      birthYear,
+      birthDate: birthYear ? `${birthYear}-${String(MONTHS.indexOf(birthMonth) + 1).padStart(2, '0')}-15` : '',
+      heightFt, heightIn, heightCm, weight, weightKg, useMetric,
+      bmi: bmiData?.bmi || null,
+      obeseFlag: bmiData?.obese || false,
+      sleepHours: '', dairy: '', activity: '', screenTime: '',
+    };
+    localStorage.setItem('child_data', JSON.stringify(data));
+    setStep(2);
   };
+
+  const handleStep2Continue = () => {
+    // Update localStorage with questionnaire answers
+    const existing = localStorage.getItem('child_data');
+    if (existing) {
+      const data = JSON.parse(existing);
+      data.sleepHours = sleepHours;
+      data.dairy = dairy;
+      data.activity = activity;
+      data.screenTime = screenTime;
+      localStorage.setItem('child_data', JSON.stringify(data));
+    }
+    setStep(3);
+  };
+
+  const displayName = childName || 'your child';
+
+  const step1Valid = childName && birthMonth && birthYear;
+  const step2Valid = sleepHours && dairy && activity && screenTime;
+
+  const inputClass = 'w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest';
+  const selectClass = 'flex-1 px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest bg-white appearance-none';
 
   return (
     <div className="min-h-screen bg-cream">
@@ -107,111 +152,61 @@ function OnboardingForm() {
 
       <main className="max-w-xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
 
+        {/* STEP 1: Child Info */}
         {step === 1 && (
           <div className="space-y-6 sm:space-y-8">
             <div>
-              <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Let's set this up for your child.</h1>
-              <p className="font-mono text-sm sm:text-base text-black">We use age to tailor the growth hormone system to their stage.</p>
+              <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Tell us about your child.</h1>
+              <p className="font-mono text-sm sm:text-base text-black">We use this to personalize the growth hormone system to their stage.</p>
             </div>
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-black">Child's birth date</label>
-              <input
-                type="date"
-                value={birthDate}
-                onChange={(e) => setBirthDate(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest"
-              />
-              <p className="text-xs sm:text-sm font-mono text-black">This lets us show precise growth and hormone windows.</p>
-            </div>
-            <button
-              onClick={() => setStep(2)}
-              disabled={!birthDate}
-              className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors"
-            >
-              Continue
-            </button>
-          </div>
-        )}
 
-        {step === 2 && (
-          <div className="space-y-6 sm:space-y-8">
-            <div>
-              <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Your growth hormone plan is ready.</h1>
-              <p className="font-mono text-sm sm:text-base text-black">Choose a plan to get started.</p>
-            </div>
-            <Script src="https://js.stripe.com/v3/pricing-table.js" strategy="lazyOnload" />
-            {/* @ts-expect-error Stripe pricing table is a custom element */}
-            <stripe-pricing-table
-              pricing-table-id="prctbl_1T21I73eI33ypy3JzXLrhay1"
-              publishable-key="pk_live_51Sw3RG3eI33ypy3JUaKVJ6RY9Xw5ear1j1eQQOp81v6YSc63XuihA4vSoANrCMLemY13GxAi0fT3x7JgFglHmGTn00W88YoFKE"
-            />
-          </div>
-        )}
-
-        {step === 3 && (
-          <div className="space-y-6 sm:space-y-8 text-center">
-            <div className="flex justify-center">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 bg-forest/10 rounded-full flex items-center justify-center">
-                <svg className="w-10 h-10 sm:w-12 sm:h-12 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-            </div>
-            <div>
-              <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Welcome to bioKids.</h1>
-              <p className="font-mono text-sm sm:text-base text-black">Your founding membership is active. Let's personalize the system for your child.</p>
-            </div>
-            <button
-              onClick={() => setStep(4)}
-              className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors"
-            >
-              Continue
-            </button>
-          </div>
-        )}
-
-        {step === 4 && (
-          <div className="space-y-6 sm:space-y-8">
-            <div>
-              <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Add your child.</h1>
-              <p className="font-mono text-sm sm:text-base text-black">We use this to show the right windows and recommendations.</p>
-            </div>
             <div className="space-y-4">
+              {/* Name */}
               <div>
                 <label className="block text-sm font-semibold text-black mb-1">Name or initial</label>
-                <input type="text" value={childName} onChange={(e) => setChildName(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" placeholder="e.g., Emma or E" />
-                <p className="text-xs sm:text-sm font-mono text-black mt-1">For privacy, you can use just their first initial.</p>
+                <p className="text-xs font-mono text-gray-500 mb-2">For privacy, consider using just your child's first initial.</p>
+                <input
+                  type="text"
+                  value={childName}
+                  onChange={(e) => setChildName(e.target.value)}
+                  className={inputClass}
+                  placeholder="e.g., Emma or E"
+                />
               </div>
+
+              {/* Month & Year */}
               <div>
-                <label className="block text-sm font-semibold text-black mb-1">Birth date</label>
-                <input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-black mb-2">Sex</label>
-                <div className="flex gap-3 sm:gap-4">
-                  <button onClick={() => setSex('female')} className={`flex-1 py-3 rounded-xl font-semibold border-2 transition-colors ${sex === 'female' ? 'bg-forest text-white border-forest' : 'bg-white text-black border-gray-300 hover:border-forest'}`}>Female</button>
-                  <button onClick={() => setSex('male')} className={`flex-1 py-3 rounded-xl font-semibold border-2 transition-colors ${sex === 'male' ? 'bg-forest text-white border-forest' : 'bg-white text-black border-gray-300 hover:border-forest'}`}>Male</button>
+                <label className="block text-sm font-semibold text-black mb-1">Born</label>
+                <div className="flex gap-3">
+                  <select
+                    value={birthMonth}
+                    onChange={(e) => setBirthMonth(e.target.value)}
+                    className={selectClass}
+                  >
+                    <option value="">Month</option>
+                    {MONTHS.map(m => <option key={m} value={m}>{m}</option>)}
+                  </select>
+                  <select
+                    value={birthYear}
+                    onChange={(e) => setBirthYear(e.target.value)}
+                    className={selectClass}
+                  >
+                    <option value="">Year</option>
+                    {YEARS.map(y => <option key={y} value={String(y)}>{y}</option>)}
+                  </select>
                 </div>
               </div>
-            </div>
-            <button onClick={() => setStep(5)} disabled={!childName || !sex || !birthDate} className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors">Continue</button>
-          </div>
-        )}
 
-        {step === 5 && (
-          <div className="space-y-6 sm:space-y-8">
-            <div>
-              <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Track their starting point.</h1>
-              <p className="font-mono text-sm sm:text-base text-black">Measurements help us personalize recommendations. Body composition changes how we approach growth hormone.</p>
-            </div>
-            <div className="space-y-4">
+              {/* Height */}
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <label className="text-sm font-semibold text-black">Height</label>
-                  <button onClick={() => setUseMetric(!useMetric)} className="text-xs sm:text-sm font-mono text-forest underline">Switch to {useMetric ? 'ft/in' : 'cm'}</button>
+                  <label className="text-sm font-semibold text-black">Height <span className="font-normal text-gray-500">(optional)</span></label>
+                  <button onClick={() => setUseMetric(!useMetric)} className="text-xs font-mono text-forest underline">
+                    Switch to {useMetric ? 'ft/in' : 'cm'}
+                  </button>
                 </div>
                 {useMetric ? (
-                  <input type="number" value={heightCm} onChange={(e) => setHeightCm(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" placeholder="Height in cm" />
+                  <input type="number" value={heightCm} onChange={(e) => setHeightCm(e.target.value)} className={inputClass} placeholder="Height in cm" />
                 ) : (
                   <div className="flex gap-3">
                     <input type="number" value={heightFt} onChange={(e) => setHeightFt(e.target.value)} className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest" placeholder="Feet" />
@@ -219,23 +214,211 @@ function OnboardingForm() {
                   </div>
                 )}
               </div>
+
+              {/* Weight */}
               <div>
-                <label className="text-sm font-semibold text-black">Weight</label>
+                <label className="text-sm font-semibold text-black">Weight <span className="font-normal text-gray-500">(optional)</span></label>
                 {useMetric ? (
-                  <input type="number" value={weightKg} onChange={(e) => setWeightKg(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest mt-1" placeholder="Weight in kg" />
+                  <input type="number" value={weightKg} onChange={(e) => setWeightKg(e.target.value)} className={inputClass + ' mt-1'} placeholder="Weight in kg" />
                 ) : (
-                  <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl font-mono text-black text-base focus:outline-none focus:border-forest mt-1" placeholder="Weight in lbs" />
+                  <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} className={inputClass + ' mt-1'} placeholder="Weight in lbs" />
                 )}
               </div>
-              <p className="text-xs sm:text-sm font-mono text-black">These fields are optional. You can skip and add later.</p>
             </div>
-            {saveError && (
-              <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm">{saveError}</div>
-            )}
-            <div className="space-y-3">
-              <button disabled={saving} onClick={handleComplete} className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Continue'}</button>
-              <button disabled={saving} onClick={handleComplete} className="w-full text-black font-mono underline py-2 text-sm sm:text-base">Skip for now</button>
+
+            <button
+              onClick={handleStep1Continue}
+              disabled={!step1Valid}
+              className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors"
+            >
+              Continue
+            </button>
+          </div>
+        )}
+
+        {/* STEP 2: Quick Questions */}
+        {step === 2 && (
+          <div className="space-y-6 sm:space-y-8">
+            <div>
+              <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">A few quick questions.</h1>
+              <p className="font-mono text-sm sm:text-base text-black">This helps us personalize {displayName}'s protocol.</p>
             </div>
+
+            <div className="space-y-6">
+              {/* Sleep */}
+              <div>
+                <label className="block text-sm font-semibold text-black mb-3">How many hours of sleep does {displayName} get each night?</label>
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { value: '8_or_less', label: '8 or less' },
+                    { value: '9-10', label: '9-10' },
+                    { value: '11-12', label: '11-12' },
+                    { value: '12+', label: '12+' },
+                  ].map(opt => (
+                    <button
+                      key={opt.value}
+                      onClick={() => setSleepHours(opt.value)}
+                      className={`py-3 rounded-xl font-semibold border-2 transition-colors text-sm sm:text-base ${
+                        sleepHours === opt.value
+                          ? 'bg-forest text-white border-forest'
+                          : 'bg-white text-black border-gray-300 hover:border-forest'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Dairy */}
+              <div>
+                <label className="block text-sm font-semibold text-black mb-3">Does {displayName} consume dairy daily?</label>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { value: 'yes', label: 'Yes' },
+                    { value: 'sometimes', label: 'Sometimes' },
+                    { value: 'no', label: 'No' },
+                  ].map(opt => (
+                    <button
+                      key={opt.value}
+                      onClick={() => setDairy(opt.value)}
+                      className={`py-3 rounded-xl font-semibold border-2 transition-colors text-sm sm:text-base ${
+                        dairy === opt.value
+                          ? 'bg-forest text-white border-forest'
+                          : 'bg-white text-black border-gray-300 hover:border-forest'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Activity */}
+              <div>
+                <label className="block text-sm font-semibold text-black mb-3">How often does {displayName} run or play hard?</label>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { value: 'daily', label: 'Daily' },
+                    { value: 'few_times', label: 'Few times a week' },
+                    { value: 'rarely', label: 'Rarely' },
+                  ].map(opt => (
+                    <button
+                      key={opt.value}
+                      onClick={() => setActivity(opt.value)}
+                      className={`py-3 rounded-xl font-semibold border-2 transition-colors text-sm sm:text-base ${
+                        activity === opt.value
+                          ? 'bg-forest text-white border-forest'
+                          : 'bg-white text-black border-gray-300 hover:border-forest'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Screen time */}
+              <div>
+                <label className="block text-sm font-semibold text-black mb-3">Screen time before bed?</label>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { value: 'none', label: 'None' },
+                    { value: 'some', label: 'Some' },
+                    { value: 'a_lot', label: 'A lot' },
+                  ].map(opt => (
+                    <button
+                      key={opt.value}
+                      onClick={() => setScreenTime(opt.value)}
+                      className={`py-3 rounded-xl font-semibold border-2 transition-colors text-sm sm:text-base ${
+                        screenTime === opt.value
+                          ? 'bg-forest text-white border-forest'
+                          : 'bg-white text-black border-gray-300 hover:border-forest'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setStep(1)}
+                className="px-6 py-3.5 sm:py-4 rounded-xl font-semibold text-base border-2 border-gray-300 text-black hover:border-forest transition-colors"
+              >
+                Back
+              </button>
+              <button
+                onClick={handleStep2Continue}
+                disabled={!step2Valid}
+                className="flex-1 bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* STEP 3: Protocol Ready */}
+        {step === 3 && (
+          <div className="space-y-6 sm:space-y-8">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-forest/10 rounded-full mb-6">
+                <span className="text-3xl">🧬</span>
+              </div>
+              <h1 className="font-display text-2xl sm:text-3xl text-black mb-4">{displayName}'s protocol is ready.</h1>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 space-y-4">
+              <p className="font-mono text-sm sm:text-base text-black leading-relaxed">
+                Most parents don't know that <strong>70% of growth happens during sleep</strong>, or that a set of 30-second sprints can <strong>boost growth hormone by 700%</strong>, or that <strong>fava beans</strong> are one of the strongest natural growth hormone stimulators.
+              </p>
+              <p className="font-mono text-sm sm:text-base text-black leading-relaxed">
+                We'll show you how to optimize all of this and much more to harness it for maximizing <strong>{displayName}'s</strong> potential.
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setStep(2)}
+                className="px-6 py-3.5 sm:py-4 rounded-xl font-semibold text-base border-2 border-gray-300 text-black hover:border-forest transition-colors"
+              >
+                Back
+              </button>
+              <button
+                onClick={() => setStep(4)}
+                className="flex-1 bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors"
+              >
+                Start your free trial
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* STEP 4: Stripe Pricing Table */}
+        {step === 4 && (
+          <div className="space-y-6 sm:space-y-8">
+            <div>
+              <button
+                onClick={() => setStep(3)}
+                className="flex items-center gap-2 text-gray-500 hover:text-forest mb-4 text-sm font-mono"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back
+              </button>
+              <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Choose your plan.</h1>
+              <p className="font-mono text-sm sm:text-base text-black">Cancel anytime, online.</p>
+            </div>
+            <Script src="https://js.stripe.com/v3/pricing-table.js" strategy="lazyOnload" />
+            {/* @ts-expect-error Stripe pricing table is a custom element */}
+            <stripe-pricing-table
+              pricing-table-id="prctbl_1T21I73eI33ypy3JzXLrhay1"
+              publishable-key="pk_live_51Sw3RG3eI33ypy3JUaKVJ6RY9Xw5ear1j1eQQOp81v6YSc63XuihA4vSoANrCMLemY13GxAi0fT3x7JgFglHmGTn00W88YoFKE"
+            />
           </div>
         )}
 
