@@ -353,6 +353,18 @@ Recognize that consumer wearables have limits in accurately staging children\u20
 
 The goal is to find your child\u2019s optimal configuration and protect it.`,
       timing: "Ongoing \u2014 review weekly to optimize"
+    },
+    {
+      title: "Glycine (bovine gelatin or bone broth)",
+      what: "Glycine directly stimulates GH release and improves sleep quality. 3-5g before bed via gelatin dessert, bone broth, or collagen powder.",
+      why: `Glycine is a conditionally essential amino acid that directly stimulates growth hormone release. In clinical studies, oral glycine administration increased serum GH levels significantly. Glycine also improves subjective sleep quality, reduces sleep onset latency, and enhances slow-wave sleep — the exact sleep stage where GH is released.
+
+The mechanism is dual: glycine acts as an inhibitory neurotransmitter in the brainstem and spinal cord, promoting relaxation and lowering core body temperature (which facilitates sleep onset), while also directly stimulating anterior pituitary somatotrophs to release GH.
+
+Bovine gelatin is approximately 30% glycine by weight, making it one of the richest dietary sources. A gelatin dessert (jello made with bovine gelatin) provides 3-5g of glycine per serving. Bone broth is another excellent source, with long-simmered broth providing significant glycine from collagen extraction.
+
+This lever stacks powerfully with the bedtime routine: gelatin dessert after dinner (2-3 hours before bed) provides glycine that peaks in time for the first deep sleep block. Collagen powder in warm milk is another option that combines the tryptophan pathway with direct GH stimulation.`,
+      timing: "3-5g glycine before bed via gelatin dessert after dinner, bone broth with dinner, or collagen powder in bedtime milk"
     }
   ];
 
