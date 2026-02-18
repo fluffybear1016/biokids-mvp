@@ -7,10 +7,10 @@ import Nav from '@/components/Nav';
 const articles = [
   {
     slug: 'growth-blockers-to-avoid',
-    title: '14 Growth Blockers to Avoid',
-    summary: 'Common factors that limit your child\'s growth potential — and how to eliminate them.',
+    title: '18 Growth Blockers to Avoid',
+    summary: 'Sleep disruptors, endocrine disruptors, nutritional blockers, and more — a checklist of targets to remove.',
     category: 'toxins',
-    readTime: '8 min',
+    readTime: '10 min',
     icon: '⚠️',
     citation: null,
   },
@@ -113,6 +113,105 @@ const articles = [
     icon: '📱',
     citation: '[Gooley JJ. J Clin Endocrinol Metab. 2011]',
   },
+  {
+    slug: 'glyphosate-oats-grains',
+    title: 'Why Oats and Grains May Be Sabotaging Your Child\'s Growth',
+    summary: 'Glyphosate quietly disrupts hormones and gut function — the two systems most critical for height.',
+    category: 'toxins',
+    readTime: '5 min',
+    icon: '🌾',
+    citation: '[Mills PJ. JAMA. 2017]',
+  },
+  {
+    slug: 'gh-igf1-axis',
+    title: 'How Your Child Actually Grows: The GH-IGF-1 Axis Explained',
+    summary: 'Understanding the biological system that controls your child\'s height — and how to optimize it.',
+    category: 'science',
+    readTime: '6 min',
+    icon: '🧬',
+    citation: '[Van Cauter E. JAMA. 2000]',
+  },
+  {
+    slug: 'dennis-rodman-growth',
+    title: 'The Dennis Rodman Growth Story',
+    summary: 'How delayed puberty and a sudden nutrition upgrade created one of the most dramatic growth spurts in sports history.',
+    category: 'science',
+    readTime: '7 min',
+    icon: '🏀',
+    citation: '[Günther AL. Am J Clin Nutr. 2010]',
+  },
+  {
+    slug: 'keep-growth-plates-open',
+    title: 'How to Keep Growth Plates Open a Little Longer',
+    summary: 'The science of extending your child\'s growth window through strategic nutrition — crucifers, mushrooms, and polyphenols.',
+    category: 'nutrition',
+    readTime: '7 min',
+    icon: '🦴',
+    citation: '[Nilsson O. Endocrine Reviews. 2005]',
+  },
+  {
+    slug: 'glycine-secret-weapon',
+    title: 'Glycine: The Secret Weapon',
+    summary: 'How the simplest amino acid can boost growth hormone, deepen sleep, and build stronger bones.',
+    category: 'nutrition',
+    readTime: '8 min',
+    icon: '🧪',
+    citation: '[Kasai K. Metabolism. 1980]',
+  },
+  {
+    slug: 'a1-vs-a2-milk',
+    title: 'A1 vs A2 Milk: Why the Type Matters',
+    summary: 'The hidden difference in milk proteins that could be affecting your child\'s gut, inflammation, and height potential.',
+    category: 'nutrition',
+    readTime: '8 min',
+    icon: '🥛',
+    citation: '[Ramadhan MR. Nutrients. 2023]',
+  },
+  {
+    slug: 'how-your-child-grows',
+    title: 'How Your Child Actually Grows',
+    summary: 'The complete guide to the biological cascade that determines your child\'s growth — and exactly how to optimize it.',
+    category: 'science',
+    readTime: '10 min',
+    icon: '📈',
+    citation: '[Giustina A. Endocrine Reviews. 1998]',
+  },
+  {
+    slug: 'milk-nutrient-profile',
+    title: 'Milk\'s Nutrient Profile: The Ultimate Growth Food',
+    summary: 'A complete breakdown of what\'s actually in milk — and why quality matters for your child\'s growth.',
+    category: 'nutrition',
+    readTime: '9 min',
+    icon: '🥛',
+    citation: '[Millward DJ. Am J Clin Nutr. 2008]',
+  },
+  {
+    slug: 'sprinting-growth-hormone',
+    title: 'Sprinting: The Most Powerful Natural Growth Hormone Trigger',
+    summary: 'Why 30-second sprints can raise GH by 700% — and how to use this for your child.',
+    category: 'exercise',
+    readTime: '7 min',
+    icon: '🏃',
+    citation: '[Stokes KA. J Appl Physiol. 2002]',
+  },
+  {
+    slug: 'jamaican-sprinter-model',
+    title: 'The Jamaican Sprinter Model: Why They Never Lift Weights',
+    summary: 'How a small island builds the world\'s fastest humans — without a single barbell.',
+    category: 'exercise',
+    readTime: '8 min',
+    icon: '🇯🇲',
+    citation: '[Caine D. Sports Med. 2006]',
+  },
+  {
+    slug: 'fava-beans-growth-hormone',
+    title: 'Fava Beans: The Natural Growth Hormone Trigger',
+    summary: 'How a humble Mediterranean bean can stimulate your child\'s GH release — backed by decades of clinical research.',
+    category: 'nutrition',
+    readTime: '9 min',
+    icon: '🫘',
+    citation: '[Boyd AE. N Engl J Med. 1970]',
+  },
 ];
 
 const categories = [
@@ -123,6 +222,7 @@ const categories = [
   { key: 'circadian', label: 'Circadian', icon: '☀️' },
   { key: 'height', label: 'Height', icon: '📈' },
   { key: 'toxins', label: 'Toxins', icon: '⚠️' },
+  { key: 'science', label: 'Science', icon: '🧬' },
 ];
 
 export default function Learn() {
@@ -163,17 +263,17 @@ export default function Learn() {
         </div>
 
         {/* Featured Article */}
-        <section className="bg-gradient-to-br from-forest to-forest-light rounded-3xl p-10 text-white mb-8 relative overflow-hidden">
+        <Link href="/learn/how-your-child-grows" className="block bg-gradient-to-br from-forest to-forest-light rounded-3xl p-10 text-white mb-8 relative overflow-hidden hover:shadow-xl transition-all no-underline">
           <div className="absolute top-0 right-0 text-[120px] opacity-10">🧬</div>
           <span className="bg-white/20 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">Featured</span>
-          <h2 className="font-display text-3xl mt-4 mb-3">The Complete GH Optimization Guide</h2>
+          <h2 className="font-display text-3xl mt-4 mb-3">How Your Child Actually Grows</h2>
           <p className="text-white/80 max-w-lg mb-6">
-            Everything you need to know about maximizing your child's natural growth hormone — from sleep to nutrition to exercise.
+            The complete guide to the biological cascade that determines your child's growth — and exactly how to optimize it.
           </p>
-          <button className="bg-white text-forest px-6 py-3 rounded-xl font-semibold hover:bg-cream transition-colors">
+          <span className="bg-white text-forest px-6 py-3 rounded-xl font-semibold hover:bg-cream transition-colors inline-block">
             Read the Guide →
-          </button>
-        </section>
+          </span>
+        </Link>
 
         {/* Articles Grid */}
         <div className="grid md:grid-cols-2 gap-5">
