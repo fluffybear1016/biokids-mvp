@@ -32,10 +32,11 @@ export default function Home() {
             <p className="text-base sm:text-xl text-black mb-8 sm:mb-10 font-mono-science">
               The evidence-based system for natural growth hormone optimization—from prenatal to age 25. No hormones, no meds, just the levers parents actually control.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-col items-center gap-3">
               <Link href="/onboarding" className="bg-forest text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold hover:bg-forest-dark transition-all hover:-translate-y-0.5 font-mono-science">
-                Get Access →
+                Start Free Trial →
               </Link>
+              <p className="text-xs sm:text-sm text-gray-500 font-mono-science">7-day free trial · Cancel anytime</p>
             </div>
           </div>
 
@@ -181,20 +182,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Founding Member Pricing */}
+      {/* Pricing */}
       <section className="py-12 sm:py-20 px-4 sm:px-6 bg-cream">
         <div className="max-w-2xl mx-auto">
           <div className="border-2 border-forest rounded-2xl sm:rounded-3xl p-6 sm:p-10 text-center bg-white">
-            <h2 className="font-display text-2xl sm:text-3xl text-black mb-3 sm:mb-4">Founding member rate</h2>
-            <p className="text-sm sm:text-base text-black font-mono-science font-medium mb-2 sm:mb-3">
-              Reserved for the first 100 families: <span className="font-bold text-forest">$30/month</span> for full access to the system.
-            </p>
+            <h2 className="font-display text-2xl sm:text-3xl text-black mb-3 sm:mb-4">Start your free trial today</h2>
             <p className="text-sm sm:text-base text-black font-mono-science font-medium mb-5 sm:mb-6">
-              As we add features and real-world data, membership pricing will increase—your rate stays locked in for life.
+              Try everything free for 7 days. Then $30/month if you love it. Cancel anytime.
             </p>
-            <Link href="/onboarding" className="bg-forest text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold hover:bg-forest-dark transition-all inline-block font-mono-science">
-              Get Access →
+            <Link href="/onboarding" className="bg-forest text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold hover:bg-forest-dark transition-all inline-block font-mono-science mb-4 sm:mb-5">
+              Start Free Trial →
             </Link>
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-black font-mono-science font-medium">
+              <span>✓ Full access</span>
+              <span>✓ Age-specific protocols</span>
+              <span>✓ Cancel anytime</span>
+            </div>
           </div>
         </div>
       </section>
@@ -230,10 +233,10 @@ export default function Home() {
       <section className="py-12 sm:py-20 px-4 sm:px-6">
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-base sm:text-xl text-black mb-6 sm:mb-8 font-mono-science">
-            Get full access for <span className="font-bold text-forest">$30/month</span> · Founding-member rate · Cancel anytime.
+            Try everything free for 7 days. Then <span className="font-bold text-forest">$30/month</span>. Cancel anytime.
           </p>
           <Link href="/onboarding" className="bg-forest text-white px-8 sm:px-10 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold hover:bg-forest-dark transition-all inline-block font-mono-science">
-            Get Access →
+            Start Free Trial →
           </Link>
         </div>
       </section>
