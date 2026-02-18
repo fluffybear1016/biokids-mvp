@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Script from 'next/script';
 import { createClient } from '@/lib/supabase';
 
 function OnboardingForm() {
@@ -23,7 +24,6 @@ function OnboardingForm() {
   const [heightCm, setHeightCm] = useState('');
   const [weightKg, setWeightKg] = useState('');
 
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
   const [userId, setUserId] = useState<string | null>(null);
@@ -137,72 +137,14 @@ function OnboardingForm() {
           <div className="space-y-6 sm:space-y-8">
             <div>
               <h1 className="font-display text-2xl sm:text-3xl text-black mb-2 sm:mb-3">Your growth hormone plan is ready.</h1>
-              <p className="font-mono text-sm sm:text-base text-black">We'll configure the system around your child's exact age and growth windows.</p>
+              <p className="font-mono text-sm sm:text-base text-black">Choose a plan to get started.</p>
             </div>
-            <div className="bg-white rounded-2xl p-4 sm:p-6 border-2 border-gray-200">
-              <h2 className="font-semibold text-base sm:text-lg text-black mb-3 sm:mb-4">What's included</h2>
-              <ul className="space-y-3 sm:space-y-4">
-                <li className="flex gap-2 sm:gap-3">
-                  <span className="text-forest text-lg sm:text-xl">✓</span>
-                  <div className="text-sm sm:text-base"><span className="font-semibold text-black">The Complete System</span><span className="font-mono text-black"> – Daily and weekly actions to support optimal growth hormone.</span></div>
-                </li>
-                <li className="flex gap-2 sm:gap-3">
-                  <span className="text-forest text-lg sm:text-xl">✓</span>
-                  <div className="text-sm sm:text-base"><span className="font-semibold text-black">The Synthesized Science</span><span className="font-mono text-black"> – Peer-reviewed mechanisms and case studies, translated for parents.</span></div>
-                </li>
-                <li className="flex gap-2 sm:gap-3">
-                  <span className="text-forest text-lg sm:text-xl">✓</span>
-                  <div className="text-sm sm:text-base"><span className="font-semibold text-black">gH AI</span><span className="font-mono text-black"> – Your on-call growth hormone assistant. Ask questions anytime.</span></div>
-                </li>
-                <li className="flex gap-2 sm:gap-3">
-                  <span className="text-forest text-lg sm:text-xl">✓</span>
-                  <div className="text-sm sm:text-base"><span className="font-semibold text-black">Growth Tracking</span><span className="font-mono text-black"> – Follow progress across the critical growth and hormone windows.</span></div>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-forest text-white rounded-2xl p-4 sm:p-6">
-              <h3 className="font-semibold text-base sm:text-lg mb-2">Founding member rate</h3>
-              <p className="text-2xl sm:text-3xl font-display mb-2">$30<span className="text-base sm:text-lg font-normal">/month</span></p>
-              <p className="text-white/90 font-mono text-xs sm:text-sm mb-2">Reserved for the first 100 families. As we add features and real-world data, pricing will increase—but your rate stays locked in for life.</p>
-              <p className="text-white/70 font-mono text-xs sm:text-sm">Cancel anytime, online.</p>
-            </div>
-            <button
-              disabled={checkoutLoading}
-              onClick={async () => {
-                setCheckoutLoading(true);
-                try {
-                  if (!userId) {
-                    router.push('/signup');
-                    return;
-                  }
-
-                  const res = await fetch('/api/stripe/create-checkout', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                      userId,
-                      email: userEmail,
-                      birthDate,
-                    }),
-                  });
-
-                  const data = await res.json();
-
-                  if (data.url) {
-                    window.location.href = data.url;
-                  } else {
-                    console.error('Checkout error:', data.error || data.message);
-                    setCheckoutLoading(false);
-                  }
-                } catch (err) {
-                  console.error('Checkout error:', err);
-                  setCheckoutLoading(false);
-                }
-              }}
-              className="w-full bg-forest text-white py-3.5 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-forest-dark transition-colors disabled:opacity-50"
-            >
-              {checkoutLoading ? 'Redirecting to checkout...' : 'Continue to secure my rate'}
-            </button>
+            <Script src="https://js.stripe.com/v3/pricing-table.js" strategy="lazyOnload" />
+            {/* @ts-expect-error Stripe pricing table is a custom element */}
+            <stripe-pricing-table
+              pricing-table-id="prctbl_1T21I73eI33ypy3JzXLrhay1"
+              publishable-key="pk_live_51Sw3RG3eI33ypy3JUaKVJ6RY9Xw5ear1j1eQQOp81v6YSc63XuihA4vSoANrCMLemY13GxAi0fT3x7JgFglHmGTn00W88YoFKE"
+            />
           </div>
         )}
 
