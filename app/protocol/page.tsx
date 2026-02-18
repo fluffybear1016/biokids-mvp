@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Nav from '@/components/Nav';
+import GrowthStacks from '@/components/GrowthStacks';
 import { Child } from '@/lib/supabase';
 
 const mockChild: Child = {
@@ -84,6 +85,16 @@ export default function Protocol() {
             Week of Jan 27
           </span>
         </header>
+
+        {/* Growth Stacks */}
+        <section className="card mb-7">
+          <h2 className="text-lg font-semibold flex items-center gap-2 mb-5">
+            <span className="text-xl">📦</span>
+            Growth Stacks
+          </h2>
+          <p className="text-sm text-gray-500 mb-4">Synergistic habit bundles. Activate a stack to commit to the full combo.</p>
+          <GrowthStacks />
+        </section>
 
         {/* High-Leverage Decisions */}
         <section className="card mb-7">
