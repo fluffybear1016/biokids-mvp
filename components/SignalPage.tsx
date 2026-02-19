@@ -2,18 +2,20 @@
 
 import { useState, useEffect } from 'react';
 
+type Period = 'morning' | 'afternoon' | 'evening';
+
 export default function SignalPage() {
   // Auto-detect time of day
-  const getTimeOfDay = () => {
+  const getTimeOfDay = (): Period => {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) return 'morning';
     if (hour >= 12 && hour < 17) return 'afternoon';
     return 'evening';
   };
 
-  const [currentPeriod, setCurrentPeriod] = useState('morning');
-  const [completedItems, setCompletedItems] = useState([]);
-  const [expandedItem, setExpandedItem] = useState(null);
+  const [currentPeriod, setCurrentPeriod] = useState<Period>('morning');
+  const [completedItems, setCompletedItems] = useState<string[]>([]);
+  const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
   // Initialize on mount
   useEffect(() => {
@@ -48,7 +50,7 @@ export default function SignalPage() {
     }
   }, [currentPeriod, completedItems]);
 
-  const toggleComplete = (id, e) => {
+  const toggleComplete = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     const isCompleting = !completedItems.includes(id);
     setCompletedItems(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
@@ -64,11 +66,11 @@ export default function SignalPage() {
     }
   };
 
-  const toggleExpand = (id) => {
+  const toggleExpand = (id: string) => {
     setExpandedItem(prev => prev === id ? null : id);
   };
 
-  const allItems = [
+  const allItems: { id: string; period: Period; title: string; subtitle: string; mechanism: string; practical: string; science: string; citations: string[] }[] = [
     // ============ MORNING ============
     { id: 'waketime', period: 'morning', title: 'Consistent wake time', subtitle: 'Same time daily, even weekends', mechanism: 'Anchors circadian rhythm for predictable GH pulses', practical: 'Pick a time and stick to it. Variability scrambles the system.', science: 'Wake time variability >1 hour correlates with reduced slow-wave sleep and blunted GH secretion.', citations: ['Wittmann M, et al. Chronobiol Int. 2006;23(1-2):497-509.'] },
     { id: 'sun', period: 'morning', title: 'Morning sunlight', subtitle: '10 min outside, no sunglasses', mechanism: "Sets tonight's melatonin clock", practical: 'Backyard, walk to bus stop, breakfast on porch.', science: 'Light exposure synchronizes the suprachiasmatic nucleus, determining melatonin onset 14-16 hours later.', citations: ['Roenneberg T, et al. Curr Biol. 2007;17(11):R462-71.'] },
@@ -109,7 +111,7 @@ export default function SignalPage() {
     { id: 'bedtime', period: 'evening', title: 'In bed by 8-8:30pm', subtitle: 'Asleep by 8:30-9pm', mechanism: 'First 90 min = 70% of GH release', practical: 'Non-negotiable. Everything else builds to this.', science: 'The first slow-wave cycle contains majority of nocturnal GH secretion.', citations: ['Van Cauter E, et al. JAMA. 2000;284(7):861-8.'] },
   ];
 
-  const periods = ['morning', 'afternoon', 'evening'];
+  const periods: Period[] = ['morning', 'afternoon', 'evening'];
   const periodLabels = { morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening' };
   const periodDescriptions = { 
     morning: 'Set up energy for the day', 
@@ -123,7 +125,7 @@ export default function SignalPage() {
   const upcomingItems = allItems.filter(item => upcomingPeriods.includes(item.period));
   const completedToday = allItems.filter(item => completedItems.includes(item.id) && item.period !== currentPeriod);
 
-  const renderItem = (item, isFirst = false) => {
+  const renderItem = (item: typeof allItems[number], isFirst = false) => {
     const isExpanded = expandedItem === item.id;
     const isCompleted = completedItems.includes(item.id);
 
