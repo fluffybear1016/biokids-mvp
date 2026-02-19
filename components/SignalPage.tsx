@@ -208,7 +208,7 @@ export default function SignalPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 sm:p-6" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
+    <div className="font-sans-override max-w-2xl mx-auto p-4 sm:p-6">
       {/* Period header */}
       <div className="text-center mb-2">
         <p className="text-2xl font-semibold text-stone-900">{periodLabels[currentPeriod]}</p>
