@@ -2,6 +2,19 @@
 
 import { useState, useEffect } from 'react';
 
+type Period = 'morning' | 'afternoon' | 'evening';
+
+type SignalItem = {
+  id: string;
+  period: Period;
+  title: string;
+  subtitle: string;
+  mechanism: string;
+  practical: string;
+  science: string;
+  citations: string[];
+};
+
 export default function SignalPage() {
   // Auto-detect time of day
   const getTimeOfDay = () => {
@@ -11,7 +24,7 @@ export default function SignalPage() {
     return 'evening';
   };
 
-  const [currentPeriod, setCurrentPeriod] = useState('morning');
+  const [currentPeriod, setCurrentPeriod] = useState<Period>('morning');
   const [completedItems, setCompletedItems] = useState<string[]>([]);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
@@ -68,7 +81,7 @@ export default function SignalPage() {
     setExpandedItem(prev => prev === id ? null : id);
   };
 
-  const allItems = [
+  const allItems: SignalItem[] = [
     // ============ MORNING ============
     { id: 'waketime', period: 'morning', title: 'Consistent wake time', subtitle: 'Same time daily, even weekends', mechanism: 'Anchors circadian rhythm for predictable GH pulses', practical: 'Pick a time and stick to it. Variability scrambles the system.', science: 'Wake time variability >1 hour correlates with reduced slow-wave sleep and blunted GH secretion.', citations: ['Wittmann M, et al. Chronobiol Int. 2006;23(1-2):497-509.'] },
     { id: 'sun', period: 'morning', title: 'Morning sunlight', subtitle: '10 min outside, no sunglasses', mechanism: "Sets tonight's melatonin clock", practical: 'Backyard, walk to bus stop, breakfast on porch.', science: 'Light exposure synchronizes the suprachiasmatic nucleus, determining melatonin onset 14-16 hours later.', citations: ['Roenneberg T, et al. Curr Biol. 2007;17(11):R462-71.'] },
@@ -109,7 +122,7 @@ export default function SignalPage() {
     { id: 'bedtime', period: 'evening', title: 'In bed by 8-8:30pm', subtitle: 'Asleep by 8:30-9pm', mechanism: 'First 90 min = 70% of GH release', practical: 'Non-negotiable. Everything else builds to this.', science: 'The first slow-wave cycle contains majority of nocturnal GH secretion.', citations: ['Van Cauter E, et al. JAMA. 2000;284(7):861-8.'] },
   ];
 
-  const periods = ['morning', 'afternoon', 'evening'];
+  const periods: Period[] = ['morning', 'afternoon', 'evening'];
   const periodLabels = { morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening' };
   const periodDescriptions = { 
     morning: 'Set up energy for the day', 
@@ -120,10 +133,10 @@ export default function SignalPage() {
   const currentItems = allItems.filter(item => item.period === currentPeriod);
   const currentIndex = periods.indexOf(currentPeriod);
   const upcomingPeriods = periods.slice(currentIndex + 1);
-  const upcomingItems = allItems.filter(item => upcomingPeriods.includes(item.period));
+  const upcomingItems = allItems.filter(item => (upcomingPeriods as string[]).includes(item.period));
   const completedToday = allItems.filter(item => completedItems.includes(item.id) && item.period !== currentPeriod);
 
-  const renderItem = (item, isFirst = false) => {
+  const renderItem = (item: SignalItem, isFirst = false) => {
     const isExpanded = expandedItem === item.id;
     const isCompleted = completedItems.includes(item.id);
 
