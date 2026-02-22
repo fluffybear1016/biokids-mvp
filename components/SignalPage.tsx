@@ -16,6 +16,7 @@ export default function SignalPage() {
   const [currentPeriod, setCurrentPeriod] = useState<Period>('morning');
   const [completedItems, setCompletedItems] = useState<string[]>([]);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const [expandedScience, setExpandedScience] = useState<string | null>(null);
 
   // Initialize on mount
   useEffect(() => {
@@ -169,14 +170,14 @@ export default function SignalPage() {
             <button 
               onClick={(e) => {
                 e.stopPropagation();
-                setExpandedItem(expandedItem === item.id + '-science' ? item.id : item.id + '-science');
+                setExpandedScience(expandedScience === item.id ? null : item.id);
               }}
               className="text-sm text-emerald-600 hover:text-emerald-800 flex items-center gap-1 font-medium"
             >
-              {expandedItem === item.id + '-science' ? '▼' : '▶'} See the science
+              {expandedScience === item.id ? '▼' : '▶'} See the science
             </button>
 
-            {expandedItem === item.id + '-science' && (
+            {expandedScience === item.id && (
               <div className="mt-3 bg-stone-50 rounded-lg p-3">
                 <p className="text-xs text-stone-700 mb-2">{item.science}</p>
                 <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>

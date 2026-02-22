@@ -347,10 +347,6 @@ export default function Dashboard() {
                 <span className="text-sm text-gray-600">Research hours</span>
                 <span className="font-semibold text-forest">2,400+</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Expert reviews</span>
-                <span className="font-semibold text-forest">47</span>
-              </div>
             </div>
             <p className="text-xs text-gray-500 mt-4 pt-4 border-t border-gray-100 leading-relaxed">
               Every recommendation is backed by high end academic peer-reviewed research.
