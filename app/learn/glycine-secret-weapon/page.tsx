@@ -63,7 +63,7 @@ export default function GlycineArticle() {
               <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Facilitate sleep onset</li>
               <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Promote deeper, more restorative sleep stages</li>
             </ul>
-            <p className="text-xs text-forest italic mb-4">[Inagawa K. et al. Sleep and Biological Rhythms. 2006]</p>
+            <p className="text-xs text-forest italic mb-4"><a href="https://pubmed.ncbi.nlm.nih.gov/25533534/" target="_blank" rel="noopener noreferrer" className="underline hover:text-forest/70">[Kawai N, et al. Neuropsychopharmacology. 2015]</a></p>
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
               <p className="text-sm sm:text-base text-amber-900 leading-relaxed font-medium">
                 Why this matters for growth: Deep slow-wave sleep is when maximal nocturnal GH secretion occurs. Better sleep architecture = more GH pulses = more growth signal.
@@ -80,7 +80,7 @@ export default function GlycineArticle() {
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-2">
               In normal adults, intravenous glycine (4&ndash;12g) produces a significant and dose-dependent rise in plasma GH &mdash; several-fold above baseline.
             </p>
-            <p className="text-xs text-forest italic mb-4">[Kasai K. et al. Metabolism. 1980]</p>
+            <p className="text-xs text-forest italic mb-4"><a href="https://pubmed.ncbi.nlm.nih.gov/7358501/" target="_blank" rel="noopener noreferrer" className="underline hover:text-forest/70">[Kasai K, et al. Metabolism. 1980]</a></p>
             <h3 className="font-semibold text-black text-base mb-2">The double benefit:</h3>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
               Pre-sleep glycine from bone broth, gelatin, or collagen-rich foods could act both by:
@@ -107,7 +107,7 @@ export default function GlycineArticle() {
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-2">
               Glycine activates mTORC1 &mdash; the master switch for muscle protein synthesis &mdash; and maintains it even under inflammatory or nutrient stress.
             </p>
-            <p className="text-xs text-forest italic mb-4">[Ham DJ. et al. Frontiers in Nutrition. 2019]</p>
+            <p className="text-xs text-forest italic mb-4"><a href="https://pubmed.ncbi.nlm.nih.gov/28337245/" target="_blank" rel="noopener noreferrer" className="underline hover:text-forest/70">[Razak MA, et al. Oxidative Medicine and Cellular Longevity. 2017]</a></p>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
               In animal studies, dietary glycine supplementation:
             </p>
@@ -130,7 +130,7 @@ export default function GlycineArticle() {
               <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Glycine is required at every third residue in collagen&apos;s triple helix</li>
               <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Glycine is the most abundant amino acid in collagen</li>
             </ul>
-            <p className="text-xs text-forest italic mb-4">[de Paz-Lugo P. et al. Amino Acids. 2018]</p>
+            <p className="text-xs text-forest italic mb-4"><a href="https://pubmed.ncbi.nlm.nih.gov/29559876/" target="_blank" rel="noopener noreferrer" className="underline hover:text-forest/70">[de Paz-Lugo P, et al. Amino Acids. 2018]</a></p>
 
             <h3 className="font-semibold text-black text-base mb-2">What happens with adequate glycine:</h3>
             <ul className="space-y-1 mb-4">
@@ -144,6 +144,26 @@ export default function GlycineArticle() {
                 Without adequate glycine: The body cannot efficiently construct or repair the collagen scaffold on which bone mineralization and longitudinal growth depend.
               </p>
             </div>
+          </section>
+
+          {/* The Collagen Gap */}
+          <section className="bg-amber-50 rounded-2xl p-6 sm:p-8 mb-6 border border-amber-200">
+            <h2 className="font-display text-xl sm:text-2xl text-black mb-4">The Collagen Gap</h2>
+            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
+              Collagen is 33% glycine &mdash; every third amino acid in the triple helix must be glycine. There is no substitute.
+            </p>
+            <h3 className="font-semibold text-black text-base mb-2">Where collagen matters most for growth:</h3>
+            <ul className="space-y-1 mb-4">
+              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Growth plates: ~30% collagen</li>
+              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Bones: ~40% collagen (the scaffold for mineralization)</li>
+              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Spinal discs: ~60% collagen</li>
+            </ul>
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+              <p className="text-sm sm:text-base text-red-900 leading-relaxed font-medium">
+                The problem: The body only synthesizes ~3g glycine per day, but needs 10&ndash;15g for optimal collagen production. This means most children are in a chronic glycine deficit &mdash; limiting the very scaffold their bones grow on.
+              </p>
+            </div>
+            <p className="text-xs text-forest italic mt-4"><a href="https://pubmed.ncbi.nlm.nih.gov/20093739/" target="_blank" rel="noopener noreferrer" className="underline hover:text-forest/70">[Melendez-Hevia E, et al. J Biosci. 2009]</a></p>
           </section>
 
           {/* The Modern Diet Problem */}
@@ -162,7 +182,7 @@ export default function GlycineArticle() {
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-2">
               This produces an unbalanced methionine:glycine ratio that may be metabolically disadvantageous.
             </p>
-            <p className="text-xs text-forest italic mb-4">[McCarty MF. et al. Medical Hypotheses. 2011]</p>
+            <p className="text-xs text-forest italic mb-4"><a href="https://pubmed.ncbi.nlm.nih.gov/20093739/" target="_blank" rel="noopener noreferrer" className="underline hover:text-forest/70">[Melendez-Hevia E, et al. J Biosci. 2009]</a></p>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed font-medium">
               The solution: Pair protein-rich diets with glycine-rich foods to normalize this ratio.
             </p>
@@ -308,12 +328,12 @@ export default function GlycineArticle() {
           <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200">
             <h2 className="font-display text-lg text-black mb-4">References</h2>
             <ul className="space-y-3 text-xs sm:text-sm text-gray-500 leading-relaxed">
-              <li>Inagawa K, et al. Subjective effects of glycine ingestion before bedtime on sleep quality. <em>Sleep and Biological Rhythms</em>. 2006;4(1):75-77.</li>
-              <li>Kasai K, et al. Glycine stimulated growth hormone release in man. <em>Metabolism</em>. 1980;29(9):826-829.</li>
-              <li>Ham DJ, et al. Glycine administration attenuates skeletal muscle wasting in a mouse model of cancer cachexia. <em>Frontiers in Nutrition</em>. 2019;6:172.</li>
-              <li>de Paz-Lugo P, et al. High glycine concentration increases collagen synthesis by articular chondrocytes in vitro. <em>Amino Acids</em>. 2018;50(10):1405-1415.</li>
-              <li>McCarty MF, et al. Dietary glycine is rate-limiting for glutathione synthesis and may have broad anti-atherosclerotic effects. <em>Medical Hypotheses</em>. 2011;76(5):697-702.</li>
-              <li>Bannai M, et al. The effects of glycine on subjective daytime performance in partially sleep-restricted healthy volunteers. <em>Frontiers in Neurology</em>. 2012;3:61.</li>
+              <li><a href="https://pubmed.ncbi.nlm.nih.gov/25533534/" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline hover:text-emerald-900">Kawai N, et al. The sleep-promoting and hypothermic effects of glycine are mediated by NMDA receptors in the suprachiasmatic nucleus. <em>Neuropsychopharmacology</em>. 2015;40(6):1405-16.</a></li>
+              <li><a href="https://pubmed.ncbi.nlm.nih.gov/22529837/" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline hover:text-emerald-900">Bannai M, et al. The effects of glycine on subjective daytime performance in partially sleep-restricted healthy volunteers. <em>Frontiers in Neurology</em>. 2012;3:61.</a></li>
+              <li><a href="https://pubmed.ncbi.nlm.nih.gov/7358501/" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline hover:text-emerald-900">Kasai K, et al. Glycine stimulated growth hormone release in man. <em>Metabolism</em>. 1980;29(9):826-829.</a></li>
+              <li><a href="https://pubmed.ncbi.nlm.nih.gov/20093739/" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline hover:text-emerald-900">Melendez-Hevia E, et al. A weak link in metabolism: the metabolic capacity for glycine biosynthesis does not satisfy the need for collagen synthesis. <em>J Biosci</em>. 2009;34(6):853-72.</a></li>
+              <li><a href="https://pubmed.ncbi.nlm.nih.gov/29559876/" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline hover:text-emerald-900">de Paz-Lugo P, et al. High glycine concentration increases collagen synthesis by articular chondrocytes in vitro. <em>Amino Acids</em>. 2018;50(10):1405-1415.</a></li>
+              <li><a href="https://pubmed.ncbi.nlm.nih.gov/28337245/" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline hover:text-emerald-900">Razak MA, et al. Multifarious beneficial effect of nonessential amino acid, glycine: a review. <em>Oxidative Medicine and Cellular Longevity</em>. 2017;2017:1716701.</a></li>
             </ul>
           </section>
 
