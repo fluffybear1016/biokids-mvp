@@ -182,7 +182,7 @@ export default function SignalPage() {
                 <p className="text-xs text-stone-700 mb-2">{item.science}</p>
                 <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
                 {item.citations.map((c, i) => (
-                  <p key={i} className="text-[10px] text-stone-500 pl-2 border-l-2 border-emerald-200 mb-1">{c}</p>
+                  <a key={i} href={`https://pubmed.ncbi.nlm.nih.gov/?term=${encodeURIComponent(c)}`} target="_blank" rel="noopener noreferrer" className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">{c}</a>
                 ))}
               </div>
             )}
