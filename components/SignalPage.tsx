@@ -12,8 +12,8 @@ export default function SignalPage() {
   };
 
   const [currentPeriod, setCurrentPeriod] = useState('morning');
-  const [completedItems, setCompletedItems] = useState([]);
-  const [expandedItem, setExpandedItem] = useState(null);
+  const [completedItems, setCompletedItems] = useState<string[]>([]);
+  const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
   // Initialize on mount
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function SignalPage() {
     }
   }, [currentPeriod, completedItems]);
 
-  const toggleComplete = (id, e) => {
+  const toggleComplete = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     const isCompleting = !completedItems.includes(id);
     setCompletedItems(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
@@ -64,7 +64,7 @@ export default function SignalPage() {
     }
   };
 
-  const toggleExpand = (id) => {
+  const toggleExpand = (id: string) => {
     setExpandedItem(prev => prev === id ? null : id);
   };
 
