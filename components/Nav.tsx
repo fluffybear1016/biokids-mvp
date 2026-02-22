@@ -15,7 +15,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
   
   const tabs = [
     { href: '/dashboard', label: 'Home' },
-    { href: '/signal', label: 'Signal' },
+    { href: '/science', label: 'Science' },
     { href: '/protocol', label: 'Protocol' },
     { href: '/learn', label: 'Articles' },
     { href: '/jarvis', label: 'gH AI' },
