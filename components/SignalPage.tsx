@@ -2,21 +2,18 @@
 
 import { useState, useEffect } from 'react';
 
-type Period = 'morning' | 'afternoon' | 'evening';
-
 export default function SignalPage() {
   // Auto-detect time of day
-  const getTimeOfDay = (): Period => {
+  const getTimeOfDay = () => {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) return 'morning';
     if (hour >= 12 && hour < 17) return 'afternoon';
     return 'evening';
   };
 
-  const [currentPeriod, setCurrentPeriod] = useState<Period>('morning');
-  const [completedItems, setCompletedItems] = useState<string[]>([]);
-  const [expandedItem, setExpandedItem] = useState<string | null>(null);
-  const [expandedScience, setExpandedScience] = useState<string | null>(null);
+  const [currentPeriod, setCurrentPeriod] = useState('morning');
+  const [completedItems, setCompletedItems] = useState([]);
+  const [expandedItem, setExpandedItem] = useState(null);
 
   // Initialize on mount
   useEffect(() => {
@@ -51,7 +48,7 @@ export default function SignalPage() {
     }
   }, [currentPeriod, completedItems]);
 
-  const toggleComplete = (id: string, e: React.MouseEvent) => {
+  const toggleComplete = (id, e) => {
     e.stopPropagation();
     const isCompleting = !completedItems.includes(id);
     setCompletedItems(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
@@ -67,11 +64,11 @@ export default function SignalPage() {
     }
   };
 
-  const toggleExpand = (id: string) => {
+  const toggleExpand = (id) => {
     setExpandedItem(prev => prev === id ? null : id);
   };
 
-  const allItems: { id: string; period: Period; title: string; subtitle: string; mechanism: string; practical: string; science: string; citations: string[] }[] = [
+  const allItems = [
     // ============ MORNING ============
     { id: 'waketime', period: 'morning', title: 'Consistent wake time', subtitle: 'Same time daily, even weekends', mechanism: 'Anchors circadian rhythm for predictable GH pulses', practical: 'Pick a time and stick to it. Variability scrambles the system.', science: 'Wake time variability >1 hour correlates with reduced slow-wave sleep and blunted GH secretion.', citations: ['Wittmann M, et al. Chronobiol Int. 2006;23(1-2):497-509.'] },
     { id: 'sun', period: 'morning', title: 'Morning sunlight', subtitle: '10 min outside, no sunglasses', mechanism: "Sets tonight's melatonin clock", practical: 'Backyard, walk to bus stop, breakfast on porch.', science: 'Light exposure synchronizes the suprachiasmatic nucleus, determining melatonin onset 14-16 hours later.', citations: ['Roenneberg T, et al. Curr Biol. 2007;17(11):R462-71.'] },
@@ -112,7 +109,7 @@ export default function SignalPage() {
     { id: 'bedtime', period: 'evening', title: 'In bed by 8-8:30pm', subtitle: 'Asleep by 8:30-9pm', mechanism: 'First 90 min = 70% of GH release', practical: 'Non-negotiable. Everything else builds to this.', science: 'The first slow-wave cycle contains majority of nocturnal GH secretion.', citations: ['Van Cauter E, et al. JAMA. 2000;284(7):861-8.'] },
   ];
 
-  const periods: Period[] = ['morning', 'afternoon', 'evening'];
+  const periods = ['morning', 'afternoon', 'evening'];
   const periodLabels = { morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening' };
   const periodDescriptions = { 
     morning: 'Set up energy for the day', 
@@ -126,7 +123,7 @@ export default function SignalPage() {
   const upcomingItems = allItems.filter(item => upcomingPeriods.includes(item.period));
   const completedToday = allItems.filter(item => completedItems.includes(item.id) && item.period !== currentPeriod);
 
-  const renderItem = (item: typeof allItems[number], isFirst = false) => {
+  const renderItem = (item, isFirst = false) => {
     const isExpanded = expandedItem === item.id;
     const isCompleted = completedItems.includes(item.id);
 
@@ -170,14 +167,14 @@ export default function SignalPage() {
             <button 
               onClick={(e) => {
                 e.stopPropagation();
-                setExpandedScience(expandedScience === item.id ? null : item.id);
+                setExpandedItem(expandedItem === item.id + '-science' ? item.id : item.id + '-science');
               }}
               className="text-sm text-emerald-600 hover:text-emerald-800 flex items-center gap-1 font-medium"
             >
-              {expandedScience === item.id ? '▼' : '▶'} See the science
+              {expandedItem === item.id + '-science' ? '▼' : '▶'} See the science
             </button>
 
-            {expandedScience === item.id && (
+            {expandedItem === item.id + '-science' && (
               <div className="mt-3 bg-stone-50 rounded-lg p-3">
                 <p className="text-xs text-stone-700 mb-2">{item.science}</p>
                 <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
@@ -209,7 +206,7 @@ export default function SignalPage() {
   };
 
   return (
-    <div className="font-sans-override max-w-2xl mx-auto p-4 sm:p-6">
+    <div className="max-w-2xl mx-auto p-4 sm:p-6">
       {/* Period header */}
       <div className="text-center mb-2">
         <p className="text-2xl font-semibold text-stone-900">{periodLabels[currentPeriod]}</p>
