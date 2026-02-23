@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
+import GoalSelection from '@/components/GoalSelection';
 
 export default function Onboarding() {
   const router = useRouter();
@@ -72,7 +73,7 @@ export default function Onboarding() {
         {/* Progress Bar */}
         <div className="mb-8">
           <div className="flex justify-between mb-2">
-            {[1, 2, 3, 4].map((s) => (
+            {[1, 2, 3, 4, 5].map((s) => (
               <div
                 key={s}
                 className={`w-1/4 h-2 rounded-full mx-1 ${
@@ -81,7 +82,7 @@ export default function Onboarding() {
               />
             ))}
           </div>
-          <p className="text-center text-sm text-stone-500">Step {step} of 4</p>
+          <p className="text-center text-sm text-stone-500">Step {step} of 5</p>
         </div>
 
         {/* Step 1: Child Info */}
@@ -340,8 +341,22 @@ export default function Onboarding() {
           </form>
         )}
 
-        {/* Step 3: Protocol Ready */}
+        {/* Step 3: Goal Selection */}
         {step === 3 && (
+          <GoalSelection
+            childName={name || 'Your child'}
+            onSelect={(goal) => {
+              localStorage.setItem('biokids_goal', JSON.stringify({
+                goal,
+                date: new Date().toISOString(),
+              }));
+              router.push('/dashboard');
+            }}
+          />
+        )}
+
+        {/* Step 4: Protocol Ready */}
+        {step === 4 && (
           <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 text-center">
             <div className="text-5xl mb-4">🌱</div>
             <h2 className="text-2xl font-semibold text-stone-900 mb-4">
@@ -426,7 +441,7 @@ export default function Onboarding() {
             </p>
 
             <button
-              onClick={() => setStep(4)}
+              onClick={() => setStep(5)}
               className="w-full py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors"
             >
               Start your free trial
@@ -434,8 +449,8 @@ export default function Onboarding() {
           </div>
         )}
 
-        {/* Step 4: Stripe Pricing Table */}
-        {step === 4 && (
+        {/* Step 5: Stripe Pricing Table */}
+        {step === 5 && (
           <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
             <h2 className="text-2xl font-semibold text-stone-900 mb-4 text-center">
               Start Your 7-Day Free Trial
