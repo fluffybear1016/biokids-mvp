@@ -152,7 +152,7 @@ function LoginForm() {
         <Link href="/forgot-password" className="text-gray-500 hover:text-forest">
           Forgot password?
         </Link>
-        <Link href="/onboarding" className="text-forest font-medium hover:underline">
+        <Link href="/signup" className="text-forest font-medium hover:underline">
           Create account
         </Link>
       </div>
