@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 import GoalSelection from '@/components/GoalSelection';
+import { createClient } from '@/lib/supabase';
 
 export default function Onboarding() {
   const router = useRouter();
@@ -17,6 +18,10 @@ export default function Onboarding() {
   const [heightIn, setHeightIn] = useState('');
   const [weight, setWeight] = useState('');
 
+  // Auth info for Stripe
+  const [userEmail, setUserEmail] = useState('');
+  const [userId, setUserId] = useState('');
+
   // Step 2: Questions
   const [sleepHours, setSleepHours] = useState('');
   const [bedtime, setBedtime] = useState('');
@@ -24,6 +29,18 @@ export default function Onboarding() {
   const [exercise, setExercise] = useState('');
   const [screenTime, setScreenTime] = useState('');
   const [processedFoods, setProcessedFoods] = useState('');
+
+  // Fetch authenticated user info for Stripe
+  useEffect(() => {
+    const supabase = createClient();
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUserEmail(session.user.email || '');
+        setUserId(session.user.id);
+      }
+    });
+  }, []);
 
   // Generate year options (current year down to 25 years ago)
   const currentYear = new Date().getFullYear();
@@ -370,6 +387,8 @@ export default function Onboarding() {
             <stripe-pricing-table
               pricing-table-id="prctbl_1T21I73eI33ypy3JzXLrhay1"
               publishable-key="pk_live_51Sw3RG3eI33ypy3JUaKVJ6RY9Xw5ear1j1eQQOp81v6YSc63XuihA4vSoANrCMLemY13GxAi0fT3x7JgFglHmGTn00W88YoFKE"
+              customer-email={userEmail || undefined}
+              client-reference-id={userId || undefined}
             />
           </div>
         )}
