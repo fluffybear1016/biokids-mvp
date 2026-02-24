@@ -28,9 +28,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["'Courier New'", 'Courier', 'monospace'],
-        body: ["'Courier New'", 'Courier', 'monospace'],
-        sans: ["'Courier New'", 'Courier', 'monospace'],
+        display: ['system-ui', '-apple-system', 'BlinkMacSystemFont', "'Segoe UI'", 'Roboto', 'sans-serif'],
+        body: ['system-ui', '-apple-system', 'BlinkMacSystemFont', "'Segoe UI'", 'Roboto', 'sans-serif'],
+        sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', "'Segoe UI'", 'Roboto', 'sans-serif'],
         mono: ["'Courier New'", 'Courier', 'monospace'],
       },
     },

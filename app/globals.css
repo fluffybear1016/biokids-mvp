@@ -17,27 +17,23 @@
   --text-muted: #8A9B92;
 }
 
-* {
-  font-family: 'Courier New', Courier, monospace !important;
-}
-
 body {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--cream);
   color: var(--text-primary);
 }
 
 .font-display {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .font-mono-science {
   font-family: 'Courier New', Courier, monospace;
 }
 
-.font-sans-override,
-.font-sans-override * {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+.font-courier,
+.font-courier * {
+  font-family: 'Courier New', Courier, monospace !important;
 }
 
 /* Custom scrollbar */
