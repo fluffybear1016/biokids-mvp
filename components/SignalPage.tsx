@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 
 type Period = 'morning' | 'afternoon' | 'evening';
 
+export const SIGNAL_ITEM_COUNT = 33;
+
 export default function SignalPage() {
   // Auto-detect time of day
   const getTimeOfDay = (): Period => {

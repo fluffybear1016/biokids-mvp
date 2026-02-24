@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
-import SignalPage from '@/components/SignalPage';
+import SignalPage, { SIGNAL_ITEM_COUNT } from '@/components/SignalPage';
 import GoalProgress from '@/components/GoalProgress';
-
-const TOTAL_ITEMS = 34;
 
 export default function Dashboard() {
   const [goal, setGoal] = useState<'concerned' | 'foundation' | 'elite' | null>(null);
@@ -56,7 +54,7 @@ export default function Dashboard() {
           <GoalProgress
             goal={goal}
             completedCount={completedCount}
-            totalCount={TOTAL_ITEMS}
+            totalCount={SIGNAL_ITEM_COUNT}
             childName={childName}
           />
         )}
