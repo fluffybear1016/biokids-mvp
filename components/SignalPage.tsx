@@ -6,6 +6,15 @@ type Period = 'morning' | 'afternoon' | 'evening';
 
 export const SIGNAL_ITEM_COUNT = 33;
 
+// High-priority items for future notification system
+export const NOTIFICATION_PRIORITY_ITEMS = [
+  { ids: ['dairy1', 'dairy2', 'dairy3'], label: 'Dairy (all 3 servings)' },
+  { ids: ['clo'], label: 'Cod Liver Oil' },
+  { ids: ['breakfast', 'dairy2', 'dinnerpro'], label: 'Protein at breakfast, lunch, dinner' },
+  { ids: ['glycine'], label: 'Glycine with dinner' },
+  { ids: ['bedtime'], label: 'Bedtime by 8-8:30pm' },
+];
+
 export default function SignalPage() {
   // Auto-detect time of day
   const getTimeOfDay = (): Period => {
@@ -85,7 +94,7 @@ export default function SignalPage() {
     { id: 'activeam', period: 'morning', title: 'Active commute', subtitle: 'Walk to school, bike, or morning play', mechanism: 'Morning movement sets up energy to burn later', practical: 'Any activity counts. Builds adenosine for tonight.', science: 'Physical activity increases adenosine accumulation, building sleep pressure throughout the day.', citations: [{ text: 'Kredlow MA, et al. J Behav Med. 2015;38(3):427-49.', url: 'https://pubmed.ncbi.nlm.nih.gov/25596964/' }, { text: 'Porkka-Heiskanen T, et al. Science. 1997;276(5316):1265-8.', url: 'https://pubmed.ncbi.nlm.nih.gov/9157887/' }] },
     
     // ============ AFTERNOON ============
-    { id: 'dairy2', period: 'afternoon', title: 'Dairy with lunch', subtitle: 'Milk, yogurt, or cheese', mechanism: '+0.39cm per 8oz milk/day', practical: 'Any form counts toward 24oz daily target.', science: 'Milk proteins uniquely stimulate IGF-1 production.', citations: [{ text: 'Hoppe C, et al. Annu Rev Nutr. 2006;26:131-73.', url: 'https://pubmed.ncbi.nlm.nih.gov/16848703/' }, { text: 'Cadogan J, et al. BMJ. 1997;315(7118):1255-60.', url: 'https://pubmed.ncbi.nlm.nih.gov/9390050/' }] },
+    { id: 'dairy2', period: 'afternoon', title: 'Protein + dairy at lunch', subtitle: 'Meat/fish/eggs + milk, yogurt, or cheese', mechanism: '+0.39cm per 8oz milk/day', practical: 'Any form counts toward 24oz daily target.', science: 'Milk proteins uniquely stimulate IGF-1 production.', citations: [{ text: 'Hoppe C, et al. Annu Rev Nutr. 2006;26:131-73.', url: 'https://pubmed.ncbi.nlm.nih.gov/16848703/' }, { text: 'Cadogan J, et al. BMJ. 1997;315(7118):1255-60.', url: 'https://pubmed.ncbi.nlm.nih.gov/9390050/' }] },
     { id: 'nosugarpm', period: 'afternoon', title: 'Water, not juice/soda', subtitle: 'Save sugar for strategic moments', mechanism: 'Random sugar spikes blunt GH all day', practical: 'Water or milk. Save treats for post-sprint.', science: 'Each insulin spike suppresses GH for 2-3 hours.', citations: [{ text: 'Lanzi R, et al. Metabolism. 1999;48(9):1152-6.', url: 'https://pubmed.ncbi.nlm.nih.gov/10484056/' }, { text: 'Cornford AS, et al. Horm Res Paediatr. 2011;75(6):396-404.', url: 'https://pubmed.ncbi.nlm.nih.gov/21540578/' }] },
     { id: 'nonap', period: 'afternoon', title: 'No naps after 2-3pm', subtitle: 'Early naps only if needed', mechanism: 'Late naps steal sleep pressure from tonight', practical: 'If they must nap, keep it before 2pm and under 30 min.', science: 'Naps >30min after 3pm reduce slow-wave sleep and delay sleep onset.', citations: [{ text: 'Milner CE, Cote KA. J Sleep Res. 2009;18(2):272-81.', url: 'https://pubmed.ncbi.nlm.nih.gov/19645971/' }, { text: 'Takahashi M. Sleep Med Rev. 2003;7(3):227-35.', url: 'https://pubmed.ncbi.nlm.nih.gov/12927122/' }] },
     { id: 'presprint', period: 'afternoon', title: 'Pre-sprint fuel (sprint days)', subtitle: 'Eggs + peanuts 30 min before', mechanism: 'Choline + niacin prime GH expression', practical: 'Hard boiled egg and handful of peanuts.', science: 'Niacin enhances GH response to exercise by 300-400%.', citations: [{ text: 'Quabbe HJ, et al. J Clin Endocrinol Metab. 1983;57(6):1214-9.', url: 'https://pubmed.ncbi.nlm.nih.gov/6415142/' }, { text: 'Stokes KA, et al. J Appl Physiol. 2002;92(2):602-8.', url: 'https://pubmed.ncbi.nlm.nih.gov/11796671/' }] },
