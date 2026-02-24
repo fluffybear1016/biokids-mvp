@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import SignalPage, { SIGNAL_ITEM_COUNT } from '@/components/SignalPage';
 import GoalProgress from '@/components/GoalProgress';
+import StreakDisplay from '@/components/StreakDisplay';
 
 export default function Dashboard() {
   const [goal, setGoal] = useState<'concerned' | 'foundation' | 'elite' | null>(null);
@@ -58,6 +59,7 @@ export default function Dashboard() {
             childName={childName}
           />
         )}
+        <StreakDisplay />
       </div>
       <SignalPage />
     </div>
