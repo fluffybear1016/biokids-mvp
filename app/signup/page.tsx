@@ -45,6 +45,10 @@ export default function Signup() {
           body: JSON.stringify({ userId: data.user.id, email }),
         });
 
+        // Save auth info for onboarding (fallback if session not available)
+        localStorage.setItem('biokids_auth_email', email);
+        localStorage.setItem('biokids_auth_user_id', data.user.id);
+
         router.push('/onboarding');
       }
     } catch (err) {

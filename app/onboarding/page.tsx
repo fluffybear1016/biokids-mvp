@@ -33,13 +33,21 @@ export default function Onboarding() {
   // Fetch authenticated user info for Stripe
   useEffect(() => {
     const supabase = createClient();
-    if (!supabase) return;
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        setUserEmail(session.user.email || '');
-        setUserId(session.user.id);
-      }
-    });
+    if (supabase) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session?.user) {
+          setUserEmail(session.user.email || '');
+          setUserId(session.user.id);
+          return;
+        }
+        // Fallback to localStorage if session not available (e.g. email confirmation pending)
+        setUserEmail(localStorage.getItem('biokids_auth_email') || '');
+        setUserId(localStorage.getItem('biokids_auth_user_id') || '');
+      });
+    } else {
+      setUserEmail(localStorage.getItem('biokids_auth_email') || '');
+      setUserId(localStorage.getItem('biokids_auth_user_id') || '');
+    }
   }, []);
 
   // Generate year options (current year down to 25 years ago)

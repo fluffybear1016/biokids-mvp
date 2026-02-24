@@ -65,6 +65,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
+  // Allow dashboard access right after Stripe checkout (webhook may still be processing)
+  if (request.nextUrl.searchParams.get('checkout_success') === 'true') {
+    return response;
+  }
+
   // Check subscription status
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
