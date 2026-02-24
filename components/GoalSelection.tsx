@@ -14,7 +14,7 @@ const goals = [
     id: 'concerned' as GoalType,
     title: 'Concerned About Growth',
     subtitle: 'My child seems small or behind',
-    description: "You've noticed your child isn't growing as expected. We'll focus on the highest-impact levers backed by research, with gentle guidance and tracking.",
+    description: "You've noticed your child isn't growing as expected. We'll focus on the highest-impact levers backed by research.",
     target: 'Personalized protocol',
     icon: '💙',
     color: 'bg-sky-50 border-sky-200 hover:border-sky-300',
