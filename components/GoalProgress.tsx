@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 interface GoalProgressProps {
-  goal: 'concerned' | 'explorer' | 'foundation' | 'optimized' | 'elite';
+  goal: 'concerned' | 'foundation' | 'elite';
   completedCount: number;
   totalCount: number;
   childName: string;
@@ -24,19 +24,6 @@ const goalConfig = {
       return "Amazing dedication! You're doing everything you can.";
     }
   },
-  explorer: {
-    title: 'Just Starting Out',
-    icon: '🌱',
-    color: 'text-stone-600',
-    bgColor: 'bg-stone-100',
-    targetPercent: 0, // No pressure
-    getMessage: (percent: number) => {
-      if (percent === 0) return "Take your time — explore what works for your family.";
-      if (percent < 30) return "You're getting started! Every step matters.";
-      if (percent < 60) return "Great progress! You're finding your rhythm.";
-      return "Amazing! You're doing wonderfully.";
-    }
-  },
   foundation: {
     title: 'Healthy Foundation',
     icon: '🌿',
@@ -50,21 +37,8 @@ const goalConfig = {
       return "Wonderful! You're giving your child a great foundation.";
     }
   },
-  optimized: {
-    title: 'Fully Optimized',
-    icon: '⭐',
-    color: 'text-amber-600',
-    bgColor: 'bg-amber-100',
-    targetPercent: 85,
-    getMessage: (percent: number) => {
-      if (percent < 50) return "Still time today — you've got this.";
-      if (percent < 75) return "Making great progress!";
-      if (percent < 90) return "Almost there — strong day!";
-      return "Outstanding! Full optimization achieved.";
-    }
-  },
   elite: {
-    title: 'Elite Athlete Track',
+    title: 'Maximum Potential',
     icon: '🏆',
     color: 'text-blue-600',
     bgColor: 'bg-blue-100',
@@ -132,7 +106,7 @@ export default function GoalProgress({ goal, completedCount, totalCount, childNa
       </p>
 
       {/* Gentle Encouragement (not guilt) */}
-      {goal !== 'explorer' && percent < config.targetPercent && percent > 0 && (
+      {percent < config.targetPercent && percent > 0 && (
         <p className="text-xs text-stone-400 mt-2">
           Your target: {config.targetPercent}% • No worries if today's different — tomorrow's a new day.
         </p>
@@ -150,20 +124,10 @@ export function CompletionCelebration({ goal, percent }: { goal: string, percent
       { threshold: 70, message: "Target reached! 🌟", subtext: "You're giving your child every advantage." },
       { threshold: 100, message: "Everything done! ✨", subtext: "Incredible commitment to your child's growth." },
     ],
-    explorer: [
-      { threshold: 1, message: "You showed up today! 🌱", subtext: "That's what matters most." },
-      { threshold: 50, message: "Look at you go! 🌿", subtext: "Finding your groove." },
-      { threshold: 100, message: "Incredible day! ✨", subtext: "You did it all — amazing!" },
-    ],
     foundation: [
       { threshold: 50, message: "Solid foundation! 🌿", subtext: "The basics are covered." },
       { threshold: 75, message: "Strong day! 💪", subtext: "Your consistency is showing." },
       { threshold: 100, message: "Perfect foundation! 🎉", subtext: "Every building block in place." },
-    ],
-    optimized: [
-      { threshold: 75, message: "Optimizing! ⭐", subtext: "You're in the zone." },
-      { threshold: 90, message: "Near perfect! 🌟", subtext: "Nothing missed." },
-      { threshold: 100, message: "Fully optimized! ✨", subtext: "Maximum support achieved." },
     ],
     elite: [
       { threshold: 85, message: "Elite effort! 🏆", subtext: "Champion habits forming." },

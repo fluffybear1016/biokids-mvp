@@ -8,7 +8,7 @@ import GoalProgress from '@/components/GoalProgress';
 const TOTAL_ITEMS = 34;
 
 export default function Dashboard() {
-  const [goal, setGoal] = useState<'concerned' | 'explorer' | 'foundation' | 'optimized' | 'elite' | null>(null);
+  const [goal, setGoal] = useState<'concerned' | 'foundation' | 'elite' | null>(null);
   const [completedCount, setCompletedCount] = useState(0);
   const [childName, setChildName] = useState('Your child');
 

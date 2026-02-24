@@ -7,7 +7,7 @@ interface GoalSelectionProps {
   onSelect: (goal: GoalType) => void;
 }
 
-type GoalType = 'concerned' | 'explorer' | 'foundation' | 'optimized' | 'elite';
+type GoalType = 'concerned' | 'foundation' | 'elite';
 
 const goals = [
   {
@@ -21,16 +21,6 @@ const goals = [
     selectedColor: 'bg-sky-100 border-sky-400',
   },
   {
-    id: 'explorer' as GoalType,
-    title: 'Just Starting Out',
-    subtitle: 'Learn at your own pace',
-    description: 'Explore the science, try what feels right, no pressure. Every small step counts.',
-    target: 'Personalized to your pace',
-    icon: '🌱',
-    color: 'bg-stone-50 border-stone-200 hover:border-stone-300',
-    selectedColor: 'bg-stone-100 border-stone-400',
-  },
-  {
     id: 'foundation' as GoalType,
     title: 'Healthy Foundation',
     subtitle: 'Build great habits',
@@ -41,20 +31,10 @@ const goals = [
     selectedColor: 'bg-emerald-100 border-emerald-400',
   },
   {
-    id: 'optimized' as GoalType,
-    title: 'Fully Optimized',
-    subtitle: 'Leave nothing on the table',
-    description: 'For parents who want to give their child every natural advantage. Consistent daily protocol.',
-    target: 'Personalized full protocol',
-    icon: '⭐',
-    color: 'bg-amber-50 border-amber-200 hover:border-amber-300',
-    selectedColor: 'bg-amber-100 border-amber-400',
-  },
-  {
     id: 'elite' as GoalType,
-    title: 'Elite Athlete Track',
-    subtitle: 'D1 / Professional sports goal',
-    description: 'Your child has big athletic dreams. This track maximizes natural growth potential for competitive sports.',
+    title: 'Maximum Potential',
+    subtitle: 'D1 / Pro sports · Leave nothing on the table',
+    description: "For parents who want to give their child every natural advantage — whether for elite athletics or overall development.",
     target: 'Personalized elite protocol',
     icon: '🏆',
     color: 'bg-blue-50 border-blue-200 hover:border-blue-300',
