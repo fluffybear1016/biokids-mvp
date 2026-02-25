@@ -1,8 +1,10 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Child, getGrowthStage, stageInfo, formatAge } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase';
 
 type NavProps = {
   children?: Child[];
@@ -12,6 +14,40 @@ type NavProps = {
 
 export default function Nav({ children, currentChild, onChildSelect }: NavProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [childName, setChildName] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+
+  useEffect(() => {
+    const name = localStorage.getItem('childName');
+    if (name) setChildName(name);
+
+    const supabase = createClient();
+    if (supabase) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session?.user) {
+          setIsLoggedIn(true);
+        } else if (localStorage.getItem('biokids_auth_user_id')) {
+          setIsLoggedIn(true);
+        }
+      });
+    } else if (localStorage.getItem('biokids_auth_user_id')) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = async () => {
+    const supabase = createClient();
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
+    localStorage.removeItem('biokids_auth_email');
+    localStorage.removeItem('biokids_auth_user_id');
+    setIsLoggedIn(false);
+    setShowMenu(false);
+    router.push('/');
+  };
   
   const tabs = [
     { href: '/dashboard', label: 'Home' },
@@ -62,15 +98,41 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
           </div>
         )}
 
-        {/* Auth buttons if no child */}
+        {/* Auth area */}
         {!currentChild && pathname !== '/' && (
           <div className="flex items-center gap-3 order-2 md:order-3">
-            <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-forest">
-              Log in
-            </Link>
-            <Link href="/signup" className="btn-primary text-sm py-2">
-              Get Started
-            </Link>
+            {isLoggedIn ? (
+              <div className="relative">
+                <button
+                  onClick={() => setShowMenu(!showMenu)}
+                  className="flex items-center gap-2 px-4 py-2 bg-cream rounded-full hover:bg-stone-200 transition-colors text-sm font-medium text-forest"
+                >
+                  {childName || 'My Account'}
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {showMenu && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-stone-200 py-1 z-50">
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-stone-50"
+                    >
+                      Log out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-forest">
+                  Log in
+                </Link>
+                <Link href="/signup" className="btn-primary text-sm py-2">
+                  Get Started
+                </Link>
+              </>
+            )}
           </div>
         )}
       </div>
