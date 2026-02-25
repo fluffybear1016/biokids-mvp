@@ -338,48 +338,80 @@ export default function Onboarding() {
             {geneticTargetCm && (
               <div className="mt-8">
                 {/* Vertical Bar Chart */}
-                <div className="relative flex items-end gap-4 mb-6 h-[320px] sm:h-[240px]">
+                <div className="relative flex items-end gap-4 mb-6 h-[340px] sm:h-[280px]">
                   {/* Labels column */}
-                  <div className="flex flex-col justify-end h-full w-24 text-right pr-2 text-xs text-stone-500 relative">
+                  <div className="flex flex-col justify-end h-full w-20 text-right pr-2 text-xs text-stone-500 relative">
                     <div className="absolute" style={{ bottom: '0%' }}>
-                      {cmToFtIn(geneticTargetCm - 10)}
-                    </div>
-                    <div className="absolute" style={{ bottom: '25%' }}>
                       {cmToFtIn(geneticTargetCm)}
                     </div>
-                    <div className="absolute" style={{ bottom: '50%' }}>
-                      {cmToFtIn(geneticTargetCm + 10)}
+                    <div className="absolute" style={{ bottom: '15%' }}>
+                      {cmToFtIn(geneticTargetCm + 2 * 2.54)}
                     </div>
-                    <div className="absolute" style={{ bottom: '85%' }}>
-                      {cmToFtIn(geneticTargetCm + 20)}
+                    <div className="absolute" style={{ bottom: '75%' }}>
+                      {cmToFtIn(geneticTargetCm + 8 * 2.54)}
                     </div>
                   </div>
 
                   {/* Bar */}
-                  <div className="flex-1 h-full flex flex-col justify-end rounded-xl overflow-hidden border border-stone-200">
-                    {/* Maximum Potential zone (top) */}
-                    <div className="bg-gradient-to-t from-emerald-400 to-emerald-300 flex items-center justify-center" style={{ height: '35%' }}>
+                  <div className="flex-1 h-full flex flex-col rounded-xl overflow-hidden border border-stone-200">
+                    {/* bioKids zone (top - dominant) */}
+                    <div className="bg-gradient-to-t from-emerald-500 to-emerald-300 flex items-center justify-center" style={{ height: '65%' }}>
                       <div className="text-center px-2">
-                        <p className="text-xs font-bold text-emerald-900">Maximum Potential</p>
-                        <p className="text-[10px] text-emerald-800">+4-8" above target</p>
-                        <p className="text-[10px] font-semibold text-emerald-900 mt-0.5">bioKids zone</p>
+                        <p className="text-sm font-bold text-emerald-950">bioKids zone</p>
+                        <p className="text-xs text-emerald-800 mt-1">+2" to +8" above target</p>
+                        <p className="text-[10px] text-emerald-700 mt-0.5">Maximum Potential</p>
                       </div>
                     </div>
-                    {/* Standard Range zone (middle) */}
-                    <div className="bg-stone-200 flex items-center justify-center" style={{ height: '40%' }}>
+                    {/* Standard Range zone (narrow) */}
+                    <div className="bg-stone-200 flex items-center justify-center" style={{ height: '15%' }}>
                       <div className="text-center px-2">
-                        <p className="text-xs font-semibold text-stone-700">Standard Range (95%)</p>
-                        <p className="text-[10px] text-stone-600">{'\u00B1'}4" of target</p>
-                        <p className="text-[10px] text-stone-500">Where most children finish</p>
+                        <p className="text-[10px] font-semibold text-stone-600">Standard Range · +2" above target</p>
                       </div>
                     </div>
                     {/* Genetic Target zone (bottom) */}
-                    <div className="bg-stone-100 flex items-center justify-center border-t-2 border-stone-400" style={{ height: '25%' }}>
+                    <div className="bg-stone-100 flex items-center justify-center border-t-2 border-stone-400" style={{ height: '20%' }}>
                       <div className="text-center px-2">
                         <p className="text-xs font-semibold text-stone-600">Genetic Target</p>
                         <p className="text-sm font-bold text-stone-900">{cmToFtIn(geneticTargetCm)}</p>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                {/* Percentile Table */}
+                <div className="mb-6">
+                  <p className="text-sm font-semibold text-stone-800 mb-2">Height Potential Breakdown</p>
+                  <div className="border border-stone-200 rounded-lg overflow-hidden text-xs">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-stone-100 text-stone-600">
+                          <th className="py-2 px-3 text-left font-medium">vs target</th>
+                          <th className="py-2 px-3 text-left font-medium">Height</th>
+                          <th className="py-2 px-3 text-left font-medium">Percentile</th>
+                          <th className="py-2 px-3 text-right font-medium"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          { offset: 2, pct: '~84th', bio: false },
+                          { offset: 3, pct: '~93rd', bio: true },
+                          { offset: 4, pct: '~97.5th', bio: true },
+                          { offset: 5, pct: '~99.4th', bio: true },
+                          { offset: 6, pct: '~99.9th', bio: true },
+                          { offset: 7, pct: '~99.95th', bio: true },
+                          { offset: 8, pct: '~99.997th', bio: true },
+                        ].map((row) => (
+                          <tr key={row.offset} className={row.bio ? 'bg-emerald-50' : 'bg-white'}>
+                            <td className="py-1.5 px-3 text-stone-700">+{row.offset}"</td>
+                            <td className="py-1.5 px-3 font-medium text-stone-900">{cmToFtIn(geneticTargetCm + row.offset * 2.54)}</td>
+                            <td className="py-1.5 px-3 text-stone-600">{row.pct}</td>
+                            <td className="py-1.5 px-3 text-right">
+                              {row.bio && <span className="text-emerald-700 font-semibold">bioKids</span>}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
 
@@ -389,7 +421,7 @@ export default function Onboarding() {
                     With parents at {formatParentHeight(motherHeightFt, motherHeightIn)} and {formatParentHeight(fatherHeightFt, fatherHeightIn)}, your child's genetic target is around <span className="font-bold text-stone-900">{cmToFtIn(geneticTargetCm)}</span>.
                   </p>
                   <p>
-                    Most children finish within about 4 inches of their genetic target (the standard 95% range).
+                    Most children finish within about 2 inches of their genetic target.
                   </p>
                   <p>
                     However, when sleep, nutrition, exercise and hormones align optimally, children can express their genetics to the maximum of their potential—up to 8 inches above target. This natural "maximal gene expression" zone is documented in peer reviewed literature and is the key target of bioKids.
