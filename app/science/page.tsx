@@ -180,7 +180,7 @@ export default function Dashboard() {
 
   const stage = child ? getGrowthStage(child.birth_date) : 'pre-puberty';
   const stageData = stageInfo[stage];
-  const childName = child?.name || 'Your child';
+  const childName = child?.name || (typeof window !== 'undefined' && localStorage.getItem('childName')) || 'Your child';
 
   if (loading) {
     return (

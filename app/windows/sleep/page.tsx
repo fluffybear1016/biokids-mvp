@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import { Child } from '@/lib/supabase';
+import { useChildName } from '@/lib/useChildName';
 
 const mockChild: Child = {
   id: '1',
   user_id: '1',
-  name: 'Emma',
+  name: 'Your child',
   birth_date: '2017-03-15',
   gender: 'female',
   created_at: new Date().toISOString(),
@@ -15,7 +16,8 @@ const mockChild: Child = {
 };
 
 export default function SleepWindow() {
-  const child = mockChild;
+  const childName = useChildName();
+  const child = { ...mockChild, name: childName };
 
   return (
     <div className="min-h-screen bg-cream">

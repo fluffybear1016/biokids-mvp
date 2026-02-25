@@ -4,11 +4,12 @@ import { useState } from 'react';
 import Nav from '@/components/Nav';
 import GrowthStacks from '@/components/GrowthStacks';
 import { Child } from '@/lib/supabase';
+import { useChildName } from '@/lib/useChildName';
 
 const mockChild: Child = {
   id: '1',
   user_id: '1',
-  name: 'Emma',
+  name: 'Your child',
   birth_date: '2017-03-15',
   gender: 'female',
   created_at: new Date().toISOString(),
@@ -23,7 +24,8 @@ type ProtocolItem = {
 };
 
 export default function Protocol() {
-  const [child] = useState<Child>(mockChild);
+  const childName = useChildName();
+  const child = { ...mockChild, name: childName };
   const [decisions, setDecisions] = useState<Record<string, boolean>>({
     early_bedtime: false,
     power_breakfast: false,

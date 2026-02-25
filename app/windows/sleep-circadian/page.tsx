@@ -9,7 +9,7 @@ import { SleepHomeTab } from '@/components/HomeTabs';
 const mockChild: Child = {
   id: '1',
   user_id: '1',
-  name: 'Emma',
+  name: 'Your child',
   birth_date: '2017-03-15',
   gender: 'female',
   created_at: new Date().toISOString(),
@@ -36,6 +36,7 @@ export default function SleepCircadianWindow() {
   const [childAge, setChildAge] = useState(8);
 
   useEffect(() => {
+    const savedName = localStorage.getItem('childName');
     const childData = localStorage.getItem('child_data');
     if (childData) {
       try {
@@ -45,14 +46,18 @@ export default function SleepCircadianWindow() {
           setChildAge(age);
           setChild({
             ...mockChild,
-            name: parsed.name || 'Emma',
+            name: parsed.name || savedName || 'Your child',
             birth_date: parsed.birthDate,
             gender: parsed.sex || 'female',
           });
+          return;
         }
       } catch (e) {
         // Use defaults
       }
+    }
+    if (savedName) {
+      setChild({ ...mockChild, name: savedName });
     }
   }, []);
 

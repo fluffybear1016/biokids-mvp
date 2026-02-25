@@ -4,11 +4,12 @@ import { useState, useRef, useEffect, Suspense, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Nav from '@/components/Nav';
 import { Child } from '@/lib/supabase';
+import { useChildName } from '@/lib/useChildName';
 
 const mockChild: Child = {
   id: '1',
   user_id: '1',
-  name: 'Emma',
+  name: 'Your child',
   birth_date: '2017-03-15',
   gender: 'female',
   created_at: new Date().toISOString(),
@@ -41,12 +42,13 @@ export default function JarvisPage() {
 
 function Jarvis() {
   const searchParams = useSearchParams();
-  const [child] = useState<Child>(mockChild);
+  const childName = useChildName();
+  const child = { ...mockChild, name: childName };
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
       role: 'assistant',
-      content: `Hi! I'm Jarvis, your GH optimization assistant. I can answer questions about growth hormone, sleep timing, nutrition, exercise — anything related to helping ${mockChild.name} reach their height potential.\n\nWhat would you like to know?`,
+      content: `Hi! I'm Jarvis, your GH optimization assistant. I can answer questions about growth hormone, sleep timing, nutrition, exercise — anything related to helping your child reach their height potential.\n\nWhat would you like to know?`,
       timestamp: new Date(),
     },
   ]);
