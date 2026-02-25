@@ -361,7 +361,7 @@ export default function Onboarding() {
                     <div className="bg-gradient-to-t from-emerald-400 to-emerald-300 flex items-center justify-center" style={{ height: '35%' }}>
                       <div className="text-center px-2">
                         <p className="text-xs font-bold text-emerald-900">Maximum Potential</p>
-                        <p className="text-[10px] text-emerald-800">+6-8" above target</p>
+                        <p className="text-[10px] text-emerald-800">+4-8" above target</p>
                         <p className="text-[10px] font-semibold text-emerald-900 mt-0.5">bioKids zone</p>
                       </div>
                     </div>
@@ -411,12 +411,12 @@ export default function Onboarding() {
                   {showScience ? '▼' : '▶'} See the science
                 </button>
                 {showScience && (
-                  <div className="mt-2 bg-emerald-50 rounded-lg p-3 space-y-2">
+                  <div className="mt-2 bg-emerald-50 rounded-lg p-3 space-y-2 font-mono">
                     <p className="text-[11px] text-emerald-800">
-                      Standard band based on Luo/Wang et al. 1998 and AAFP pediatric guidelines.
+                      Standard band based on <a href="https://www.nature.com/articles/pr1998502" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-950">Luo/Wang et al. 1998</a> and <a href="https://www.aafp.org/pubs/afp/issues/2015/0701/p43.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-950">AAFP pediatric guidelines</a>.
                     </p>
                     <p className="text-[11px] text-emerald-800">
-                      Maximal expression (+3-4 SD) documented in Zeevi et al. 2024 study of healthy families.
+                      Maximal expression (+3-4 SD) documented in <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11352326/" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-950">Zeevi et al. 2024</a> study of healthy families.
                     </p>
                   </div>
                 )}
