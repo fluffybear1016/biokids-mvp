@@ -338,7 +338,7 @@ export default function Onboarding() {
             {geneticTargetCm && (
               <div className="mt-8">
                 {/* Vertical Bar Chart */}
-                <div className="relative flex items-end gap-4 mb-6" style={{ height: '240px' }}>
+                <div className="relative flex items-end gap-4 mb-6 h-[320px] sm:h-[240px]">
                   {/* Labels column */}
                   <div className="flex flex-col justify-end h-full w-24 text-right pr-2 text-xs text-stone-500 relative">
                     <div className="absolute" style={{ bottom: '0%' }}>
