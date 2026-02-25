@@ -18,25 +18,25 @@ export default function Onboarding() {
   const [heightIn, setHeightIn] = useState('');
   const [weight, setWeight] = useState('');
 
-  // Step 2: Height Potential
-  const [childGender, setChildGender] = useState<'boy' | 'girl' | ''>('');
-  const [motherHeightFt, setMotherHeightFt] = useState('');
-  const [motherHeightIn, setMotherHeightIn] = useState('');
-  const [fatherHeightFt, setFatherHeightFt] = useState('');
-  const [fatherHeightIn, setFatherHeightIn] = useState('');
-  const [showScience, setShowScience] = useState(false);
-
-  // Auth info for Stripe
+  // Step 2: Questions
   const [userEmail, setUserEmail] = useState('');
   const [userId, setUserId] = useState('');
 
-  // Step 3: Questions
+  // Auth info for Stripe
   const [sleepHours, setSleepHours] = useState('');
   const [bedtime, setBedtime] = useState('');
   const [dairy, setDairy] = useState('');
   const [exercise, setExercise] = useState('');
   const [screenTime, setScreenTime] = useState('');
   const [processedFoods, setProcessedFoods] = useState('');
+
+  // Step 4: Height Potential
+  const [childGender, setChildGender] = useState<'boy' | 'girl' | ''>('');
+  const [motherHeightFt, setMotherHeightFt] = useState('');
+  const [motherHeightIn, setMotherHeightIn] = useState('');
+  const [fatherHeightFt, setFatherHeightFt] = useState('');
+  const [fatherHeightIn, setFatherHeightIn] = useState('');
+  const [showScience, setShowScience] = useState(false);
 
   // Fetch authenticated user info for Stripe
   useEffect(() => {
@@ -105,17 +105,7 @@ export default function Onboarding() {
     return ((fatherCm - 13) + motherCm) / 2;
   })() : null;
 
-  const handleStep2Submit = () => {
-    if (geneticTargetCm) {
-      localStorage.setItem('childGender', childGender);
-      localStorage.setItem('motherHeight', `${motherHeightFt}'${motherHeightIn}"`);
-      localStorage.setItem('fatherHeight', `${fatherHeightFt}'${fatherHeightIn}"`);
-      localStorage.setItem('geneticTarget', geneticTargetCm.toString());
-    }
-    setStep(3);
-  };
-
-  const handleStep3Submit = (e: React.FormEvent) => {
+  const handleStep2Submit = (e: React.FormEvent) => {
     e.preventDefault();
     localStorage.setItem('sleepHours', sleepHours);
     localStorage.setItem('bedtime', bedtime);
@@ -123,7 +113,17 @@ export default function Onboarding() {
     localStorage.setItem('exercise', exercise);
     localStorage.setItem('screenTime', screenTime);
     localStorage.setItem('processedFoods', processedFoods);
-    setStep(4);
+    setStep(3);
+  };
+
+  const handleStep4Submit = () => {
+    if (geneticTargetCm) {
+      localStorage.setItem('childGender', childGender);
+      localStorage.setItem('motherHeight', `${motherHeightFt}'${motherHeightIn}"`);
+      localStorage.setItem('fatherHeight', `${fatherHeightFt}'${fatherHeightIn}"`);
+      localStorage.setItem('geneticTarget', geneticTargetCm.toString());
+    }
+    setStep(5);
   };
 
   return (
@@ -249,8 +249,174 @@ export default function Onboarding() {
           </form>
         )}
 
-        {/* Step 2: Height Potential */}
+        {/* Step 2: Quick Questions */}
         {step === 2 && (
+          <form onSubmit={handleStep2Submit} className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+            <h2 className="text-2xl font-semibold text-stone-900 mb-2">A few quick questions</h2>
+            <p className="text-sm text-stone-500 mb-6">
+              This helps us personalize {name}'s protocol.
+            </p>
+
+            <div className="space-y-5">
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-2">
+                  How many hours of sleep does {name} get each night?
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {['8 or less', '9-10', '11-12', '12+'].map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => setSleepHours(option)}
+                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
+                        sleepHours === option
+                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
+                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-2">
+                  What time does {name} usually go to bed?
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {['Before 8pm', '8-9pm', 'After 9pm'].map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => setBedtime(option)}
+                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
+                        bedtime === option
+                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
+                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-2">
+                  Does {name} consume dairy daily?
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {['Yes', 'Sometimes', 'No'].map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => setDairy(option)}
+                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
+                        dairy === option
+                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
+                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-2">
+                  How often does {name} run or play hard?
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {['Daily', 'Few times a week', 'Rarely'].map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => setExercise(option)}
+                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
+                        exercise === option
+                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
+                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-2">
+                  Screen time before bed?
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {['None', 'Some', 'A lot'].map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => setScreenTime(option)}
+                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
+                        screenTime === option
+                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
+                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-2">
+                  How often does {name} eat processed/packaged foods?
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {['Rarely', 'Sometimes', 'Often'].map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => setProcessedFoods(option)}
+                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
+                        processedFoods === option
+                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
+                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={!sleepHours || !bedtime || !dairy || !exercise || !screenTime || !processedFoods}
+              className="w-full mt-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
+            >
+              Continue
+            </button>
+          </form>
+        )}
+
+        {/* Step 3: Goal Selection */}
+        {step === 3 && (
+          <GoalSelection
+            childName={name || 'Your child'}
+            onSelect={(goal) => {
+              localStorage.setItem('biokids_goal', JSON.stringify({
+                goal,
+                date: new Date().toISOString(),
+              }));
+              setStep(4);
+            }}
+          />
+        )}
+
+        {/* Step 4: Height Potential */}
+        {step === 4 && (
           <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
             <h2 className="text-2xl font-semibold text-stone-900 mb-2">{name}'s growth potential</h2>
             <p className="text-sm text-stone-500 mb-6">
@@ -457,179 +623,13 @@ export default function Onboarding() {
 
             <button
               type="button"
-              onClick={handleStep2Submit}
+              onClick={handleStep4Submit}
               disabled={!canCalculateHeight}
               className="w-full mt-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
             >
               Continue
             </button>
           </div>
-        )}
-
-        {/* Step 3: Quick Questions */}
-        {step === 3 && (
-          <form onSubmit={handleStep3Submit} className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
-            <h2 className="text-2xl font-semibold text-stone-900 mb-2">A few quick questions</h2>
-            <p className="text-sm text-stone-500 mb-6">
-              This helps us personalize {name}'s protocol.
-            </p>
-
-            <div className="space-y-5">
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  How many hours of sleep does {name} get each night?
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  {['8 or less', '9-10', '11-12', '12+'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setSleepHours(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        sleepHours === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  What time does {name} usually go to bed?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['Before 8pm', '8-9pm', 'After 9pm'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setBedtime(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        bedtime === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  Does {name} consume dairy daily?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['Yes', 'Sometimes', 'No'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setDairy(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        dairy === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  How often does {name} run or play hard?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['Daily', 'Few times a week', 'Rarely'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setExercise(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        exercise === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  Screen time before bed?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['None', 'Some', 'A lot'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setScreenTime(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        screenTime === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  How often does {name} eat processed/packaged foods?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['Rarely', 'Sometimes', 'Often'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setProcessedFoods(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        processedFoods === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={!sleepHours || !bedtime || !dairy || !exercise || !screenTime || !processedFoods}
-              className="w-full mt-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
-            >
-              Continue
-            </button>
-          </form>
-        )}
-
-        {/* Step 4: Goal Selection */}
-        {step === 4 && (
-          <GoalSelection
-            childName={name || 'Your child'}
-            onSelect={(goal) => {
-              localStorage.setItem('biokids_goal', JSON.stringify({
-                goal,
-                date: new Date().toISOString(),
-              }));
-              setStep(5);
-            }}
-          />
         )}
 
         {/* Step 5: Stripe Pricing Table */}
