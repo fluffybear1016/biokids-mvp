@@ -183,13 +183,13 @@ export default function SignalPage() {
                 e.stopPropagation();
                 setExpandedScience(expandedScience === item.id ? null : item.id);
               }}
-              className="text-sm text-emerald-600 hover:text-emerald-800 flex items-center gap-1 font-medium"
+              className="text-sm text-emerald-600 hover:text-emerald-800 flex items-center gap-1 font-medium font-mono"
             >
               {expandedScience === item.id ? '▼' : '▶'} See the science
             </button>
 
             {expandedScience === item.id && (
-              <div className="mt-3 bg-stone-50 rounded-lg p-3">
+              <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
                 <p className="text-xs text-stone-700 mb-2">{item.science}</p>
                 <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
                 {item.citations.map((c, i) => (
