@@ -101,6 +101,19 @@ function OnboardingContent() {
     localStorage.setItem('childName', name);
     localStorage.setItem('childBirthMonth', birthMonth);
     localStorage.setItem('childBirthYear', birthYear);
+
+    // Save child to Supabase so name persists across devices
+    if (userId) {
+      const birthDate = birthYear && birthMonth
+        ? `${birthYear}-${birthMonth.padStart(2, '0')}-01`
+        : null;
+      fetch('/api/auth/save-child', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, name, birthDate }),
+      }).catch(() => {}); // fire-and-forget
+    }
+
     setStep(2);
   };
 

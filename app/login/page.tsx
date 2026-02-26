@@ -77,6 +77,11 @@ function LoginForm() {
           const state = await stateRes.json();
           hasSubscription = state.profile?.subscription_status === 'active' || state.profile?.subscription_status === 'trial';
           hasChild = state.children && state.children.length > 0;
+
+          // Restore child name to localStorage from server (survives cross-device login)
+          if (hasChild && state.children[0].name) {
+            localStorage.setItem('childName', state.children[0].name);
+          }
         } catch {
           // API failed — fall through to localStorage check
         }
