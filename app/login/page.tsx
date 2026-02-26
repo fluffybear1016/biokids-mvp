@@ -86,6 +86,11 @@ function LoginForm() {
           // API failed — fall through to localStorage check
         }
 
+        // Also try auth user metadata for child name
+        if (!localStorage.getItem('childName') && authData.user.user_metadata?.child_name) {
+          localStorage.setItem('childName', authData.user.user_metadata.child_name);
+        }
+
         // localStorage fallback: if user completed onboarding locally, treat them as returning
         const onboardingComplete = localStorage.getItem('biokids_onboarding_complete') === 'true';
         const hasLocalChild = !!localStorage.getItem('childName');

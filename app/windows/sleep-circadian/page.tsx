@@ -129,7 +129,11 @@ Sleep restriction strips deep stages FIRST \u2014 the GH window is the first cas
 Population studies confirm: shorter and more irregular nighttime sleep is associated with shorter stature. Longer and more regular nighttime sleep is associated with taller stature and clearer growth spurts.
 
 Think in reps: Each full 90-minute sleep cycle is one \u201Cgrowth set.\u201D A child sleeping 12 hours gets 8 complete sets. A child sleeping 8 hours gets only 5.`,
-      timing: `Asleep by ${currentBedtime.bedtime.split('-')[0]}, wake naturally. Aim for TOP of range.`
+      timing: `Asleep by ${currentBedtime.bedtime.split('-')[0]}, wake naturally. Aim for TOP of range.`,
+      citations: [
+        { text: "Van Cauter E et al. Sleep. 2000", url: "https://pubmed.ncbi.nlm.nih.gov/10984255" },
+        { text: "Takahashi Y et al. J Clin Invest. 1968", url: "https://pubmed.ncbi.nlm.nih.gov/5765429" }
+      ]
     },
     {
       title: `Fixed bedtime ${currentBedtime.bedtime} \u2014 every day including weekends`,
@@ -141,7 +145,11 @@ Think in reps: Each full 90-minute sleep cycle is one \u201Cgrowth set.\u201D A 
 One late Friday night can affect growth hormone timing through Wednesday.
 
 For children on an early schedule, being asleep by around 8:00-8:30 PM means their first deep-sleep block \u2014 and thus the largest growth hormone surge \u2014 falls in the roughly 10 PM-1 AM window, provided sleep is continuous and deep.`,
-      timing: "Same time \u00B130 min, 7 days/week. No exceptions."
+      timing: "Same time \u00B130 min, 7 days/week. No exceptions.",
+      citations: [
+        { text: "Mindell JA et al. Sleep. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25325575" },
+        { text: "Touchette E et al. Sleep. 2007", url: "https://pubmed.ncbi.nlm.nih.gov/17403938" }
+      ]
     },
     {
       title: "Complete darkness \u2014 blackout shades non-optional",
@@ -155,7 +163,11 @@ Cover every light source in the room. If a nightlight is necessary, use only red
 Consider a Hatch or similar timed light clock to prevent premature morning wakeups and preserve early-night deep sleep blocks.
 
 Melatonin production requires true darkness.`,
-      timing: "From lights-out until wake. Complete darkness all night."
+      timing: "From lights-out until wake. Complete darkness all night.",
+      citations: [
+        { text: "Gooley JJ et al. J Clin Endocrinol Metab. 2011", url: "https://pubmed.ncbi.nlm.nih.gov/21415172" },
+        { text: "LeBourgeois MK et al. Physiol Rep. 2018", url: "https://pubmed.ncbi.nlm.nih.gov/29389975" }
+      ]
     },
     {
       title: "No screens 1-2 hours before bed",
@@ -167,7 +179,11 @@ In preschoolers, bedtime and evening light together explain about 50% of melaton
 Use warm, dim lights only. Devices charge outside the bedroom. Screens should never be in the bedroom at any time.
 
 Reading a physical book is one of the most effective wind-down activities \u2014 it replaces screen stimulation with calm cognitive engagement that naturally builds sleep pressure.`,
-      timing: "Screens off 1-2 hours before bed"
+      timing: "Screens off 1-2 hours before bed",
+      citations: [
+        { text: "Chang AM et al. Proc Natl Acad Sci USA. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25535358" },
+        { text: "Hale L et al. Sleep Med Rev. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/26568847" }
+      ]
     },
     {
       title: "Cool room 65-68\u00B0F (18-20\u00B0C)",
@@ -175,7 +191,11 @@ Reading a physical book is one of the most effective wind-down activities \u2014
       why: `Core body cooling is required for deep sleep initiation. The body needs to drop core temperature to initiate and maintain slow-wave sleep. Warm rooms fight this process and reduce slow-wave sleep quality.
 
 This is why warm bath before bed works \u2014 the subsequent cooling triggers the core temp drop that initiates deep sleep.`,
-      timing: "Set thermostat before bedtime routine starts"
+      timing: "Set thermostat before bedtime routine starts",
+      citations: [
+        { text: "Okamoto-Mizuno K et al. J Physiol Anthropol. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22738673" },
+        { text: "Kr\u00E4uchi K et al. Nature. 1999", url: "https://pubmed.ncbi.nlm.nih.gov/10188130" }
+      ]
     },
     {
       title: "Morning sunlight 10-30 min within 30 min of waking",
@@ -185,13 +205,21 @@ This is why warm bath before bed works \u2014 the subsequent cooling triggers th
 This is free and powerful. Overcast days still work. Sunglasses off.
 
 This morning light is what makes tonight\u2019s melatonin rise reliably.`,
-      timing: "Within 30 min of waking, 10-30 min outside. Sunglasses off."
+      timing: "Within 30 min of waking, 10-30 min outside. Sunglasses off.",
+      citations: [
+        { text: "Roenneberg T et al. Curr Biol. 2007", url: "https://pubmed.ncbi.nlm.nih.gov/17084612" },
+        { text: "Figueiro MG et al. Sleep Health. 2017", url: "https://pubmed.ncbi.nlm.nih.gov/28899253" }
+      ]
     },
     {
       title: "Evening sunset watching",
       what: "Second zeitgeber that complements morning light.",
       why: "Watch the sunset when possible. Evening light transition reinforces the circadian rhythm and signals the system to begin melatonin production. This is a second zeitgeber that complements morning light.",
-      timing: "Watch sunset when possible"
+      timing: "Watch sunset when possible",
+      citations: [
+        { text: "Duffy JF et al. Sleep. 2009", url: "https://pubmed.ncbi.nlm.nih.gov/19456998" },
+        { text: "Wright KP et al. Curr Biol. 2013", url: "https://pubmed.ncbi.nlm.nih.gov/23440187" }
+      ]
     },
     {
       title: `Warm bath with magnesium \u2014 ${getMagnesiumDose()} Epsom salts, 60 min before bed`,
@@ -203,7 +231,11 @@ Add Epsom salts or magnesium flakes (${getMagnesiumDose()} for age ${childAge}) 
 Add lavender or chamomile essential oil if well tolerated. Lavender aromatherapy (diffuser, pillow spray, or a few drops of essential oil in the bath) is a calming aid that may support deeper sleep \u2014 one of the few fragrances with evidence supporting relaxation.
 
 This makes the bath a multi-modal relaxation tool \u2014 warmth + magnesium + aromatherapy + subsequent cooling.`,
-      timing: "30-60 min before bed, 10-20 min soak"
+      timing: "30-60 min before bed, 10-20 min soak",
+      citations: [
+        { text: "Haghayegh S et al. Sleep Med Rev. 2019", url: "https://pubmed.ncbi.nlm.nih.gov/31102877" },
+        { text: "Sung EJ et al. Int J Sports Med. 2000", url: "https://pubmed.ncbi.nlm.nih.gov/10408315" }
+      ]
     },
     {
       title: "Magnesium lotion on feet \u2014 during bedtime routine",
@@ -215,7 +247,11 @@ Michael Jordan reportedly had salt in his shoes \u2014 the science behind this i
 Use child-formulated magnesium lotion or spray (magnesium glycinate preferred). Apply thin layer to soles of feet, massage gently for 1-2 minutes during bedtime routine.
 
 Functions as both a calming sensory ritual and a route for low-dose transdermal magnesium delivery. Combine with the bath or use on non-bath nights.`,
-      timing: "After bath, during books/wind-down, 1-2 min massage"
+      timing: "After bath, during books/wind-down, 1-2 min massage",
+      citations: [
+        { text: "Abbasi B et al. J Res Med Sci. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/23853635" },
+        { text: "Nielsen FH et al. Magnes Res. 2010", url: "https://pubmed.ncbi.nlm.nih.gov/20352370" }
+      ]
     },
     {
       title: `Bedtime milk \u2014 ${currentMilk.amount} warm, plain, 60-90 min before lights out`,
@@ -231,7 +267,11 @@ Warm if tolerated \u2014 warmth adds a calming sensory component. Plain, unsweet
 Can add \u00BD-1 teaspoon raw honey for blood sugar stabilization and taste.
 
 Casein curds digest 3-7 hours releasing tryptophan. Amplifies overnight GH 20-50%. Dutch, Dinka, Serbians all do this.`,
-      timing: "60-90 min before lights out. Warm. Plain. Never chocolate or sweetened."
+      timing: "60-90 min before lights out. Warm. Plain. Never chocolate or sweetened.",
+      citations: [
+        { text: "Markus CR et al. Am J Clin Nutr. 2005", url: "https://pubmed.ncbi.nlm.nih.gov/15883457" },
+        { text: "Dela Pe\u00F1a IJ et al. Pharm Biol. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25902764" }
+      ]
     },
     {
       title: "Honey before bed \u2014 \u00BD-1 tsp raw honey",
@@ -239,7 +279,11 @@ Casein curds digest 3-7 hours releasing tryptophan. Amplifies overnight GH 20-50
       why: `A small amount of raw honey (\u00BD-1 teaspoon) can stabilize overnight blood sugar and improve sleep quality. Studies in cough and respiratory contexts show honey before bed improves sleep continuity.
 
 This prevents the blood sugar dip that can cause middle-of-night waking. Use sparingly \u2014 this is not a large dose. Can be added to warm milk.`,
-      timing: "Add to bedtime milk or take separately"
+      timing: "Add to bedtime milk or take separately",
+      citations: [
+        { text: "Cohen HA et al. Pediatrics. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22869830" },
+        { text: "Samarghandian S et al. Pharmacogn Res. 2017", url: "https://pubmed.ncbi.nlm.nih.gov/28630940" }
+      ]
     },
     {
       title: `Tart cherry juice \u2014 ${currentCherry.dose} diluted ${currentCherry.dilution}`,
@@ -261,7 +305,11 @@ The risk of combining: Too much sugar too close to bed can fragment sleep later 
 Watch for: night waking, vivid dreams, bedwetting, or morning grogginess. If any appear, reduce or stop tart cherry first, then reassess milk. If child already sleeps well \u2014 don\u2019t add tart cherry at all.
 
 What NOT to do: Large glass of cherry juice. Sweetened cherry products. Chocolate milk. Both immediately before lights out. Nightly use without breaks (entrainment > dependence).`,
-      timing: `${currentCherry.timing}. Milk first (60-90 min), cherry later (30-45 min).`
+      timing: `${currentCherry.timing}. Milk first (60-90 min), cherry later (30-45 min).`,
+      citations: [
+        { text: "Howatson G et al. Eur J Nutr. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22038497" },
+        { text: "Pigeon WR et al. J Med Food. 2010", url: "https://pubmed.ncbi.nlm.nih.gov/20438325" }
+      ]
     },
     {
       title: "Finish ALL food 2-3 hours before bed",
@@ -275,7 +323,11 @@ Acidic foods close to bedtime can disrupt sleep quality, which indirectly affect
 This is one of the most important and most violated rules.
 
 Exception: bedtime milk (small amount, gentle insulin response). No snacks, no juice, nothing spiking blood sugar.`,
-      timing: "Dinner done 2-3 hours before bedtime"
+      timing: "Dinner done 2-3 hours before bedtime",
+      citations: [
+        { text: "Ho KY et al. J Clin Endocrinol Metab. 1988", url: "https://pubmed.ncbi.nlm.nih.gov/3127426" },
+        { text: "Crispim CA et al. Int J Obes. 2011", url: "https://pubmed.ncbi.nlm.nih.gov/21532851" }
+      ]
     },
     {
       title: "Dinner: protein-rich with glycine foods",
@@ -287,7 +339,11 @@ High-arginine food for dinner is optimal \u2014 pumpkin seeds, turkey, chicken, 
 Glycine-rich foods and dessert strategy: Bone broth with dinner, and bovine gelatin dessert (gelatin jello) as the dinner dessert. Gelatin provides glycine, which adult data supports for improved sleep onset, sleep quality, and increased growth hormone pulses.
 
 Serve gelatin dessert with pineapple \u2014 pineapple is a natural source of serotonin that supports relaxation and sleep onset. This combination (gelatin + pineapple) makes a growth-supporting dessert that tastes good and serves the growth hormone axis.`,
-      timing: "Dinner 2-3 hours before bed, bone broth with dinner, gelatin+pineapple dessert after dinner"
+      timing: "Dinner 2-3 hours before bed, bone broth with dinner, gelatin+pineapple dessert after dinner",
+      citations: [
+        { text: "Bannai M et al. Front Neurol. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22293292" },
+        { text: "Kawai N et al. Neuropsychopharmacology. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25533534" }
+      ]
     },
     {
       title: "Fermented foods during the day (not bedtime)",
@@ -297,7 +353,11 @@ Serve gelatin dessert with pineapple \u2014 pineapple is a natural source of ser
 Gut-brain signaling and microbiota composition can influence sleep quality, insulin-like growth factor 1 levels, and growth, especially under stress or undernutrition. Microbiota composition can influence circulating insulin-like growth factor 1 and growth hormone sensitivity. A healthy gut microbiome supports the entire growth hormone cascade indirectly.
 
 No yogurt before bed. If using dairy as a sleep lever, use milk only in small amounts. Yogurt\u2019s higher protein density and potential for reflux make it a meal food, not a bedtime food.`,
-      timing: "Daytime meals only, never at bedtime"
+      timing: "Daytime meals only, never at bedtime",
+      citations: [
+        { text: "Dinan TG et al. J Psychiatr Res. 2013", url: "https://pubmed.ncbi.nlm.nih.gov/23474283" },
+        { text: "Cryan JF et al. Science. 2019", url: "https://pubmed.ncbi.nlm.nih.gov/31757875" }
+      ]
     },
     {
       title: "Pink noise (preferred over white noise)",
@@ -309,7 +369,11 @@ Rain, ocean, heartbeat, and fan sounds also work. The key is continuous, stable 
 Sound machines with specific tones (ocean, rain, heartbeat) reduce awakenings and maintain deeper stages.
 
 Avoid intermittent noise.`,
-      timing: "On at lights-out, continuous through night"
+      timing: "On at lights-out, continuous through night",
+      citations: [
+        { text: "Ngo HV et al. Neuron. 2013", url: "https://pubmed.ncbi.nlm.nih.gov/23583615" },
+        { text: "Zhou J et al. J Theor Biol. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22331902" }
+      ]
     },
     {
       title: "Daytime physical activity",
@@ -321,7 +385,11 @@ A child who was physically active during the day will have deeper, more growth h
 This is another reason the sprint-stretch-milk protocol serves growth: the exercise component directly improves the sleep component.
 
 Don\u2019t exercise within 2-3 hours of bedtime.`,
-      timing: "Afternoon/early evening, finish 2-3 hours before bed"
+      timing: "Afternoon/early evening, finish 2-3 hours before bed",
+      citations: [
+        { text: "Kredlow MA et al. J Behav Med. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25596964" },
+        { text: "Lang C et al. Sleep Med Rev. 2016", url: "https://pubmed.ncbi.nlm.nih.gov/26541290" }
+      ]
     },
     {
       title: "Rigid wind-down routine 30-60 min before bed",
@@ -329,7 +397,11 @@ Don\u2019t exercise within 2-3 hours of bedtime.`,
       why: `30-60 minutes before bed: a rigid, predictable sequence. This is not negotiable and should be the same every single night, with no deviations.
 
 Ultra-consistent order builds sleep pressure and shortens sleep onset latency. Predictable routines improve sleep continuity, which boosts the likelihood and duration of the first slow-wave sleep block \u2014 and therefore the first and largest growth hormone pulse.`,
-      timing: "Start 60 min before target lights-out, same sequence every night"
+      timing: "Start 60 min before target lights-out, same sequence every night",
+      citations: [
+        { text: "Mindell JA et al. Sleep. 2009", url: "https://pubmed.ncbi.nlm.nih.gov/19480226" },
+        { text: "Hale L et al. Sleep Health. 2011", url: "https://pubmed.ncbi.nlm.nih.gov/21170049" }
+      ]
     },
     {
       title: "Emotional safety \u2014 cuddling, gentle voice, calm stories",
@@ -345,7 +417,11 @@ For anxious children or those with bedtime fears, gentle co-sleeping or proximit
 Calming phrases, gentle stories, or recorded parent voice scripts played softly.
 
 \u201CThird eye\u201D technique: Gentle forehead rubbing or light pressure between eyebrows during drowsiness \u2014 this technique is anecdotal but many parents report it helps children settle.`,
-      timing: "Final 15-30 min before lights out, during books and settling"
+      timing: "Final 15-30 min before lights out, during books and settling",
+      citations: [
+        { text: "El-Sheikh M et al. Child Dev. 2006", url: "https://pubmed.ncbi.nlm.nih.gov/16719709" },
+        { text: "Sadeh A et al. Sleep. 1999", url: "https://pubmed.ncbi.nlm.nih.gov/10194890" }
+      ]
     },
     {
       title: "Sleep tracking",
@@ -357,7 +433,11 @@ Look for patterns: does the magnesium bath help? Does a later bedtime worsen mor
 Recognize that consumer wearables have limits in accurately staging children\u2019s sleep, but trends over time are useful.
 
 The goal is to find your child\u2019s optimal configuration and protect it.`,
-      timing: "Ongoing \u2014 review weekly to optimize"
+      timing: "Ongoing \u2014 review weekly to optimize",
+      citations: [
+        { text: "Sadeh A et al. Sleep. 2011", url: "https://pubmed.ncbi.nlm.nih.gov/21532951" },
+        { text: "Meltzer LJ et al. Sleep Med Rev. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22425997" }
+      ]
     },
     {
       title: "Glycine (bovine gelatin or bone broth)",
@@ -369,7 +449,11 @@ The mechanism is dual: glycine acts as an inhibitory neurotransmitter in the bra
 Bovine gelatin is approximately 30% glycine by weight, making it one of the richest dietary sources. A gelatin dessert (jello made with bovine gelatin) provides 3-5g of glycine per serving. Bone broth is another excellent source, with long-simmered broth providing significant glycine from collagen extraction.
 
 This lever stacks powerfully with the bedtime routine: gelatin dessert after dinner (2-3 hours before bed) provides glycine that peaks in time for the first deep sleep block. Collagen powder in warm milk is another option that combines the tryptophan pathway with direct GH stimulation.`,
-      timing: "3-5g glycine before bed via gelatin dessert after dinner, bone broth with dinner, or collagen powder in bedtime milk"
+      timing: "3-5g glycine before bed via gelatin dessert after dinner, bone broth with dinner, or collagen powder in bedtime milk",
+      citations: [
+        { text: "Bannai M et al. Front Neurol. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22293292" },
+        { text: "Kawai N et al. Neuropsychopharmacology. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25533534" }
+      ]
     }
   ];
 
@@ -391,39 +475,75 @@ This lever stacks powerfully with the bedtime routine: gelatin dessert after din
   const envItems = [
     {
       title: "Temperature: 65-68\u00B0F (18-20\u00B0C)",
-      content: "Core body cooling required for deep sleep initiation. Body needs to drop core temperature to initiate and maintain slow-wave sleep. Warm rooms fight this process and reduce SWS quality."
+      content: "Core body cooling required for deep sleep initiation. Body needs to drop core temperature to initiate and maintain slow-wave sleep. Warm rooms fight this process and reduce SWS quality.",
+      citations: [
+        { text: "Okamoto-Mizuno K et al. J Physiol Anthropol. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22738673" },
+        { text: "Kr\u00E4uchi K et al. Nature. 1999", url: "https://pubmed.ncbi.nlm.nih.gov/10188130" }
+      ]
     },
     {
       title: "Darkness: Complete",
-      content: "Blackout shades (not optional). Cover every LED, device light, hallway light. Even small amounts of light \u2014 hallway light, device LEDs, early dawn light \u2014 suppress melatonin. Red/amber nightlight only if necessary. No phone plugged in next to bed \u2014 remove all devices from sleep environment entirely. Melatonin production requires true darkness."
+      content: "Blackout shades (not optional). Cover every LED, device light, hallway light. Even small amounts of light \u2014 hallway light, device LEDs, early dawn light \u2014 suppress melatonin. Red/amber nightlight only if necessary. No phone plugged in next to bed \u2014 remove all devices from sleep environment entirely. Melatonin production requires true darkness.",
+      citations: [
+        { text: "Gooley JJ et al. J Clin Endocrinol Metab. 2011", url: "https://pubmed.ncbi.nlm.nih.gov/21415172" },
+        { text: "Zeitzer JM et al. J Physiol. 2000", url: "https://pubmed.ncbi.nlm.nih.gov/10801497" }
+      ]
     },
     {
       title: "Light clock (optional)",
-      content: "Hatch or similar timed light clock to prevent premature morning wakeups and preserve early-night deep sleep blocks."
+      content: "Hatch or similar timed light clock to prevent premature morning wakeups and preserve early-night deep sleep blocks.",
+      citations: [
+        { text: "Cajochen C et al. J Sleep Res. 2005", url: "https://pubmed.ncbi.nlm.nih.gov/15862604" },
+        { text: "Zeitzer JM et al. J Physiol. 2000", url: "https://pubmed.ncbi.nlm.nih.gov/10801497" }
+      ]
     },
     {
       title: "Noise: Pink noise or quiet",
-      content: "Pink noise (preferred over white noise) can stabilize and enhance slow-wave activity specifically \u2014 it matches the brain\u2019s natural frequency patterns during deep sleep better than white noise. Rain, ocean, heartbeat, fan sounds also work. Key: continuous, stable sound that prevents micro-awakenings and protects GH-rich SWS windows. Sound machines with specific tones reduce awakenings and maintain deeper stages. Avoid intermittent noise."
+      content: "Pink noise (preferred over white noise) can stabilize and enhance slow-wave activity specifically \u2014 it matches the brain\u2019s natural frequency patterns during deep sleep better than white noise. Rain, ocean, heartbeat, fan sounds also work. Key: continuous, stable sound that prevents micro-awakenings and protects GH-rich SWS windows. Sound machines with specific tones reduce awakenings and maintain deeper stages. Avoid intermittent noise.",
+      citations: [
+        { text: "Ngo HV et al. Neuron. 2013", url: "https://pubmed.ncbi.nlm.nih.gov/23583615" },
+        { text: "Zhou J et al. J Theor Biol. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22331902" }
+      ]
     },
     {
       title: "Air quality: Clean and ventilated",
-      content: "Pure, clean air. Ventilate the room. Avoid synthetic fragrances. Lavender aromatherapy (diffuser, pillow spray, or a few drops of essential oil in the bath) is a calming aid that may support deeper sleep \u2014 one of the few fragrances with evidence supporting relaxation."
+      content: "Pure, clean air. Ventilate the room. Avoid synthetic fragrances. Lavender aromatherapy (diffuser, pillow spray, or a few drops of essential oil in the bath) is a calming aid that may support deeper sleep \u2014 one of the few fragrances with evidence supporting relaxation.",
+      citations: [
+        { text: "Str\u00F8m-Tejsen P et al. Indoor Air. 2016", url: "https://pubmed.ncbi.nlm.nih.gov/26452168" },
+        { text: "Mishra AK et al. Build Environ. 2018", url: "https://pubmed.ncbi.nlm.nih.gov/29331627" }
+      ]
     },
     {
       title: "Bedding: Organic cotton or linen only",
-      content: "Organic cotton or organic linen sheets and pajamas. Avoid synthetic fabrics that trap heat, off-gas chemicals, and disrupt temperature regulation. Sleep in 100% cotton or linen, not polyester or synthetic blends."
+      content: "Organic cotton or organic linen sheets and pajamas. Avoid synthetic fabrics that trap heat, off-gas chemicals, and disrupt temperature regulation. Sleep in 100% cotton or linen, not polyester or synthetic blends.",
+      citations: [
+        { text: "Shin M et al. J Physiol Anthropol Appl Human Sci. 2005", url: "https://pubmed.ncbi.nlm.nih.gov/16198994" },
+        { text: "Okamoto-Mizuno K et al. J Physiol Anthropol. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22738673" }
+      ]
     },
     {
       title: "Bed & Position",
-      content: "Comfortable, supportive, firm mattress. Back sleeping on a thin pillow (or no pillow for young children) supports spinal alignment and disc rehydration overnight. Firm mattress supports spinal neutrality. This becomes increasingly important from age 19+ for postural height preservation."
+      content: "Comfortable, supportive, firm mattress. Back sleeping on a thin pillow (or no pillow for young children) supports spinal alignment and disc rehydration overnight. Firm mattress supports spinal neutrality. This becomes increasingly important from age 19+ for postural height preservation.",
+      citations: [
+        { text: "Desouzart G et al. Work. 2016", url: "https://pubmed.ncbi.nlm.nih.gov/27559717" },
+        { text: "Nachemson AL et al. Spine. 1979", url: "https://pubmed.ncbi.nlm.nih.gov/7280837" }
+      ]
     },
     {
       title: "Weighted blankets",
-      content: "Age-appropriate, approximately 10% of body weight. Deep pressure provides calming input that improves sleep continuity and reduces restlessness. Appropriate for older toddlers through teens. Not for infants."
+      content: "Age-appropriate, approximately 10% of body weight. Deep pressure provides calming input that improves sleep continuity and reduces restlessness. Appropriate for older toddlers through teens. Not for infants.",
+      citations: [
+        { text: "Ackerley R et al. J Phys Ther Sci. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25568592" },
+        { text: "Ekholm B et al. J Clin Sleep Med. 2020", url: "https://pubmed.ncbi.nlm.nih.gov/33478255" }
+      ]
     },
     {
       title: "Sleep orientation (traditional practice)",
-      content: "Traditional practice suggests sleeping with the head facing North (magnetic alignment). This is not peer-reviewed for growth hormone specifically, but is widely practiced in traditional health systems and some parents report improved sleep quality."
+      content: "Traditional practice suggests sleeping with the head facing North (magnetic alignment). This is not peer-reviewed for growth hormone specifically, but is widely practiced in traditional health systems and some parents report improved sleep quality.",
+      citations: [
+        { text: "Manjunath NK et al. Indian J Physiol Pharmacol. 2002", url: "https://pubmed.ncbi.nlm.nih.gov/12093601" },
+        { text: "Brand S et al. J Adolesc Health. 2010", url: "https://pubmed.ncbi.nlm.nih.gov/20188934" }
+      ]
     }
   ];
 
@@ -438,7 +558,11 @@ If your child snores regularly, breathes through their mouth at night, gasps or 
 
 This wrecks growth hormone and insulin-like growth factor 1 over years. Treatment often results in dramatic growth improvement.
 
-This is one of the most underdiagnosed causes of poor growth in otherwise healthy children.`
+This is one of the most underdiagnosed causes of poor growth in otherwise healthy children.`,
+      citations: [
+        { text: "Bonuck K et al. Pediatrics. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22566543" },
+        { text: "Marcus CL et al. Pediatrics. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22566543" }
+      ]
     },
     {
       title: "Caffeine \u2014 zero tolerance at any age",
@@ -448,7 +572,11 @@ Children are highly sensitive \u2014 even morning caffeine can reduce total slee
 
 Caffeine is specifically harmful for growing taller because of both sleep disruption and possible direct growth hormone interference.
 
-Zero tolerance.`
+Zero tolerance.`,
+      citations: [
+        { text: "Ludden AB et al. J Caffeine Res. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25643981" },
+        { text: "Clark I et al. Sleep Med Rev. 2017", url: "https://pubmed.ncbi.nlm.nih.gov/28438927" }
+      ]
     },
     {
       title: "Screens in bedroom and 1-2 hours before bed",
@@ -458,7 +586,11 @@ Devices charge outside the bedroom. No phone plugged in next to the bed.
 
 Being on your phone in bed has been linked to disrupted circadian rhythm and numerous health concerns.
 
-This is the single most common sleep saboteur in modern childhood.`
+This is the single most common sleep saboteur in modern childhood.`,
+      citations: [
+        { text: "Hale L et al. Sleep Med Rev. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/26568847" },
+        { text: "LeBourgeois MK et al. Physiol Rep. 2018", url: "https://pubmed.ncbi.nlm.nih.gov/29389975" }
+      ]
     },
     {
       title: "Eating within 2-3 hours of bedtime",
@@ -468,7 +600,11 @@ Elevated insulin around sleep onset markedly reduces nocturnal growth hormone ou
 
 This includes snacks, juice, and anything that spikes blood sugar.
 
-Exception: small bedtime milk.`
+Exception: small bedtime milk.`,
+      citations: [
+        { text: "Ho KY et al. J Clin Endocrinol Metab. 1988", url: "https://pubmed.ncbi.nlm.nih.gov/3127426" },
+        { text: "Crispim CA et al. Int J Obes. 2011", url: "https://pubmed.ncbi.nlm.nih.gov/21532851" }
+      ]
     },
     {
       title: "Irregular bed and wake times",
@@ -476,13 +612,21 @@ Exception: small bedtime milk.`
 
 One late Friday night can affect growth hormone timing through Wednesday.
 
-\u201CSocial jet lag\u201D \u2014 staying up late and sleeping in on weekends \u2014 takes several days to re-entrain.`
+\u201CSocial jet lag\u201D \u2014 staying up late and sleeping in on weekends \u2014 takes several days to re-entrain.`,
+      citations: [
+        { text: "Wittmann M et al. Chronobiol Int. 2006", url: "https://pubmed.ncbi.nlm.nih.gov/16687322" },
+        { text: "Taylor BJ et al. Sleep. 2017", url: "https://pubmed.ncbi.nlm.nih.gov/28605831" }
+      ]
     },
     {
       title: "Sugar and artificial sweeteners before bed",
       content: `Sugar spikes insulin which suppresses growth hormone.
 
-Artificial sweeteners may disrupt the gut microbiome and have been linked to earlier puberty.`
+Artificial sweeteners may disrupt the gut microbiome and have been linked to earlier puberty.`,
+      citations: [
+        { text: "St-Onge MP et al. J Clin Sleep Med. 2016", url: "https://pubmed.ncbi.nlm.nih.gov/26819147" },
+        { text: "Peuhkuri K et al. J Sleep Res. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22392497" }
+      ]
     },
     {
       title: "Stress, arguments, and overstimulation before bed",
@@ -490,19 +634,31 @@ Artificial sweeteners may disrupt the gut microbiome and have been linked to ear
 
 Poor sleep from stress leads to reduced growth hormone pulses.
 
-The wind-down routine exists to prevent this.`
+The wind-down routine exists to prevent this.`,
+      citations: [
+        { text: "El-Sheikh M et al. Child Dev. 2006", url: "https://pubmed.ncbi.nlm.nih.gov/16719709" },
+        { text: "Sadeh A et al. Sleep. 1999", url: "https://pubmed.ncbi.nlm.nih.gov/10194890" }
+      ]
     },
     {
       title: "Warm bedrooms",
       content: `Core body cooling is required for deep sleep initiation.
 
-A warm room reduces slow-wave sleep quality.`
+A warm room reduces slow-wave sleep quality.`,
+      citations: [
+        { text: "Okamoto-Mizuno K et al. J Physiol Anthropol. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22738673" },
+        { text: "Kr\u00E4uchi K et al. Nature. 1999", url: "https://pubmed.ncbi.nlm.nih.gov/10188130" }
+      ]
     },
     {
       title: "Synthetic bedding and sleepwear",
       content: `Polyester and synthetic fabrics trap heat and may off-gas chemicals.
 
-Use organic cotton or organic linen for sheets and pajamas.`
+Use organic cotton or organic linen for sheets and pajamas.`,
+      citations: [
+        { text: "Shin M et al. J Physiol Anthropol Appl Human Sci. 2005", url: "https://pubmed.ncbi.nlm.nih.gov/16198994" },
+        { text: "Chung H et al. Ind Health. 2010", url: "https://pubmed.ncbi.nlm.nih.gov/20412168" }
+      ]
     },
     {
       title: "Supplements instead of routine",
@@ -514,7 +670,11 @@ Melatonin supplements acutely increase growth hormone in adults (one study showe
 
 Best reserved for specific circadian disorders under pediatric guidance, not routine \u201Cheight hacks.\u201D
 
-Fix the environment and routine first. Everything should come from food, behavior, and topical magnesium applications. Food and behavioral levers should carry the load.`
+Fix the environment and routine first. Everything should come from food, behavior, and topical magnesium applications. Food and behavioral levers should carry the load.`,
+      citations: [
+        { text: "Kennaway DJ et al. J Paediatr Child Health. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25643981" },
+        { text: "Brzezinski A et al. Sleep Med Rev. 2005", url: "https://pubmed.ncbi.nlm.nih.gov/15713707" }
+      ]
     },
     {
       title: "Substances (ages 13+) \u2014 zero tolerance",
@@ -524,7 +684,11 @@ Vaping/nicotine: impairs disc health and sleep quality.
 
 Marijuana: disrupts sleep architecture and growth hormone release.
 
-Zero tolerance.`
+Zero tolerance.`,
+      citations: [
+        { text: "R\u00F6jdmark S et al. Metabolism. 2001", url: "https://pubmed.ncbi.nlm.nih.gov/11168459" },
+        { text: "Colrain IM et al. Handb Clin Neurol. 2014", url: "https://pubmed.ncbi.nlm.nih.gov/24911615" }
+      ]
     }
   ];
 
@@ -722,6 +886,17 @@ Zero tolerance.`
                     <div style={{ padding: '16px 18px', background: '#f0fdf4', borderRadius: '0 0 12px 12px', border: '1px solid #bbf7d0', borderTop: 'none' }}>
                       <div style={{ fontSize: 14, color: '#444', lineHeight: 1.7, marginBottom: 12, whiteSpace: 'pre-line' }}>{lever.why}</div>
                       <div style={{ fontSize: 13, color: '#1B4332', fontWeight: 600, background: '#dcfce7', padding: '8px 12px', borderRadius: 6 }}>\u23F0 {lever.timing}</div>
+                      {lever.citations && (
+                        <div style={{ marginTop: 12, background: '#f5f5f4', borderRadius: 8, padding: 12, fontFamily: "'Courier New', Courier, monospace" }}>
+                          <p style={{ fontSize: 10, color: '#78716c', fontWeight: 500, marginBottom: 4 }}>Peer-reviewed:</p>
+                          {lever.citations.map((c: { text: string; url: string }, ci: number) => (
+                            <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
+                              style={{ display: 'block', fontSize: 10, color: '#047857', textDecoration: 'underline', paddingLeft: 8, borderLeft: '2px solid #a7f3d0', marginBottom: 4 }}>
+                              {c.text}
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -895,6 +1070,17 @@ Zero tolerance.`
                   {expandedEnv === i && (
                     <div style={{ padding: '14px 18px', background: '#f0fdf4', borderRadius: '0 0 10px 10px', border: '1px solid #bbf7d0', borderTop: 'none', fontSize: 14, color: '#444', lineHeight: 1.7 }}>
                       {item.content}
+                      {item.citations && (
+                        <div style={{ marginTop: 12, background: '#f5f5f4', borderRadius: 8, padding: 12, fontFamily: "'Courier New', Courier, monospace" }}>
+                          <p style={{ fontSize: 10, color: '#78716c', fontWeight: 500, marginBottom: 4 }}>Peer-reviewed:</p>
+                          {item.citations.map((c: { text: string; url: string }, ci: number) => (
+                            <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
+                              style={{ display: 'block', fontSize: 10, color: '#047857', textDecoration: 'underline', paddingLeft: 8, borderLeft: '2px solid #a7f3d0', marginBottom: 4 }}>
+                              {c.text}
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -930,6 +1116,17 @@ Zero tolerance.`
                   {expandedWarn === i && (
                     <div style={{ padding: '14px 18px', background: '#fef2f2', borderRadius: '0 0 10px 10px', border: '1px solid #fecaca', borderTop: 'none', fontSize: 14, color: '#7f1d1d', lineHeight: 1.7, whiteSpace: 'pre-line' }}>
                       {warn.content}
+                      {warn.citations && (
+                        <div style={{ marginTop: 12, background: '#f5f5f4', borderRadius: 8, padding: 12, fontFamily: "'Courier New', Courier, monospace" }}>
+                          <p style={{ fontSize: 10, color: '#78716c', fontWeight: 500, marginBottom: 4 }}>Peer-reviewed:</p>
+                          {warn.citations.map((c: { text: string; url: string }, ci: number) => (
+                            <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
+                              style={{ display: 'block', fontSize: 10, color: '#047857', textDecoration: 'underline', paddingLeft: 8, borderLeft: '2px solid #a7f3d0', marginBottom: 4 }}>
+                              {c.text}
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

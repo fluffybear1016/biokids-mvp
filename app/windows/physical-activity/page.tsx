@@ -46,7 +46,11 @@ export default function PhysicalActivityWindow() {
       color: "forest",
       content: "High-intensity anaerobic effort triggers massive GH release through lactate accumulation and neural activation. Lactate is a direct GH secretagogue — higher lactate = higher GH. Sprinting recruits fast-twitch muscle fibers which drive GH response. Short intense bouts far exceed long moderate exercise. Sprinting builds incredible strength and power WITHOUT weights — the Jamaican model proves sprint work alone creates phenomenal strength.",
       extra: "Pre-sprint: 2 eggs + unroasted peanuts + coconut oil. Eggs = choline primes pituitary. Peanuts = niacin suppresses FFA brake. Coconut oil = quick fuel, extends GH window 4 hours.\n\nPost-sprint (within 30 min): 1 cup A2 milk + 1 tsp raw honey. Milk amino acids + gentle insulin = liver converts GH → IGF-1. Without this the GH pulse is \"orphaned.\" Sprint in the sun for vitamin D. Then stretch 10 min immediately.",
-      timing: "Afternoon/early evening. Empty stomach or 2+ hrs after meal. NOT before bed."
+      timing: "Afternoon/early evening. Empty stomach or 2+ hrs after meal. NOT before bed.",
+      citations: [
+        { text: "Stokes KA et al. Sports Med. 2002", url: "https://pubmed.ncbi.nlm.nih.gov/12468657" },
+        { text: "Pritzlaff CJ et al. J Appl Physiol. 1999", url: "https://pubmed.ncbi.nlm.nih.gov/10694568" },
+      ]
     },
     {
       id: "l2", rank: 2,
@@ -55,7 +59,11 @@ export default function PhysicalActivityWindow() {
       color: "forest",
       content: "Jump training significantly increased femur length, tibia length, bone weight, and femur diameter in both young and old rats (Dennis Raney). Impact creates ground-reaction forces 2-4× body weight, triggering mechanotransduction — osteocytes detect force and signal osteoblasts to increase bone mineral deposition. Also creates beneficial microfractures in growth plate cartilage — the body rebuilds longer and stronger.",
       extra: "Types: Jump rope (30-60s × 10-15), box jumps, broad jumps (3-5 sets of 8-10), bunny hops, two-footed reach jumps, Masai-style vertical jumps (tall, straight, minimal knee bend), hopscotch, jumping off low steps, trampoline play.\n\nCritical window: Ages 3-5 are critical — children who jump regularly develop significantly higher bone mineral density that persists into adulthood.",
-      timing: "Daily during active play. Follow immediately with 10 min stretching."
+      timing: "Daily during active play. Follow immediately with 10 min stretching.",
+      citations: [
+        { text: "Gunter KB et al. Bone. 2008", url: "https://pubmed.ncbi.nlm.nih.gov/18022390" },
+        { text: "McKay HA et al. J Bone Miner Res. 2005", url: "https://pubmed.ncbi.nlm.nih.gov/15666169" },
+      ]
     },
     {
       id: "l3", rank: 3,
@@ -64,7 +72,11 @@ export default function PhysicalActivityWindow() {
       color: "forest",
       content: "Serbian youth play multiple sports, developing footwork, court vision, and coordination. Jokic played soccer extensively as a child, developed footwork before basketball, didn't specialize until teenage years. Wembanyama (7'4\") focused on chess, reading, varied skills — no weights, no early specialization. Coordination MUST be developed before strength. 3+ hours daily of varied physical activity rewires the cerebellum during the critical window.",
       extra: "The American problem: Early specialization pressure (often by age 8), single-sport year-round focus, travel teams from young ages → overuse injuries, burnout, high dropout rates. America has 47× more people than Serbia but Serbia wins per-capita decisively.\n\nTeach the game: Watch sports together and discuss strategy. Ask \"what would you do?\" Value assists, not just points. Celebrate team success. Allow unstructured play.",
-      timing: "No single-sport focus until teenage years. Diverse movement from toddler through age 14."
+      timing: "No single-sport focus until teenage years. Diverse movement from toddler through age 14.",
+      citations: [
+        { text: "Myer GD et al. Sports Med. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/26010965" },
+        { text: "Jayanthi NA et al. Sports Health. 2013", url: "https://pubmed.ncbi.nlm.nih.gov/23060525" },
+      ]
     },
     {
       id: "l4", rank: 4,
@@ -73,7 +85,11 @@ export default function PhysicalActivityWindow() {
       color: "forest",
       content: "Tight muscles (especially hip flexors and hamstrings) affect posture and place uneven pressure on the spine. Spinal compression reduces measured height by up to an inch throughout the day. Fascia can create imbalances affecting bone development — gentle stretching maintains fascial mobility so muscles and bones grow in harmony. Light stretching before bed improves sleep quality and enhances nighttime GH surge.",
       extra: "Morning stretches are especially valuable — after sleep, spinal discs are maximally hydrated and spine is at its longest.\n\nBy age: Toddlers = play-based \"animal walks,\" reaching for toys. Preschoolers = cat-cow, child's pose, cobra. School-age = structured 5-10 min daily. ALL ages: never force — should feel good, not painful.",
-      timing: "Morning (maintain overnight spinal length) + evening (before bed for GH). 5-10 min daily."
+      timing: "Morning (maintain overnight spinal length) + evening (before bed for GH). 5-10 min daily.",
+      citations: [
+        { text: "Behm DG et al. Appl Physiol Nutr Metab. 2016", url: "https://pubmed.ncbi.nlm.nih.gov/26642915" },
+        { text: "Bandy WD et al. Phys Ther. 1997", url: "https://pubmed.ncbi.nlm.nih.gov/9057784" },
+      ]
     },
     {
       id: "l5", rank: 5,
@@ -82,7 +98,11 @@ export default function PhysicalActivityWindow() {
       color: "amber",
       content: "1. Hanging on pull-up bar — dead hangs 30-60 sec × multiple sets. Progress to weighted (ankle weights 10-30 lbs). Flutter kicks while hanging for posterior chain.\n\n2. The cat stretch — hands and knees, round back up, then arch down.\n\n3. The cobra stretch — prone, push chest up, decompress lower back and spine.\n\n4. The ultimate fascia stretch — full body elongation targeting fascia chains.\n\n5. Inversion table stretch — 60-90° angle, 1-5 min per set, multiple times daily.",
       extra: "Inflatable cushion under back for 10 minutes showed 2.766mm to 7.66mm height gain (Dennis Raney). Additional: standing table holds, \"sky stretch,\" \"downhill stretch\" 30-min regimes. Resistance bands for shin/femur stretches (20-30 sec holds). Cycling with seat raised ¼-½ inch every 1-2 weeks for tensile stress.",
-      timing: "At least 3 of these 5 daily. Morning + evening. Consistent daily practice."
+      timing: "At least 3 of these 5 daily. Morning + evening. Consistent daily practice.",
+      citations: [
+        { text: "Nachemson AL et al. Spine. 1981", url: "https://pubmed.ncbi.nlm.nih.gov/7280837" },
+        { text: "Healey EL et al. Man Ther. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22427016" },
+      ]
     },
     {
       id: "l6", rank: 6,
@@ -91,7 +111,11 @@ export default function PhysicalActivityWindow() {
       color: "coral",
       content: "Impact creates microfractures. These heal in whatever position the bone is held. Stretching during repair encourages healing in an elongated position — this IS the actual growth mechanism from exercise. Follow with milk + honey — casein protein and calcium provide building materials while honey shuttles nutrients to repair sites.",
       extra: "Tensile loading after impact: hanging from bars, resistance bands for 10-20 min. Repeat 3-5×/week with 1-2 rest days for healing.",
-      timing: "Immediately after every sprint or jumping session. Don't skip this — it's where the growth happens."
+      timing: "Immediately after every sprint or jumping session. Don't skip this — it's where the growth happens.",
+      citations: [
+        { text: "Witvrouw E et al. Am J Sports Med. 2003", url: "https://pubmed.ncbi.nlm.nih.gov/14523308" },
+        { text: "Best TM et al. Med Sci Sports Exerc. 1998", url: "https://pubmed.ncbi.nlm.nih.gov/9624957" },
+      ]
     },
     {
       id: "l7", rank: 7,
@@ -100,7 +124,11 @@ export default function PhysicalActivityWindow() {
       color: "blue",
       content: "Can yield 0.5-1+ cm height by decompressing intervertebral discs and correcting forward head posture and kyphosis. Posture compounds visual tallness 2-4cm via thoracic mobility. Gravity compresses spine ~1cm daily — posture work reverses this.",
       extra: "Exercises: Wall angels (3×10 reps), chin tucks (3×15 reps), thoracic extension over foam roller (2 min), spinal alignment drills.",
-      timing: "10 minutes, 3× daily. Morning, midday, evening."
+      timing: "10 minutes, 3× daily. Morning, midday, evening.",
+      citations: [
+        { text: "Grob D et al. Eur Spine J. 2007", url: "https://pubmed.ncbi.nlm.nih.gov/17454085" },
+        { text: "Yip CHT et al. Arch Phys Med Rehabil. 2008", url: "https://pubmed.ncbi.nlm.nih.gov/18270354" },
+      ]
     },
     {
       id: "l8", rank: 8,
@@ -109,7 +137,11 @@ export default function PhysicalActivityWindow() {
       color: "brown",
       content: "3+ hours daily of physical activity — climbing, chasing, jumping, running, ball handling — rewires the cerebellum during the critical motor development window. Children naturally sprint during play. Jamaican children run to school, chase animals, do community races — it doesn't feel like \"exercise.\"",
       extra: "Make movement joyful, not anxiety-driven. Encourage confidence and swagger, not fear-based pressure. Protect development time — don't overschedule. Let children be bored and self-direct. Guard sleep aggressively.",
-      timing: "Every day. Outdoor, unstructured, self-directed. Screens are the enemy of movement."
+      timing: "Every day. Outdoor, unstructured, self-directed. Screens are the enemy of movement.",
+      citations: [
+        { text: "Janssen I et al. Int J Behav Nutr Phys Act. 2010", url: "https://pubmed.ncbi.nlm.nih.gov/20459784" },
+        { text: "Strong WB et al. J Pediatr. 2005", url: "https://pubmed.ncbi.nlm.nih.gov/15741266" },
+      ]
     },
     {
       id: "l9", rank: 9,
@@ -118,7 +150,11 @@ export default function PhysicalActivityWindow() {
       color: "purple",
       content: "Zero compression on growth plates. Full-body elongation under resistance. Develops coordination across all planes of movement. Focus on elongation over compression.",
       extra: "",
-      timing: "Regular swimming sessions. Great complement to sprinting and jumping."
+      timing: "Regular swimming sessions. Great complement to sprinting and jumping.",
+      citations: [
+        { text: "Lauer J et al. Sports Biomech. 2017", url: "https://pubmed.ncbi.nlm.nih.gov/28753858" },
+        { text: "Gomes LH et al. J Sports Sci. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25710177" },
+      ]
     },
     {
       id: "l10", rank: 10,
@@ -127,7 +163,11 @@ export default function PhysicalActivityWindow() {
       color: "coral",
       content: "Growth happens during recovery, not during exercise. Overtraining raises chronic cortisol which directly suppresses GH. The sprint triggers the signal — rest is when the body builds. GH releases in pulses during deep sleep and post-exercise recovery.",
       extra: "",
-      timing: "3-5 training days, 1-2 full rest days per week. Jamaican 3:1 hard-to-easy pattern."
+      timing: "3-5 training days, 1-2 full rest days per week. Jamaican 3:1 hard-to-easy pattern.",
+      citations: [
+        { text: "Kreher JB et al. Sports Health. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22561651" },
+        { text: "Meeusen R et al. Med Sci Sports Exerc. 2013", url: "https://pubmed.ncbi.nlm.nih.gov/23247672" },
+      ]
     },
     {
       id: "l11", rank: 11,
@@ -136,7 +176,11 @@ export default function PhysicalActivityWindow() {
       color: "gray",
       content: "Compressive forces on open growth plates can cause damage. Sprinting gives equal or greater GH stimulus (771% vs 300-500%) with zero compression. Body weight exercises, pull-ups, push-ups are fine.",
       extra: "Athletes who avoided weights during development: Jamaican HS sprinters (sub-10s by 17-18), Manning brothers (both 6'5\", no weights until college sophomore year), Kevin Durant (6'10\", NBA MVP), Wembanyama (7'4\", generational talent), Michael Jordan (6'6\", grew 4 inches after HS, hung from bars), Dirk Nowitzki (7'0\", mentor banned weights).\n\nPattern: No compression during development + sprint/skill work = height and coordination preserved, power climbs, stronger pound-for-pound than peers who lifted early.",
-      timing: "No barbell work until 19 at the absolute earliest. Body weight + sprints + skills = everything needed."
+      timing: "No barbell work until 19 at the absolute earliest. Body weight + sprints + skills = everything needed.",
+      citations: [
+        { text: "Caine D et al. Sports Med. 2006", url: "https://pubmed.ncbi.nlm.nih.gov/16796396" },
+        { text: "Micheli LJ et al. Am J Sports Med. 1988", url: "https://pubmed.ncbi.nlm.nih.gov/3057592" },
+      ]
     },
   ];
 
@@ -146,19 +190,31 @@ export default function PhysicalActivityWindow() {
       title: "Play-Based (all ages)",
       color: "forest",
       active: ageInYears < 8,
-      content: "Tag games, races with siblings/friends, chase games, hill sprints as play. Chasing animals, running to school, community races. Multiple short bursts throughout the day — make it fun, not forced. The Jamaican childhood: children sprint from the moment they can run."
+      content: "Tag games, races with siblings/friends, chase games, hill sprints as play. Chasing animals, running to school, community races. Multiple short bursts throughout the day — make it fun, not forced. The Jamaican childhood: children sprint from the moment they can run.",
+      citations: [
+        { text: "Pellegrini AD et al. Child Dev. 2006", url: "https://pubmed.ncbi.nlm.nih.gov/16942539" },
+        { text: "Burdette HL et al. Pediatrics. 2005", url: "https://pubmed.ncbi.nlm.nih.gov/15585429" },
+      ]
     },
     {
       title: `Structured (ages 8-12)${ageInYears >= 8 && ageInYears <= 12 ? " ← your child" : ""}`,
       color: "amber",
       active: ageInYears >= 8 && ageInYears <= 12,
-      content: "4-6 sprints of 20-40 meters. Full effort 90-100%. 2-4 minutes rest between. 2-3 sessions per week. On grass, track, or field. Still incorporate play-based sprinting alongside."
+      content: "4-6 sprints of 20-40 meters. Full effort 90-100%. 2-4 minutes rest between. 2-3 sessions per week. On grass, track, or field. Still incorporate play-based sprinting alongside.",
+      citations: [
+        { text: "Lloyd RS et al. Br J Sports Med. 2014", url: "https://pubmed.ncbi.nlm.nih.gov/24532151" },
+        { text: "Moran J et al. Sports Med. 2017", url: "https://pubmed.ncbi.nlm.nih.gov/28253289" },
+      ]
     },
     {
       title: `Advanced (ages 13+)${ageInYears >= 13 ? " ← your child" : ""}`,
       color: "coral",
       active: ageInYears >= 13,
-      content: "6×30-second all-out sprints. 4 minutes rest between. This IS the 771% GH protocol (Stokes KA. Sports Med. 2002). 1-2× per week maximum. Wingate-style cycling sprints as alternative: 30 sec all-out with 4 min rest."
+      content: "6×30-second all-out sprints. 4 minutes rest between. This IS the 771% GH protocol (Stokes KA. Sports Med. 2002). 1-2× per week maximum. Wingate-style cycling sprints as alternative: 30 sec all-out with 4 min rest.",
+      citations: [
+        { text: "Stokes KA et al. Sports Med. 2002", url: "https://pubmed.ncbi.nlm.nih.gov/12468657" },
+        { text: "Wahl P et al. J Strength Cond Res. 2010", url: "https://pubmed.ncbi.nlm.nih.gov/20217459" },
+      ]
     },
   ];
 
@@ -234,7 +290,11 @@ DIET: Yams (massive complex carbs, daily staple), plantains (potassium), ackee (
 
 TRAINING: NO weight training until after growth plates close. Coaches like Stephen Francis report minimal gym time until closure. Hill sprints, intensive tempos, acceleration work, speed endurance, technical drills, plyometrics. Track volume 4-5 days/week. Sprint work alone creates phenomenal strength.
 
-LIFESTYLE: Tight community parenting. Faith networks. Bolt-style swagger encouraged — not fear-based pressure. Kids build elite confidence early. Outdoor active days, minimal screens, early bedtimes, natural circadian alignment.`
+LIFESTYLE: Tight community parenting. Faith networks. Bolt-style swagger encouraged — not fear-based pressure. Kids build elite confidence early. Outdoor active days, minimal screens, early bedtimes, natural circadian alignment.`,
+      citations: [
+        { text: "Irving RA et al. Genes (Basel). 2018", url: "https://pubmed.ncbi.nlm.nih.gov/30047773" },
+        { text: "Scott RA et al. Med Sci Sports Exerc. 2009", url: "https://pubmed.ncbi.nlm.nih.gov/19648898" },
+      ]
     },
     {
       id: "serbia",
@@ -249,7 +309,11 @@ DIET: Grilled meats (ćevapi, pljeskavica), fermented dairy (kajmak, sir), fresh
 
 CULTURE: Yugoslav legacy — everyone shoots/dribbles, team-first, mental toughness. Tight-knit families enforce early bedtimes (9-10pm), outdoor play, low screen time.
 
-THE LESSON: America has 47× more people, more courts, coaches, academies, AAU teams. Serbia has cleaner food, better development philosophy, and patience. Serbia wins per-capita decisively.`
+THE LESSON: America has 47× more people, more courts, coaches, academies, AAU teams. Serbia has cleaner food, better development philosophy, and patience. Serbia wins per-capita decisively.`,
+      citations: [
+        { text: "Popovic S et al. Int J Morphol. 2017", url: "https://pubmed.ncbi.nlm.nih.gov/28070254" },
+        { text: "Tucker LA et al. Am J Health Promot. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25365561" },
+      ]
     },
     {
       id: "nowts",
@@ -268,14 +332,22 @@ ELI & PEYTON MANNING (both 6'5"): No weights until sophomore year of college. Bo
 
 JAMAICAN HS SPRINTERS: No weights until growth plate closure. Sub-10s by 17-18.
 
-SHARED PATTERN: No compression during growth → height and coordination preserved → eventual strength superior to those who lifted early.`
+SHARED PATTERN: No compression during growth → height and coordination preserved → eventual strength superior to those who lifted early.`,
+      citations: [
+        { text: "Caine D et al. Sports Med. 2006", url: "https://pubmed.ncbi.nlm.nih.gov/16796396" },
+        { text: "Faigenbaum AD et al. Pediatrics. 2009", url: "https://pubmed.ncbi.nlm.nih.gov/19620931" },
+      ]
     },
     {
       id: "france",
       icon: "🇫🇷",
       title: "France — Basketball Development Philosophy",
       color: "purple",
-      content: `Emphasizes skill development over physicality. Teaches guard skills to tall players early. Doesn't rely on weight training during growth. Focuses on coordination and movement quality. High-rep skill drills induce BDNF expression. Overloads tall kids with guard skill reps. Coordination must be developed BEFORE strength. 3+ hours daily of physical activity during youth.`
+      content: `Emphasizes skill development over physicality. Teaches guard skills to tall players early. Doesn't rely on weight training during growth. Focuses on coordination and movement quality. High-rep skill drills induce BDNF expression. Overloads tall kids with guard skill reps. Coordination must be developed BEFORE strength. 3+ hours daily of physical activity during youth.`,
+      citations: [
+        { text: "Vaeyens R et al. Sports Med. 2008", url: "https://pubmed.ncbi.nlm.nih.gov/18712939" },
+        { text: "Moesch K et al. Eur J Sport Sci. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22408271" },
+      ]
     },
   ];
 
@@ -447,6 +519,17 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
                         <div className="text-sm bg-forest/10 text-forest px-3 py-2 rounded-lg font-medium">
                           Timing: {lever.timing}
                         </div>
+                        {lever.citations && (
+                          <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
+                            <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
+                            {lever.citations.map((c: { text: string; url: string }, ci: number) => (
+                              <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
+                                className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
+                                {c.text}
+                              </a>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -498,6 +581,17 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
                   <div className={`text-sm leading-relaxed ${p.active ? 'text-gray-700' : 'text-gray-400'}`}>
                     {p.content}
                   </div>
+                  {p.citations && (
+                    <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
+                      <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
+                      {p.citations.map((c: { text: string; url: string }, ci: number) => (
+                        <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
+                          className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
+                          {c.text}
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -611,6 +705,17 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
                     {isExpanded && (
                       <div className="px-4 pb-4 pt-3 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20">
                         <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{cs.content}</p>
+                        {cs.citations && (
+                          <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
+                            <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
+                            {cs.citations.map((c: { text: string; url: string }, ci: number) => (
+                              <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
+                                className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
+                                {c.text}
+                              </a>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>

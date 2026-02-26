@@ -102,7 +102,13 @@ function OnboardingContent() {
     localStorage.setItem('childBirthMonth', birthMonth);
     localStorage.setItem('childBirthYear', birthYear);
 
-    // Save child to Supabase so name persists across devices
+    // Save child name to Supabase auth metadata so it persists across devices
+    const supabase = createClient();
+    if (supabase) {
+      supabase.auth.updateUser({ data: { child_name: name } }).catch(() => {});
+    }
+
+    // Also save to children table
     if (userId) {
       const birthDate = birthYear && birthMonth
         ? `${birthYear}-${birthMonth.padStart(2, '0')}-01`
