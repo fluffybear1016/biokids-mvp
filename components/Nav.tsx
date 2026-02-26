@@ -28,6 +28,19 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
       supabase.auth.getSession().then(({ data: { session } }) => {
         if (session?.user) {
           setIsLoggedIn(true);
+
+          // If no childName in localStorage, fetch from server
+          if (!name) {
+            fetch(`/api/auth/user-state?userId=${session.user.id}`)
+              .then(res => res.json())
+              .then(data => {
+                if (data.children && data.children.length > 0 && data.children[0].name) {
+                  setChildName(data.children[0].name);
+                  localStorage.setItem('childName', data.children[0].name);
+                }
+              })
+              .catch(() => {});
+          }
         } else if (localStorage.getItem('biokids_auth_user_id')) {
           setIsLoggedIn(true);
         }
