@@ -8,6 +8,7 @@ const PROTECTED_PREFIXES = [
   '/protocol',
   '/learn',
   '/stage',
+  '/settings',
 ];
 
 function isProtectedRoute(pathname: string): boolean {

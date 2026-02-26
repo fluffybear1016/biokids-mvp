@@ -29,17 +29,24 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
         if (session?.user) {
           setIsLoggedIn(true);
 
-          // If no childName in localStorage, fetch from server
+          // If no childName in localStorage, read from auth user metadata
           if (!name) {
-            fetch(`/api/auth/user-state?userId=${session.user.id}`)
-              .then(res => res.json())
-              .then(data => {
-                if (data.children && data.children.length > 0 && data.children[0].name) {
-                  setChildName(data.children[0].name);
-                  localStorage.setItem('childName', data.children[0].name);
-                }
-              })
-              .catch(() => {});
+            const metaName = session.user.user_metadata?.child_name;
+            if (metaName) {
+              setChildName(metaName);
+              localStorage.setItem('childName', metaName);
+            } else {
+              // Last resort: fetch from children table
+              fetch(`/api/auth/user-state?userId=${session.user.id}`)
+                .then(res => res.json())
+                .then(data => {
+                  if (data.children?.length > 0 && data.children[0].name) {
+                    setChildName(data.children[0].name);
+                    localStorage.setItem('childName', data.children[0].name);
+                  }
+                })
+                .catch(() => {});
+            }
           }
         } else if (localStorage.getItem('biokids_auth_user_id')) {
           setIsLoggedIn(true);
@@ -126,7 +133,15 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
                   </svg>
                 </button>
                 {showMenu && (
-                  <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-stone-200 py-1 z-50">
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-stone-200 py-1 z-50">
+                    <Link
+                      href="/settings"
+                      onClick={() => setShowMenu(false)}
+                      className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-stone-50"
+                    >
+                      Edit Profile
+                    </Link>
+                    <div className="border-t border-stone-100 my-1" />
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-stone-50"
