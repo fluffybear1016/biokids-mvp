@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 const STREAK_DEFS = [
-  { id: 'dairy', emoji: '🥛', label: 'Dairy', items: ['dairy1', 'dairy2', 'dairy3'], mode: 'all' as const },
+  { id: 'dairy', emoji: '🥛', label: 'Dairy', items: ['dairy1', 'dairy2'], mode: 'all' as const },
   { id: 'clo', emoji: '🐟', label: 'CLO', items: ['clo'], mode: 'all' as const },
   { id: 'protein', emoji: '🥩', label: 'Protein', items: ['breakfast', 'presprint', 'dinnerpro'], mode: 'all' as const },
   { id: 'glycine', emoji: '😴', label: 'Glycine', items: ['glycine'], mode: 'all' as const },
