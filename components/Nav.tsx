@@ -99,7 +99,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
         )}
 
         {/* Auth area */}
-        {!currentChild && pathname !== '/' && (
+        {!currentChild && (
           <div className="flex items-center gap-3 order-2 md:order-3">
             {isLoggedIn ? (
               <div className="relative">
