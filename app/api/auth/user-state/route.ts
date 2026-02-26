@@ -31,7 +31,7 @@ export async function GET(request: Request) {
       supabase
         .from('children')
         .select('*')
-        .eq('account_id', userId),
+        .eq('user_id', userId),
     ]);
 
     return NextResponse.json({

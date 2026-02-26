@@ -69,19 +69,33 @@ function LoginForm() {
         }
 
         // Check user state via server API (bypasses RLS)
-        const stateRes = await fetch(`/api/auth/user-state?userId=${authData.user.id}`);
-        const state = await stateRes.json();
+        let hasSubscription = false;
+        let hasChild = false;
 
-        const hasSubscription = state.profile?.subscription_status === 'active' || state.profile?.subscription_status === 'trial';
-        const hasChild = state.children && state.children.length > 0;
+        try {
+          const stateRes = await fetch(`/api/auth/user-state?userId=${authData.user.id}`);
+          const state = await stateRes.json();
+          hasSubscription = state.profile?.subscription_status === 'active' || state.profile?.subscription_status === 'trial';
+          hasChild = state.children && state.children.length > 0;
+        } catch {
+          // API failed — fall through to localStorage check
+        }
 
-        if (hasChild && hasSubscription) {
+        // localStorage fallback: if user completed onboarding locally, treat them as returning
+        const onboardingComplete = localStorage.getItem('biokids_onboarding_complete') === 'true';
+        const hasLocalChild = !!localStorage.getItem('childName');
+
+        if (hasSubscription || onboardingComplete) {
           const redirectTo = searchParams.get('redirect') || '/dashboard';
-          router.push(redirectTo);
-        } else if (hasSubscription && !hasChild) {
-          router.push('/onboarding?step=4');
-        } else if (hasChild && !hasSubscription) {
-          router.push('/onboarding?step=2');
+          if (onboardingComplete && !hasSubscription) {
+            const sep = redirectTo.includes('?') ? '&' : '?';
+            router.push(redirectTo + sep + 'checkout_success=true');
+          } else {
+            router.push(redirectTo);
+          }
+        } else if (hasLocalChild) {
+          // User started onboarding but may not have paid — send to Stripe step
+          router.push('/onboarding?step=5');
         } else {
           router.push('/onboarding');
         }

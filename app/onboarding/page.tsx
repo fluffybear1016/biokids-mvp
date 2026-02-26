@@ -1,13 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
 import GoalSelection from '@/components/GoalSelection';
 import { createClient } from '@/lib/supabase';
+import { Suspense } from 'react';
 
-export default function Onboarding() {
+function OnboardingContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
 
   // Step 1: Child Info
@@ -37,6 +39,20 @@ export default function Onboarding() {
   const [fatherHeightFt, setFatherHeightFt] = useState('');
   const [fatherHeightIn, setFatherHeightIn] = useState('');
   const [showScience, setShowScience] = useState(false);
+
+  // Read ?step= URL param to allow resuming onboarding
+  useEffect(() => {
+    const stepParam = searchParams.get('step');
+    if (stepParam) {
+      const parsed = parseInt(stepParam, 10);
+      if (parsed >= 1 && parsed <= 5) {
+        setStep(parsed);
+        // Restore child name from localStorage for display in later steps
+        const savedName = localStorage.getItem('childName');
+        if (savedName) setName(savedName);
+      }
+    }
+  }, [searchParams]);
 
   // Fetch authenticated user info for Stripe
   useEffect(() => {
@@ -123,6 +139,8 @@ export default function Onboarding() {
       localStorage.setItem('fatherHeight', `${fatherHeightFt}'${fatherHeightIn}"`);
       localStorage.setItem('geneticTarget', geneticTargetCm.toString());
     }
+    // Mark onboarding as complete (user is about to see Stripe)
+    localStorage.setItem('biokids_onboarding_complete', 'true');
     setStep(5);
   };
 
@@ -650,10 +668,30 @@ export default function Onboarding() {
               customer-email={userEmail || undefined}
               client-reference-id={userId || undefined}
             />
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => router.push('/dashboard?checkout_success=true')}
+                className="text-sm text-emerald-700 font-medium hover:text-emerald-900 hover:underline transition-colors"
+              >
+                Already paid? Go to Dashboard →
+              </button>
+            </div>
           </div>
         )}
 
       </div>
     </div>
+  );
+}
+
+export default function Onboarding() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#FFFDF7] flex items-center justify-center p-4">
+        <div className="w-full max-w-md text-center text-stone-500">Loading...</div>
+      </div>
+    }>
+      <OnboardingContent />
+    </Suspense>
   );
 }
