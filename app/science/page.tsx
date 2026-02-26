@@ -254,58 +254,6 @@ export default function Dashboard() {
           </Link>
         </section>
 
-        {/* Bottom Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-          {/* Jarvis */}
-          <section className="bg-forest rounded-2xl sm:rounded-3xl p-5 sm:p-7 text-white">
-            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-5">
-              <div className="w-9 h-9 sm:w-11 sm:h-11 bg-white/15 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl">🤖</div>
-              <div>
-                <h3 className="font-display text-lg sm:text-xl">Ask Jarvis</h3>
-                <p className="text-xs sm:text-sm text-white/70">Your GH optimization AI</p>
-              </div>
-            </div>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Ask anything..."
-                className="w-full px-4 sm:px-5 py-3 sm:py-4 pr-12 sm:pr-14 bg-white/10 border border-white/20 rounded-xl sm:rounded-2xl text-white text-base placeholder:text-white/50 focus:outline-none focus:bg-white/15 focus:border-white/40"
-              />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-lg sm:rounded-xl flex items-center justify-center hover:scale-105 transition-transform">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </button>
-            </div>
-            <div className="flex flex-wrap gap-2 mt-3 sm:mt-4">
-              {['Why 8:30pm bedtime?', 'Best GH foods', 'Sprint alternatives'].map((q) => (
-                <span key={q} className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-white/10 border border-white/15 rounded-full text-[10px] sm:text-xs text-white/90 cursor-pointer hover:bg-white/20">
-                  {q}
-                </span>
-              ))}
-            </div>
-          </section>
-
-          {/* Article Cards */}
-          <section className="flex flex-col gap-3">
-            <Link href="/learn" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '14px 16px', textDecoration: 'none', color: '#1B4332', display: 'block', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-0.5">
-              <div style={{ fontSize: 10, color: '#999', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 6 }}>bioKids Article</div>
-              <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>14 Growth Blockers to Avoid</div>
-              <div style={{ fontSize: 12, color: '#666' }}>Common factors that limit growth potential — and how to eliminate them.</div>
-            </Link>
-            <Link href="/learn" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '14px 16px', textDecoration: 'none', color: '#1B4332', display: 'block', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-0.5">
-              <div style={{ fontSize: 10, color: '#999', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 6 }}>bioKids Article</div>
-              <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>Why the Dutch Are the Tallest People on Earth</div>
-              <div style={{ fontSize: 12, color: '#666' }}>A2 milk proteins support IGF-1 production. The milk flooding protocol.</div>
-            </Link>
-            <Link href="/learn" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '14px 16px', textDecoration: 'none', color: '#1B4332', display: 'block', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-0.5">
-              <div style={{ fontSize: 10, color: '#999', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 6 }}>bioKids Article</div>
-              <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>The 771% GH Sprint Protocol</div>
-              <div style={{ fontSize: 12, color: '#666' }}>30-second sprints trigger massive growth hormone spikes steady cardio can&apos;t match.</div>
-            </Link>
-          </section>
-        </div>
-
       </main>
 
         {/* Right Sidebar - xl screens only */}
