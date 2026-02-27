@@ -192,7 +192,7 @@ export default function Home() {
           <div className="flex gap-6 sm:gap-8 text-sm text-black font-mono-science font-medium">
             <Link href="/privacy" className="hover:text-forest">Privacy</Link>
             <Link href="/terms" className="hover:text-forest">Terms</Link>
-            <a href="mailto:hello@biokids.me" className="hover:text-forest">Contact</a>
+            <a href="mailto:contact@biokids.me" className="hover:text-forest">contact@biokids.me</a>
           </div>
         </div>
       </footer>
