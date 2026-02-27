@@ -231,11 +231,15 @@ export default function Dashboard() {
           <div className="relative">
             <div className="text-xs sm:text-sm text-white/70 mb-1 sm:mb-2">Where {childName} is right now</div>
             <h1 className="font-display text-3xl sm:text-5xl mb-2 sm:mb-3">{stageData.label}</h1>
-            <p className="text-sm sm:text-base text-white/60 mb-4 sm:mb-5">
-              You have time. {childName} is in the optimal window.
-            </p>
             <p className="text-sm sm:text-lg text-white/90 max-w-lg">
-              This is the highest-leverage stage for supporting natural growth. Small consistent actions now make a big difference.
+              {stage === 'infancy' && `The foundation is being built. ${childName}'s growth hormone system is establishing its rhythm — this is when receptor sensitivity and nutritional foundations are set for everything that follows.`}
+              {stage === 'early-childhood' && `${childName}'s growth velocity is among the highest it will ever be. The habits you build now — sleep, nutrition, movement — wire the GH system for the next decade.`}
+              {stage === 'mid-childhood' && `${childName}'s growth hormone system is running at full capacity. This is the steady-state window where consistent daily actions compound quietly into real results.`}
+              {stage === 'pre-puberty' && `This is prime time. ${childName}'s growth plates are wide open and the pre-puberty window is the highest-leverage stage for supporting natural growth. Small consistent actions now make a big difference.`}
+              {stage === 'early-puberty' && `${childName} is entering the growth acceleration phase. Puberty amplifies everything — sleep quality, nutrition, and movement all have an outsized impact on peak growth velocity right now.`}
+              {stage === 'active-puberty' && `${childName} is in the peak growth velocity window. Every month matters. The protocols you follow now determine how much of ${childName}'s genetic potential is expressed before the growth plates begin to close.`}
+              {stage === 'late-growth' && `${childName}'s growth plates are in their final phase. There is still meaningful opportunity — spinal health, posture optimization, and hormonal support can add real height even now.`}
+              {(stage === 'prenatal' || stage === 'adult') && `${childName} is in the ${stageData.label.toLowerCase()} stage. Every action you take supports long-term growth potential.`}
             </p>
             <Link
               href="/stage"
