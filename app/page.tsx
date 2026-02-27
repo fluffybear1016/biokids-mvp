@@ -153,35 +153,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What You Get - Teaser Only */}
-      <section className="py-12 sm:py-20 px-4 sm:px-6 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-display text-2xl sm:text-4xl text-black mb-3 sm:mb-4">What's inside</h2>
-            <p className="text-sm sm:text-base text-black font-mono-science font-medium">Everything you need to optimize your child's natural growth hormone over time.</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            {[
-              { icon: '📋', title: 'The Complete System', desc: 'Daily and weekly actions, personalized to your child\'s growth stage.' },
-              { icon: '🧬', title: 'The Synthesized Science', desc: 'Mechanism breakdowns and case studies with peer-reviewed citations, so you understand the why.' },
-              { icon: '🤖', title: 'gH AI', desc: 'Your personal growth hormone optimization assistant. Ask anything, anytime.' },
-              { icon: '📊', title: 'Growth Tracking', desc: 'Monitor progress across the three critical growth windows.' },
-            ].map((item) => (
-              <div key={item.title} className="bg-cream rounded-2xl p-4 sm:p-6 flex items-start gap-3 sm:gap-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl flex items-center justify-center text-xl sm:text-2xl flex-shrink-0 shadow-sm">
-                  {item.icon}
-                </div>
-                <div>
-                  <h3 className="font-semibold text-base sm:text-lg mb-1 sm:mb-2 font-mono-science text-black">{item.title}</h3>
-                  <p className="text-sm sm:text-base text-black font-mono-science font-medium">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Pricing */}
       <section className="py-12 sm:py-20 px-4 sm:px-6 bg-cream">
         <div className="max-w-2xl mx-auto">
@@ -198,33 +169,6 @@ export default function Home() {
               <span>✓ Age-specific protocols</span>
               <span>✓ Cancel anytime</span>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof */}
-      <section className="py-12 sm:py-20 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8 sm:mb-12">
-            <p className="text-xs sm:text-sm font-semibold text-forest uppercase tracking-wider mb-3 sm:mb-4 font-mono-science">Trusted By</p>
-            <h2 className="font-display text-2xl sm:text-3xl text-black">Parents who do the research.</h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {[
-              { quote: "Finally, something beyond 'feed them vegetables and hope for the best.'", author: "Parent of 2", location: "San Francisco" },
-              { quote: "The protocol is simple. The science is deep. Exactly what I was looking for.", author: "Parent of 1", location: "Austin" },
-              { quote: "I wish I had this when my oldest was younger. Starting with my second now.", author: "Parent of 3", location: "New York" },
-            ].map((item, i) => (
-              <div key={i} className="bg-white rounded-2xl p-5 sm:p-6">
-                <p className="text-sm sm:text-base text-black mb-3 sm:mb-4 font-mono-science">"{item.quote}"</p>
-                <div className="text-xs sm:text-sm text-black font-mono-science font-medium">
-                  <span className="font-medium text-black">{item.author}</span>
-                  <span className="mx-2">·</span>
-                  <span>{item.location}</span>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
