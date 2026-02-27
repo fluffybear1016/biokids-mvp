@@ -90,33 +90,38 @@ export type GrowthWindow = {
   updated_at: string;
 };
 
-export type GrowthStage = 
+export type GrowthStage =
   | 'prenatal'
-  | 'infant'
-  | 'toddler'
+  | 'infancy'
   | 'early-childhood'
+  | 'mid-childhood'
   | 'pre-puberty'
-  | 'puberty'
-  | 'late-adolescence'
+  | 'early-puberty'
+  | 'active-puberty'
+  | 'late-growth'
   | 'adult';
 
 // Helper to calculate growth stage from birth date
-export function getGrowthStage(birthDate: string): GrowthStage {
+export function getGrowthStage(birthDate: string | null): GrowthStage {
+  if (!birthDate) return 'early-childhood';
+
   const birth = new Date(birthDate);
+  if (isNaN(birth.getTime())) return 'early-childhood';
+
   const now = new Date();
-  
   if (birth > now) return 'prenatal';
-  
-  const ageInMonths = (now.getFullYear() - birth.getFullYear()) * 12 + 
+
+  const ageInMonths = (now.getFullYear() - birth.getFullYear()) * 12 +
                        (now.getMonth() - birth.getMonth());
   const ageInYears = ageInMonths / 12;
-  
-  if (ageInYears < 2) return 'infant';
-  if (ageInYears < 5) return 'toddler';
-  if (ageInYears < 8) return 'early-childhood';
-  if (ageInYears < 12) return 'pre-puberty';
-  if (ageInYears < 16) return 'puberty';
-  if (ageInYears < 25) return 'late-adolescence';
+
+  if (ageInYears < 2) return 'infancy';
+  if (ageInYears < 5) return 'early-childhood';
+  if (ageInYears < 8) return 'mid-childhood';
+  if (ageInYears < 11) return 'pre-puberty';
+  if (ageInYears < 14) return 'early-puberty';
+  if (ageInYears < 18) return 'active-puberty';
+  if (ageInYears < 21) return 'late-growth';
   return 'adult';
 }
 
@@ -145,39 +150,44 @@ export const stageInfo: Record<GrowthStage, { label: string; description: string
     description: 'Programming the Foundation',
     color: 'purple'
   },
-  'infant': {
-    label: 'Infant',
+  'infancy': {
+    label: 'Infancy',
     description: 'Rapid Growth Phase (0-2)',
     color: 'blue'
   },
-  'toddler': {
-    label: 'Toddler',
-    description: 'Building Momentum (2-5)',
-    color: 'teal'
-  },
   'early-childhood': {
     label: 'Early Childhood',
-    description: 'Establishing Habits (5-8)',
+    description: 'Building Momentum (2-4)',
+    color: 'teal'
+  },
+  'mid-childhood': {
+    label: 'Mid Childhood',
+    description: 'Establishing Habits (5-7)',
     color: 'green'
   },
   'pre-puberty': {
     label: 'Pre-Puberty',
-    description: 'Peak Opportunity Window (8-12)',
+    description: 'Peak Opportunity Window (8-10)',
     color: 'amber'
   },
-  'puberty': {
-    label: 'Puberty',
-    description: 'Active Growth Spurt (12-16)',
+  'early-puberty': {
+    label: 'Early Puberty',
+    description: 'Growth Acceleration (11-13)',
     color: 'orange'
   },
-  'late-adolescence': {
-    label: 'Late Adolescence',
-    description: 'Final Window (16-25)',
+  'active-puberty': {
+    label: 'Active Puberty',
+    description: 'Active Growth Spurt (14-17)',
+    color: 'coral'
+  },
+  'late-growth': {
+    label: 'Late Growth',
+    description: 'Final Window (18-20)',
     color: 'red'
   },
   'adult': {
     label: 'Adult',
-    description: 'Optimization Mode (25+)',
+    description: 'Optimization Mode (21+)',
     color: 'gray'
   }
 };

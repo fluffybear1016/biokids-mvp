@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
+import { createClient } from '@/lib/supabase';
 
 type StageSection = {
   title: string;
@@ -997,24 +998,44 @@ function calculateAgeInMonths(birthDate: string): number {
 }
 
 export default function StagePage() {
-  const [currentStageId, setCurrentStageId] = useState<string>('age-8');
+  const [currentStageId, setCurrentStageId] = useState<string | null>(null);
   const [openSection, setOpenSection] = useState<number>(0);
   const [showStages, setShowStages] = useState(false);
 
-  // Load child data and determine stage
+  // Load child data from Supabase, fallback to localStorage
   useEffect(() => {
-    const childData = localStorage.getItem('child_data');
-    if (childData) {
-      try {
-        const parsed = JSON.parse(childData);
-        if (parsed.birthDate) {
-          const ageInMonths = calculateAgeInMonths(parsed.birthDate);
-          const stageId = getStageFromAge(ageInMonths);
-          setCurrentStageId(stageId);
-        }
-      } catch (e) {
-        // Use default stage
+    let resolved = false;
+
+    const supabase = createClient();
+    if (supabase) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (!session?.user || resolved) return;
+
+        fetch(`/api/auth/user-state?userId=${session.user.id}`)
+          .then(res => res.json())
+          .then(data => {
+            if (resolved) return;
+            if (data.children && data.children.length > 0 && data.children[0].birth_date) {
+              const ageInMonths = calculateAgeInMonths(data.children[0].birth_date);
+              resolved = true;
+              setCurrentStageId(getStageFromAge(ageInMonths));
+            }
+          })
+          .catch(() => {});
+      });
+    }
+
+    // localStorage fallback (runs immediately, Supabase overrides if successful)
+    const m = localStorage.getItem('childBirthMonth');
+    const y = localStorage.getItem('childBirthYear');
+    if (m && y) {
+      const birthDate = `${y}-${m.padStart(2, '0')}-01`;
+      const ageInMonths = calculateAgeInMonths(birthDate);
+      if (!resolved) {
+        setCurrentStageId(getStageFromAge(ageInMonths));
       }
+    } else if (!resolved) {
+      setCurrentStageId('age-2');
     }
   }, []);
 

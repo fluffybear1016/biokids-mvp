@@ -178,7 +178,12 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  const stage = child ? getGrowthStage(child.birth_date) : 'pre-puberty';
+  const birthDate = child?.birth_date || (typeof window !== 'undefined' ? (() => {
+    const m = localStorage.getItem('childBirthMonth');
+    const y = localStorage.getItem('childBirthYear');
+    return m && y ? `${y}-${m.padStart(2, '0')}-01` : null;
+  })() : null);
+  const stage = getGrowthStage(birthDate);
   const stageData = stageInfo[stage];
   const childName = child?.name || (typeof window !== 'undefined' && localStorage.getItem('childName')) || 'Your child';
 
