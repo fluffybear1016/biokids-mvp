@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Script from 'next/script';
 import GoalSelection from '@/components/GoalSelection';
+import HeightPotentialCalculator from '@/components/HeightPotentialCalculator';
 import { createClient } from '@/lib/supabase';
 import { Suspense } from 'react';
 
@@ -39,8 +40,6 @@ function OnboardingContent() {
   const [motherHeightIn, setMotherHeightIn] = useState('');
   const [fatherHeightFt, setFatherHeightFt] = useState('');
   const [fatherHeightIn, setFatherHeightIn] = useState('');
-  const [showScience, setShowScience] = useState(false);
-
   // Step 5: Account Creation
   const [signupEmail, setSignupEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
@@ -133,11 +132,6 @@ function OnboardingContent() {
 
   const toInches = (ft: string, inches: string) => (parseInt(ft) * 12) + parseInt(inches);
   const toCm = (totalInches: number) => totalInches * 2.54;
-  const cmToFtIn = (cm: number) => {
-    const totalIn = Math.round(cm / 2.54);
-    return `${Math.floor(totalIn / 12)}'${totalIn % 12}"`;
-  };
-  const formatParentHeight = (ft: string, inches: string) => `${ft}'${inches}"`;
 
   const canCalculateHeight = childGender && motherHeightFt && motherHeightIn && fatherHeightFt && fatherHeightIn;
 
@@ -609,123 +603,11 @@ function OnboardingContent() {
 
             {/* Height Visualization */}
             {geneticTargetCm && (
-              <div className="mt-8">
-                {/* Vertical Bar Chart */}
-                <div className="relative flex items-end gap-4 mb-6 h-[340px] sm:h-[280px]">
-                  {/* Labels column */}
-                  <div className="flex flex-col justify-end h-full w-20 text-right pr-2 text-xs text-stone-500 relative">
-                    <div className="absolute" style={{ bottom: '0%' }}>
-                      {cmToFtIn(geneticTargetCm)}
-                    </div>
-                    <div className="absolute" style={{ bottom: '15%' }}>
-                      {cmToFtIn(geneticTargetCm + 2 * 2.54)}
-                    </div>
-                    <div className="absolute" style={{ bottom: '75%' }}>
-                      {cmToFtIn(geneticTargetCm + 8 * 2.54)}
-                    </div>
-                  </div>
-
-                  {/* Bar */}
-                  <div className="flex-1 h-full flex flex-col rounded-xl overflow-hidden border border-stone-200">
-                    {/* bioKids zone (top - dominant) */}
-                    <div className="bg-gradient-to-t from-emerald-500 to-emerald-300 flex items-center justify-center" style={{ height: '65%' }}>
-                      <div className="text-center px-2">
-                        <p className="text-sm font-bold text-emerald-950">bioKids zone</p>
-                        <p className="text-xs text-emerald-800 mt-1">+2" to +8" above target</p>
-                        <p className="text-[10px] text-emerald-700 mt-0.5">Maximum Potential</p>
-                      </div>
-                    </div>
-                    {/* Standard Range zone (narrow) */}
-                    <div className="bg-stone-200 flex items-center justify-center" style={{ height: '15%' }}>
-                      <div className="text-center px-2">
-                        <p className="text-[10px] font-semibold text-stone-600">Standard Range · +2" above target</p>
-                      </div>
-                    </div>
-                    {/* Genetic Target zone (bottom) */}
-                    <div className="bg-stone-100 flex items-center justify-center border-t-2 border-stone-400" style={{ height: '20%' }}>
-                      <div className="text-center px-2">
-                        <p className="text-xs font-semibold text-stone-600">Genetic Target</p>
-                        <p className="text-sm font-bold text-stone-900">{cmToFtIn(geneticTargetCm)}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Percentile Table */}
-                <div className="mb-6">
-                  <p className="text-sm font-semibold text-stone-800 mb-2">Height Potential Breakdown</p>
-                  <div className="border border-stone-200 rounded-lg overflow-hidden text-xs">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="bg-stone-100 text-stone-600">
-                          <th className="py-2 px-3 text-left font-medium">vs target</th>
-                          <th className="py-2 px-3 text-left font-medium">Height</th>
-                          <th className="py-2 px-3 text-left font-medium">Percentile</th>
-                          <th className="py-2 px-3 text-right font-medium"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {[
-                          { offset: 2, pct: '~84th', bio: false },
-                          { offset: 3, pct: '~93rd', bio: true },
-                          { offset: 4, pct: '~97.5th', bio: true },
-                          { offset: 5, pct: '~99.4th', bio: true },
-                          { offset: 6, pct: '~99.9th', bio: true },
-                          { offset: 7, pct: '~99.95th', bio: true },
-                          { offset: 8, pct: '~99.997th', bio: true },
-                        ].map((row) => (
-                          <tr key={row.offset} className={row.bio ? 'bg-emerald-50' : 'bg-white'}>
-                            <td className="py-1.5 px-3 text-stone-700">+{row.offset}"</td>
-                            <td className="py-1.5 px-3 font-medium text-stone-900">{cmToFtIn(geneticTargetCm + row.offset * 2.54)}</td>
-                            <td className="py-1.5 px-3 text-stone-600">{row.pct}</td>
-                            <td className="py-1.5 px-3 text-right">
-                              {row.bio && <span className="text-emerald-700 font-semibold">bioKids</span>}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                {/* Copy */}
-                <div className="space-y-3 text-sm text-stone-700">
-                  <p>
-                    With parents at {formatParentHeight(motherHeightFt, motherHeightIn)} and {formatParentHeight(fatherHeightFt, fatherHeightIn)}, your child's genetic target is around <span className="font-bold text-stone-900">{cmToFtIn(geneticTargetCm)}</span>.
-                  </p>
-                  <p>
-                    Most children finish within about 2 inches of their genetic target.
-                  </p>
-                  <p>
-                    However, when sleep, nutrition, exercise and hormones align optimally, children can express their genetics to the maximum of their potential—up to 8 inches above target. This natural "maximal gene expression" zone is documented in peer reviewed literature and is the key target of bioKids.
-                  </p>
-                  <p className="font-semibold text-emerald-700">
-                    bioKids helps you avoid leaving inches on the table.
-                  </p>
-                  <p>
-                    The real goal is not to "force tallness," but to remove avoidable limitations so each child can grow into the best version of their own biology.
-                  </p>
-                </div>
-
-                {/* See the science */}
-                <button
-                  type="button"
-                  onClick={() => setShowScience(!showScience)}
-                  className="mt-4 text-xs text-emerald-700 font-medium hover:text-emerald-900 transition-colors"
-                >
-                  {showScience ? '▼' : '▶'} See the science
-                </button>
-                {showScience && (
-                  <div className="mt-2 bg-emerald-50 rounded-lg p-3 space-y-2 font-mono">
-                    <p className="text-[11px] text-emerald-800">
-                      Standard band based on <a href="https://www.nature.com/articles/pr1998502" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-950">Luo/Wang et al. 1998</a> and <a href="https://www.aafp.org/pubs/afp/issues/2015/0701/p43.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-950">AAFP pediatric guidelines</a>.
-                    </p>
-                    <p className="text-[11px] text-emerald-800">
-                      Maximal expression (+3-4 SD) documented in <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11352326/" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-950">Zeevi et al. 2024</a> study of healthy families.
-                    </p>
-                  </div>
-                )}
-              </div>
+              <HeightPotentialCalculator
+                geneticTargetCm={geneticTargetCm}
+                motherHeight={`${motherHeightFt}'${motherHeightIn}"`}
+                fatherHeight={`${fatherHeightFt}'${fatherHeightIn}"`}
+              />
             )}
 
             <button
