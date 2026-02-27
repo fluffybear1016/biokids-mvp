@@ -33,7 +33,7 @@ export default function Settings() {
   const [processedFoods, setProcessedFoods] = useState('');
 
   // Goal
-  const [goal, setGoal] = useState<'concerned' | 'optimization' | 'competitive' | 'elite_performance' | 'maximum' | ''>('');
+  const [goal, setGoal] = useState<'concerned' | 'foundation' | 'elite' | ''>('');
 
   // Height Potential
   const [childGender, setChildGender] = useState<'boy' | 'girl' | ''>('');
@@ -146,10 +146,8 @@ export default function Settings() {
 
   const goalOptions = [
     { value: 'concerned' as const, icon: '💙', label: 'Concerned About Growth', desc: 'My child seems small or behind' },
-    { value: 'optimization' as const, icon: '🌿', label: 'General Optimization', desc: 'Build a strong foundation' },
-    { value: 'competitive' as const, icon: '⚡', label: 'Competitive Edge', desc: 'Outperform peers naturally' },
-    { value: 'elite_performance' as const, icon: '🏅', label: 'Elite Performance', desc: 'D1 athletics · Serious advantage' },
-    { value: 'maximum' as const, icon: '🏆', label: 'Maximum Potential', desc: 'Leave nothing on the table' },
+    { value: 'foundation' as const, icon: '🌿', label: 'Healthy Foundation', desc: 'Build great habits' },
+    { value: 'elite' as const, icon: '🏆', label: 'Maximum Potential', desc: 'D1 / Pro sports · Leave nothing on the table' },
   ];
 
   // Genetic target display

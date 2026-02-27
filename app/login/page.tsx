@@ -105,7 +105,7 @@ function LoginForm() {
           }
         } else if (hasLocalChild) {
           // User started onboarding but may not have paid — send to Stripe step
-          router.push('/onboarding?step=6');
+          router.push('/onboarding?step=5');
         } else {
           router.push('/onboarding');
         }
