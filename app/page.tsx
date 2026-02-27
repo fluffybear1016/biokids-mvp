@@ -30,7 +30,7 @@ export default function Home() {
               A natural way to optimize your child's <span className="text-forest">growth hormone</span>
             </h1>
             <p className="text-base sm:text-xl text-black mb-8 sm:mb-10 font-mono-science">
-              The evidence-based system for natural growth hormone optimization—from prenatal to age 25. No hormones, no meds, just the levers parents actually control.
+              The evidence-based system for natural growth hormone optimization—from prenatal to age 25. No prescriptions, no meds, just the levers parents actually control.
             </p>
             <div className="flex flex-col items-center gap-3">
               <Link href="/signup" className="bg-forest text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold hover:bg-forest-dark transition-all hover:-translate-y-0.5 font-mono-science">
