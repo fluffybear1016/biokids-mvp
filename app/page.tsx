@@ -186,9 +186,9 @@ export default function Home() {
       </section>
 
       {/* Closing Statement */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6">
-        <p className="font-display text-2xl sm:text-4xl text-forest text-center">
-          Inspire the next generation.
+      <section className="py-20 sm:py-32 px-4 sm:px-6">
+        <p className="font-display text-4xl sm:text-6xl font-bold text-forest text-center">
+          Grow.
         </p>
       </section>
 
