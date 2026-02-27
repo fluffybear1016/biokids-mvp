@@ -826,14 +826,6 @@ function OnboardingContent() {
               customer-email={userEmail || undefined}
               client-reference-id={userId || undefined}
             />
-            <div className="mt-6 text-center">
-              <button
-                onClick={() => router.push('/dashboard?checkout_success=true')}
-                className="text-sm text-emerald-700 font-medium hover:text-emerald-900 hover:underline transition-colors"
-              >
-                Already paid? Go to Dashboard →
-              </button>
-            </div>
           </div>
         )}
 

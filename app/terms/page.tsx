@@ -12,7 +12,7 @@ export default function TermsOfService() {
           </Link>
           <div className="flex items-center gap-3 sm:gap-6">
             <Link href="/login" className="text-sm font-medium text-white/80 hover:text-white font-mono-science">Log in</Link>
-            <Link href="/signup" className="bg-white text-forest px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-sm font-semibold hover:bg-cream transition-colors font-mono-science">
+            <Link href="/onboarding" className="bg-white text-forest px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-sm font-semibold hover:bg-cream transition-colors font-mono-science">
               Get Access
             </Link>
           </div>

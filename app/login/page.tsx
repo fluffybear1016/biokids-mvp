@@ -91,18 +91,11 @@ function LoginForm() {
           localStorage.setItem('childName', authData.user.user_metadata.child_name);
         }
 
-        // localStorage fallback: if user completed onboarding locally, treat them as returning
-        const onboardingComplete = localStorage.getItem('biokids_onboarding_complete') === 'true';
         const hasLocalChild = !!localStorage.getItem('childName');
 
-        if (hasSubscription || onboardingComplete) {
+        if (hasSubscription) {
           const redirectTo = searchParams.get('redirect') || '/dashboard';
-          if (onboardingComplete && !hasSubscription) {
-            const sep = redirectTo.includes('?') ? '&' : '?';
-            router.push(redirectTo + sep + 'checkout_success=true');
-          } else {
-            router.push(redirectTo);
-          }
+          router.push(redirectTo);
         } else if (hasLocalChild) {
           // User started onboarding but may not have paid — send to Stripe step
           router.push('/onboarding?step=6');
@@ -176,7 +169,7 @@ function LoginForm() {
         <Link href="/forgot-password" className="text-gray-500 hover:text-forest">
           Forgot password?
         </Link>
-        <Link href="/signup" className="text-forest font-medium hover:underline">
+        <Link href="/onboarding" className="text-forest font-medium hover:underline">
           Create account
         </Link>
       </div>

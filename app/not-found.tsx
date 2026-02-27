@@ -10,7 +10,7 @@ export default function NotFound() {
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
         <Link
-          href="/dashboard"
+          href="/"
           style={{ display: 'inline-block', background: '#2D5A47', color: 'white', padding: '10px 24px', borderRadius: 10, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}
         >
           Go Home
