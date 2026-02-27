@@ -122,6 +122,15 @@ const articles = [
     icon: '🫘',
     citation: '[Boyd AE. N Engl J Med. 1970]',
   },
+  {
+    slug: 'zinc-gh-igf1-axis',
+    title: 'Zinc and the GH–IGF‑1 Axis: Why This Mineral Controls Three Stages of Growth',
+    summary: 'Zinc is required at every level of the growth hormone pathway — pituitary secretion, liver IGF‑1 production, and growth plate signaling.',
+    category: 'nutrition',
+    readTime: '6 min',
+    icon: '⚡',
+    citation: '[Brown KH. Am J Clin Nutr. 2002]',
+  },
 ];
 
 const categories = [
