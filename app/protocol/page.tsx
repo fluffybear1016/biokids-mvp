@@ -40,9 +40,11 @@ export default function Protocol() {
     { name: 'Cod liver oil (1 tsp daily)', citation: '[Holick MF. 2007]', target: 7, current: 0 },
     { name: 'Eggs organic pasture-raised (2-3 daily)', citation: '[Iannotti LL. 2017]', target: 7, current: 0 },
     { name: 'Beef liver (1x/week)', citation: '[Prasad AS. 1998]', target: 1, current: 0 },
+    { name: 'Cooked oysters (1-2x/week)', citation: '[Stanford Children\'s Health. 2024]', target: 2, current: 0 },
     { name: 'Wild-caught salmon (2x/week)', citation: '[Parletta N. 2013]', target: 2, current: 0 },
     { name: 'Bone broth', citation: '[Shoulders MD. 2009]', target: 5, current: 0 },
     { name: 'Fermented foods (kefir, sauerkraut)', citation: '[Marco ML. 2017]', target: 7, current: 0 },
+    { name: 'Pumpkin seeds (daily snack)', citation: '[Prasad AS. 1991]', target: 7, current: 0 },
     { name: 'Bovine gelatin in smoothie/jello', citation: '[Clark KL. 2008]', target: 5, current: 0 },
   ]);
 
