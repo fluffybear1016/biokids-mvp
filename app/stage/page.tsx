@@ -1227,24 +1227,6 @@ export default function StagePage() {
           )}
         </div>
 
-        {/* Bottom CTA */}
-        <div className="mt-12 sm:mt-16 p-6 sm:p-8 bg-forest rounded-2xl text-white text-center">
-          <h3 className="font-display text-xl sm:text-2xl mb-3">
-            The window is open now.
-          </h3>
-          <p className="text-white/80 mb-6 max-w-md mx-auto">
-            Every day matters during this stage. The protocol is designed to maximize every opportunity.
-          </p>
-          <Link
-            href="/protocol"
-            className="inline-flex items-center gap-2 bg-white text-forest px-6 py-3 rounded-xl font-semibold hover:bg-cream transition-colors"
-          >
-            View the Protocol
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </Link>
-        </div>
       </main>
     </div>
   );
