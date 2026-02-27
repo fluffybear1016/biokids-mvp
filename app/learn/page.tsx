@@ -146,11 +146,11 @@ export default function Learn() {
     <div className="min-h-screen bg-cream">
       <Nav />
       
-      <main className="max-w-5xl mx-auto px-4 py-12">
+      <main className="max-w-5xl mx-auto px-4 py-6 sm:py-12">
         
         {/* Header */}
         <header className="mb-10">
-          <h1 className="font-display text-4xl text-gray-900 mb-2">Learn</h1>
+          <h1 className="font-display text-3xl sm:text-4xl text-gray-900 mb-2">Learn</h1>
           <p className="text-gray-500">Deep dives into the science of natural growth hormone optimization.</p>
         </header>
 
@@ -173,10 +173,10 @@ export default function Learn() {
         </div>
 
         {/* Featured Article */}
-        <Link href="/learn/how-your-child-grows" className="block bg-gradient-to-br from-forest to-forest-light rounded-3xl p-10 text-white mb-8 relative overflow-hidden hover:shadow-xl transition-all no-underline">
-          <div className="absolute top-0 right-0 text-[120px] opacity-10">🧬</div>
+        <Link href="/learn/how-your-child-grows" className="block bg-gradient-to-br from-forest to-forest-light rounded-2xl sm:rounded-3xl p-6 sm:p-10 text-white mb-8 relative overflow-hidden hover:shadow-xl transition-all no-underline">
+          <div className="absolute top-0 right-0 text-[60px] sm:text-[120px] opacity-10">🧬</div>
           <span className="bg-white/20 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">Featured</span>
-          <h2 className="font-display text-3xl mt-4 mb-3">How Your Child Actually Grows</h2>
+          <h2 className="font-display text-2xl sm:text-3xl mt-4 mb-3">How Your Child Actually Grows</h2>
           <p className="text-white/80 max-w-lg mb-6">
             The complete guide to the biological cascade that determines your child's growth — and exactly how to optimize it.
           </p>
@@ -230,7 +230,7 @@ export default function Learn() {
         )}
 
         {/* Bottom CTA */}
-        <section className="mt-12 bg-amber-50 rounded-3xl p-8 text-center">
+        <section className="mt-12 bg-amber-50 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center">
           <div className="text-4xl mb-4">🤖</div>
           <h3 className="font-display text-2xl mb-2">Have a specific question?</h3>
           <p className="text-gray-600 mb-6">Ask Jarvis — our AI assistant knows the science inside and out.</p>

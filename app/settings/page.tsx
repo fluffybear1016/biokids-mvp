@@ -365,7 +365,7 @@ function ChoiceGroup({ label, options, value, onChange, cols }: {
   return (
     <div>
       <label className="block text-sm font-medium text-stone-700 mb-2">{label}</label>
-      <div className={`grid gap-2 ${cols === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+      <div className={`grid gap-2 ${cols === 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'}`}>
         {options.map((opt) => (
           <button
             key={opt}

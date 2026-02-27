@@ -75,12 +75,12 @@ export default function Protocol() {
     <div className="min-h-screen bg-cream">
       <Nav currentChild={child} />
       
-      <main className="max-w-5xl mx-auto px-4 py-12">
+      <main className="max-w-5xl mx-auto px-4 py-6 sm:py-12">
         
         {/* Header */}
         <header className="flex flex-wrap justify-between items-center gap-4 mb-10">
           <div>
-            <h1 className="font-display text-4xl text-gray-900">GH Optimization Protocol</h1>
+            <h1 className="font-display text-2xl sm:text-4xl text-gray-900">GH Optimization Protocol</h1>
             <p className="text-gray-500 mt-1">{child.name}'s personalized protocol for the Pre-Puberty Window</p>
           </div>
           <span className="bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold">

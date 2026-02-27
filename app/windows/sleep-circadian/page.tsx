@@ -741,7 +741,7 @@ Zero tolerance.`,
     <div className="min-h-screen bg-cream">
       <Nav currentChild={child} />
 
-      <main className="max-w-3xl mx-auto px-4 py-12">
+      <main className="max-w-3xl mx-auto px-4 py-6 sm:py-12">
 
         {/* Back Link */}
         <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-forest mb-6">
@@ -752,7 +752,7 @@ Zero tolerance.`,
         </Link>
 
         {/* Header Card */}
-        <div style={{ background: 'linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)', borderRadius: 16, padding: '32px', marginBottom: 20, color: 'white', position: 'relative' }}>
+        <div style={{ background: 'linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)', borderRadius: 16, padding: '20px', marginBottom: 20, color: 'white', position: 'relative' }} className="sm:!p-8">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
             <span style={{ background: 'rgba(255,255,255,0.2)', padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 600 }}>🌙 Sleep Window</span>
             <span style={{ background: 'rgba(255,255,255,0.2)', padding: '6px 14px', borderRadius: 20, fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -760,11 +760,11 @@ Zero tolerance.`,
               Optimal
             </span>
           </div>
-          <h1 style={{ fontSize: 32, fontWeight: 700, margin: '0 0 12px' }}>Sleep & Circadian</h1>
+          <h1 style={{ fontWeight: 700, margin: '0 0 12px' }} className="text-2xl sm:text-[32px]">Sleep & Circadian</h1>
           <p style={{ fontSize: 15, opacity: 0.9, lineHeight: 1.6, maxWidth: 600 }}>
             Sleep is the #1 lever a parent has to grow a taller, stronger child. Each night of deep sleep is a growth rep for the GH axis. Your job: maximize sleep reps, every night, for years. <em>Growth only happens lying down.</em>
           </p>
-          <div style={{ display: 'flex', gap: 32, marginTop: 24, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 16, marginTop: 24, flexWrap: 'wrap' }} className="sm:!gap-8">
             <div>
               <div style={{ fontSize: 28, fontWeight: 700 }}>60-80%</div>
               <div style={{ fontSize: 13, opacity: 0.8 }}>GH in first 3 hours</div>
@@ -808,21 +808,23 @@ Zero tolerance.`,
         </div>
 
         {/* Tab Bar */}
-        <div style={{ display: 'flex', gap: 4, marginBottom: 0, background: '#f5f5f5', padding: 4, borderRadius: '12px 12px 0 0', width: 'fit-content' }}>
+        <div style={{ display: 'flex', gap: 4, marginBottom: 0, background: '#f5f5f5', padding: 4, borderRadius: '12px 12px 0 0', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               style={{
-                padding: '10px 20px',
+                padding: '10px 14px',
                 border: 'none',
                 background: activeTab === tab.id ? 'white' : 'transparent',
                 borderRadius: 8,
-                fontSize: 14,
+                fontSize: 13,
                 fontWeight: activeTab === tab.id ? 600 : 400,
                 color: activeTab === tab.id ? '#1B4332' : '#666',
                 cursor: 'pointer',
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
+                whiteSpace: 'nowrap' as const,
+                flexShrink: 0
               }}
             >
               {tab.label}

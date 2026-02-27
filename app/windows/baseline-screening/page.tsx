@@ -23,7 +23,7 @@ export default function BaselineScreeningWindow() {
     <div className="min-h-screen bg-cream">
       <Nav currentChild={child} />
 
-      <main className="max-w-3xl mx-auto px-4 py-12">
+      <main className="max-w-3xl mx-auto px-4 py-6 sm:py-12">
 
         {/* Back Link */}
         <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-forest mb-6">
@@ -71,13 +71,13 @@ export default function BaselineScreeningWindow() {
             </div>
             <span className="badge-check">Pending</span>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
             {[
               { value: '—', label: 'Bone Age', note: 'Not tested' },
               { value: '—', label: 'IGF-1 Level', note: 'Not tested' },
               { value: '—', label: 'Growth Velocity', note: 'Needs data' },
             ].map((stat) => (
-              <div key={stat.label} className="bg-cream rounded-xl p-4 text-center">
+              <div key={stat.label} className="bg-cream rounded-xl p-3 sm:p-4 text-center">
                 <div className="font-display text-2xl text-forest">{stat.value}</div>
                 <div className="text-xs text-gray-500">{stat.label}</div>
                 {stat.note && <div className="text-xs text-amber-600 font-semibold mt-1">{stat.note}</div>}
