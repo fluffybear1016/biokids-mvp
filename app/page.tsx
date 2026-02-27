@@ -185,6 +185,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Closing Statement */}
+      <section className="py-16 sm:py-24 px-4 sm:px-6">
+        <p className="font-display text-2xl sm:text-4xl text-forest text-center">
+          Inspire the next generation.
+        </p>
+      </section>
+
       {/* Footer */}
       <footer className="py-8 sm:py-12 px-4 sm:px-6 border-t border-gray-200">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
