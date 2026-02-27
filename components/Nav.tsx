@@ -156,7 +156,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
                 <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-forest">
                   Log in
                 </Link>
-                <Link href="/signup" className="btn-primary text-sm py-2.5">
+                <Link href="/onboarding" className="btn-primary text-sm py-2.5">
                   Get Started
                 </Link>
               </>
