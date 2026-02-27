@@ -78,6 +78,9 @@ export default function TermsOfService() {
                 <p>(i) Use the Content for any artificial intelligence training, machine learning datasets, large language model training, or any other computational analysis purpose.</p>
               </div>
               <p className="mt-4">
+                West Palm Research LLC may employ technical measures including but not limited to digital watermarking, forensic tracking, and usage monitoring to detect unauthorized reproduction or distribution of Content. You consent to such measures as a condition of using the Service.
+              </p>
+              <p className="mt-4">
                 Any violation of this Section 3 shall constitute a material breach of these Terms and may result in immediate termination of your account without refund, as well as civil and criminal liability. West Palm Research LLC reserves the right to pursue all available legal remedies, including but not limited to injunctive relief, statutory damages, actual damages, and recovery of attorneys&apos; fees and costs.
               </p>
             </section>
@@ -204,9 +207,25 @@ export default function TermsOfService() {
               </p>
             </section>
 
-            {/* Section 17 */}
+            {/* Section 18 */}
             <section>
-              <h2 className="font-display text-xl sm:text-2xl mb-4">17. Contact</h2>
+              <h2 className="font-display text-xl sm:text-2xl mb-4">18. Liquidated Damages</h2>
+              <p>
+                You acknowledge that unauthorized reproduction, distribution, or misappropriation of Content would cause substantial and irreparable harm to West Palm Research LLC, the exact amount of which would be difficult or impossible to ascertain. Accordingly, you agree that in addition to all other remedies available at law or in equity, West Palm Research LLC shall be entitled to liquidated damages of Ten Thousand U.S. Dollars ($10,000.00) per individual item of Content that is copied, reproduced, distributed, shared, or otherwise misappropriated in violation of these Terms, plus Ten Thousand U.S. Dollars ($10,000.00) per platform or channel on which such Content is published or distributed. These amounts represent a reasonable estimate of the minimum damages that would be suffered and are not intended as a penalty. This provision does not limit West Palm Research LLC&apos;s right to seek actual damages, statutory damages, or any other relief to the extent actual damages exceed the liquidated amounts.
+              </p>
+            </section>
+
+            {/* Section 19 */}
+            <section>
+              <h2 className="font-display text-xl sm:text-2xl mb-4">19. Attorneys&apos; Fees and Costs</h2>
+              <p>
+                In the event of any legal action, arbitration, or proceeding arising out of or relating to these Terms or any violation thereof, the prevailing party shall be entitled to recover all reasonable attorneys&apos; fees, costs, and expenses incurred in connection with such action, including but not limited to fees incurred in enforcing intellectual property rights, pursuing injunctive relief, issuing DMCA takedown notices, and collecting any damages or judgments awarded.
+              </p>
+            </section>
+
+            {/* Section 20 */}
+            <section>
+              <h2 className="font-display text-xl sm:text-2xl mb-4">20. Contact</h2>
               <p className="mb-2">West Palm Research LLC</p>
               <p className="mb-4">Palm Beach County, Florida</p>
               <p>
