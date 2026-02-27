@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import Script from 'next/script';
 import GoalSelection from '@/components/GoalSelection';
 import { createClient } from '@/lib/supabase';
@@ -40,12 +41,19 @@ function OnboardingContent() {
   const [fatherHeightIn, setFatherHeightIn] = useState('');
   const [showScience, setShowScience] = useState(false);
 
+  // Step 5: Account Creation
+  const [signupEmail, setSignupEmail] = useState('');
+  const [signupPassword, setSignupPassword] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [signupLoading, setSignupLoading] = useState(false);
+  const [signupError, setSignupError] = useState('');
+
   // Read ?step= URL param to allow resuming onboarding
   useEffect(() => {
     const stepParam = searchParams.get('step');
     if (stepParam) {
       const parsed = parseInt(stepParam, 10);
-      if (parsed >= 1 && parsed <= 5) {
+      if (parsed >= 1 && parsed <= 6) {
         setStep(parsed);
         // Restore child name from localStorage for display in later steps
         const savedName = localStorage.getItem('childName');
@@ -163,6 +171,68 @@ function OnboardingContent() {
     setStep(5);
   };
 
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSignupLoading(true);
+    setSignupError('');
+
+    try {
+      const supabase = createClient();
+
+      if (!supabase) {
+        setSignupError('Authentication not configured');
+        setSignupLoading(false);
+        return;
+      }
+
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email: signupEmail,
+        password: signupPassword,
+      });
+
+      if (signUpError) {
+        setSignupError(signUpError.message);
+        setSignupLoading(false);
+        return;
+      }
+
+      if (data.user) {
+        // Create profile row via server API (bypasses RLS)
+        await fetch('/api/auth/create-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: data.user.id, email: signupEmail }),
+        });
+
+        // Save auth info for Stripe
+        setUserEmail(signupEmail);
+        setUserId(data.user.id);
+        localStorage.setItem('biokids_auth_email', signupEmail);
+        localStorage.setItem('biokids_auth_user_id', data.user.id);
+
+        // Save child name to Supabase auth metadata
+        supabase.auth.updateUser({ data: { child_name: name } }).catch(() => {});
+
+        // Save child to children table
+        const birthDate = birthYear && birthMonth
+          ? `${birthYear}-${birthMonth.padStart(2, '0')}-01`
+          : null;
+        fetch('/api/auth/save-child', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: data.user.id, name, birthDate }),
+        }).catch(() => {});
+
+        setStep(6);
+      }
+    } catch (err) {
+      console.error('Signup error:', err);
+      setSignupError('An error occurred. Please try again.');
+    } finally {
+      setSignupLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#FFFDF7] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -170,16 +240,16 @@ function OnboardingContent() {
         {/* Progress Bar */}
         <div className="mb-8">
           <div className="flex justify-between mb-2">
-            {[1, 2, 3, 4, 5].map((s) => (
+            {[1, 2, 3, 4, 5, 6].map((s) => (
               <div
                 key={s}
-                className={`w-1/5 h-2 rounded-full mx-1 ${
+                className={`w-1/6 h-2 rounded-full mx-1 ${
                   s <= step ? 'bg-emerald-600' : 'bg-stone-200'
                 }`}
               />
             ))}
           </div>
-          <p className="text-center text-sm text-stone-500">Step {step} of 5</p>
+          <p className="text-center text-sm text-stone-500">Step {step} of 6</p>
         </div>
 
         {/* Step 1: Child Info */}
@@ -669,8 +739,77 @@ function OnboardingContent() {
           </div>
         )}
 
-        {/* Step 5: Stripe Pricing Table */}
+        {/* Step 5: Create Account */}
         {step === 5 && (
+          <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+            <h2 className="text-2xl font-semibold text-stone-900 mb-2 text-center">Create your account</h2>
+            <p className="text-sm text-stone-500 mb-6 text-center">
+              One last step before we build {name || 'your child'}'s protocol.
+            </p>
+
+            {signupError && (
+              <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm mb-6">
+                {signupError}
+              </div>
+            )}
+
+            <form onSubmit={handleSignup} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Email</label>
+                <input
+                  type="email"
+                  value={signupEmail}
+                  onChange={(e) => setSignupEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Password</label>
+                <input
+                  type="password"
+                  value={signupPassword}
+                  onChange={(e) => setSignupPassword(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  placeholder="At least 8 characters"
+                  required
+                  minLength={8}
+                />
+              </div>
+              <label className="flex items-start gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  className="mt-1 w-4 h-4 rounded border-stone-300 text-emerald-600 focus:ring-emerald-500"
+                  required
+                />
+                <span className="text-sm text-stone-600">
+                  I agree to the{' '}
+                  <Link href="/terms" target="_blank" rel="noopener noreferrer" className="text-emerald-600 font-medium hover:underline">Terms of Service</Link>
+                  {' '}and{' '}
+                  <Link href="/privacy" target="_blank" rel="noopener noreferrer" className="text-emerald-600 font-medium hover:underline">Privacy Policy</Link>
+                </span>
+              </label>
+              <button
+                type="submit"
+                className="w-full py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
+                disabled={signupLoading || !agreedToTerms}
+              >
+                {signupLoading ? 'Creating account...' : 'Create Account'}
+              </button>
+            </form>
+
+            <p className="text-center text-sm text-stone-500 mt-6">
+              Already have an account?{' '}
+              <Link href="/login" className="text-emerald-600 font-medium hover:underline">Log in</Link>
+            </p>
+          </div>
+        )}
+
+        {/* Step 6: Stripe Pricing Table */}
+        {step === 6 && (
           <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
             <h2 className="text-2xl font-semibold text-stone-900 mb-4 text-center">
               Start Your 7-Day Free Trial
