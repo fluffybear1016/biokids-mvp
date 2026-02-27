@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import Script from 'next/script';
 import GoalSelection from '@/components/GoalSelection';
+import type { GoalType } from '@/components/GoalSelection';
 import { createClient } from '@/lib/supabase';
 import { Suspense } from 'react';
 
@@ -12,76 +14,88 @@ function OnboardingContent() {
   const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
 
-  // Step 1: Child Info
+  // Step 1: Goal
+  const [goal, setGoal] = useState<GoalType | ''>('');
+
+  // Step 2: Child Info
   const [name, setName] = useState('');
   const [birthMonth, setBirthMonth] = useState('');
   const [birthYear, setBirthYear] = useState('');
   const [heightFt, setHeightFt] = useState('');
   const [heightIn, setHeightIn] = useState('');
   const [weight, setWeight] = useState('');
+  const [childGender, setChildGender] = useState<'boy' | 'girl' | ''>('');
 
-  // Step 2: Questions
-  const [userEmail, setUserEmail] = useState('');
-  const [userId, setUserId] = useState('');
-
-  // Auth info for Stripe
+  // Step 3: Quick Questions
   const [sleepHours, setSleepHours] = useState('');
-  const [bedtime, setBedtime] = useState('');
   const [dairy, setDairy] = useState('');
   const [exercise, setExercise] = useState('');
   const [screenTime, setScreenTime] = useState('');
-  const [processedFoods, setProcessedFoods] = useState('');
 
   // Step 4: Height Potential
-  const [childGender, setChildGender] = useState<'boy' | 'girl' | ''>('');
   const [motherHeightFt, setMotherHeightFt] = useState('');
   const [motherHeightIn, setMotherHeightIn] = useState('');
   const [fatherHeightFt, setFatherHeightFt] = useState('');
   const [fatherHeightIn, setFatherHeightIn] = useState('');
   const [showScience, setShowScience] = useState(false);
 
-  // Read ?step= URL param to allow resuming onboarding
+  // Step 5: Account Creation
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // Auth state (set after account creation)
+  const [userEmail, setUserEmail] = useState('');
+  const [userId, setUserId] = useState('');
+
+  // Handle ?step= URL param for resuming (only steps 5+ if auth exists)
   useEffect(() => {
     const stepParam = searchParams.get('step');
     if (stepParam) {
       const parsed = parseInt(stepParam, 10);
-      if (parsed >= 1 && parsed <= 5) {
-        setStep(parsed);
-        // Restore child name from localStorage for display in later steps
-        const savedName = localStorage.getItem('childName');
-        if (savedName) setName(savedName);
+      if (parsed >= 5 && parsed <= 7) {
+        // Only allow resuming post-auth steps if we have auth
+        const supabase = createClient();
+        if (supabase) {
+          supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session?.user) {
+              setUserEmail(session.user.email || '');
+              setUserId(session.user.id);
+              setName(localStorage.getItem('childName') || '');
+              setStep(parsed);
+            }
+          });
+        } else {
+          const savedUserId = localStorage.getItem('biokids_auth_user_id');
+          if (savedUserId) {
+            setUserEmail(localStorage.getItem('biokids_auth_email') || '');
+            setUserId(savedUserId);
+            setName(localStorage.getItem('childName') || '');
+            setStep(parsed);
+          }
+        }
       }
     }
   }, [searchParams]);
 
-  // Fetch authenticated user info for Stripe
-  useEffect(() => {
-    const supabase = createClient();
-    if (supabase) {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session?.user) {
-          setUserEmail(session.user.email || '');
-          setUserId(session.user.id);
-          return;
-        }
-        // Fallback to localStorage if session not available (e.g. email confirmation pending)
-        setUserEmail(localStorage.getItem('biokids_auth_email') || '');
-        setUserId(localStorage.getItem('biokids_auth_user_id') || '');
-      });
-    } else {
-      setUserEmail(localStorage.getItem('biokids_auth_email') || '');
-      setUserId(localStorage.getItem('biokids_auth_user_id') || '');
-    }
-  }, []);
-
-  // Generate year options (current year down to 25 years ago)
+  // Year/month options
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 26 }, (_, i) => currentYear - i);
-
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
+
+  // Height calculation helpers
+  const toInches = (ft: string, inches: string) => (parseInt(ft) * 12) + parseInt(inches);
+  const toCm = (totalInches: number) => totalInches * 2.54;
+  const cmToFtIn = (cm: number) => {
+    const totalIn = Math.round(cm / 2.54);
+    return `${Math.floor(totalIn / 12)}'${totalIn % 12}"`;
+  };
+  const formatParentHeight = (ft: string, inches: string) => `${ft}'${inches}"`;
 
   const calculateBMI = () => {
     if (!heightFt || !heightIn || !weight) return null;
@@ -90,46 +104,6 @@ function OnboardingContent() {
     const weightKg = parseInt(weight) * 0.453592;
     return weightKg / (heightM * heightM);
   };
-
-  const handleStep1Submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Store BMI for personalization (not shown to user)
-    const bmi = calculateBMI();
-    if (bmi) {
-      localStorage.setItem('childBMI', bmi.toString());
-    }
-    localStorage.setItem('childName', name);
-    localStorage.setItem('childBirthMonth', birthMonth);
-    localStorage.setItem('childBirthYear', birthYear);
-
-    // Save child name to Supabase auth metadata so it persists across devices
-    const supabase = createClient();
-    if (supabase) {
-      supabase.auth.updateUser({ data: { child_name: name } }).catch(() => {});
-    }
-
-    // Also save to children table
-    if (userId) {
-      const birthDate = birthYear && birthMonth
-        ? `${birthYear}-${birthMonth.padStart(2, '0')}-01`
-        : null;
-      fetch('/api/auth/save-child', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, name, birthDate }),
-      }).catch(() => {}); // fire-and-forget
-    }
-
-    setStep(2);
-  };
-
-  const toInches = (ft: string, inches: string) => (parseInt(ft) * 12) + parseInt(inches);
-  const toCm = (totalInches: number) => totalInches * 2.54;
-  const cmToFtIn = (cm: number) => {
-    const totalIn = Math.round(cm / 2.54);
-    return `${Math.floor(totalIn / 12)}'${totalIn % 12}"`;
-  };
-  const formatParentHeight = (ft: string, inches: string) => `${ft}'${inches}"`;
 
   const canCalculateHeight = childGender && motherHeightFt && motherHeightIn && fatherHeightFt && fatherHeightIn;
 
@@ -140,51 +114,160 @@ function OnboardingContent() {
     return ((fatherCm - 13) + motherCm) / 2;
   })() : null;
 
+  // Step handlers
+  const handleGoalSelect = (selectedGoal: GoalType) => {
+    setGoal(selectedGoal);
+    setStep(2);
+  };
+
   const handleStep2Submit = (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem('sleepHours', sleepHours);
-    localStorage.setItem('bedtime', bedtime);
-    localStorage.setItem('dairy', dairy);
-    localStorage.setItem('exercise', exercise);
-    localStorage.setItem('screenTime', screenTime);
-    localStorage.setItem('processedFoods', processedFoods);
     setStep(3);
   };
 
+  const handleStep3Submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStep(4);
+  };
+
   const handleStep4Submit = () => {
-    if (geneticTargetCm) {
-      localStorage.setItem('childGender', childGender);
-      localStorage.setItem('motherHeight', `${motherHeightFt}'${motherHeightIn}"`);
-      localStorage.setItem('fatherHeight', `${fatherHeightFt}'${fatherHeightIn}"`);
-      localStorage.setItem('geneticTarget', geneticTargetCm.toString());
-    }
-    // Mark onboarding as complete (user is about to see Stripe)
-    localStorage.setItem('biokids_onboarding_complete', 'true');
     setStep(5);
   };
+
+  const handleAccountCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const supabase = createClient();
+      if (!supabase) {
+        setError('Authentication not configured');
+        setLoading(false);
+        return;
+      }
+
+      // 1. Create Supabase account
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (signUpError) {
+        setError(signUpError.message);
+        setLoading(false);
+        return;
+      }
+
+      if (!data.user) {
+        setError('Account creation failed. Please try again.');
+        setLoading(false);
+        return;
+      }
+
+      const newUserId = data.user.id;
+      setUserEmail(email);
+      setUserId(newUserId);
+
+      // 2. Create profile row
+      await fetch('/api/auth/create-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: newUserId, email }),
+      });
+
+      // 3. Save child to children table
+      const birthDate = birthYear && birthMonth
+        ? `${birthYear}-${birthMonth.padStart(2, '0')}-01`
+        : null;
+      await fetch('/api/auth/save-child', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: newUserId, name, birthDate }),
+      });
+
+      // 4. Save all onboarding data to auth metadata
+      const bmi = calculateBMI();
+      await supabase.auth.updateUser({
+        data: {
+          child_name: name,
+          goal,
+          sleepHours,
+          dairy,
+          exercise,
+          screenTime,
+          childGender,
+          motherHeight: `${motherHeightFt}'${motherHeightIn}"`,
+          fatherHeight: `${fatherHeightFt}'${fatherHeightIn}"`,
+          geneticTarget: geneticTargetCm?.toString() || '',
+        },
+      });
+
+      // 5. Write all values to localStorage
+      localStorage.setItem('childName', name);
+      localStorage.setItem('childBirthMonth', birthMonth);
+      localStorage.setItem('childBirthYear', birthYear);
+      if (bmi) localStorage.setItem('childBMI', bmi.toString());
+      localStorage.setItem('sleepHours', sleepHours);
+      localStorage.setItem('dairy', dairy);
+      localStorage.setItem('exercise', exercise);
+      localStorage.setItem('screenTime', screenTime);
+      localStorage.setItem('biokids_goal', JSON.stringify({ goal, date: new Date().toISOString() }));
+      localStorage.setItem('childGender', childGender);
+      if (motherHeightFt && motherHeightIn) {
+        localStorage.setItem('motherHeight', `${motherHeightFt}'${motherHeightIn}"`);
+      }
+      if (fatherHeightFt && fatherHeightIn) {
+        localStorage.setItem('fatherHeight', `${fatherHeightFt}'${fatherHeightIn}"`);
+      }
+      if (geneticTargetCm) {
+        localStorage.setItem('geneticTarget', geneticTargetCm.toString());
+      }
+      localStorage.setItem('biokids_onboarding_complete', 'true');
+      localStorage.setItem('biokids_auth_email', email);
+      localStorage.setItem('biokids_auth_user_id', newUserId);
+
+      // 6. Advance to Stripe checkout
+      setStep(6);
+    } catch (err) {
+      console.error('Account creation error:', err);
+      setError('An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const totalSteps = 7;
 
   return (
     <div className="min-h-screen bg-[#FFFDF7] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
 
         {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="flex justify-between mb-2">
-            {[1, 2, 3, 4, 5].map((s) => (
-              <div
-                key={s}
-                className={`w-1/5 h-2 rounded-full mx-1 ${
-                  s <= step ? 'bg-emerald-600' : 'bg-stone-200'
-                }`}
-              />
-            ))}
+        {step <= 6 && (
+          <div className="mb-8">
+            <div className="flex justify-between mb-2">
+              {Array.from({ length: totalSteps }, (_, i) => i + 1).map((s) => (
+                <div
+                  key={s}
+                  className={`flex-1 h-2 rounded-full mx-0.5 ${
+                    s <= step ? 'bg-emerald-600' : 'bg-stone-200'
+                  }`}
+                />
+              ))}
+            </div>
+            <p className="text-center text-sm text-stone-500">Step {step} of {totalSteps}</p>
           </div>
-          <p className="text-center text-sm text-stone-500">Step {step} of 5</p>
-        </div>
+        )}
 
-        {/* Step 1: Child Info */}
+        {/* Step 1: Goal Selection */}
         {step === 1 && (
-          <form onSubmit={handleStep1Submit} className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+          <GoalSelection onSelect={handleGoalSelect} />
+        )}
+
+        {/* Step 2: Child Info */}
+        {step === 2 && (
+          <form onSubmit={handleStep2Submit} className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
             <h2 className="text-2xl font-semibold text-stone-900 mb-2">Tell us about your child</h2>
             <p className="text-sm text-stone-500 mb-6">
               For privacy, consider using just your child's first initial.
@@ -245,7 +328,7 @@ function OnboardingContent() {
                   >
                     <option value="">Ft</option>
                     {[2, 3, 4, 5, 6].map((ft) => (
-                      <option key={ft} value={ft}>{ft}'</option>
+                      <option key={ft} value={ft}>{ft}&apos;</option>
                     ))}
                   </select>
                 </div>
@@ -259,7 +342,7 @@ function OnboardingContent() {
                   >
                     <option value="">In</option>
                     {Array.from({ length: 12 }, (_, i) => (
-                      <option key={i} value={i}>{i}"</option>
+                      <option key={i} value={i}>{i}&quot;</option>
                     ))}
                   </select>
                 </div>
@@ -275,29 +358,51 @@ function OnboardingContent() {
                   />
                 </div>
               </div>
+
+              {/* Sex */}
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-2">Sex</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[{ value: 'girl' as const, label: 'Female' }, { value: 'boy' as const, label: 'Male' }].map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setChildGender(option.value)}
+                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
+                        childGender === option.value
+                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
+                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <button
               type="submit"
-              className="w-full mt-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors"
+              disabled={!childGender}
+              className="w-full mt-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
             >
               Continue
             </button>
           </form>
         )}
 
-        {/* Step 2: Quick Questions */}
-        {step === 2 && (
-          <form onSubmit={handleStep2Submit} className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+        {/* Step 3: Quick Questions */}
+        {step === 3 && (
+          <form onSubmit={handleStep3Submit} className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
             <h2 className="text-2xl font-semibold text-stone-900 mb-2">A few quick questions</h2>
             <p className="text-sm text-stone-500 mb-6">
-              This helps us personalize {name}'s protocol.
+              This helps us personalize {name || 'your child'}&apos;s protocol.
             </p>
 
             <div className="space-y-5">
               <div>
                 <label className="block text-sm font-medium text-stone-700 mb-2">
-                  How many hours of sleep does {name} get each night?
+                  How many hours of sleep does {name || 'your child'} get each night?
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {['8 or less', '9-10', '11-12', '12+'].map((option) => (
@@ -319,29 +424,7 @@ function OnboardingContent() {
 
               <div>
                 <label className="block text-sm font-medium text-stone-700 mb-2">
-                  What time does {name} usually go to bed?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['Before 8pm', '8-9pm', 'After 9pm'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setBedtime(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        bedtime === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  Does {name} consume dairy daily?
+                  Does {name || 'your child'} consume dairy daily?
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {['Yes', 'Sometimes', 'No'].map((option) => (
@@ -363,9 +446,9 @@ function OnboardingContent() {
 
               <div>
                 <label className="block text-sm font-medium text-stone-700 mb-2">
-                  How often does {name} run or play hard?
+                  How often does {name || 'your child'} run or play hard?
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {['Daily', 'Few times a week', 'Rarely'].map((option) => (
                     <button
                       key={option}
@@ -404,33 +487,11 @@ function OnboardingContent() {
                   ))}
                 </div>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  How often does {name} eat processed/packaged foods?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['Rarely', 'Sometimes', 'Often'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setProcessedFoods(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        processedFoods === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
 
             <button
               type="submit"
-              disabled={!sleepHours || !bedtime || !dairy || !exercise || !screenTime || !processedFoods}
+              disabled={!sleepHours || !dairy || !exercise || !screenTime}
               className="w-full mt-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
             >
               Continue
@@ -438,53 +499,18 @@ function OnboardingContent() {
           </form>
         )}
 
-        {/* Step 3: Goal Selection */}
-        {step === 3 && (
-          <GoalSelection
-            childName={name || 'Your child'}
-            onSelect={(goal) => {
-              localStorage.setItem('biokids_goal', JSON.stringify({
-                goal,
-                date: new Date().toISOString(),
-              }));
-              setStep(4);
-            }}
-          />
-        )}
-
         {/* Step 4: Height Potential */}
         {step === 4 && (
           <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
-            <h2 className="text-2xl font-semibold text-stone-900 mb-2">{name}'s growth potential</h2>
+            <h2 className="text-2xl font-semibold text-stone-900 mb-2">{name || 'Your child'}&apos;s growth potential</h2>
             <p className="text-sm text-stone-500 mb-6">
-              Enter parent heights to see {name}'s predicted range.
+              Enter parent heights to see {name || 'your child'}&apos;s predicted range.
             </p>
 
             <div className="space-y-4">
-              {/* Gender */}
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">Child's gender</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {[{ value: 'boy' as const, label: 'Boy' }, { value: 'girl' as const, label: 'Girl' }].map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      onClick={() => setChildGender(option.value)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        childGender === option.value
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Mother's Height */}
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">Mother's height</label>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Mother&apos;s height</label>
                 <div className="grid grid-cols-2 gap-2">
                   <select
                     value={motherHeightFt}
@@ -493,7 +519,7 @@ function OnboardingContent() {
                   >
                     <option value="">Ft</option>
                     {[4, 5, 6].map((ft) => (
-                      <option key={ft} value={ft}>{ft}'</option>
+                      <option key={ft} value={ft}>{ft}&apos;</option>
                     ))}
                   </select>
                   <select
@@ -503,7 +529,7 @@ function OnboardingContent() {
                   >
                     <option value="">In</option>
                     {Array.from({ length: 12 }, (_, i) => (
-                      <option key={i} value={i}>{i}"</option>
+                      <option key={i} value={i}>{i}&quot;</option>
                     ))}
                   </select>
                 </div>
@@ -511,7 +537,7 @@ function OnboardingContent() {
 
               {/* Father's Height */}
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">Father's height</label>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Father&apos;s height</label>
                 <div className="grid grid-cols-2 gap-2">
                   <select
                     value={fatherHeightFt}
@@ -520,7 +546,7 @@ function OnboardingContent() {
                   >
                     <option value="">Ft</option>
                     {[5, 6, 7].map((ft) => (
-                      <option key={ft} value={ft}>{ft}'</option>
+                      <option key={ft} value={ft}>{ft}&apos;</option>
                     ))}
                   </select>
                   <select
@@ -530,7 +556,7 @@ function OnboardingContent() {
                   >
                     <option value="">In</option>
                     {Array.from({ length: 12 }, (_, i) => (
-                      <option key={i} value={i}>{i}"</option>
+                      <option key={i} value={i}>{i}&quot;</option>
                     ))}
                   </select>
                 </div>
@@ -561,14 +587,14 @@ function OnboardingContent() {
                     <div className="bg-gradient-to-t from-emerald-500 to-emerald-300 flex items-center justify-center" style={{ height: '65%' }}>
                       <div className="text-center px-2">
                         <p className="text-sm font-bold text-emerald-950">bioKids zone</p>
-                        <p className="text-xs text-emerald-800 mt-1">+2" to +8" above target</p>
+                        <p className="text-xs text-emerald-800 mt-1">+2&quot; to +8&quot; above target</p>
                         <p className="text-[10px] text-emerald-700 mt-0.5">Maximum Potential</p>
                       </div>
                     </div>
                     {/* Standard Range zone (narrow) */}
                     <div className="bg-stone-200 flex items-center justify-center" style={{ height: '15%' }}>
                       <div className="text-center px-2">
-                        <p className="text-[10px] font-semibold text-stone-600">Standard Range · +2" above target</p>
+                        <p className="text-[10px] font-semibold text-stone-600">Standard Range · +2&quot; above target</p>
                       </div>
                     </div>
                     {/* Genetic Target zone (bottom) */}
@@ -605,7 +631,7 @@ function OnboardingContent() {
                           { offset: 8, pct: '~99.997th', bio: true },
                         ].map((row) => (
                           <tr key={row.offset} className={row.bio ? 'bg-emerald-50' : 'bg-white'}>
-                            <td className="py-1.5 px-3 text-stone-700">+{row.offset}"</td>
+                            <td className="py-1.5 px-3 text-stone-700">+{row.offset}&quot;</td>
                             <td className="py-1.5 px-3 font-medium text-stone-900">{cmToFtIn(geneticTargetCm + row.offset * 2.54)}</td>
                             <td className="py-1.5 px-3 text-stone-600">{row.pct}</td>
                             <td className="py-1.5 px-3 text-right">
@@ -621,19 +647,19 @@ function OnboardingContent() {
                 {/* Copy */}
                 <div className="space-y-3 text-sm text-stone-700">
                   <p>
-                    With parents at {formatParentHeight(motherHeightFt, motherHeightIn)} and {formatParentHeight(fatherHeightFt, fatherHeightIn)}, your child's genetic target is around <span className="font-bold text-stone-900">{cmToFtIn(geneticTargetCm)}</span>.
+                    With parents at {formatParentHeight(motherHeightFt, motherHeightIn)} and {formatParentHeight(fatherHeightFt, fatherHeightIn)}, {name || 'your child'}&apos;s genetic target is around <span className="font-bold text-stone-900">{cmToFtIn(geneticTargetCm)}</span>.
                   </p>
                   <p>
                     Most children finish within about 2 inches of their genetic target.
                   </p>
                   <p>
-                    However, when sleep, nutrition, exercise and hormones align optimally, children can express their genetics to the maximum of their potential—up to 8 inches above target. This natural "maximal gene expression" zone is documented in peer reviewed literature and is the key target of bioKids.
+                    However, when sleep, nutrition, exercise and hormones align optimally, children can express their genetics to the maximum of their potential—up to 8 inches above target. This natural &quot;maximal gene expression&quot; zone is documented in peer reviewed literature and is the key target of bioKids.
                   </p>
                   <p className="font-semibold text-emerald-700">
                     bioKids helps you avoid leaving inches on the table.
                   </p>
                   <p>
-                    The real goal is not to "force tallness," but to remove avoidable limitations so each child can grow into the best version of their own biology.
+                    The real goal is not to &quot;force tallness,&quot; but to remove avoidable limitations so each child can grow into the best version of their own biology.
                   </p>
                 </div>
 
@@ -664,13 +690,82 @@ function OnboardingContent() {
               disabled={!canCalculateHeight}
               className="w-full mt-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
             >
-              Continue
+              {canCalculateHeight ? `Unlock ${name || 'Your Child'}'s Protocol →` : 'Enter parent heights to continue'}
             </button>
           </div>
         )}
 
-        {/* Step 5: Stripe Pricing Table */}
+        {/* Step 5: Create Account */}
         {step === 5 && (
+          <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+            <h2 className="text-2xl font-semibold text-stone-900 mb-2 text-center">Create your account</h2>
+            <p className="text-sm text-stone-500 mb-6 text-center">
+              Save {name || 'your child'}&apos;s personalized protocol
+            </p>
+
+            {error && (
+              <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm mb-6">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleAccountCreate} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  placeholder="At least 8 characters"
+                  required
+                  minLength={8}
+                />
+              </div>
+              <label className="flex items-start gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  className="mt-1 w-4 h-4 rounded border-stone-300 text-emerald-600 focus:ring-emerald-500"
+                  required
+                />
+                <span className="text-sm text-gray-600">
+                  I agree to the{' '}
+                  <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-emerald-600 font-medium hover:underline">Terms of Service</a>
+                  {' '}and{' '}
+                  <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-emerald-600 font-medium hover:underline">Privacy Policy</a>
+                </span>
+              </label>
+              <button
+                type="submit"
+                disabled={loading || !agreedToTerms}
+                className="w-full py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
+              >
+                {loading ? 'Creating account...' : 'Create Account'}
+              </button>
+            </form>
+
+            <p className="text-center text-sm text-gray-500 mt-6">
+              Already have an account?{' '}
+              <Link href="/login" className="text-emerald-600 font-medium hover:underline">Log in</Link>
+            </p>
+          </div>
+        )}
+
+        {/* Step 6: Stripe Checkout */}
+        {step === 6 && (
           <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
             <h2 className="text-2xl font-semibold text-stone-900 mb-4 text-center">
               Start Your 7-Day Free Trial
@@ -695,6 +790,23 @@ function OnboardingContent() {
                 Already paid? Go to Dashboard →
               </button>
             </div>
+          </div>
+        )}
+
+        {/* Step 7: Welcome */}
+        {step === 7 && (
+          <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-8 text-center">
+            <div className="text-5xl mb-4">🌿</div>
+            <h2 className="font-display text-3xl text-forest mb-3">Welcome to bioKids!</h2>
+            <p className="text-stone-600 mb-8">
+              {name || 'Your child'}&apos;s personalized growth protocol is ready.
+            </p>
+            <button
+              onClick={() => router.push('/dashboard')}
+              className="w-full py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors"
+            >
+              Go to Dashboard →
+            </button>
           </div>
         )}
 

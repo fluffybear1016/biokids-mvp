@@ -3,11 +3,10 @@
 import { useState } from 'react';
 
 interface GoalSelectionProps {
-  childName: string;
   onSelect: (goal: GoalType) => void;
 }
 
-type GoalType = 'concerned' | 'foundation' | 'elite';
+type GoalType = 'concerned' | 'optimization' | 'competitive' | 'elite_performance' | 'maximum';
 
 const goals = [
   {
@@ -15,40 +14,52 @@ const goals = [
     title: 'Concerned About Growth',
     subtitle: 'My child seems small or behind',
     description: "You've noticed your child isn't growing as expected. We'll focus on the highest-impact levers backed by research.",
-    target: 'Personalized protocol',
     icon: '💙',
     color: 'bg-sky-50 border-sky-200 hover:border-sky-300',
     selectedColor: 'bg-sky-100 border-sky-400',
   },
   {
-    id: 'foundation' as GoalType,
-    title: 'Healthy Foundation',
-    subtitle: 'Build great habits',
-    description: 'Focus on the fundamentals — good sleep, nutrition basics, daily movement. A solid foundation for life.',
-    target: 'Personalized daily essentials',
+    id: 'optimization' as GoalType,
+    title: 'General Optimization',
+    subtitle: 'Build a strong foundation',
+    description: 'Focus on the fundamentals — good sleep, nutrition basics, daily movement. A solid foundation for lifelong health.',
     icon: '🌿',
     color: 'bg-emerald-50 border-emerald-200 hover:border-emerald-300',
     selectedColor: 'bg-emerald-100 border-emerald-400',
   },
   {
-    id: 'elite' as GoalType,
-    title: 'Maximum Potential',
-    subtitle: 'D1 / Pro sports · Leave nothing on the table',
-    description: "For parents who want to give their child every natural advantage — whether for elite athletics or overall development.",
-    target: 'Personalized elite protocol',
-    icon: '🏆',
+    id: 'competitive' as GoalType,
+    title: 'Competitive Edge',
+    subtitle: 'Outperform peers naturally',
+    description: 'Go beyond the basics with structured protocols for sleep, nutrition, and activity that give your child an edge.',
+    icon: '⚡',
+    color: 'bg-amber-50 border-amber-200 hover:border-amber-300',
+    selectedColor: 'bg-amber-100 border-amber-400',
+  },
+  {
+    id: 'elite_performance' as GoalType,
+    title: 'Elite Performance',
+    subtitle: 'D1 athletics · Serious advantage',
+    description: 'For families targeting elite athletic development. Every lever optimized, every window maximized.',
+    icon: '🏅',
     color: 'bg-blue-50 border-blue-200 hover:border-blue-300',
     selectedColor: 'bg-blue-100 border-blue-400',
   },
+  {
+    id: 'maximum' as GoalType,
+    title: 'Maximum Potential',
+    subtitle: 'Leave nothing on the table',
+    description: "For parents who want to give their child every natural advantage — the full protocol, no compromises.",
+    icon: '🏆',
+    color: 'bg-purple-50 border-purple-200 hover:border-purple-300',
+    selectedColor: 'bg-purple-100 border-purple-400',
+  },
 ];
 
-export default function GoalSelection({ childName, onSelect }: GoalSelectionProps) {
-  const [selected, setSelected] = useState<GoalType | null>(null);
-  const [hoveredId, setHoveredId] = useState<GoalType | null>(null);
+export type { GoalType };
 
-  const handleSelect = (goalId: GoalType) => {
-    setSelected(goalId);
-  };
+export default function GoalSelection({ onSelect }: GoalSelectionProps) {
+  const [selected, setSelected] = useState<GoalType | null>(null);
 
   const handleContinue = () => {
     if (selected) {
@@ -57,55 +68,44 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6" style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+    <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
       {/* Header */}
-      <div className="text-center mb-8">
-        <p className="text-sm text-emerald-600 font-medium mb-2">Setting up {childName}'s profile</p>
-        <h1 className="text-2xl font-semibold text-stone-900 mb-2">
-          What feels right for your family?
-        </h1>
-        <p className="text-stone-500 text-sm">
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-semibold text-stone-900 mb-2">
+          What's your goal?
+        </h2>
+        <p className="text-sm text-stone-500">
           There's no wrong answer. You can always adjust this later.
         </p>
       </div>
 
       {/* Goal Cards */}
-      <div className="space-y-3 mb-8">
+      <div className="space-y-3 mb-6">
         {goals.map((goal) => (
           <button
             key={goal.id}
-            onClick={() => handleSelect(goal.id)}
-            onMouseEnter={() => setHoveredId(goal.id)}
-            onMouseLeave={() => setHoveredId(null)}
+            onClick={() => setSelected(goal.id)}
             className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
-              selected === goal.id 
-                ? goal.selectedColor 
+              selected === goal.id
+                ? goal.selectedColor
                 : goal.color
             }`}
           >
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-3">
               <span className="text-2xl">{goal.icon}</span>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-stone-900">{goal.title}</h3>
                   {selected === goal.id && (
-                    <span className="text-emerald-600 text-sm">✓ Selected</span>
+                    <span className="text-emerald-600 text-sm">✓</span>
                   )}
                 </div>
                 <p className="text-sm text-stone-600 mb-1">{goal.subtitle}</p>
                 <p className="text-xs text-stone-500">{goal.description}</p>
-                <p className="text-xs text-stone-400 mt-2">Daily rhythm: {goal.target}</p>
               </div>
             </div>
           </button>
         ))}
-      </div>
-
-      {/* Reassurance Message */}
-      <div className="bg-emerald-50 rounded-lg p-4 mb-6">
-        <p className="text-sm text-emerald-800 text-center">
-          💚 Every path supports your child's growth. Start where you are — progress happens naturally.
-        </p>
       </div>
 
       {/* Continue Button */}
