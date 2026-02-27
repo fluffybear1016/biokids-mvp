@@ -107,11 +107,8 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
         
         {/* Child Selector */}
         {currentChild && (
-          <div className="flex items-center gap-2 px-4 py-2 bg-cream rounded-full cursor-pointer hover:bg-cream-dark transition-colors order-2 md:order-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-amber-light to-amber rounded-full flex items-center justify-center text-base">
-              {currentChild.gender === 'female' ? '👧' : '👦'}
-            </div>
-            <span className="font-semibold text-sm">{currentChild.name}</span>
+          <div className="flex items-center gap-2 px-4 py-2 bg-cream rounded-full cursor-pointer hover:bg-stone-200 transition-colors order-2 md:order-3 text-sm font-medium text-forest">
+            {currentChild.name}
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
