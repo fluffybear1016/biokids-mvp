@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
+import SignalPage, { SIGNAL_ITEM_COUNT } from '@/components/SignalPage';
+import GoalProgress from '@/components/GoalProgress';
 import GrowthStacks from '@/components/GrowthStacks';
 import { Child } from '@/lib/supabase';
 import { useChildName } from '@/lib/useChildName';
@@ -26,6 +28,47 @@ type ProtocolItem = {
 export default function Protocol() {
   const childName = useChildName();
   const child = { ...mockChild, name: childName };
+
+  // GoalProgress state
+  const [goal, setGoal] = useState<'concerned' | 'foundation' | 'elite' | null>(null);
+  const [completedCount, setCompletedCount] = useState(0);
+  const [isStuck, setIsStuck] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsStuck(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const savedGoal = localStorage.getItem('biokids_goal');
+    if (savedGoal) {
+      try {
+        const parsed = JSON.parse(savedGoal);
+        setGoal(parsed.goal);
+      } catch {}
+    }
+
+    const updateCompleted = () => {
+      const saved = localStorage.getItem('biokids_signal_completed');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (parsed.date === new Date().toDateString()) {
+            setCompletedCount(parsed.items.length);
+          } else {
+            setCompletedCount(0);
+          }
+        } catch {}
+      }
+    };
+    updateCompleted();
+    const interval = setInterval(updateCompleted, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
   const [decisions, setDecisions] = useState<Record<string, boolean>>({
     early_bedtime: false,
     power_breakfast: false,
@@ -76,7 +119,22 @@ export default function Protocol() {
   return (
     <div className="min-h-screen bg-cream">
       <Nav currentChild={child} />
-      
+
+      {/* Daily Protocol - time-based signals */}
+      {goal && (
+        <div className={`sticky top-[73px] z-40 bg-cream transition-shadow ${isStuck ? 'shadow-md' : ''}`}>
+          <div className="max-w-2xl mx-auto px-4 pt-4 pb-2">
+            <GoalProgress
+              goal={goal}
+              completedCount={completedCount}
+              totalCount={SIGNAL_ITEM_COUNT}
+              childName={childName}
+            />
+          </div>
+        </div>
+      )}
+      <SignalPage />
+
       <main className="max-w-5xl mx-auto px-4 py-6 sm:py-12">
         
         {/* Header */}
