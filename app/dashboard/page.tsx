@@ -509,20 +509,15 @@ export default function Dashboard() {
 
         {/* Header */}
         <div style={{ paddingTop:48, paddingBottom:0 }}>
-          <div
+          <p
             onClick={() => setIntroOpen(o => !o)}
-            style={{ display:"flex", alignItems:"center", gap:8, marginBottom: introOpen ? 28 : 0, cursor:"pointer" }}
+            style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:16, fontWeight:600, color:"#1c1917", lineHeight:1.55, maxWidth:460, marginBottom: introOpen ? 16 : 0, cursor:"pointer" }}
           >
-            <span style={{ width:8, height:8, borderRadius:4, background:"#059669", display:"inline-block" }} />
-            <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, fontWeight:600, color:"#059669", letterSpacing:"0.12em" }}>bioKids</span>
-            <span style={{ color:"#059669", fontSize:9, transition:"transform 0.2s ease", transform: introOpen ? "rotate(180deg)" : "none", display:"inline-block" }}>▼</span>
-          </div>
+            bioKids is a natural rhythm for the body&apos;s own growth signals that keeps your child&apos;s growth maximally supported all day and all night — organically.
+            <span style={{ color:"#059669", fontSize:9, transition:"transform 0.2s ease", transform: introOpen ? "rotate(180deg)" : "none", display:"inline-block", marginLeft:6 }}>▼</span>
+          </p>
 
           {introOpen && <>
-            <p style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:21, color:"#1c1917", lineHeight:1.55, maxWidth:460, marginBottom:16, letterSpacing:"-0.01em" }}>
-              bioKids is a natural rhythm for the body&apos;s own growth signals that keeps your child&apos;s growth maximally supported all day and all night — organically.
-            </p>
-
             <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:14, color:"#44403c", lineHeight:1.75, maxWidth:440, marginBottom:14 }}>
               It&apos;s built on one simple idea: when you arrange a child&apos;s day with care, growth hormone doesn&apos;t need to be forced or hacked — it&apos;s invited, again and again.
             </p>
