@@ -80,25 +80,30 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
   const isActive = (href: string) => pathname === href;
 
   return (
-    <nav className="bg-white border-b border-forest/10 px-4 md:px-8 py-4 sticky top-0 z-50">
+    <nav style={{ backgroundColor:'#fafaf9', borderBottom:'1px solid rgba(0,0,0,0.06)' }} className="px-4 md:px-8 py-4 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2" style={{ textDecoration:'none' }}>
           <span style={{ width:10, height:10, borderRadius:'50%', background:'#059669', display:'inline-block' }} />
           <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, fontWeight:600, color:'#059669', letterSpacing:'0.04em' }}>bioKids</span>
         </Link>
-        
+
         {/* Navigation Tabs */}
-        <div className="flex gap-1 bg-cream p-1.5 rounded-xl order-3 md:order-2 w-full md:w-auto justify-center overflow-x-auto">
+        <div className="flex order-3 md:order-2 w-full md:w-auto justify-center overflow-x-auto" style={{ gap:28 }}>
           {tabs.map((tab) => (
             <Link
               key={tab.href}
               href={tab.href}
-              className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
-                isActive(tab.href)
-                  ? 'bg-white text-forest shadow-sm'
-                  : 'text-gray-500 hover:text-forest'
-              }`}
+              style={{
+                fontFamily:"'Courier New', Courier, monospace",
+                fontSize:12,
+                fontWeight: isActive(tab.href) ? 700 : 500,
+                color: isActive(tab.href) ? '#1c1917' : '#78716c',
+                letterSpacing:'0.02em',
+                textDecoration:'none',
+                whiteSpace:'nowrap',
+                transition:'color 0.2s ease',
+              }}
             >
               {tab.label}
             </Link>
