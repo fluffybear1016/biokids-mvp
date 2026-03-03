@@ -513,7 +513,7 @@ export default function Dashboard() {
             onClick={() => setIntroOpen(o => !o)}
             style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:16, fontWeight:600, color:"#1c1917", lineHeight:1.55, maxWidth:460, marginBottom: introOpen ? 16 : 0, cursor:"pointer" }}
           >
-            bioKids is a natural rhythm for the body&apos;s own growth signals that keeps your child&apos;s growth maximally supported all day and all night — organically.
+            <span style={{ color:"#059669" }}>bioKids</span> is a natural rhythm for the body&apos;s own growth signals that keeps your child&apos;s growth maximally supported all day and all night — organically.
             <span style={{ color:"#059669", fontSize:9, transition:"transform 0.2s ease", transform: introOpen ? "rotate(180deg)" : "none", display:"inline-block", marginLeft:6 }}>▼</span>
           </p>
 
