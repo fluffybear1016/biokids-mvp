@@ -514,7 +514,7 @@ export default function Dashboard() {
             style={{ display:"flex", alignItems:"center", gap:8, marginBottom: introOpen ? 28 : 0, cursor:"pointer" }}
           >
             <span style={{ width:8, height:8, borderRadius:4, background:"#059669", display:"inline-block" }} />
-            <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, fontWeight:600, color:"#059669", textTransform:"uppercase", letterSpacing:"0.12em" }}>bioKids</span>
+            <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, fontWeight:600, color:"#059669", letterSpacing:"0.12em" }}>bioKids</span>
             <span style={{ color:"#059669", fontSize:9, transition:"transform 0.2s ease", transform: introOpen ? "rotate(180deg)" : "none", display:"inline-block" }}>▼</span>
           </div>
 
