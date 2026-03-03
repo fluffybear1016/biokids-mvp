@@ -84,7 +84,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-display text-xl text-forest">
-          <span className="text-2xl">🌿</span>
+          <span style={{ width:10, height:10, borderRadius:'50%', background:'#059669', display:'inline-block' }} />
           bioKids
         </Link>
         
