@@ -111,14 +111,14 @@ const dayData: DayPeriod[] = [
         { f:"Full-fat kefir", d:"Milk proteins + fermentation-derived GABA." },
       ]},
 
-    { id:"clo", t:"Cod liver oil", sub:"½ tsp — NOT on beef liver days", gh:"40–60% GH", headline:"of GH receptor function lost without retinol", tier:1, cite:"Balmer, J Lipid Res 2002; Soliman, Indian J Endocrinol Metab 2014", why:"CLO delivers three growth levers in one spoon. Retinol is required for GH receptor gene expression — deficiency cuts binding 40–60%. Vitamin D deficiency blunts GH — IGF-1 — growth plate pathway. Omega-3s are anti-inflammatory at the growth plate.", tip:"In a smoothie — they won't taste it. Skip on beef liver days — both deliver high-dose vitamins A and D.",
+    { id:"clo", t:"Cod liver oil", sub:"½ tsp — NOT on beef liver days", gh:"40–60% GH", headline:"of GH receptor function lost without retinol", tier:0, cite:"Balmer, J Lipid Res 2002; Soliman, Indian J Endocrinol Metab 2014", why:"CLO delivers three growth levers in one spoon. Retinol is required for GH receptor gene expression — deficiency cuts binding 40–60%. Vitamin D deficiency blunts GH — IGF-1 — growth plate pathway. Omega-3s are anti-inflammatory at the growth plate.", tip:"In a smoothie — they won't taste it. Skip on beef liver days — both deliver high-dose vitamins A and D.",
       pumps:[
         { p:"Retinol — GH receptors", n:"40–60%", d:"Deficiency reduces GH receptor binding" },
         { p:"Vitamin D — IGF-1", n:"axis enabler", d:"Deficiency blunts IGF-1 production" },
         { p:"Omega-3s", n:"anti-inflammatory", d:"Reduces inflammation at growth plate" },
       ]},
 
-    { id:"cit", t:"Vitamin C with iron meals", sub:"Orange slices or lemon water", gh:"2–3× iron", headline:"iron absorption — iron delivers oxygen to growing tissues", tier:2, cite:"Hallberg, Am J Clin Nutr 1989; Chinese ISS RCT", why:"Vitamin C boosts iron absorption 2–3× — critical for oxygen delivery to growth plate chondrocytes. Citrus also delivers inositol (part of the lysine-inositol-B12 growth combo from the Chinese ISS RCT).", tip:"Orange slices or lemon water with beef, liver, lentils. Never serve milk alongside iron meals.",
+    { id:"cit", t:"Vitamin C with iron meals", sub:"Orange slices or lemon water", gh:"2–3× iron", headline:"iron absorption — iron delivers oxygen to growing tissues", tier:0, cite:"Hallberg, Am J Clin Nutr 1989; Chinese ISS RCT", why:"Vitamin C boosts iron absorption 2–3× — critical for oxygen delivery to growth plate chondrocytes. Citrus also delivers inositol (part of the lysine-inositol-B12 growth combo from the Chinese ISS RCT).", tip:"Orange slices or lemon water with beef, liver, lentils. Never serve milk alongside iron meals.",
       pumps:[
         { p:"Iron absorption", n:"2–3×", d:"Vitamin C dramatically increases iron uptake" },
         { p:"Inositol", n:"ISS RCT", d:"Part of lysine-inositol-B12 growth combo" },
@@ -132,7 +132,7 @@ const dayData: DayPeriod[] = [
         { p:"Microbiome integrity", n:"GABA protected", d:"No sweeteners — gut bacteria keep producing GABA" },
       ]},
 
-    { id:"joy", t:"Laughter and play", sub:"Start the day light", gh:"87% GH", headline:"from anticipation of fun alone — cortisol down 39%", tier:1, cite:"Berk, FASEB J 2006; Berk, Am J Med Sci 1989", why:"Merely anticipating a funny experience raised GH 87%, β-endorphins 27%, and reduced cortisol 39%. Chronic stress suppresses GH. Joy is not a bonus — it's a growth lever.", tip:"Morning dance party. Jokes at breakfast. Roughhousing before they leave.",
+    { id:"joy", t:"Laughter and play", sub:"Start the day light", gh:"87% GH", headline:"from anticipation of fun alone — cortisol down 39%", tier:0, cite:"Berk, FASEB J 2006; Berk, Am J Med Sci 1989", why:"Merely anticipating a funny experience raised GH 87%, β-endorphins 27%, and reduced cortisol 39%. Chronic stress suppresses GH. Joy is not a bonus — it's a growth lever.", tip:"Morning dance party. Jokes at breakfast. Roughhousing before they leave.",
       pumps:[
         { p:"Anticipation of fun", n:"87%", d:"Just anticipating humor raises GH 87%" },
         { p:"Cortisol reduction", n:"↓39%", d:"Less cortisol = less GH suppression" },
@@ -141,7 +141,7 @@ const dayData: DayPeriod[] = [
 
     { id:"bp", t:"Light backpack", sub:"Under 10–15% body weight", gh:"—", headline:"heavy loads compress developing spine", tier:3, cite:"Brackley, Spine 2004; Negrini, Spine 2002", why:"Chronic heavy loads affect intervertebral disc height during the years when the spine should be lengthening. Combined with daily gravitational compression, an overweight backpack amplifies the problem.", tip:"Weigh it. Remove what they don't need. A rolling backpack eliminates the issue." },
 
-    { id:"hang", t:"Dead hang", sub:"3 × 20 sec, thumbs over bar", gh:"—", headline:"axial traction — reverses gravity's daily 1% compression", tier:2, cite:"Nachemson, Scand J Rehabil Med 1970; Reilly, Ergonomics 1984", why:"Gravity compresses spinal discs all day — up to 1% of height lost by evening. Hanging creates pure axial traction that rehydrates discs.", tip:"Pull-up bar, playground bar, door-frame bar. Relax shoulders completely." },
+    { id:"hang", t:"Dead hang", sub:"3 × 20 sec, thumbs over bar", gh:"—", headline:"axial traction — reverses gravity's daily 1% compression", tier:0, cite:"Nachemson, Scand J Rehabil Med 1970; Reilly, Ergonomics 1984", why:"Gravity compresses spinal discs all day — up to 1% of height lost by evening. Hanging creates pure axial traction that rehydrates discs.", tip:"Pull-up bar, playground bar, door-frame bar. Relax shoulders completely." },
   ]},
 
   { period:"Afternoon", time:"12:00 – 5:00pm", items:[
@@ -215,7 +215,7 @@ const dayData: DayPeriod[] = [
         { p:"Cortisol ↓", n:"39%", d:"Fun play lowers cortisol" },
       ]},
 
-    { id:"stretch", t:"10 min stretching", sub:"Dead hang, cobra, cat stretch — after sprints", gh:"↑ velocity", headline:"ISS RCT: exercise + nutrition doubled height velocity at 12mo", tier:1, cite:"Chinese ISS RCT (12-month); Zribi, J Pediatr Endocrinol Metab", why:"12-month RCT in short-stature children: moderate stretching + lysine-inositol-B12 produced significantly greater height velocity than supplementation alone. More days/week = better. Excessive minutes/day = counterproductive. Stretching decompresses the spine and allows growth plates to recover.", tip:"ALWAYS after sprints or jumping. Dead hang 30+ sec × 3. Cobra pose. Cat-cow. Forward fold. This is when their body grows — during recovery.",
+    { id:"stretch", t:"10 min stretching", sub:"Dead hang, cobra, cat stretch — after sprints", gh:"↑ velocity", headline:"ISS RCT: exercise + nutrition doubled height velocity at 12mo", tier:0, cite:"Chinese ISS RCT (12-month); Zribi, J Pediatr Endocrinol Metab", why:"12-month RCT in short-stature children: moderate stretching + lysine-inositol-B12 produced significantly greater height velocity than supplementation alone. More days/week = better. Excessive minutes/day = counterproductive. Stretching decompresses the spine and allows growth plates to recover.", tip:"ALWAYS after sprints or jumping. Dead hang 30+ sec × 3. Cobra pose. Cat-cow. Forward fold. This is when their body grows — during recovery.",
       pumps:[
         { p:"Stretch + nutrition synergy", n:"↑ velocity", d:"Combo beats nutrition alone" },
         { p:"GH elevation", n:"significant", d:"Higher GH markers at 12 months" },
@@ -338,7 +338,7 @@ const dayData: DayPeriod[] = [
         { p:"Cortisol ↓ (cherry)", n:"↓ stress", d:"Tart cherry reduces cortisol" },
       ]},
 
-    { id:"rtn", t:"Same routine every night", sub:"Bath — lotion — drink — books — bed", gh:"157% GH", headline:"brain auto-releases melatonin when routine starts", tier:2, cite:"Mindell, Sleep 2015; Mindell, Sleep 2009", why:"After 1–2 weeks, the brain starts releasing melatonin as soon as it recognizes the familiar sequence — before lights are off. The routine itself becomes a GH lever.", tip:"Same order, always. They stop fighting bedtime.",
+    { id:"rtn", t:"Same routine every night", sub:"Bath — lotion — drink — books — bed", gh:"157% GH", headline:"brain auto-releases melatonin when routine starts", tier:0, cite:"Mindell, Sleep 2015; Mindell, Sleep 2009", why:"After 1–2 weeks, the brain starts releasing melatonin as soon as it recognizes the familiar sequence — before lights are off. The routine itself becomes a GH lever.", tip:"Same order, always. They stop fighting bedtime.",
       pumps:[
         { p:"Anticipatory melatonin", n:"157%", d:"Brain auto-releases melatonin when routine starts" },
         { p:"Sensory ritual", n:"conditioned", d:"After 1–2 weeks the sequence itself triggers sleep" },
@@ -347,7 +347,7 @@ const dayData: DayPeriod[] = [
 
     { id:"cool", t:"Cool room", sub:"65–68°F + fan for pink noise", gh:"60–80% GH", headline:"core temp must drop 2–3°F for deep sleep", tier:2, cite:"Krauchi, Nature 1999; Brandenberger, Lancet 2000", why:"The body must lower core temperature by 1–1.5°C to initiate SWS — where the massive nocturnal GH surge occurs. Cool room + warm blanket = fastest path.", tip:"Crack a window, use a fan. Fan doubles as pink noise." },
 
-    { id:"dark", t:"Complete darkness", sub:"Blackout curtains — tape every LED", gh:"60–80% GH", headline:"even dim light suppresses 50%+ of melatonin-driven GH", tier:1, cite:"Brandenberger, Lancet 2000; Gooley, JCEM 2011", why:"Normal sleep produces a single massive GH surge — 3× greater peak than disrupted sleep. Even a small LED suppresses melatonin-driven GH by 50%+. Every lever today builds to this one nocturnal surge.", tip:"Blackout curtains are the single best investment. Tape every LED. Red nightlight only." },
+    { id:"dark", t:"Complete darkness", sub:"Blackout curtains — tape every LED", gh:"60–80% GH", headline:"even dim light suppresses 50%+ of melatonin-driven GH", tier:0, cite:"Brandenberger, Lancet 2000; Gooley, JCEM 2011", why:"Normal sleep produces a single massive GH surge — 3× greater peak than disrupted sleep. Even a small LED suppresses melatonin-driven GH by 50%+. Every lever today builds to this one nocturnal surge.", tip:"Blackout curtains are the single best investment. Tape every LED. Red nightlight only." },
 
     { id:"bed", t:"In bed by 8:00–8:30pm", sub:"Asleep by 9 — target 10–12 hours", gh:"60–80% GH", headline:"each 90-min cycle is one 'growth rep' — 11 hrs = 7–8 reps", tier:0, cite:"Brandenberger, Lancet 2000; Van Cauter, JAMA 2000; Takahashi, J Clin Invest 1968", why:"Everything today builds to this. Normal sleep = 3× more peak GH. Each 90-minute cycle is one 'growth rep.' 11 hours = 7–8 reps. 8 hours = only 5. With every lever activated — choline-primed pituitary, sprint-triggered lactate, IGF-1 conversion, amino reloading, GABA, glycine, melatonin, casein slow-releasing, core temp dropped, complete darkness — the 24-hour cycle begins again tomorrow with eggs.", tip:"10–12 hours. Non-negotiable. This is the most important item on the entire page." },
   ]},
