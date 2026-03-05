@@ -8,6 +8,9 @@ type HeightPotentialCalculatorProps = {
   fatherHeight: string;
 };
 
+const mono = "'Courier New', Courier, monospace";
+const serif = "Georgia, 'Times New Roman', serif";
+
 export default function HeightPotentialCalculator({
   geneticTargetCm,
   motherHeight,
@@ -26,69 +29,81 @@ export default function HeightPotentialCalculator({
   const bioHigh = cmToFtIn(geneticTargetCm + 8 * 2.54);
 
   return (
-    <div className="mt-6">
+    <div style={{ marginTop: 28 }}>
+
+      {/* Emotional moment — the big number */}
+      <div style={{
+        background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)',
+        borderRadius: 16, padding: '1.5rem', marginBottom: 20,
+        border: '2px solid #a7f3d0', textAlign: 'center',
+      }}>
+        <p style={{ fontFamily: mono, fontSize: 10, color: '#059669', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 8 }}>
+          With optimized environment
+        </p>
+        <p style={{ fontFamily: serif, fontSize: 36, fontWeight: 800, color: '#059669', lineHeight: 1, marginBottom: 4 }}>
+          {bioLow} — {bioHigh}
+        </p>
+        <p style={{ fontFamily: mono, fontSize: 12, color: '#065f46', marginTop: 8, lineHeight: 1.55 }}>
+          Up to +8&quot; above the genetic midpoint when sleep, nutrition, and movement are dialed in.
+        </p>
+      </div>
+
       {/* Two-Zone Bar Chart */}
-      <div className="relative flex items-end gap-4 mb-6 h-[280px]">
+      <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', gap: 12, marginBottom: 20, height: 240 }}>
         {/* Labels column */}
-        <div className="flex flex-col justify-end h-full w-20 text-right pr-2 text-xs text-stone-500 relative">
-          <div className="absolute" style={{ bottom: '0%' }}>
-            {rangeLow}
-          </div>
-          <div className="absolute" style={{ bottom: '36%' }}>
-            {rangeHigh}
-          </div>
-          <div className="absolute" style={{ bottom: '92%' }}>
-            {bioHigh}
-          </div>
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', width: 56, textAlign: 'right', paddingRight: 8, position: 'relative' }}>
+          <span style={{ position: 'absolute', bottom: '0%', fontFamily: mono, fontSize: 10, color: '#a8a29e' }}>{rangeLow}</span>
+          <span style={{ position: 'absolute', bottom: '36%', fontFamily: mono, fontSize: 10, color: '#a8a29e' }}>{rangeHigh}</span>
+          <span style={{ position: 'absolute', bottom: '92%', fontFamily: mono, fontSize: 10, color: '#059669', fontWeight: 700 }}>{bioHigh}</span>
         </div>
 
         {/* Bar */}
-        <div className="flex-1 h-full flex flex-col rounded-xl overflow-hidden border border-stone-200">
+        <div style={{ flex: 1, height: '100%', display: 'flex', flexDirection: 'column', borderRadius: 14, overflow: 'hidden', border: '1px solid #e7e5e4' }}>
           {/* Zone 2: bioKids Zone */}
-          <div className="bg-gradient-to-t from-emerald-600 via-emerald-400 to-teal-300 flex items-center justify-center" style={{ height: '60%' }}>
-            <div className="text-center px-3">
-              <p className="text-base font-bold text-white drop-shadow-sm">bioKids Zone</p>
-              <p className="text-sm text-white/90 mt-1 font-medium">{bioLow} to {bioHigh}</p>
-              <p className="text-[10px] text-white/70 mt-0.5">+2&quot; to +8&quot; above genetic midpoint</p>
+          <div style={{ background: 'linear-gradient(to top, #059669, #34d399, #6ee7b7)', height: '60%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ textAlign: 'center', padding: '0 0.75rem' }}>
+              <p style={{ fontFamily: mono, fontSize: 13, fontWeight: 800, color: '#fff' }}>bioKids Zone</p>
+              <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 4, fontWeight: 600 }}>{bioLow} to {bioHigh}</p>
+              <p style={{ fontFamily: mono, fontSize: 9, color: 'rgba(255,255,255,0.7)', marginTop: 2 }}>+2&quot; to +8&quot; above genetic midpoint</p>
             </div>
           </div>
           {/* Zone 1: Genetic Target */}
-          <div className="bg-stone-100 flex items-center justify-center border-t-2 border-stone-300" style={{ height: '40%' }}>
-            <div className="text-center px-3">
-              <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Genetic Target</p>
-              <p className="text-sm font-bold text-stone-900 mt-0.5">{rangeLow} to {rangeHigh}</p>
+          <div style={{ background: '#f5f5f0', height: '40%', display: 'flex', alignItems: 'center', justifyContent: 'center', borderTop: '2px solid #d6d3d1' }}>
+            <div style={{ textAlign: 'center', padding: '0 0.75rem' }}>
+              <p style={{ fontFamily: mono, fontSize: 9, fontWeight: 700, color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Genetic Target</p>
+              <p style={{ fontFamily: mono, fontSize: 13, fontWeight: 800, color: '#1c1917', marginTop: 2 }}>{rangeLow} to {rangeHigh}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Zone Descriptions */}
-      <div className="space-y-4 mb-6">
-        <div className="bg-stone-50 rounded-xl p-4 border border-stone-200">
-          <p className="text-sm font-semibold text-stone-800 mb-1">Genetic Target &middot; {rangeLow} to {rangeHigh}</p>
-          <p className="text-sm text-stone-600">
-            Based on mid-parental height calculations, most children finish within this range. Where your child lands within it depends on environment &mdash; sleep, nutrition, movement, and hormonal support.
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
+        <div style={{ background: '#f5f5f0', borderRadius: 12, padding: '0.875rem 1rem', border: '1px solid #e7e5e4' }}>
+          <p style={{ fontFamily: mono, fontSize: 12, fontWeight: 700, color: '#1c1917', marginBottom: 4 }}>Genetic Target · {rangeLow} to {rangeHigh}</p>
+          <p style={{ fontFamily: mono, fontSize: 11, color: '#78716c', lineHeight: 1.55 }}>
+            Where most children finish based on mid-parental calculations. Where they land depends on environment — sleep, nutrition, movement.
           </p>
         </div>
-        <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-4 border border-emerald-200">
-          <p className="text-sm font-semibold text-emerald-800 mb-1">bioKids Zone &middot; {bioLow} to {bioHigh}</p>
-          <p className="text-sm text-stone-600">
-            With optimized sleep, nutrition, and movement, children can express their genetics to the upper end of their potential &mdash; up to 8 inches above the genetic midpoint. This is where bioKids operates.
+        <div style={{ background: '#ecfdf5', borderRadius: 12, padding: '0.875rem 1rem', border: '1px solid #a7f3d0' }}>
+          <p style={{ fontFamily: mono, fontSize: 12, fontWeight: 700, color: '#059669', marginBottom: 4 }}>bioKids Zone · {bioLow} to {bioHigh}</p>
+          <p style={{ fontFamily: mono, fontSize: 11, color: '#065f46', lineHeight: 1.55 }}>
+            With optimized sleep, nutrition, and movement, children can express their genetics to the upper end — up to 8 inches above midpoint.
           </p>
         </div>
       </div>
 
       {/* Percentile Table */}
-      <div className="mb-6">
-        <p className="text-sm font-semibold text-stone-800 mb-2">Height Potential Breakdown</p>
-        <div className="border border-stone-200 rounded-lg overflow-hidden text-xs">
-          <table className="w-full">
+      <div style={{ marginBottom: 20 }}>
+        <p style={{ fontFamily: mono, fontSize: 12, fontWeight: 700, color: '#1c1917', marginBottom: 8 }}>Height Potential Breakdown</p>
+        <div style={{ border: '1px solid #e7e5e4', borderRadius: 10, overflow: 'hidden' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: mono, fontSize: 11 }}>
             <thead>
-              <tr className="bg-stone-100 text-stone-600">
-                <th className="py-2 px-3 text-left font-medium">vs target</th>
-                <th className="py-2 px-3 text-left font-medium">Height</th>
-                <th className="py-2 px-3 text-left font-medium">Percentile</th>
-                <th className="py-2 px-3 text-right font-medium"></th>
+              <tr style={{ background: '#f5f5f0' }}>
+                <th style={{ padding: '8px 10px', textAlign: 'left', fontWeight: 600, color: '#78716c' }}>vs target</th>
+                <th style={{ padding: '8px 10px', textAlign: 'left', fontWeight: 600, color: '#78716c' }}>Height</th>
+                <th style={{ padding: '8px 10px', textAlign: 'left', fontWeight: 600, color: '#78716c' }}>Percentile</th>
+                <th style={{ padding: '8px 10px', textAlign: 'right', fontWeight: 600, color: '#78716c' }}></th>
               </tr>
             </thead>
             <tbody>
@@ -101,12 +116,12 @@ export default function HeightPotentialCalculator({
                 { offset: 7, pct: '~99.95th', bio: true },
                 { offset: 8, pct: '~99.997th', bio: true },
               ].map((row) => (
-                <tr key={row.offset} className={row.bio ? 'bg-emerald-50' : 'bg-white'}>
-                  <td className="py-1.5 px-3 text-stone-700">+{row.offset}&quot;</td>
-                  <td className="py-1.5 px-3 font-medium text-stone-900">{cmToFtIn(geneticTargetCm + row.offset * 2.54)}</td>
-                  <td className="py-1.5 px-3 text-stone-600">{row.pct}</td>
-                  <td className="py-1.5 px-3 text-right">
-                    {row.bio && <span className="text-emerald-700 font-semibold">bioKids</span>}
+                <tr key={row.offset} style={{ background: row.bio ? '#ecfdf5' : '#fff', borderTop: '1px solid #f0f0f0' }}>
+                  <td style={{ padding: '6px 10px', color: '#57534e' }}>+{row.offset}&quot;</td>
+                  <td style={{ padding: '6px 10px', fontWeight: 700, color: '#1c1917' }}>{cmToFtIn(geneticTargetCm + row.offset * 2.54)}</td>
+                  <td style={{ padding: '6px 10px', color: '#78716c' }}>{row.pct}</td>
+                  <td style={{ padding: '6px 10px', textAlign: 'right' }}>
+                    {row.bio && <span style={{ color: '#059669', fontWeight: 700, fontSize: 10 }}>bioKids</span>}
                   </td>
                 </tr>
               ))}
@@ -119,17 +134,17 @@ export default function HeightPotentialCalculator({
       <button
         type="button"
         onClick={() => setShowReferences(!showReferences)}
-        className="text-xs text-emerald-700 font-medium hover:text-emerald-900 transition-colors"
+        style={{ fontFamily: mono, fontSize: 11, color: '#059669', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
       >
         {showReferences ? '\u25BC' : '\u25B6'} References
       </button>
       {showReferences && (
-        <div className="mt-2 bg-emerald-50 rounded-lg p-3 space-y-2 font-mono">
-          <p className="text-[11px] text-emerald-800">
-            Standard band based on <a href="https://www.nature.com/articles/pr1998502" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-950">Luo/Wang et al. 1998</a> and <a href="https://www.aafp.org/pubs/afp/issues/2015/0701/p43.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-950">AAFP pediatric guidelines</a>.
+        <div style={{ marginTop: 8, background: '#ecfdf5', borderRadius: 10, padding: '0.75rem', fontFamily: mono }}>
+          <p style={{ fontSize: 10, color: '#065f46', marginBottom: 6, lineHeight: 1.5 }}>
+            Standard band based on Luo/Wang et al. 1998 (Nature) and AAFP pediatric guidelines.
           </p>
-          <p className="text-[11px] text-emerald-800">
-            Maximal expression (+3-4 SD) documented in <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11352326/" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-950">Zeevi et al. 2024</a> study of healthy families.
+          <p style={{ fontSize: 10, color: '#065f46', lineHeight: 1.5 }}>
+            Maximal expression (+3-4 SD) documented in Zeevi et al. 2024 study of healthy families.
           </p>
         </div>
       )}

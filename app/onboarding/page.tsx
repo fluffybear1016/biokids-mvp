@@ -9,6 +9,9 @@ import HeightPotentialCalculator from '@/components/HeightPotentialCalculator';
 import { createClient } from '@/lib/supabase';
 import { Suspense } from 'react';
 
+// Shared styles
+const mono = "'Courier New', Courier, monospace";
+
 function OnboardingContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -160,7 +163,7 @@ function OnboardingContent() {
       localStorage.setItem('fatherHeight', `${fatherHeightFt}'${fatherHeightIn}"`);
       localStorage.setItem('geneticTarget', geneticTargetCm.toString());
     }
-    // Mark onboarding as complete (user is about to see Stripe)
+    // Mark onboarding as complete (user is about to see account creation)
     localStorage.setItem('biokids_onboarding_complete', 'true');
     setStep(5);
   };
@@ -227,55 +230,96 @@ function OnboardingContent() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-[#FFFDF7] flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+  // Shared input style
+  const inputStyle: React.CSSProperties = {
+    fontFamily: mono, fontSize: 14, width: '100%',
+    padding: '0.75rem 1rem', borderRadius: 10,
+    border: '1px solid #d6d3d1', outline: 'none',
+    color: '#1c1917', background: '#fff',
+  };
+  const labelStyle: React.CSSProperties = {
+    fontFamily: mono, fontSize: 12, fontWeight: 600,
+    color: '#57534e', display: 'block', marginBottom: 4,
+  };
+  const chipStyle = (active: boolean): React.CSSProperties => ({
+    fontFamily: mono, fontSize: 13, fontWeight: 600,
+    padding: '0.75rem 1rem', borderRadius: 10, cursor: 'pointer',
+    border: active ? '2px solid #059669' : '1px solid #d6d3d1',
+    background: active ? '#ecfdf5' : '#fff',
+    color: active ? '#059669' : '#57534e',
+    transition: 'all 0.2s ease', textAlign: 'center',
+  });
+  const btnStyle = (disabled?: boolean): React.CSSProperties => ({
+    fontFamily: mono, fontSize: 15, fontWeight: 700,
+    width: '100%', padding: '0.875rem', borderRadius: 12,
+    border: 'none', cursor: disabled ? 'not-allowed' : 'pointer',
+    background: disabled ? '#d6d3d1' : '#059669',
+    color: disabled ? '#a8a29e' : '#fff',
+    transition: 'all 0.2s ease', marginTop: 24,
+  });
 
-        {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="flex justify-between mb-2">
+  return (
+    <div style={{ minHeight: '100vh', backgroundColor: '#fafaf9', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
+      <style>{`
+        @keyframes stepPulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.15); }
+          100% { transform: scale(1); }
+        }
+        @keyframes fadeSlideIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+      <div style={{ width: '100%', maxWidth: 440 }}>
+
+        {/* Progress Bar — micro-interactions */}
+        <div style={{ marginBottom: 32 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 6, marginBottom: 8 }}>
             {[1, 2, 3, 4, 5, 6].map((s) => (
               <div
                 key={s}
-                className={`w-1/6 h-2 rounded-full mx-1 ${
-                  s <= step ? 'bg-emerald-600' : 'bg-stone-200'
-                }`}
+                style={{
+                  flex: 1, height: 6, borderRadius: 3,
+                  background: s < step ? '#059669' : s === step ? '#059669' : '#e7e5e4',
+                  opacity: s < step ? 0.5 : s === step ? 1 : 0.4,
+                  transition: 'all 0.4s ease',
+                  animation: s === step ? 'stepPulse 0.5s ease' : 'none',
+                }}
               />
             ))}
           </div>
-          <p className="text-center text-sm text-stone-500">Step {step} of 6</p>
+          <p style={{ textAlign: 'center', fontSize: 11, color: '#a8a29e', fontFamily: mono }}>Step {step} of 6</p>
         </div>
 
         {/* Step 1: Child Info */}
         {step === 1 && (
-          <form onSubmit={handleStep1Submit} className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
-            <h2 className="text-2xl font-semibold text-stone-900 mb-2">Tell us about your child</h2>
-            <p className="text-sm text-stone-500 mb-6">
-              For privacy, consider using just your child's first initial.
+          <form onSubmit={handleStep1Submit} style={{
+            background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
+            padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
+          }}>
+            <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>Tell us about your child</h2>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#a8a29e', marginBottom: 24 }}>
+              For privacy, consider using just a first initial.
             </p>
 
-            <div className="space-y-4">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">Name or Initial</label>
+                <label style={labelStyle}>Name or Initial</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="E.g., Emma or E"
-                  className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  style={inputStyle}
                   required
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Birth Month</label>
-                  <select
-                    value={birthMonth}
-                    onChange={(e) => setBirthMonth(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                    required
-                  >
+                  <label style={labelStyle}>Birth Month</label>
+                  <select value={birthMonth} onChange={(e) => setBirthMonth(e.target.value)} style={inputStyle} required>
                     <option value="">Month</option>
                     {months.map((month, i) => (
                       <option key={month} value={i + 1}>{month}</option>
@@ -283,13 +327,8 @@ function OnboardingContent() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Birth Year</label>
-                  <select
-                    value={birthYear}
-                    onChange={(e) => setBirthYear(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                    required
-                  >
+                  <label style={labelStyle}>Birth Year</label>
+                  <select value={birthYear} onChange={(e) => setBirthYear(e.target.value)} style={inputStyle} required>
                     <option value="">Year</option>
                     {years.map((year) => (
                       <option key={year} value={year}>{year}</option>
@@ -298,83 +337,64 @@ function OnboardingContent() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Height (ft)</label>
-                  <select
-                    value={heightFt}
-                    onChange={(e) => setHeightFt(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                    required
-                  >
+                  <label style={labelStyle}>Height (ft)</label>
+                  <select value={heightFt} onChange={(e) => setHeightFt(e.target.value)} style={inputStyle} required>
                     <option value="">Ft</option>
                     {[2, 3, 4, 5, 6].map((ft) => (
-                      <option key={ft} value={ft}>{ft}'</option>
+                      <option key={ft} value={ft}>{ft}&apos;</option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Height (in)</label>
-                  <select
-                    value={heightIn}
-                    onChange={(e) => setHeightIn(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                    required
-                  >
+                  <label style={labelStyle}>Height (in)</label>
+                  <select value={heightIn} onChange={(e) => setHeightIn(e.target.value)} style={inputStyle} required>
                     <option value="">In</option>
                     {Array.from({ length: 12 }, (_, i) => (
-                      <option key={i} value={i}>{i}"</option>
+                      <option key={i} value={i}>{i}&quot;</option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Weight (lbs)</label>
+                  <label style={labelStyle}>Weight (lbs)</label>
                   <input
                     type="number"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
                     placeholder="lbs"
-                    className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    style={inputStyle}
                     required
                   />
                 </div>
               </div>
             </div>
 
-            <button
-              type="submit"
-              className="w-full mt-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors"
-            >
+            <button type="submit" style={btnStyle()}>
               Continue
             </button>
           </form>
         )}
 
-        {/* Step 2: Quick Questions */}
+        {/* Step 2: Understanding their day */}
         {step === 2 && (
-          <form onSubmit={handleStep2Submit} className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
-            <h2 className="text-2xl font-semibold text-stone-900 mb-2">A few quick questions</h2>
-            <p className="text-sm text-stone-500 mb-6">
-              This helps us personalize {name}'s protocol.
+          <form onSubmit={handleStep2Submit} style={{
+            background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
+            padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
+          }}>
+            <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>
+              Help us understand {name}&apos;s day
+            </h2>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#a8a29e', marginBottom: 24 }}>
+              You know {name} best. This helps us tailor the protocol.
             </p>
 
-            <div className="space-y-5">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  How many hours of sleep does {name} get each night?
-                </label>
-                <div className="grid grid-cols-2 gap-2">
+                <label style={labelStyle}>How many hours of sleep does {name} get?</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                   {['8 or less', '9-10', '11-12', '12+'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setSleepHours(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        sleepHours === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
+                    <button key={option} type="button" onClick={() => setSleepHours(option)} style={chipStyle(sleepHours === option)}>
                       {option}
                     </button>
                   ))}
@@ -382,21 +402,10 @@ function OnboardingContent() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  What time does {name} usually go to bed?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
+                <label style={labelStyle}>Usual bedtime?</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
                   {['Before 8pm', '8-9pm', 'After 9pm'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setBedtime(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        bedtime === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
+                    <button key={option} type="button" onClick={() => setBedtime(option)} style={chipStyle(bedtime === option)}>
                       {option}
                     </button>
                   ))}
@@ -404,21 +413,10 @@ function OnboardingContent() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  Does {name} consume dairy daily?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
+                <label style={labelStyle}>Does {name} have dairy daily?</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
                   {['Yes', 'Sometimes', 'No'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setDairy(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        dairy === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
+                    <button key={option} type="button" onClick={() => setDairy(option)} style={chipStyle(dairy === option)}>
                       {option}
                     </button>
                   ))}
@@ -426,21 +424,10 @@ function OnboardingContent() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  How often does {name} run or play hard?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['Daily', 'Few times a week', 'Rarely'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setExercise(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        exercise === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
+                <label style={labelStyle}>How often does {name} run or play hard?</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
+                  {['Daily', 'Few times/wk', 'Rarely'].map((option) => (
+                    <button key={option} type="button" onClick={() => setExercise(option)} style={chipStyle(exercise === option)}>
                       {option}
                     </button>
                   ))}
@@ -448,21 +435,10 @@ function OnboardingContent() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  Screen time before bed?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
+                <label style={labelStyle}>Screen time before bed?</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
                   {['None', 'Some', 'A lot'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setScreenTime(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        screenTime === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
+                    <button key={option} type="button" onClick={() => setScreenTime(option)} style={chipStyle(screenTime === option)}>
                       {option}
                     </button>
                   ))}
@@ -470,21 +446,10 @@ function OnboardingContent() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">
-                  How often does {name} eat processed/packaged foods?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
+                <label style={labelStyle}>How often does {name} eat processed foods?</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
                   {['Rarely', 'Sometimes', 'Often'].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setProcessedFoods(option)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        processedFoods === option
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
-                    >
+                    <button key={option} type="button" onClick={() => setProcessedFoods(option)} style={chipStyle(processedFoods === option)}>
                       {option}
                     </button>
                   ))}
@@ -495,7 +460,7 @@ function OnboardingContent() {
             <button
               type="submit"
               disabled={!sleepHours || !bedtime || !dairy || !exercise || !screenTime || !processedFoods}
-              className="w-full mt-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
+              style={btnStyle(!sleepHours || !bedtime || !dairy || !exercise || !screenTime || !processedFoods)}
             >
               Continue
             </button>
@@ -504,41 +469,47 @@ function OnboardingContent() {
 
         {/* Step 3: Goal Selection */}
         {step === 3 && (
-          <GoalSelection
-            childName={name || 'Your child'}
-            onSelect={(goal) => {
-              localStorage.setItem('biokids_goal', JSON.stringify({
-                goal,
-                date: new Date().toISOString(),
-              }));
-              setStep(4);
-            }}
-          />
+          <div style={{ animation: 'fadeSlideIn 0.4s ease' }}>
+            <GoalSelection
+              childName={name || 'Your child'}
+              onSelect={(goal) => {
+                localStorage.setItem('biokids_goal', JSON.stringify({
+                  goal,
+                  date: new Date().toISOString(),
+                }));
+                setStep(4);
+              }}
+            />
+          </div>
         )}
 
-        {/* Step 4: Height Potential */}
+        {/* Step 4: Height Potential — the emotional peak */}
         {step === 4 && (
-          <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
-            <h2 className="text-2xl font-semibold text-stone-900 mb-2">{name}'s growth potential</h2>
-            <p className="text-sm text-stone-500 mb-6">
-              Enter parent heights to see {name}'s predicted range.
+          <div style={{
+            background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
+            padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
+          }}>
+            <p style={{ fontFamily: mono, fontSize: 10, color: '#059669', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 8 }}>
+              This is what&apos;s possible
+            </p>
+            <h2 style={{ fontFamily: mono, fontSize: 22, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>
+              {name}&apos;s growth potential
+            </h2>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', marginBottom: 24, lineHeight: 1.6 }}>
+              Enter parent heights and we&apos;ll show you where {name} could land.
             </p>
 
-            <div className="space-y-4">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {/* Gender */}
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">Child's gender</label>
-                <div className="grid grid-cols-2 gap-2">
+                <label style={labelStyle}>Child&apos;s gender</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                   {[{ value: 'boy' as const, label: 'Boy' }, { value: 'girl' as const, label: 'Girl' }].map((option) => (
                     <button
                       key={option.value}
                       type="button"
                       onClick={() => setChildGender(option.value)}
-                      className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                        childGender === option.value
-                          ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                          : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                      }`}
+                      style={chipStyle(childGender === option.value)}
                     >
                       {option.label}
                     </button>
@@ -548,26 +519,18 @@ function OnboardingContent() {
 
               {/* Mother's Height */}
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">Mother's height</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <select
-                    value={motherHeightFt}
-                    onChange={(e) => setMotherHeightFt(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                  >
+                <label style={labelStyle}>Mother&apos;s height</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                  <select value={motherHeightFt} onChange={(e) => setMotherHeightFt(e.target.value)} style={inputStyle}>
                     <option value="">Ft</option>
                     {[4, 5, 6].map((ft) => (
-                      <option key={ft} value={ft}>{ft}'</option>
+                      <option key={ft} value={ft}>{ft}&apos;</option>
                     ))}
                   </select>
-                  <select
-                    value={motherHeightIn}
-                    onChange={(e) => setMotherHeightIn(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                  >
+                  <select value={motherHeightIn} onChange={(e) => setMotherHeightIn(e.target.value)} style={inputStyle}>
                     <option value="">In</option>
                     {Array.from({ length: 12 }, (_, i) => (
-                      <option key={i} value={i}>{i}"</option>
+                      <option key={i} value={i}>{i}&quot;</option>
                     ))}
                   </select>
                 </div>
@@ -575,26 +538,18 @@ function OnboardingContent() {
 
               {/* Father's Height */}
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">Father's height</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <select
-                    value={fatherHeightFt}
-                    onChange={(e) => setFatherHeightFt(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                  >
+                <label style={labelStyle}>Father&apos;s height</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                  <select value={fatherHeightFt} onChange={(e) => setFatherHeightFt(e.target.value)} style={inputStyle}>
                     <option value="">Ft</option>
                     {[5, 6, 7].map((ft) => (
-                      <option key={ft} value={ft}>{ft}'</option>
+                      <option key={ft} value={ft}>{ft}&apos;</option>
                     ))}
                   </select>
-                  <select
-                    value={fatherHeightIn}
-                    onChange={(e) => setFatherHeightIn(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                  >
+                  <select value={fatherHeightIn} onChange={(e) => setFatherHeightIn(e.target.value)} style={inputStyle}>
                     <option value="">In</option>
                     {Array.from({ length: 12 }, (_, i) => (
-                      <option key={i} value={i}>{i}"</option>
+                      <option key={i} value={i}>{i}&quot;</option>
                     ))}
                   </select>
                 </div>
@@ -614,7 +569,7 @@ function OnboardingContent() {
               type="button"
               onClick={handleStep4Submit}
               disabled={!canCalculateHeight}
-              className="w-full mt-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
+              style={btnStyle(!canCalculateHeight)}
             >
               Continue
             </button>
@@ -623,79 +578,90 @@ function OnboardingContent() {
 
         {/* Step 5: Create Account */}
         {step === 5 && (
-          <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
-            <h2 className="text-2xl font-semibold text-stone-900 mb-2 text-center">Create your account</h2>
-            <p className="text-sm text-stone-500 mb-6 text-center">
-              One last step before we build {name || 'your child'}'s protocol.
+          <div style={{
+            background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
+            padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
+          }}>
+            <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6, textAlign: 'center' }}>
+              Create your account
+            </h2>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', marginBottom: 24, textAlign: 'center', lineHeight: 1.6 }}>
+              One last step before we build {name || 'your child'}&apos;s protocol.
             </p>
 
             {signupError && (
-              <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm mb-6">
+              <div style={{ background: '#fef2f2', color: '#dc2626', padding: '0.75rem 1rem', borderRadius: 12, fontSize: 13, fontFamily: mono, marginBottom: 20 }}>
                 {signupError}
               </div>
             )}
 
-            <form onSubmit={handleSignup} className="space-y-4">
+            <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">Email</label>
+                <label style={labelStyle}>Email</label>
                 <input
                   type="email"
                   value={signupEmail}
                   onChange={(e) => setSignupEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  style={inputStyle}
                   placeholder="you@example.com"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">Password</label>
+                <label style={labelStyle}>Password</label>
                 <input
                   type="password"
                   value={signupPassword}
                   onChange={(e) => setSignupPassword(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  style={inputStyle}
                   placeholder="At least 8 characters"
                   required
                   minLength={8}
                 />
               </div>
-              <label className="flex items-start gap-2 cursor-pointer">
+              <label style={{ display: 'flex', alignItems: 'flex-start', gap: 8, cursor: 'pointer' }}>
                 <input
                   type="checkbox"
                   checked={agreedToTerms}
                   onChange={(e) => setAgreedToTerms(e.target.checked)}
-                  className="mt-1 w-4 h-4 rounded border-stone-300 text-emerald-600 focus:ring-emerald-500"
+                  style={{ marginTop: 3, width: 16, height: 16, accentColor: '#059669' }}
                   required
                 />
-                <span className="text-sm text-stone-600">
+                <span style={{ fontFamily: mono, fontSize: 12, color: '#78716c', lineHeight: 1.5 }}>
                   I agree to the{' '}
-                  <Link href="/terms" target="_blank" rel="noopener noreferrer" className="text-emerald-600 font-medium hover:underline">Terms of Service</Link>
+                  <Link href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#059669', fontWeight: 600, textDecoration: 'none' }}>Terms</Link>
                   {' '}and{' '}
-                  <Link href="/privacy" target="_blank" rel="noopener noreferrer" className="text-emerald-600 font-medium hover:underline">Privacy Policy</Link>
+                  <Link href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#059669', fontWeight: 600, textDecoration: 'none' }}>Privacy Policy</Link>
                 </span>
               </label>
               <button
                 type="submit"
-                className="w-full py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-stone-300 disabled:cursor-not-allowed"
+                style={btnStyle(signupLoading || !agreedToTerms)}
                 disabled={signupLoading || !agreedToTerms}
               >
                 {signupLoading ? 'Creating account...' : 'Create Account'}
               </button>
             </form>
 
-            <p className="text-center text-sm text-stone-500 mt-6">
+            <p style={{ textAlign: 'center', fontFamily: mono, fontSize: 12, color: '#a8a29e', marginTop: 20 }}>
               Already have an account?{' '}
-              <Link href="/login" className="text-emerald-600 font-medium hover:underline">Log in</Link>
+              <Link href="/login" style={{ color: '#059669', fontWeight: 600, textDecoration: 'none' }}>Log in</Link>
             </p>
           </div>
         )}
 
         {/* Step 6: Stripe Pricing Table */}
         {step === 6 && (
-          <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
-            <h2 className="text-2xl font-semibold text-stone-900 mb-4 text-center">
-              Start Your 7-Day Free Trial
+          <div style={{
+            background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
+            padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
+          }}>
+            <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6, textAlign: 'center' }}>
+              Start {name || 'your child'}&apos;s protocol
             </h2>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', textAlign: 'center', marginBottom: 20, lineHeight: 1.6 }}>
+              Full access from day one. Cancel anytime.
+            </p>
             <Script
               async
               src="https://js.stripe.com/v3/pricing-table.js"
@@ -719,8 +685,8 @@ function OnboardingContent() {
 export default function Onboarding() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#FFFDF7] flex items-center justify-center p-4">
-        <div className="w-full max-w-md text-center text-stone-500">Loading...</div>
+      <div style={{ minHeight: '100vh', backgroundColor: '#fafaf9', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
+        <div style={{ fontFamily: "'Courier New', Courier, monospace", color: '#a8a29e', fontSize: 13 }}>Loading...</div>
       </div>
     }>
       <OnboardingContent />

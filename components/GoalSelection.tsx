@@ -9,6 +9,8 @@ interface GoalSelectionProps {
 
 type GoalType = 'concerned' | 'foundation' | 'elite';
 
+const mono = "'Courier New', Courier, monospace";
+
 const goals = [
   {
     id: 'concerned' as GoalType,
@@ -16,9 +18,6 @@ const goals = [
     subtitle: 'My child seems small or behind',
     description: "You've noticed your child isn't growing as expected. We'll focus on the highest-impact levers backed by research.",
     target: 'Personalized protocol',
-    icon: '',
-    color: 'bg-sky-50 border-sky-200 hover:border-sky-300',
-    selectedColor: 'bg-sky-100 border-sky-400',
   },
   {
     id: 'foundation' as GoalType,
@@ -26,9 +25,6 @@ const goals = [
     subtitle: 'Build great habits',
     description: 'Focus on the fundamentals — good sleep, nutrition basics, daily movement. A solid foundation for life.',
     target: 'Personalized daily essentials',
-    icon: '',
-    color: 'bg-emerald-50 border-emerald-200 hover:border-emerald-300',
-    selectedColor: 'bg-emerald-100 border-emerald-400',
   },
   {
     id: 'elite' as GoalType,
@@ -36,19 +32,11 @@ const goals = [
     subtitle: 'D1 / Pro sports · Leave nothing on the table',
     description: "For parents who want to give their child every natural advantage — whether for elite athletics or overall development.",
     target: 'Personalized elite protocol',
-    icon: '',
-    color: 'bg-blue-50 border-blue-200 hover:border-blue-300',
-    selectedColor: 'bg-blue-100 border-blue-400',
   },
 ];
 
 export default function GoalSelection({ childName, onSelect }: GoalSelectionProps) {
   const [selected, setSelected] = useState<GoalType | null>(null);
-  const [hoveredId, setHoveredId] = useState<GoalType | null>(null);
-
-  const handleSelect = (goalId: GoalType) => {
-    setSelected(goalId);
-  };
 
   const handleContinue = () => {
     if (selected) {
@@ -57,54 +45,50 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6" style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+    <div style={{ maxWidth: 440, margin: '0 auto' }}>
       {/* Header */}
-      <div className="text-center mb-8">
-        <p className="text-sm text-emerald-600 font-medium mb-2">Setting up {childName}'s profile</p>
-        <h1 className="text-2xl font-semibold text-stone-900 mb-2">
+      <div style={{ textAlign: 'center', marginBottom: 28 }}>
+        <p style={{ fontFamily: mono, fontSize: 10, color: '#059669', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>
+          Setting up {childName}&apos;s profile
+        </p>
+        <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>
           What feels right for your family?
-        </h1>
-        <p className="text-stone-500 text-sm">
-          There's no wrong answer. You can always adjust this later.
+        </h2>
+        <p style={{ fontFamily: mono, fontSize: 12, color: '#a8a29e' }}>
+          There&apos;s no wrong answer. You can always adjust later.
         </p>
       </div>
 
       {/* Goal Cards */}
-      <div className="space-y-3 mb-8">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
         {goals.map((goal) => (
           <button
             key={goal.id}
-            onClick={() => handleSelect(goal.id)}
-            onMouseEnter={() => setHoveredId(goal.id)}
-            onMouseLeave={() => setHoveredId(null)}
-            className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
-              selected === goal.id 
-                ? goal.selectedColor 
-                : goal.color
-            }`}
+            onClick={() => setSelected(goal.id)}
+            style={{
+              textAlign: 'left', padding: '1rem 1.25rem', borderRadius: 14, cursor: 'pointer',
+              border: selected === goal.id ? '2px solid #059669' : '1px solid #e7e5e4',
+              background: selected === goal.id ? '#ecfdf5' : '#fff',
+              transition: 'all 0.2s ease',
+            }}
           >
-            <div className="flex items-start gap-4">
-              <span className="text-2xl">{goal.icon}</span>
-              <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-stone-900">{goal.title}</h3>
-                  {selected === goal.id && (
-                    <span className="text-emerald-600 text-sm">✓ Selected</span>
-                  )}
-                </div>
-                <p className="text-sm text-stone-600 mb-1">{goal.subtitle}</p>
-                <p className="text-xs text-stone-500">{goal.description}</p>
-                <p className="text-xs text-stone-400 mt-2">Daily rhythm: {goal.target}</p>
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+              <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: '#1c1917' }}>{goal.title}</span>
+              {selected === goal.id && (
+                <span style={{ fontFamily: mono, fontSize: 11, color: '#059669', fontWeight: 700 }}>Selected</span>
+              )}
             </div>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#059669', fontWeight: 600, marginBottom: 4 }}>{goal.subtitle}</p>
+            <p style={{ fontFamily: mono, fontSize: 11, color: '#78716c', lineHeight: 1.5, marginBottom: 6 }}>{goal.description}</p>
+            <p style={{ fontFamily: mono, fontSize: 10, color: '#a8a29e' }}>{goal.target}</p>
           </button>
         ))}
       </div>
 
-      {/* Reassurance Message */}
-      <div className="bg-emerald-50 rounded-lg p-4 mb-6">
-        <p className="text-sm text-emerald-800 text-center">
-          Every path supports your child's growth. Start where you are — progress happens naturally.
+      {/* Reassurance */}
+      <div style={{ background: '#ecfdf5', borderRadius: 12, padding: '0.75rem 1rem', marginBottom: 20 }}>
+        <p style={{ fontFamily: mono, fontSize: 11.5, color: '#065f46', textAlign: 'center', lineHeight: 1.55 }}>
+          Every path supports your child&apos;s growth. Start where you are.
         </p>
       </div>
 
@@ -112,17 +96,19 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
       <button
         onClick={handleContinue}
         disabled={!selected}
-        className={`w-full py-3 rounded-xl font-medium transition-all ${
-          selected
-            ? 'bg-emerald-600 text-white hover:bg-emerald-700'
-            : 'bg-stone-200 text-stone-400 cursor-not-allowed'
-        }`}
+        style={{
+          fontFamily: mono, fontSize: 15, fontWeight: 700,
+          width: '100%', padding: '0.875rem', borderRadius: 12,
+          border: 'none', cursor: selected ? 'pointer' : 'not-allowed',
+          background: selected ? '#059669' : '#d6d3d1',
+          color: selected ? '#fff' : '#a8a29e',
+          transition: 'all 0.2s ease',
+        }}
       >
         Continue
       </button>
 
-      {/* Footer Note */}
-      <p className="text-center text-xs text-stone-400 mt-4">
+      <p style={{ textAlign: 'center', fontFamily: mono, fontSize: 10, color: '#a8a29e', marginTop: 12 }}>
         You can change this anytime in settings
       </p>
     </div>
