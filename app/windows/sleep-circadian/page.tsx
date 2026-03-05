@@ -44,7 +44,7 @@ const C = {
 
 export default function SleepCircadianWindow() {
   const [child, setChild] = useState<Child>(mockChild);
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState('science');
   const [expandedLever, setExpandedLever] = useState<number | null>(null);
   const [expandedEnv, setExpandedEnv] = useState<number | null>(null);
   const [expandedWarn, setExpandedWarn] = useState<number | null>(null);
@@ -708,12 +708,12 @@ Zero tolerance.`,
   ];
 
   const tabs = [
-    { id: 'home', label: 'Home' },
+    { id: 'science', label: 'Science' },
     { id: 'today', label: 'Levers' },
     { id: 'routine', label: 'Routine' },
     { id: 'environment', label: 'Environment' },
     { id: 'warnings', label: 'Warnings' },
-    { id: 'science', label: 'Science' }
+    { id: 'home', label: 'Overview' }
   ];
 
   const AgeTable = ({ data, columns, title }: { data: Record<string, unknown>[]; columns: { header: string; key: string }[]; title: string }) => (
@@ -776,7 +776,7 @@ Zero tolerance.`,
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
-          Back to Dashboard
+          Back
         </Link>
 
         {/* Page Title */}
@@ -837,24 +837,24 @@ Zero tolerance.`,
         </div>
 
         {/* Tab Bar */}
-        <div style={{ display: 'flex', gap: 4, marginBottom: 0, background: C.bg, padding: 4, borderRadius: '14px 14px 0 0', overflowX: 'auto', WebkitOverflowScrolling: 'touch', border: `1px solid ${C.border}`, borderBottom: 'none' }}>
+        <div style={{ display: 'flex', gap: 0, marginBottom: 0, overflowX: 'auto', WebkitOverflowScrolling: 'touch', borderBottom: `1px solid ${C.border}` }}>
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               style={{
-                padding: '10px 14px',
+                padding: '10px 16px',
                 border: 'none',
-                background: activeTab === tab.id ? C.card : 'transparent',
-                borderRadius: 10,
-                fontSize: 13,
+                background: 'transparent',
+                borderBottom: activeTab === tab.id ? `2px solid ${C.green}` : '2px solid transparent',
+                fontSize: 12,
                 fontFamily: F,
-                fontWeight: activeTab === tab.id ? 800 : 400,
-                color: activeTab === tab.id ? C.title : C.light,
+                fontWeight: activeTab === tab.id ? 700 : 500,
+                color: activeTab === tab.id ? C.green : C.light,
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 whiteSpace: 'nowrap' as const,
-                flexShrink: 0
+                flexShrink: 0,
               }}
             >
               {tab.label}
@@ -863,7 +863,7 @@ Zero tolerance.`,
         </div>
 
         {/* Tab Content */}
-        <div style={{ background: C.card, borderRadius: '0 0 14px 14px', padding: '18px', border: `1px solid ${C.border}`, borderTop: 'none', marginBottom: 44 }}>
+        <div style={{ padding: '24px 0', marginBottom: 44 }}>
 
           {/* HOME TAB */}
           {activeTab === 'home' && (

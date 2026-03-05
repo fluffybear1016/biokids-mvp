@@ -9,7 +9,7 @@ import { NutritionHomeTab } from '@/components/HomeTabs';
 export default function NutritionWindow() {
   const [child, setChild] = useState<Child | null>(null);
   const [ageInMonths, setAgeInMonths] = useState(96); // Default 8 years
-  const [activeTab, setActiveTab] = useState<'home' | 'today' | 'milk' | 'foods' | 'mechanisms' | 'science'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'today' | 'milk' | 'foods' | 'mechanisms' | 'science'>('science');
   const [expandedLever, setExpandedLever] = useState<string | null>(null);
   const [expandedFood, setExpandedFood] = useState<string | null>(null);
   const [expandedMech, setExpandedMech] = useState<number | null>(null);
@@ -211,7 +211,7 @@ export default function NutritionWindow() {
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
-          Back to Dashboard
+          Back
         </Link>
 
         {/* Page Title */}
@@ -258,32 +258,31 @@ export default function NutritionWindow() {
         </div>
 
         {/* Tab Bar */}
-        <div style={{ display: 'flex', gap: 4, marginBottom: 0, background: CC.bg, padding: 4, borderRadius: '14px 14px 0 0', overflowX: 'auto', WebkitOverflowScrolling: 'touch', border: `1px solid ${CC.border}`, borderBottom: 'none' }}>
+        <div style={{ display: 'flex', gap: 0, marginBottom: 0, overflowX: 'auto', WebkitOverflowScrolling: 'touch', borderBottom: `1px solid ${CC.border}` }}>
           {[
-            { id: 'home', label: 'Home' },
+            { id: 'science', label: 'Science' },
             { id: 'today', label: 'Levers' },
             { id: 'milk', label: 'Milk' },
             { id: 'foods', label: 'Foods' },
             { id: 'mechanisms', label: 'Why' },
-            { id: 'science', label: 'Science' },
+            { id: 'home', label: 'Overview' },
           ].map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
               style={{
-                padding: '10px 14px',
+                padding: '10px 16px',
                 border: 'none',
-                background: activeTab === tab.id ? CC.card : 'transparent',
-                borderRadius: 10,
-                fontSize: 13,
+                background: 'transparent',
+                borderBottom: activeTab === tab.id ? `2px solid ${CC.green}` : '2px solid transparent',
+                fontSize: 12,
                 fontFamily: F,
-                fontWeight: activeTab === tab.id ? 800 : 400,
-                color: activeTab === tab.id ? CC.title : CC.light,
+                fontWeight: activeTab === tab.id ? 700 : 500,
+                color: activeTab === tab.id ? CC.green : CC.light,
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 whiteSpace: 'nowrap' as const,
                 flexShrink: 0,
-                flex: 1,
               }}
             >
               {tab.label}
@@ -292,7 +291,7 @@ export default function NutritionWindow() {
         </div>
 
         {/* Tab Content */}
-        <div style={{ background: CC.card, borderRadius: '0 0 14px 14px', padding: 18, border: `1px solid ${CC.border}`, borderTop: 'none', marginBottom: 44 }}>
+        <div style={{ padding: '24px 0', marginBottom: 44 }}>
 
           {/* ═══ TAB: HOME ═══ */}
           {activeTab === 'home' && (
