@@ -32,6 +32,12 @@ const suggestedQuestions = [
   "How does morning sunlight help?",
 ];
 
+const F = "'Courier New', Courier, monospace";
+const C = {
+  bg: '#fafaf9', title: '#1c1917', body: '#57534e', light: '#a8a29e',
+  green: '#059669', card: '#fff', border: '#e7e5e4',
+};
+
 export default function JarvisPage() {
   return (
     <Suspense>
@@ -179,47 +185,46 @@ function Jarvis() {
   };
 
   return (
-    <div className="min-h-screen bg-cream flex flex-col">
+    <div style={{ minHeight: '100vh', background: C.bg, fontFamily: F, display: 'flex', flexDirection: 'column' }}>
       <Nav currentChild={child} />
 
-      <main className="flex-1 flex flex-col max-w-3xl mx-auto w-full px-4 py-6">
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', maxWidth: 540, margin: '0 auto', width: '100%', padding: '24px 20px' }}>
 
         {/* Header */}
-        <header className="text-center mb-6">
-          <div className="w-16 h-16 bg-forest rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
-            🤖
-          </div>
-          <h1 className="font-display text-3xl text-gray-900 mb-1">Jarvis</h1>
-          <p className="text-gray-500 text-sm">Your GH optimization AI assistant</p>
+        <header style={{ textAlign: 'center', marginBottom: 24 }}>
+          <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Jarvis</h1>
+          <p style={{ fontSize: 13, color: C.light, margin: 0, fontFamily: F }}>Your GH optimization AI assistant</p>
         </header>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto space-y-4 mb-4">
+        <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 16 }}>
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              style={{ display: 'flex', justifyContent: message.role === 'user' ? 'flex-end' : 'flex-start' }}
             >
               <div
-                className={`max-w-[85%] rounded-2xl px-5 py-4 ${
-                  message.role === 'user'
-                    ? 'bg-forest text-white'
-                    : 'bg-white shadow-sm'
-                }`}
+                style={{
+                  maxWidth: '85%', borderRadius: 14, padding: '14px 18px',
+                  ...(message.role === 'user'
+                    ? { background: C.green, color: '#fff' }
+                    : { background: C.card, border: `1px solid ${C.border}` }
+                  ),
+                }}
               >
-                <div className="text-sm whitespace-pre-wrap leading-relaxed">
+                <div style={{ fontSize: 14, whiteSpace: 'pre-wrap', lineHeight: 1.75, fontFamily: F, color: message.role === 'user' ? '#fff' : C.body }}>
                   {message.content}
                 </div>
               </div>
             </div>
           ))}
           {isLoading && messages[messages.length - 1]?.role === 'user' && (
-            <div className="flex justify-start">
-              <div className="bg-white shadow-sm rounded-2xl px-5 py-4">
-                <div className="flex gap-1">
-                  <span className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-2 h-2 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+              <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: '14px 18px' }}>
+                <div style={{ display: 'flex', gap: 4 }}>
+                  <span style={{ width: 6, height: 6, background: C.light, borderRadius: '50%', animation: 'bounce 1s infinite', animationDelay: '0ms' }} />
+                  <span style={{ width: 6, height: 6, background: C.light, borderRadius: '50%', animation: 'bounce 1s infinite', animationDelay: '150ms' }} />
+                  <span style={{ width: 6, height: 6, background: C.light, borderRadius: '50%', animation: 'bounce 1s infinite', animationDelay: '300ms' }} />
                 </div>
               </div>
             </div>
@@ -229,12 +234,16 @@ function Jarvis() {
 
         {/* Suggested Questions */}
         {messages.length <= 2 && (
-          <div className="flex flex-wrap gap-2 mb-4 justify-center">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16, justifyContent: 'center' }}>
             {suggestedQuestions.map((q) => (
               <button
                 key={q}
                 onClick={() => handleSuggestionClick(q)}
-                className="px-4 py-2 bg-white rounded-full text-sm text-gray-600 hover:bg-cream-dark transition-colors shadow-sm"
+                style={{
+                  padding: '6px 14px', background: C.card, borderRadius: 20, fontSize: 11,
+                  color: C.body, border: `1px solid ${C.border}`, cursor: 'pointer', fontFamily: F,
+                  fontWeight: 500, transition: 'all 0.15s',
+                }}
               >
                 {q}
               </button>
@@ -243,27 +252,36 @@ function Jarvis() {
         )}
 
         {/* Input */}
-        <form onSubmit={handleSubmit} className="relative">
+        <form onSubmit={handleSubmit} style={{ position: 'relative' }}>
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask about GH optimization..."
-            className="w-full px-6 py-4 pr-14 bg-white rounded-2xl shadow-lg border-0 focus:outline-none focus:ring-2 focus:ring-forest text-base"
             disabled={isLoading}
+            style={{
+              width: '100%', padding: '14px 52px 14px 18px', background: C.card,
+              borderRadius: 14, border: `1px solid ${C.border}`, fontFamily: F,
+              fontSize: 14, color: C.title, outline: 'none', boxSizing: 'border-box',
+            }}
           />
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-forest rounded-xl flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-dark transition-colors"
+            style={{
+              position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
+              width: 36, height: 36, background: C.green, borderRadius: 10,
+              border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              opacity: (!input.trim() || isLoading) ? 0.4 : 1,
+            }}
           >
-            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#fff" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-400 mt-4">
+        <p style={{ textAlign: 'center', fontSize: 11, color: C.light, marginTop: 14, fontFamily: F }}>
           Jarvis provides educational information based on peer-reviewed research. Always consult a pediatrician for medical advice.
         </p>
 
