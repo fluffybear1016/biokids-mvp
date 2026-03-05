@@ -494,7 +494,19 @@ export default function Dashboard() {
   const child = { ...mockChild, name: childName };
 
   const [openId, setOpenId] = useState<string | null>(null);
-  const [done, setDone] = useState<Record<string, boolean>>({});
+
+  // Persist checkmarks in localStorage, keyed by today's date (auto-resets daily)
+  const todayKey = `biokids_done_${new Date().toISOString().slice(0, 10)}`;
+  const [done, setDone] = useState<Record<string, boolean>>(() => {
+    if (typeof window === 'undefined') return {};
+    try {
+      const saved = localStorage.getItem(todayKey);
+      return saved ? JSON.parse(saved) : {};
+    } catch { return {}; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem(todayKey, JSON.stringify(done)); } catch {}
+  }, [done, todayKey]);
   const allItems = dayData.flatMap(d => d.items);
   const total = allItems.length;
   const doneCount = Object.values(done).filter(Boolean).length;
