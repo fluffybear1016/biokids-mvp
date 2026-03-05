@@ -11,7 +11,6 @@ const articles = [
     summary: 'Sleep disruptors, endocrine disruptors, nutritional blockers, and more — a checklist of targets to remove.',
     category: 'toxins',
     readTime: '10 min',
-    icon: '⚠️',
     citation: null,
   },
   {
@@ -20,7 +19,6 @@ const articles = [
     summary: 'Why elite athletes and the world\'s tallest populations share one common childhood factor — raw milk access during their growth years.',
     category: 'nutrition',
     readTime: '8 min',
-    icon: '🥛',
     citation: '[Hoppe C. Eur J Clin Nutr. 2004]',
   },
   {
@@ -29,7 +27,6 @@ const articles = [
     summary: 'Glyphosate quietly disrupts hormones and gut function — the two systems most critical for height.',
     category: 'toxins',
     readTime: '5 min',
-    icon: '🌾',
     citation: '[Mills PJ. JAMA. 2017]',
   },
   {
@@ -38,7 +35,6 @@ const articles = [
     summary: 'Understanding the biological system that controls your child\'s height — and how to optimize it.',
     category: 'science',
     readTime: '6 min',
-    icon: '🧬',
     citation: '[Van Cauter E. JAMA. 2000]',
   },
   {
@@ -47,7 +43,6 @@ const articles = [
     summary: 'How delayed puberty and a sudden nutrition upgrade created one of the most dramatic growth spurts in sports history.',
     category: 'science',
     readTime: '7 min',
-    icon: '🏀',
     citation: '[Günther AL. Am J Clin Nutr. 2010]',
   },
   {
@@ -56,7 +51,6 @@ const articles = [
     summary: 'The science of extending your child\'s growth window through strategic nutrition — crucifers, mushrooms, and polyphenols.',
     category: 'nutrition',
     readTime: '7 min',
-    icon: '🦴',
     citation: '[Nilsson O. Endocrine Reviews. 2005]',
   },
   {
@@ -65,7 +59,6 @@ const articles = [
     summary: 'How the simplest amino acid can boost growth hormone, deepen sleep, and build stronger bones.',
     category: 'nutrition',
     readTime: '8 min',
-    icon: '🧪',
     citation: '[Kasai K. Metabolism. 1980]',
   },
   {
@@ -74,7 +67,6 @@ const articles = [
     summary: 'The hidden difference in milk proteins that could be affecting your child\'s gut, inflammation, and height potential.',
     category: 'nutrition',
     readTime: '8 min',
-    icon: '🥛',
     citation: '[Ramadhan MR. Nutrients. 2023]',
   },
   {
@@ -83,7 +75,6 @@ const articles = [
     summary: 'The complete guide to the biological cascade that determines your child\'s growth — and exactly how to optimize it.',
     category: 'science',
     readTime: '10 min',
-    icon: '📈',
     citation: '[Giustina A. Endocrine Reviews. 1998]',
   },
   {
@@ -92,7 +83,6 @@ const articles = [
     summary: 'A complete breakdown of what\'s actually in milk — and why quality matters for your child\'s growth.',
     category: 'nutrition',
     readTime: '9 min',
-    icon: '🥛',
     citation: '[Millward DJ. Am J Clin Nutr. 2008]',
   },
   {
@@ -101,7 +91,6 @@ const articles = [
     summary: 'Why 30-second sprints can raise GH by 700% — and how to use this for your child.',
     category: 'exercise',
     readTime: '7 min',
-    icon: '🏃',
     citation: '[Stokes KA. J Appl Physiol. 2002]',
   },
   {
@@ -110,7 +99,6 @@ const articles = [
     summary: 'How a small island builds the world\'s fastest humans — without a single barbell.',
     category: 'exercise',
     readTime: '8 min',
-    icon: '🇯🇲',
     citation: '[Caine D. Sports Med. 2006]',
   },
   {
@@ -119,7 +107,6 @@ const articles = [
     summary: 'How a humble Mediterranean bean can stimulate your child\'s GH release — backed by decades of clinical research.',
     category: 'nutrition',
     readTime: '9 min',
-    icon: '🫘',
     citation: '[Boyd AE. N Engl J Med. 1970]',
   },
   {
@@ -128,20 +115,19 @@ const articles = [
     summary: 'Zinc is required at every level of the growth hormone pathway — pituitary secretion, liver IGF‑1 production, and growth plate signaling.',
     category: 'nutrition',
     readTime: '6 min',
-    icon: '⚡',
     citation: '[Brown KH. Am J Clin Nutr. 2002]',
   },
 ];
 
 const categories = [
-  { key: 'all', label: 'All Topics', icon: '📚' },
-  { key: 'sleep', label: 'Sleep', icon: '🌙' },
-  { key: 'nutrition', label: 'Nutrition', icon: '🍽️' },
-  { key: 'exercise', label: 'Exercise', icon: '🏃' },
-  { key: 'circadian', label: 'Circadian', icon: '☀️' },
-  { key: 'height', label: 'Height', icon: '📈' },
-  { key: 'toxins', label: 'Toxins', icon: '⚠️' },
-  { key: 'science', label: 'Science', icon: '🧬' },
+  { key: 'all', label: 'All Topics' },
+  { key: 'sleep', label: 'Sleep' },
+  { key: 'nutrition', label: 'Nutrition' },
+  { key: 'exercise', label: 'Exercise' },
+  { key: 'circadian', label: 'Circadian' },
+  { key: 'height', label: 'Height' },
+  { key: 'toxins', label: 'Toxins' },
+  { key: 'science', label: 'Science' },
 ];
 
 const F = "'Courier New', Courier, monospace";
@@ -184,7 +170,6 @@ export default function Learn() {
                 cursor: 'pointer', transition: 'all 0.15s',
               }}
             >
-              <span>{cat.icon}</span>
               {cat.label}
             </button>
           ))}
@@ -195,14 +180,13 @@ export default function Learn() {
           display: 'block', background: C.card, borderRadius: 16, padding: 24,
           border: `2px solid ${C.sigBorder}`, marginBottom: 24, textDecoration: 'none', position: 'relative', overflow: 'hidden',
         }}>
-          <div style={{ position: 'absolute', top: -10, right: -10, fontSize: 80, opacity: 0.06 }}>🧬</div>
           <span style={{ display: 'inline-block', background: '#ecfdf5', color: C.green, padding: '3px 10px', borderRadius: 20, fontSize: 9, fontWeight: 800, fontFamily: F, textTransform: 'uppercase', letterSpacing: 1 }}>Featured</span>
           <h2 style={{ fontFamily: F, fontSize: 18, fontWeight: 700, color: C.title, margin: '12px 0 8px' }}>How Your Child Actually Grows</h2>
           <p style={{ fontSize: 13, color: C.body, margin: '0 0 16px', lineHeight: 1.5, maxWidth: 400 }}>
             The complete guide to the biological cascade that determines your child's growth — and exactly how to optimize it.
           </p>
           <span style={{ display: 'inline-block', background: C.green, color: '#fff', padding: '8px 18px', borderRadius: 10, fontSize: 12, fontWeight: 700, fontFamily: F }}>
-            Read the Guide →
+            Read the Guide
           </span>
         </Link>
 
@@ -217,31 +201,23 @@ export default function Learn() {
                 border: `1px solid ${C.border}`, textDecoration: 'none', transition: 'all 0.15s',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                <div style={{
-                  width: 38, height: 38, background: C.bg, borderRadius: 10,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0,
-                }}>
-                  {article.icon}
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                  <span style={{ fontSize: 9, fontWeight: 800, color: C.green, textTransform: 'uppercase', letterSpacing: 1, fontFamily: F }}>
+                    {categories.find(c => c.key === article.category)?.label}
+                  </span>
+                  <span style={{ fontSize: 9, color: C.light }}>·</span>
+                  <span style={{ fontSize: 11, color: C.light, fontFamily: F }}>{article.readTime}</span>
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                    <span style={{ fontSize: 9, fontWeight: 800, color: C.green, textTransform: 'uppercase', letterSpacing: 1, fontFamily: F }}>
-                      {categories.find(c => c.key === article.category)?.label}
-                    </span>
-                    <span style={{ fontSize: 9, color: C.light }}>·</span>
-                    <span style={{ fontSize: 11, color: C.light, fontFamily: F }}>{article.readTime}</span>
-                  </div>
-                  <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 700, color: C.title, margin: '0 0 4px' }}>
-                    {article.title}
-                  </h3>
-                  <p style={{ fontSize: 12, color: C.body, margin: 0, lineHeight: 1.5 }}>
-                    {article.summary}
-                  </p>
-                  {article.citation && (
-                    <span style={{ fontSize: 10, color: C.green, fontStyle: 'italic', fontFamily: F }}>{article.citation}</span>
-                  )}
-                </div>
+                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 700, color: C.title, margin: '0 0 4px' }}>
+                  {article.title}
+                </h3>
+                <p style={{ fontSize: 12, color: C.body, margin: 0, lineHeight: 1.5 }}>
+                  {article.summary}
+                </p>
+                {article.citation && (
+                  <span style={{ fontSize: 10, color: C.green, fontStyle: 'italic', fontFamily: F }}>{article.citation}</span>
+                )}
               </div>
             </Link>
           ))}
@@ -250,7 +226,6 @@ export default function Learn() {
         {/* Empty State */}
         {filteredArticles.length === 0 && (
           <div style={{ textAlign: 'center', padding: '48px 0' }}>
-            <div style={{ fontSize: 48, marginBottom: 12 }}>📭</div>
             <h3 style={{ fontFamily: F, fontSize: 15, fontWeight: 700, color: C.title, marginBottom: 6 }}>No articles in this category yet</h3>
             <p style={{ fontSize: 13, color: C.light }}>Check back soon — we're adding new content regularly.</p>
           </div>
@@ -258,7 +233,6 @@ export default function Learn() {
 
         {/* Bottom CTA */}
         <section style={{ marginTop: 40, background: '#fffbeb', borderRadius: 16, padding: 28, textAlign: 'center' }}>
-          <div style={{ fontSize: 32, marginBottom: 12 }}>🤖</div>
           <h3 style={{ fontFamily: F, fontSize: 18, fontWeight: 700, color: C.title, marginBottom: 6 }}>Have a specific question?</h3>
           <p style={{ fontSize: 13, color: C.body, marginBottom: 18 }}>Ask Jarvis — our AI assistant knows the science inside and out.</p>
           <a href="/jarvis" style={{
