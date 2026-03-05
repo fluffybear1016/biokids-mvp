@@ -547,6 +547,12 @@ export default function Dashboard() {
 
   return (
     <div style={{ minHeight:"100vh", backgroundColor:"#fafaf9" }}>
+      <style>{`
+        @keyframes celebrateFadeIn {
+          from { opacity: 0; transform: translateY(12px) scale(0.97); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+      `}</style>
       <Nav currentChild={child} />
 
       {/* Sticky progress bar — floats at top while scrolling */}
@@ -616,6 +622,82 @@ export default function Dashboard() {
 
         {/* Progress spacer — reserves space when sticky bar is visible */}
         {doneCount > 0 && <div style={{ height:48 }} />}
+
+        {/* Core goals celebration */}
+        {showCoreCelebration && (
+          <div style={{
+            background:"linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #ecfdf5 100%)",
+            borderRadius:20, border:"2px solid #a7f3d0",
+            padding:"28px 24px", margin:"24px 0 0",
+            boxShadow:"0 4px 24px rgba(5,150,105,0.12)",
+            animation:"celebrateFadeIn 0.6s ease",
+          }}>
+            <div style={{ textAlign:"center" }}>
+              <div style={{ fontSize:32, marginBottom:12 }}>&#x2728;</div>
+              <p style={{
+                fontSize:18, fontWeight:800, color:"#059669", margin:"0 0 10px",
+                letterSpacing:"-0.02em",
+              }}>
+                Every core goal — done.
+              </p>
+              <p style={{
+                fontFamily:"'Courier New', Courier, monospace",
+                fontSize:13, color:"#065f46", lineHeight:1.65, margin:"0 0 14px",
+                maxWidth:380, marginLeft:"auto", marginRight:"auto",
+              }}>
+                You just gave {childName === 'Your child' ? 'your child' : childName} a full day of growth support. The science says this matters — and so do you for showing up like this.
+              </p>
+              {!allDone && (
+                <div style={{
+                  background:"rgba(255,255,255,0.7)", borderRadius:12,
+                  padding:"12px 16px", marginTop:16,
+                }}>
+                  <p style={{
+                    fontFamily:"'Courier New', Courier, monospace",
+                    fontSize:11.5, color:"#57534e", lineHeight:1.6, margin:0,
+                  }}>
+                    There are {total - coreTotal - (doneCount - coreDoneCount)} bonus items left — these are the amplifiers.
+                    Each one you check off stacks on top of today&apos;s foundation.
+                    No pressure. You&apos;ve already done the hard part.
+                  </p>
+                </div>
+              )}
+              {allDone && (
+                <p style={{
+                  fontFamily:"'Courier New', Courier, monospace",
+                  fontSize:12, color:"#059669", fontWeight:700, margin:"8px 0 0",
+                }}>
+                  Every single item. That&apos;s extraordinary.
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* All items complete — full day celebration */}
+        {allDone && (
+          <div style={{
+            background:"#059669", borderRadius:20,
+            padding:"28px 24px", margin:"16px 0 0",
+            boxShadow:"0 8px 32px rgba(5,150,105,0.25)",
+          }}>
+            <div style={{ textAlign:"center" }}>
+              <div style={{ fontSize:32, marginBottom:10 }}>&#x1F31F;</div>
+              <p style={{ fontSize:18, fontWeight:800, color:"#fff", margin:"0 0 8px", letterSpacing:"-0.02em" }}>
+                Perfect day.
+              </p>
+              <p style={{
+                fontFamily:"'Courier New', Courier, monospace",
+                fontSize:13, color:"rgba(255,255,255,0.85)", lineHeight:1.65, margin:0,
+                maxWidth:380, marginLeft:"auto", marginRight:"auto",
+              }}>
+                {total}/{total} — every lever pulled, every window used.
+                {childName === 'Your child' ? ' Your child' : ` ${childName}`} got the full protocol today.
+                That&apos;s a parent who cares deeply. Tomorrow it starts again — and it gets easier.
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Breath before the day begins */}
         <div style={{ height:1, background:"#e7e5e4", margin:"36px 0 40px" }} />
