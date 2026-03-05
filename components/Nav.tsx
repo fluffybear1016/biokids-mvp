@@ -78,7 +78,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
   const isActive = (href: string) => pathname === href;
 
   return (
-    <nav style={{ backgroundColor:'#fafaf9', borderBottom:'1px solid rgba(0,0,0,0.06)' }} className="px-4 md:px-8 py-4 sticky top-0 z-50">
+    <nav style={{ backgroundColor:'#fafaf9', borderBottom:'1px solid rgba(0,0,0,0.06)', fontFamily:"'Courier New', Courier, monospace" }} className="px-4 md:px-8 py-4 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
         {/* Logo */}
         <Link href="/dashboard" className="flex items-center gap-2" style={{ textDecoration:'none' }}>
