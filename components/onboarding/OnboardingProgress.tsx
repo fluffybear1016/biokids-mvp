@@ -15,7 +15,7 @@ export default function OnboardingProgress({ currentStep, totalSteps }: Props) {
       <div className="max-w-2xl mx-auto">
         <div className="flex justify-between items-center mb-3">
           <Link href="/" className="flex items-center gap-2 font-display text-xl text-forest">
-            <span className="text-2xl">🌿</span>
+            <span className="text-2xl"></span>
             bioKids
           </Link>
           <span className="text-sm text-gray-500">

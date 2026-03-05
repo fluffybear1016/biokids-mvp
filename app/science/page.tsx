@@ -146,37 +146,37 @@ const sidebarSecrets = [
 // Growth Secrets - rotates daily
 const growthSecrets = [
   {
-    icon: '🌙',
+    icon: '',
     title: '70% of GH in the First 3 Hours',
     text: 'Growth hormone is released in pulses during deep sleep, with 70% occurring in the first 3 sleep cycles. An 8:30pm bedtime captures the critical 10pm-1am surge.',
     citation: '[Van Cauter E. Sleep. 2000]',
   },
   {
-    icon: '🍽️',
+    icon: '',
     title: 'The Insulin-GH Trade-off',
     text: 'Eating within 2 hours of sleep spikes insulin, which suppresses growth hormone by up to 80%. That bedtime snack? It\'s costing inches.',
     citation: '[Ho KY. J Clin Endocrinol Metab. 1988]',
   },
   {
-    icon: '🏃',
+    icon: '',
     title: 'The 771% Sprint Effect',
     text: '30-second all-out sprints trigger GH release up to 771% above baseline. Steady-state cardio doesn\'t come close. Six sprints, 3x per week.',
     citation: '[Stokes KA. Sports Med. 2002]',
   },
   {
-    icon: '🥛',
+    icon: '',
     title: 'Why the Dutch Are Tallest',
     text: 'The Netherlands has the tallest population on Earth — and the highest milk consumption. A2 casein proteins directly support IGF-1 production.',
     citation: '[Hoppe C. Am J Clin Nutr. 2004]',
   },
   {
-    icon: '⚖️',
+    icon: '',
     title: 'Fat Closes Growth Plates',
     text: 'Excess body fat produces estrogen via aromatase. Elevated estrogen signals growth plates to ossify (close) earlier — potentially costing years of growth.',
     citation: '[Nilsson O. Endocr Rev. 2005]',
   },
   {
-    icon: '☀️',
+    icon: '',
     title: 'Morning Light Sets the Clock',
     text: '10-30 minutes of sunlight within 30 minutes of waking synchronizes the master clock, which controls melatonin timing — and melatonin gates GH release.',
     citation: '[Roenneberg T. Curr Biol. 2007]',
@@ -264,42 +264,42 @@ export default function Dashboard() {
   const getActivePhase = (hour: number) => {
     if (hour >= 6 && hour < 10) {
       return {
-        emoji: '☀️',
+        emoji: '',
         title: 'Morning Light',
         subtitle: 'Circadian rhythm syncing',
         tip: 'Get 10-30 minutes of direct sunlight within 30 minutes of waking to set the master clock.',
       };
     } else if (hour >= 10 && hour < 14) {
       return {
-        emoji: '🏃',
+        emoji: '',
         title: 'Peak Activity',
         subtitle: 'Growth hormone primed',
         tip: 'Ideal time for sprint intervals — 6x30 second all-out efforts trigger up to 771% GH increase.',
       };
     } else if (hour >= 14 && hour < 18) {
       return {
-        emoji: '⚽',
+        emoji: '',
         title: 'Active Play',
         subtitle: 'Movement window open',
         tip: 'Encourage jumping, climbing, and active play. Impact activities stimulate bone growth.',
       };
     } else if (hour >= 18 && hour < 20) {
       return {
-        emoji: '🌅',
+        emoji: '',
         title: 'Wind Down',
         subtitle: 'Preparing for GH release',
         tip: 'Dim lights, finish dinner, and avoid screens. Blue light after sunset suppresses melatonin.',
       };
     } else if (hour >= 20 && hour < 22) {
       return {
-        emoji: '🌙',
+        emoji: '',
         title: 'Golden Sleep',
         subtitle: 'Growth hormone releasing',
         tip: 'Maintain consistent bedtime. Consider magnesium-rich foods or bath for deeper sleep.',
       };
     } else {
       return {
-        emoji: '💤',
+        emoji: '',
         title: 'Deep Sleep',
         subtitle: 'Peak GH secretion',
         tip: 'Avoid waking them — 70% of growth hormone is released in the first 3 hours of sleep.',

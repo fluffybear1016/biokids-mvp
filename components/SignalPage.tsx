@@ -310,7 +310,7 @@ export default function SignalPage() {
       {/* All done state */}
       {currentItems.every(item => completedItems.includes(item.id)) && upcomingItems.length === 0 && (
         <div className="mt-4 bg-emerald-50 rounded-xl p-6 text-center border border-emerald-200">
-          <p className="text-emerald-800 font-semibold">🎉 All done for today</p>
+          <p className="text-emerald-800 font-semibold">All done for today</p>
           <p className="text-emerald-700 text-sm mt-1">They should be drowsy and ready for sleep.</p>
         </div>
       )}

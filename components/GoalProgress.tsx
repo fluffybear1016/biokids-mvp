@@ -12,7 +12,7 @@ interface GoalProgressProps {
 const goalConfig = {
   concerned: {
     title: 'Growth Support',
-    icon: '💙',
+    icon: '',
     color: 'text-sky-600',
     bgColor: 'bg-sky-100',
     targetPercent: 70,
@@ -26,7 +26,7 @@ const goalConfig = {
   },
   foundation: {
     title: 'Healthy Foundation',
-    icon: '🌿',
+    icon: '',
     color: 'text-emerald-600',
     bgColor: 'bg-emerald-100',
     targetPercent: 50,
@@ -39,7 +39,7 @@ const goalConfig = {
   },
   elite: {
     title: 'Maximum Potential',
-    icon: '🏆',
+    icon: '',
     color: 'text-blue-600',
     bgColor: 'bg-blue-100',
     targetPercent: 95,
@@ -119,20 +119,20 @@ export default function GoalProgress({ goal, completedCount, totalCount, childNa
 export function CompletionCelebration({ goal, percent }: { goal: string, percent: number }) {
   const celebrations = {
     concerned: [
-      { threshold: 1, message: "You showed up today 💙", subtext: "That's the most important step." },
-      { threshold: 50, message: "Halfway there! 💪", subtext: "Your dedication is inspiring." },
-      { threshold: 70, message: "Target reached! 🌟", subtext: "You're giving your child every advantage." },
-      { threshold: 100, message: "Everything done! ✨", subtext: "Incredible commitment to your child's growth." },
+      { threshold: 1, message: "You showed up today", subtext: "That's the most important step." },
+      { threshold: 50, message: "Halfway there!", subtext: "Your dedication is inspiring." },
+      { threshold: 70, message: "Target reached!", subtext: "You're giving your child every advantage." },
+      { threshold: 100, message: "Everything done!", subtext: "Incredible commitment to your child's growth." },
     ],
     foundation: [
-      { threshold: 50, message: "Solid foundation! 🌿", subtext: "The basics are covered." },
-      { threshold: 75, message: "Strong day! 💪", subtext: "Your consistency is showing." },
-      { threshold: 100, message: "Perfect foundation! 🎉", subtext: "Every building block in place." },
+      { threshold: 50, message: "Solid foundation!", subtext: "The basics are covered." },
+      { threshold: 75, message: "Strong day!", subtext: "Your consistency is showing." },
+      { threshold: 100, message: "Perfect foundation!", subtext: "Every building block in place." },
     ],
     elite: [
-      { threshold: 85, message: "Elite effort! 🏆", subtext: "Champion habits forming." },
-      { threshold: 95, message: "Almost perfect! 🥇", subtext: "D1 caliber commitment." },
-      { threshold: 100, message: "Perfect execution! 🏆✨", subtext: "Nothing left on the table." },
+      { threshold: 85, message: "Elite effort!", subtext: "Champion habits forming." },
+      { threshold: 95, message: "Almost perfect!", subtext: "D1 caliber commitment." },
+      { threshold: 100, message: "Perfect execution!", subtext: "Nothing left on the table." },
     ],
   };
 

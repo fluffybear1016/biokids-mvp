@@ -16,7 +16,7 @@ const goals = [
     subtitle: 'My child seems small or behind',
     description: "You've noticed your child isn't growing as expected. We'll focus on the highest-impact levers backed by research.",
     target: 'Personalized protocol',
-    icon: '💙',
+    icon: '',
     color: 'bg-sky-50 border-sky-200 hover:border-sky-300',
     selectedColor: 'bg-sky-100 border-sky-400',
   },
@@ -26,7 +26,7 @@ const goals = [
     subtitle: 'Build great habits',
     description: 'Focus on the fundamentals — good sleep, nutrition basics, daily movement. A solid foundation for life.',
     target: 'Personalized daily essentials',
-    icon: '🌿',
+    icon: '',
     color: 'bg-emerald-50 border-emerald-200 hover:border-emerald-300',
     selectedColor: 'bg-emerald-100 border-emerald-400',
   },
@@ -36,7 +36,7 @@ const goals = [
     subtitle: 'D1 / Pro sports · Leave nothing on the table',
     description: "For parents who want to give their child every natural advantage — whether for elite athletics or overall development.",
     target: 'Personalized elite protocol',
-    icon: '🏆',
+    icon: '',
     color: 'bg-blue-50 border-blue-200 hover:border-blue-300',
     selectedColor: 'bg-blue-100 border-blue-400',
   },
@@ -104,7 +104,7 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
       {/* Reassurance Message */}
       <div className="bg-emerald-50 rounded-lg p-4 mb-6">
         <p className="text-sm text-emerald-800 text-center">
-          💚 Every path supports your child's growth. Start where you are — progress happens naturally.
+          Every path supports your child's growth. Start where you are — progress happens naturally.
         </p>
       </div>
 

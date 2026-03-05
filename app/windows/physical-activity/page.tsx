@@ -222,7 +222,7 @@ export default function PhysicalActivityWindow() {
   const sprintStack = [
     {
       phase: "PRE-SPRINT",
-      emoji: "🥚",
+      emoji: "",
       color: "forest",
       items: [
         "2 eggs — choline → acetylcholine → pituitary primed for max GH amplitude",
@@ -232,7 +232,7 @@ export default function PhysicalActivityWindow() {
     },
     {
       phase: "SPRINT",
-      emoji: "🏃",
+      emoji: "",
       color: "amber",
       items: [
         "All-out effort, 30 seconds — don't pace it",
@@ -242,7 +242,7 @@ export default function PhysicalActivityWindow() {
     },
     {
       phase: "POST-SPRINT (within 30 min)",
-      emoji: "🥛",
+      emoji: "",
       color: "coral",
       items: [
         "1 cup A2 milk + 1 tsp raw honey",
@@ -252,7 +252,7 @@ export default function PhysicalActivityWindow() {
     },
     {
       phase: "IMMEDIATELY AFTER",
-      emoji: "🧘",
+      emoji: "",
       color: "purple",
       items: [
         "10 minutes stretching — microfractures heal in elongated position",
@@ -276,7 +276,7 @@ export default function PhysicalActivityWindow() {
   const caseStudies = [
     {
       id: "jamaica",
-      icon: "🇯🇲",
+      icon: "",
       title: "Jamaica — Why a Tiny Island Dominates Sprinting",
       color: "forest",
       content: `3 million people produce 70-80% of top global 100m times. Usain Bolt (fastest human in history), Shelly-Ann Fraser-Pryce, Elaine Thompson-Herah.
@@ -298,7 +298,7 @@ LIFESTYLE: Tight community parenting. Faith networks. Bolt-style swagger encoura
     },
     {
       id: "serbia",
-      icon: "🇷🇸",
+      icon: "",
       title: "Serbia — Basketball Dominance from 7 Million People",
       color: "blue",
       content: `7 million people competing head-to-head with Team USA. Jokic, multiple NBA players.
@@ -317,7 +317,7 @@ THE LESSON: America has 47× more people, more courts, coaches, academies, AAU t
     },
     {
       id: "nowts",
-      icon: "🏅",
+      icon: "",
       title: "The No-Weights Hall of Fame",
       color: "amber",
       content: `DIRK NOWITZKI (7'0"): Mentor Holger Geschwindner BANNED weights. Used saxophone for rhythm, fencing for coordination, reading for focus, physics for shot mechanics. Goal: develop a complete human. Created a 7-footer who moves like a guard.
@@ -340,7 +340,7 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
     },
     {
       id: "france",
-      icon: "🇫🇷",
+      icon: "",
       title: "France — Basketball Development Philosophy",
       color: "purple",
       content: `Emphasizes skill development over physicality. Teaches guard skills to tall players early. Doesn't rely on weight training during growth. Focuses on coordination and movement quality. High-rep skill drills induce BDNF expression. Overloads tall kids with guard skill reps. Coordination must be developed BEFORE strength. 3+ hours daily of physical activity during youth.`,

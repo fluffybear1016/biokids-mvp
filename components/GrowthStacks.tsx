@@ -6,7 +6,7 @@ const stacks = [
   {
     id: 'sprint',
     name: 'Sprint Stack',
-    icon: '🏃',
+    icon: '',
     subtitle: '771% GH spike → converted to IGF-1',
     steps: [
       { time: '2 hrs before', action: 'Beef liver', why: 'Retinol primes GH receptors' },
@@ -20,7 +20,7 @@ const stacks = [
   {
     id: 'sleep',
     name: 'Sleep Stack',
-    icon: '🌙',
+    icon: '',
     subtitle: 'Maximize slow-wave sleep + GH release',
     steps: [
       { time: 'Dinner', action: 'Bone broth + high-arginine protein', why: 'Glycine + GH precursors' },
@@ -36,7 +36,7 @@ const stacks = [
   {
     id: 'morning',
     name: 'Morning Stack',
-    icon: '☀️',
+    icon: '',
     subtitle: 'Prime IGF-1 axis for the day',
     steps: [
       { time: 'Within 30 min of waking', action: 'Sunlight 10-30 min', why: 'Sets circadian phase + vitamin D' },
@@ -49,7 +49,7 @@ const stacks = [
   {
     id: 'puberty-delay',
     name: 'Puberty Delay Stack',
-    icon: '🦴',
+    icon: '',
     subtitle: 'Extend the growth window',
     steps: [
       { time: 'Daily', action: 'Beans/lentils', why: 'Phytoestrogen competition delays puberty' },
@@ -63,7 +63,7 @@ const stacks = [
   {
     id: 'height-preservation',
     name: 'Height Preservation',
-    icon: '📏',
+    icon: '',
     subtitle: 'Ages 19-25: Spinal gains after plates close',
     steps: [
       { time: 'Sleep', action: '10+ hours on back, thin pillow', why: 'Disc rehydration overnight' },

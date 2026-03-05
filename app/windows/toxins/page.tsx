@@ -20,81 +20,67 @@ export default function ToxinsWindow() {
   const child = { ...mockChild, name: childName };
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div style={{ minHeight: '100vh', background: '#fafaf9', fontFamily: "'Courier New', Courier, monospace" }}>
       <Nav currentChild={child} />
 
-      <main className="max-w-3xl mx-auto px-4 py-6 sm:py-12">
+      <main style={{ maxWidth: 540, margin: '0 auto', padding: '0 20px', paddingTop: 32, paddingBottom: 64 }}>
 
         {/* Back Link */}
-        <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-forest mb-6">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <Link href="/dashboard" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 14, color: '#a8a29e', marginBottom: 32, textDecoration: 'none' }}>
+          <svg style={{ width: 16, height: 16 }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
           Back to Dashboard
         </Link>
 
         {/* Header */}
-        <header className="bg-gradient-to-br from-red-500 to-red-600 rounded-3xl p-10 text-white mb-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 text-[150px] opacity-15">🛡️</div>
-          <div className="flex justify-between items-start mb-5 relative">
-            <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-semibold">🛡️ Toxin Exposure</span>
-            <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
-              <span className="w-2 h-2 bg-yellow-300 rounded-full" />
-              Needs Attention
-            </span>
-          </div>
-          <h1 className="font-display text-5xl mb-4 relative">Toxins</h1>
-          <p className="text-lg text-white/90 max-w-xl relative">
+        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #a7f3d0', padding: '20px', marginBottom: 44 }}>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1c1917', marginBottom: 16 }}>Toxins</h1>
+          <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75, marginBottom: 20 }}>
             Endocrine disruptors (BPA, phthalates, PFAS) interfere with hormone signaling. Minimizing exposure protects the GH-IGF axis and prevents premature puberty signals.
           </p>
-          <div className="flex gap-8 mt-8 pt-6 border-t border-white/20">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             <div>
-              <span className="font-display text-4xl">1000+</span>
-              <span className="text-sm text-white/80 ml-2">known disruptors</span>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>1000+</div>
+              <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>known disruptors</div>
             </div>
             <div>
-              <span className="font-display text-4xl">Plastics</span>
-              <span className="text-sm text-white/80 ml-2">#1 exposure source</span>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>Plastics</div>
+              <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>#1 exposure source</div>
             </div>
           </div>
-        </header>
+        </div>
 
         {/* Child Status */}
-        <section className="card border-2 border-blue-100 mb-6">
-          <div className="flex items-center gap-4 mb-5">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-light to-amber rounded-xl flex items-center justify-center text-2xl">
-              {child.gender === 'female' ? '👧' : '👦'}
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-lg">{child.name}'s Exposure Profile</h3>
-              <p className="text-sm text-gray-500">Pre-Puberty Window · Age 8</p>
-            </div>
-            <span className="badge-check">Check</span>
+        <section style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', padding: '14px 18px', marginBottom: 44 }}>
+          <div style={{ marginBottom: 16 }}>
+            <h3 style={{ fontSize: 16, fontWeight: 600, color: '#1c1917', marginBottom: 4 }}>{child.name}'s Exposure Profile</h3>
+            <p style={{ fontSize: 14, color: '#a8a29e' }}>Pre-Puberty Window · Age 8</p>
           </div>
-          <div className="grid grid-cols-3 gap-2 sm:gap-4">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
             {[
-              { value: '3', label: 'Areas to Fix', note: '⚠️ Action needed' },
-              { value: 'No', label: 'Water Filter', note: '⚠️ Get filter' },
-              { value: 'Some', label: 'Plastic Use', note: '↓ Reduce' },
+              { value: '3', label: 'Areas to Fix', note: 'Action needed' },
+              { value: 'No', label: 'Water Filter', note: 'Get filter' },
+              { value: 'Some', label: 'Plastic Use', note: 'Reduce' },
             ].map((stat) => (
-              <div key={stat.label} className="bg-cream rounded-xl p-3 sm:p-4 text-center">
-                <div className="font-display text-2xl text-forest">{stat.value}</div>
-                <div className="text-xs text-gray-500">{stat.label}</div>
-                {stat.note && <div className="text-xs text-amber-600 font-semibold mt-1">{stat.note}</div>}
+              <div key={stat.label} style={{ background: '#f5f5f4', borderRadius: 10, padding: '12px', textAlign: 'center' }}>
+                <div style={{ fontSize: 18, fontWeight: 800, color: '#059669' }}>{stat.value}</div>
+                <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>{stat.label}</div>
+                {stat.note && <div style={{ fontSize: 12, color: '#f59e0b', fontWeight: 600, marginTop: 4 }}>{stat.note}</div>}
               </div>
             ))}
           </div>
         </section>
 
         {/* The Science */}
-        <section className="card mb-6">
-          <h2 className="font-display text-2xl mb-4">The Science</h2>
-          <p className="text-gray-600 mb-6">
+        <section style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', padding: '14px 18px', marginBottom: 44 }}>
+          <h2 style={{ fontSize: 18, fontWeight: 800, color: '#1c1917', marginBottom: 16 }}>The Science</h2>
+          <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75, marginBottom: 16 }}>
             Understanding how environmental toxins disrupt the endocrine system.
           </p>
-          <div className="bg-red-50 rounded-2xl p-6">
-            <div className="text-xs font-bold text-red-600 uppercase tracking-wider mb-2">Mechanism</div>
-            <p className="text-gray-800 leading-relaxed">
+          <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '16px' }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#059669', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
+            <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75 }}>
               Endocrine disrupting chemicals (EDCs) mimic or block hormones. BPA and phthalates (from plastics) have estrogenic activity — potentially accelerating growth plate closure.
               PFAS ("forever chemicals" from non-stick coatings) persist in the body and interfere with thyroid function, which regulates growth.
               Heavy metals (lead, mercury) directly impair GH secretion. Pesticide residues may have cumulative hormonal effects.
@@ -103,9 +89,9 @@ export default function ToxinsWindow() {
         </section>
 
         {/* How to Optimize */}
-        <section className="card mb-6">
-          <h2 className="font-display text-2xl mb-6">How to Reduce Exposure</h2>
-          <div className="space-y-4">
+        <section style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', padding: '14px 18px', marginBottom: 44 }}>
+          <h2 style={{ fontSize: 18, fontWeight: 800, color: '#1c1917', marginBottom: 20 }}>How to Reduce Exposure</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {[
               { text: 'Filter drinking water — removes heavy metals, PFAS, chlorine', citation: '[EWG Water Filter Guide. 2023]' },
               { text: 'Glass/stainless containers — eliminates plastic leaching', citation: '[Yang CZ. Environ Health Perspect. 2011]' },
@@ -113,15 +99,15 @@ export default function ToxinsWindow() {
               { text: 'Eat organic when possible — reduces pesticide load', citation: '[Curl CL. Environ Health Perspect. 2015]' },
               { text: 'Wild-caught over farmed fish — lower contaminant levels', citation: '[Hites RA. Science. 2004]' },
             ].map((item) => (
-              <div key={item.text} className="flex items-start gap-4 p-4 bg-cream rounded-xl hover:bg-cream-dark transition-colors">
-                <div className="w-6 h-6 bg-red-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+              <div key={item.text} style={{ display: 'flex', gap: 12, padding: '12px', background: '#f5f5f4', borderRadius: 10 }}>
+                <div style={{ width: 24, height: 24, background: '#059669', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg style={{ width: 16, height: 16, color: 'white' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div>
-                  <div className="font-medium">{item.text}</div>
-                  <div className="text-sm text-forest font-medium">{item.citation}</div>
+                  <div style={{ fontSize: 14, color: '#1c1917', fontWeight: 500 }}>{item.text}</div>
+                  <div style={{ fontSize: 12, color: '#059669', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
                 </div>
               </div>
             ))}
@@ -129,9 +115,9 @@ export default function ToxinsWindow() {
         </section>
 
         {/* Avoid */}
-        <section className="bg-coral-light rounded-3xl p-8 mb-6">
-          <div className="text-sm font-bold text-coral uppercase tracking-wider mb-5">⚠️ Key Toxin Sources</div>
-          <div className="space-y-3">
+        <section style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', padding: '14px 18px', marginBottom: 44 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#dc2626', marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Key Toxin Sources</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {[
               'Plastic food containers — especially when heated',
               'Non-stick pans (Teflon) — PFAS "forever chemicals"',
@@ -140,39 +126,17 @@ export default function ToxinsWindow() {
               'Farmed fish — higher PCBs, lower omega-3s',
               'Receipts and thermal paper — BPA absorbed through skin',
             ].map((item) => (
-              <div key={item} className="flex items-start gap-3">
-                <div className="w-5 h-5 bg-coral rounded-md flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+              <div key={item} style={{ display: 'flex', gap: 12 }}>
+                <div style={{ width: 20, height: 20, background: '#dc2626', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
+                  <svg style={{ width: 12, height: 12, color: 'white' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </div>
-                <span className="text-gray-800">{item}</span>
+                <span style={{ fontSize: 14, color: '#57534e' }}>{item}</span>
               </div>
             ))}
           </div>
         </section>
-
-        {/* Actions */}
-        <div className="flex justify-end gap-3 pt-6 border-t border-cream-dark">
-          <button className="flex items-center gap-2 px-5 py-3 bg-cream rounded-xl text-sm font-semibold hover:bg-cream-dark transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-            </svg>
-            Save
-          </button>
-          <button className="flex items-center gap-2 px-5 py-3 bg-cream rounded-xl text-sm font-semibold hover:bg-cream-dark transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-            </svg>
-            Share
-          </button>
-          <button className="flex items-center gap-2 px-5 py-3 bg-forest text-white rounded-xl text-sm font-semibold hover:bg-forest-dark transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-            Ask Jarvis
-          </button>
-        </div>
 
       </main>
     </div>

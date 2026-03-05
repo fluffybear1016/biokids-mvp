@@ -1087,56 +1087,56 @@ export default function StagePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div style={{ minHeight: '100vh', background: '#fafaf9', fontFamily: "'Courier New', Courier, monospace" }}>
       <Nav />
 
-      <main className="max-w-2xl mx-auto px-4 py-12 sm:py-20">
+      <main style={{ maxWidth: '540px', margin: '0 auto', padding: '0 20px', paddingTop: '48px', paddingBottom: '80px' }}>
         {/* Back link */}
         <Link
           href="/dashboard"
-          className="inline-flex items-center gap-2 text-forest hover:text-forest-dark transition-colors mb-8 sm:mb-12"
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#059669', textDecoration: 'none', marginBottom: '32px' }}
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg style={{ width: '16px', height: '16px' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
           Back to Dashboard
         </Link>
 
         {/* Header */}
-        <header className="mb-12 sm:mb-16">
-          <div className="text-sm text-gray-500 mb-2">{currentStage.ageRange}</div>
-          <h1 className="font-display text-3xl sm:text-4xl text-gray-900 mb-3">
+        <header style={{ marginBottom: '44px' }}>
+          <div style={{ fontSize: '14px', color: '#a8a29e', marginBottom: '8px' }}>{currentStage.ageRange}</div>
+          <h1 style={{ fontWeight: 800, fontSize: '32px', color: '#1c1917', marginBottom: '12px' }}>
             {currentStage.header}
           </h1>
-          <p className="text-xl sm:text-2xl text-gray-600 mb-3">
+          <p style={{ fontSize: '20px', color: '#57534e', marginBottom: '12px', lineHeight: 1.75 }}>
             {currentStage.subhead}
           </p>
-          <p className="text-base text-forest font-medium">
+          <p style={{ fontSize: '14px', color: '#059669', fontWeight: 500 }}>
             {currentStage.supportive}
           </p>
         </header>
 
         {/* Accordion */}
-        <div className="space-y-4">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {currentStage.sections.map((section, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl border border-gray-200 overflow-hidden"
+              style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}
             >
               <button
                 onClick={() => toggleSection(index)}
-                className="w-full flex items-center justify-between p-5 sm:p-6 text-left hover:bg-gray-50 transition-colors"
+                style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}
               >
-                <div className="flex items-center gap-4">
-                  <span className="w-8 h-8 sm:w-10 sm:h-10 bg-forest/10 text-forest rounded-full flex items-center justify-center font-semibold text-sm sm:text-base">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <span style={{ width: '32px', height: '32px', background: '#e0f2fe', color: '#059669', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '14px' }}>
                     {index + 1}
                   </span>
-                  <h2 className="font-semibold text-base sm:text-lg text-gray-900">
+                  <h2 style={{ fontWeight: 600, fontSize: '16px', color: '#1c1917', margin: 0 }}>
                     {section.title}
                   </h2>
                 </div>
                 <svg
-                  className={`w-5 h-5 text-gray-400 transition-transform ${openSection === index ? 'rotate-180' : ''}`}
+                  style={{ width: '20px', height: '20px', color: '#a8a29e', transform: openSection === index ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -1147,27 +1147,27 @@ export default function StagePage() {
               </button>
 
               {openSection === index && (
-                <div className="px-5 sm:px-6 pb-6 sm:pb-8 pt-0">
-                  <div className="pl-12 sm:pl-14 space-y-5">
+                <div style={{ padding: '0 18px 32px 18px' }}>
+                  <div style={{ paddingLeft: '48px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     {/* Intro */}
-                    <p className="text-gray-900 font-medium text-sm sm:text-base leading-relaxed">
+                    <p style={{ color: '#1c1917', fontWeight: 500, fontSize: '14px', lineHeight: 1.75, margin: 0 }}>
                       {section.intro}
                     </p>
 
                     {/* Explanation */}
-                    <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                    <p style={{ color: '#57534e', fontSize: '14px', lineHeight: 1.75, margin: 0 }}>
                       {section.explanation}
                     </p>
 
                     {/* Flow diagram */}
-                    <div className="bg-forest/5 rounded-xl p-4 border border-forest/10">
-                      <p className="text-forest text-sm font-mono leading-relaxed">
+                    <div style={{ background: '#f0fdf4', borderRadius: '14px', padding: '14px 18px', border: '1px solid #a7f3d0' }}>
+                      <p style={{ color: '#059669', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, margin: 0 }}>
                         {section.flow}
                       </p>
                     </div>
 
                     {/* Citation */}
-                    <p className="text-gray-400 text-sm italic">
+                    <p style={{ color: '#a8a29e', fontSize: '14px', fontStyle: 'italic', margin: 0 }}>
                       [{section.citation}]
                     </p>
                   </div>
@@ -1178,14 +1178,14 @@ export default function StagePage() {
         </div>
 
         {/* See all stages */}
-        <div className="mt-8">
+        <div style={{ marginTop: '32px' }}>
           <button
             onClick={() => setShowStages(!showStages)}
-            className="flex items-center gap-2 text-forest hover:text-forest-dark transition-colors font-medium"
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#059669', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500, fontSize: '14px', fontFamily: "'Courier New', Courier, monospace" }}
           >
-            <span>See all stages →</span>
+            <span>See all stages</span>
             <svg
-              className={`w-4 h-4 transition-transform ${showStages ? 'rotate-180' : ''}`}
+              style={{ width: '16px', height: '16px', transform: showStages ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -1196,31 +1196,27 @@ export default function StagePage() {
           </button>
 
           {showStages && (
-            <div className="mt-4 bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
-              <div className="space-y-1">
+            <div style={{ marginTop: '16px', background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', padding: '14px 18px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {stageLabels.map((stage) => (
                   <button
                     key={stage.id}
                     onClick={() => handleStageSelect(stage.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
-                      currentStageId === stage.id
-                        ? 'bg-forest/10 text-forest'
-                        : 'hover:bg-gray-50 text-gray-700'
-                    }`}
+                    style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px', borderRadius: '6px', textAlign: 'left', background: currentStageId === stage.id ? '#e0f2fe' : 'transparent', color: currentStageId === stage.id ? '#059669' : '#57534e', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: currentStageId === stage.id ? 600 : 400, fontFamily: "'Courier New', Courier, monospace", transition: 'background-color 0.2s ease' }}
                   >
-                    <span className={`w-2 h-2 rounded-full ${currentStageId === stage.id ? 'bg-green-500' : 'bg-gray-300'}`} />
-                    <span className={`font-medium text-sm ${currentStageId === stage.id ? 'text-forest' : ''}`}>
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: currentStageId === stage.id ? '#059669' : '#d4d4d8' }} />
+                    <span>
                       {stage.label}
                     </span>
                     {currentStageId === stage.id && (
-                      <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full ml-auto">
+                      <span style={{ fontSize: '12px', background: '#a7f3d0', color: '#059669', padding: '4px 8px', borderRadius: '999px', marginLeft: 'auto' }}>
                         Current
                       </span>
                     )}
                   </button>
                 ))}
               </div>
-              <p className="text-sm text-gray-500 italic mt-4 pt-3 border-t border-gray-100">
+              <p style={{ fontSize: '14px', color: '#a8a29e', fontStyle: 'italic', margin: '16px 0 0 0', paddingTop: '12px', borderTop: '1px solid #f5f5f5' }}>
                 More stages coming soon...
               </p>
             </div>

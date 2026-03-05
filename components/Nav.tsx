@@ -104,7 +104,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
               }}
             >
               {tab.label}
-              {(tab.label === 'Science' || tab.label === 'gH AI') && <span style={{ fontSize:8, fontWeight:600, color:'#059669', background:'#f0fdf4', borderRadius:4, padding:'2px 5px', marginLeft:4, textTransform:'uppercase', letterSpacing:'0.05em' }}>beta</span>}
+              {tab.label === 'Science' && <span style={{ fontSize:8, fontWeight:600, color:'#059669', background:'#f0fdf4', borderRadius:4, padding:'2px 5px', marginLeft:4, textTransform:'uppercase', letterSpacing:'0.05em' }}>beta</span>}
             </Link>
           ))}
         </div>

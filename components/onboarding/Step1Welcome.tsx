@@ -91,7 +91,6 @@ export default function Step1Welcome({ onNext }: Props) {
         <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8">
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center text-xl flex-shrink-0">
-              🧬
             </div>
             <div>
               <p className="font-semibold text-gray-900 mb-1">Did you know?</p>

@@ -75,7 +75,7 @@ export default function Step4ChildrenSummary({ data, updateData, onNext, onBack 
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-forest/10 rounded-full flex items-center justify-center text-lg">
-                  {child.isPregnancy ? '🤰' : child.gender === 'female' ? '👧' : child.gender === 'male' ? '👦' : '👶'}
+                  {child.isPregnancy ? '' : child.gender === 'female' ? '' : child.gender === 'male' ? '' : ''}
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">{child.name}</p>

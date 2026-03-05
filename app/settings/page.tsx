@@ -146,9 +146,9 @@ export default function Settings() {
   const chevron = (section: SectionId) => openSection === section ? '▼' : '▶';
 
   const goalOptions = [
-    { value: 'concerned' as const, icon: '💙', label: 'Concerned About Growth', desc: 'My child seems small or behind' },
-    { value: 'foundation' as const, icon: '🌿', label: 'Healthy Foundation', desc: 'Build great habits' },
-    { value: 'elite' as const, icon: '🏆', label: 'Maximum Potential', desc: 'D1 / Pro sports · Leave nothing on the table' },
+    { value: 'concerned' as const, label: 'Concerned About Growth', desc: 'My child seems small or behind' },
+    { value: 'foundation' as const, label: 'Healthy Foundation', desc: 'Build great habits' },
+    { value: 'elite' as const, label: 'Maximum Potential', desc: 'D1 / Pro sports · Leave nothing on the table' },
   ];
 
   // Height potential helpers
@@ -164,144 +164,159 @@ export default function Settings() {
   })() : null;
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div style={{ minHeight: '100vh', background: '#fafaf9', fontFamily: "'Courier New', Courier, monospace" }}>
       <Nav />
-      <main className="max-w-lg mx-auto px-4 py-6 sm:py-10">
+      <main style={{ maxWidth: '540px', margin: '0 auto', padding: '0 20px', paddingTop: '24px', paddingBottom: '40px' }}>
         <button
           onClick={() => router.back()}
-          className="text-sm text-stone-500 hover:text-forest mb-4 inline-flex items-center gap-1"
+          style={{ fontSize: '14px', color: '#a8a29e', marginBottom: '16px', display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
         >
           ← Back
         </button>
-        <h1 className="font-display text-2xl sm:text-3xl text-forest mb-6">Edit Profile</h1>
+        <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontWeight: 800, fontSize: '24px', color: '#1c1917', marginBottom: '24px' }}>Edit Profile</h1>
 
-        <div className="space-y-3">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
           {/* Child Info */}
-          <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-            <button onClick={() => toggle('child')} className="w-full flex items-center justify-between px-5 py-4 text-left">
-              <span className="font-semibold text-stone-900">Child Info</span>
-              <span className="text-stone-400 text-xs">{chevron('child')}</span>
+          <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+            <button onClick={() => toggle('child')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+              <span style={{ fontWeight: 600, color: '#1c1917' }}>Child Info</span>
+              <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('child')}</span>
             </button>
             {openSection === 'child' && (
-              <div className="px-5 pb-5 space-y-4">
+              <div style={{ padding: '0 18px 18px 18px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Name or Initial</label>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#57534e', marginBottom: '4px' }}>Name or Initial</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="E.g., Emma or E"
-                    className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div>
-                    <label className="block text-sm font-medium text-stone-700 mb-1">Birth Month</label>
-                    <select value={birthMonth} onChange={(e) => setBirthMonth(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#57534e', marginBottom: '4px' }}>Birth Month</label>
+                    <select value={birthMonth} onChange={(e) => setBirthMonth(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
                       <option value="">Month</option>
                       {months.map((m, i) => <option key={m} value={i + 1}>{m}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-stone-700 mb-1">Birth Year</label>
-                    <select value={birthYear} onChange={(e) => setBirthYear(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#57534e', marginBottom: '4px' }}>Birth Year</label>
+                    <select value={birthYear} onChange={(e) => setBirthYear(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
                       <option value="">Year</option>
                       {years.map((y) => <option key={y} value={y}>{y}</option>)}
                     </select>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <button onClick={saveChildInfo} className="px-5 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <button onClick={saveChildInfo} style={{ padding: '8px 20px', background: '#059669', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
                     Save
                   </button>
-                  {saved === 'child' && <span className="text-sm text-emerald-600 font-medium">Saved!</span>}
+                  {saved === 'child' && <span style={{ fontSize: '14px', color: '#059669', fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
           </div>
 
           {/* Daily Habits */}
-          <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-            <button onClick={() => toggle('habits')} className="w-full flex items-center justify-between px-5 py-4 text-left">
-              <span className="font-semibold text-stone-900">Daily Habits</span>
-              <span className="text-stone-400 text-xs">{chevron('habits')}</span>
+          <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+            <button onClick={() => toggle('habits')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+              <span style={{ fontWeight: 600, color: '#1c1917' }}>Daily Habits</span>
+              <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('habits')}</span>
             </button>
             {openSection === 'habits' && (
-              <div className="px-5 pb-5 space-y-5">
+              <div style={{ padding: '0 18px 18px 18px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <ChoiceGroup label="Hours of sleep per night" options={['8 or less', '9-10', '11-12', '12+']} value={sleepHours} onChange={setSleepHours} cols={2} />
                 <ChoiceGroup label="Usual bedtime" options={['Before 8pm', '8-9pm', 'After 9pm']} value={bedtime} onChange={setBedtime} cols={3} />
                 <ChoiceGroup label="Daily dairy" options={['Yes', 'Sometimes', 'No']} value={dairy} onChange={setDairy} cols={3} />
                 <ChoiceGroup label="Running / hard play" options={['Daily', 'Few times a week', 'Rarely']} value={exercise} onChange={setExercise} cols={3} />
                 <ChoiceGroup label="Screen time before bed" options={['None', 'Some', 'A lot']} value={screenTime} onChange={setScreenTime} cols={3} />
                 <ChoiceGroup label="Processed / packaged foods" options={['Rarely', 'Sometimes', 'Often']} value={processedFoods} onChange={setProcessedFoods} cols={3} />
-                <div className="flex items-center gap-3">
-                  <button onClick={saveHabits} className="px-5 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <button onClick={saveHabits} style={{ padding: '8px 20px', background: '#059669', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
                     Save
                   </button>
-                  {saved === 'habits' && <span className="text-sm text-emerald-600 font-medium">Saved!</span>}
+                  {saved === 'habits' && <span style={{ fontSize: '14px', color: '#059669', fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
           </div>
 
           {/* Growth Goal */}
-          <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-            <button onClick={() => toggle('goal')} className="w-full flex items-center justify-between px-5 py-4 text-left">
-              <span className="font-semibold text-stone-900">Growth Goal</span>
-              <span className="text-stone-400 text-xs">{chevron('goal')}</span>
+          <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+            <button onClick={() => toggle('goal')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+              <span style={{ fontWeight: 600, color: '#1c1917' }}>Growth Goal</span>
+              <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('goal')}</span>
             </button>
             {openSection === 'goal' && (
-              <div className="px-5 pb-5 space-y-3">
+              <div style={{ padding: '0 18px 18px 18px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {goalOptions.map((opt) => (
                   <button
                     key={opt.value}
                     type="button"
                     onClick={() => setGoal(opt.value)}
-                    className={`w-full flex items-center gap-3 p-4 rounded-lg border text-left transition-colors ${
-                      goal === opt.value
-                        ? 'bg-emerald-50 border-emerald-600'
-                        : 'border-stone-300 hover:bg-stone-50'
-                    }`}
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      padding: '16px',
+                      borderRadius: '8px',
+                      border: goal === opt.value ? '1px solid #059669' : '1px solid #e7e5e4',
+                      textAlign: 'left',
+                      background: goal === opt.value ? '#f0fdf4' : '#fff',
+                      cursor: 'pointer',
+                      fontFamily: "'Courier New', Courier, monospace",
+                      transition: 'all 0.2s'
+                    }}
                   >
-                    <span className="text-xl">{opt.icon}</span>
                     <div>
-                      <p className={`text-sm font-semibold ${goal === opt.value ? 'text-emerald-700' : 'text-stone-900'}`}>{opt.label}</p>
-                      <p className="text-xs text-stone-500">{opt.desc}</p>
+                      <p style={{ fontSize: '14px', fontWeight: 600, color: goal === opt.value ? '#059669' : '#1c1917', margin: 0 }}>{opt.label}</p>
+                      <p style={{ fontSize: '12px', color: '#a8a29e', margin: '4px 0 0 0' }}>{opt.desc}</p>
                     </div>
                   </button>
                 ))}
-                <div className="flex items-center gap-3 pt-2">
-                  <button onClick={saveGoal} className="px-5 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', paddingTop: '8px' }}>
+                  <button onClick={saveGoal} style={{ padding: '8px 20px', background: '#059669', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
                     Save
                   </button>
-                  {saved === 'goal' && <span className="text-sm text-emerald-600 font-medium">Saved!</span>}
+                  {saved === 'goal' && <span style={{ fontSize: '14px', color: '#059669', fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
           </div>
 
           {/* Height Potential */}
-          <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-            <button onClick={() => toggle('height')} className="w-full flex items-center justify-between px-5 py-4 text-left">
-              <span className="font-semibold text-stone-900">Height Potential</span>
-              <span className="text-stone-400 text-xs">{chevron('height')}</span>
+          <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+            <button onClick={() => toggle('height')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+              <span style={{ fontWeight: 600, color: '#1c1917' }}>Height Potential</span>
+              <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('height')}</span>
             </button>
             {openSection === 'height' && (
-              <div className="px-5 pb-5 space-y-4">
+              <div style={{ padding: '0 18px 18px 18px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Child&apos;s gender</label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#57534e', marginBottom: '8px' }}>Child&apos;s gender</label>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                     {[{ value: 'boy' as const, label: 'Boy' }, { value: 'girl' as const, label: 'Girl' }].map((opt) => (
                       <button
                         key={opt.value}
                         type="button"
                         onClick={() => setChildGender(opt.value)}
-                        className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-                          childGender === opt.value
-                            ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                            : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-                        }`}
+                        style={{
+                          padding: '12px 16px',
+                          borderRadius: '8px',
+                          border: childGender === opt.value ? '1px solid #059669' : '1px solid #e7e5e4',
+                          fontSize: '14px',
+                          fontWeight: 500,
+                          color: childGender === opt.value ? '#059669' : '#57534e',
+                          background: childGender === opt.value ? '#f0fdf4' : '#fff',
+                          cursor: 'pointer',
+                          fontFamily: "'Courier New', Courier, monospace",
+                          transition: 'all 0.2s'
+                        }}
                       >
                         {opt.label}
                       </button>
@@ -309,26 +324,26 @@ export default function Settings() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Mother&apos;s height</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <select value={motherHeightFt} onChange={(e) => setMotherHeightFt(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#57534e', marginBottom: '4px' }}>Mother&apos;s height</label>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                    <select value={motherHeightFt} onChange={(e) => setMotherHeightFt(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
                       <option value="">Ft</option>
                       {[4, 5, 6].map((ft) => <option key={ft} value={ft}>{ft}&apos;</option>)}
                     </select>
-                    <select value={motherHeightIn} onChange={(e) => setMotherHeightIn(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    <select value={motherHeightIn} onChange={(e) => setMotherHeightIn(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
                       <option value="">In</option>
                       {Array.from({ length: 12 }, (_, i) => <option key={i} value={i}>{i}&quot;</option>)}
                     </select>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Father&apos;s height</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <select value={fatherHeightFt} onChange={(e) => setFatherHeightFt(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#57534e', marginBottom: '4px' }}>Father&apos;s height</label>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                    <select value={fatherHeightFt} onChange={(e) => setFatherHeightFt(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
                       <option value="">Ft</option>
                       {[5, 6, 7].map((ft) => <option key={ft} value={ft}>{ft}&apos;</option>)}
                     </select>
-                    <select value={fatherHeightIn} onChange={(e) => setFatherHeightIn(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    <select value={fatherHeightIn} onChange={(e) => setFatherHeightIn(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
                       <option value="">In</option>
                       {Array.from({ length: 12 }, (_, i) => <option key={i} value={i}>{i}&quot;</option>)}
                     </select>
@@ -341,11 +356,11 @@ export default function Settings() {
                     fatherHeight={`${fatherHeightFt}'${fatherHeightIn}"`}
                   />
                 )}
-                <div className="flex items-center gap-3">
-                  <button onClick={saveHeight} className="px-5 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <button onClick={saveHeight} style={{ padding: '8px 20px', background: '#059669', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
                     Save
                   </button>
-                  {saved === 'height' && <span className="text-sm text-emerald-600 font-medium">Saved!</span>}
+                  {saved === 'height' && <span style={{ fontSize: '14px', color: '#059669', fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
@@ -366,18 +381,25 @@ function ChoiceGroup({ label, options, value, onChange, cols }: {
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-stone-700 mb-2">{label}</label>
-      <div className={`grid gap-2 ${cols === 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'}`}>
+      <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#57534e', marginBottom: '8px' }}>{label}</label>
+      <div style={{ display: 'grid', gridTemplateColumns: cols === 2 ? '1fr 1fr' : 'repeat(auto-fit, minmax(0, 1fr))', gap: '8px' }}>
         {options.map((opt) => (
           <button
             key={opt}
             type="button"
             onClick={() => onChange(opt)}
-            className={`py-3 px-4 rounded-lg border text-sm font-medium transition-colors ${
-              value === opt
-                ? 'bg-emerald-50 border-emerald-600 text-emerald-700'
-                : 'border-stone-300 text-stone-700 hover:bg-stone-50'
-            }`}
+            style={{
+              padding: '12px 16px',
+              borderRadius: '8px',
+              border: value === opt ? '1px solid #059669' : '1px solid #e7e5e4',
+              fontSize: '14px',
+              fontWeight: 500,
+              color: value === opt ? '#059669' : '#57534e',
+              background: value === opt ? '#f0fdf4' : '#fff',
+              cursor: 'pointer',
+              fontFamily: "'Courier New', Courier, monospace",
+              transition: 'all 0.2s'
+            }}
           >
             {opt}
           </button>

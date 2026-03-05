@@ -112,12 +112,12 @@ function LoginForm() {
   };
 
   return (
-    <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg">
-      <h1 className="font-display text-2xl sm:text-3xl text-gray-900 mb-2 text-center">Welcome back</h1>
-      <p className="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8 text-center">Continue optimizing your child's growth.</p>
+    <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', padding: '14px 18px' }}>
+      <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.5rem', color: '#1c1917', fontWeight: 800, marginBottom: '0.5rem', textAlign: 'center' }} className="sm:text-3xl">Welcome back</h1>
+      <p style={{ fontSize: '0.875rem', color: '#57534e', marginBottom: '1.5rem', textAlign: 'center', lineHeight: 1.75 }} className="sm:text-base">Continue optimizing your child's growth.</p>
 
       {kickedMessage && (
-        <div className="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-xl text-sm mb-6">
+        <div style={{ background: '#fff', border: '1px solid #e7e5e4', color: '#a8a29e', padding: '0.75rem 1rem', borderRadius: '10px', fontSize: '0.875rem', marginBottom: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }}>
           <div className="flex items-start gap-3">
             <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -128,14 +128,14 @@ function LoginForm() {
       )}
 
       {error && (
-        <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm mb-6">
+        <div style={{ background: '#fff', color: '#dc2626', padding: '0.75rem 1rem', borderRadius: '10px', fontSize: '0.875rem', marginBottom: '1.5rem', border: '1px solid #e7e5e4', fontFamily: "'Courier New', Courier, monospace" }}>
           {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#57534e', marginBottom: '0.5rem', fontFamily: "'Courier New', Courier, monospace" }}>Email</label>
           <input
             type="email"
             value={email}
@@ -146,7 +146,7 @@ function LoginForm() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#57534e', marginBottom: '0.5rem', fontFamily: "'Courier New', Courier, monospace" }}>Password</label>
           <input
             type="password"
             value={password}
@@ -158,7 +158,7 @@ function LoginForm() {
         </div>
         <button
           type="submit"
-          className="btn-primary w-full"
+          style={{ background: '#059669', color: 'white', borderRadius: '10px', fontFamily: "'Courier New', Courier, monospace", fontWeight: 600, padding: '0.75rem 1rem', fontSize: '1rem', width: '100%', border: 'none', cursor: 'pointer' }}
           disabled={loading}
         >
           {loading ? 'Logging in...' : 'Log in'}
@@ -166,10 +166,10 @@ function LoginForm() {
       </form>
 
       <div className="flex justify-between items-center mt-6 text-sm">
-        <Link href="/forgot-password" className="text-gray-500 hover:text-forest">
+        <Link href="/forgot-password" style={{ color: '#a8a29e', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem' }}>
           Forgot password?
         </Link>
-        <Link href="/onboarding" className="text-forest font-medium hover:underline">
+        <Link href="/onboarding" style={{ color: '#059669', fontWeight: 500, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem' }}>
           Create account
         </Link>
       </div>
@@ -179,10 +179,9 @@ function LoginForm() {
 
 export default function Login() {
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center p-4 sm:p-8">
+    <div style={{ minHeight: '100vh', backgroundColor: '#fafaf9', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--p-4, 1rem)' }} className="sm:p-8">
       <div className="w-full max-w-md">
-        <Link href="/" className="flex items-center gap-2 font-display text-lg sm:text-xl text-forest mb-8 sm:mb-12 justify-center">
-          <span className="text-xl sm:text-2xl">🌿</span>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Courier New', Courier, monospace", fontSize: 'var(--text-lg, 1.125rem)', color: '#059669', marginBottom: 'var(--mb-8, 2rem)', justifyContent: 'center' }} className="sm:mb-12">
           bioKids
         </Link>
 
@@ -202,7 +201,7 @@ export default function Login() {
           <LoginForm />
         </Suspense>
 
-        <p className="text-center text-xs text-gray-400 mt-6 sm:mt-8">
+        <p style={{ textAlign: 'center', fontSize: '0.75rem', color: '#a8a29e', marginTop: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mt-8">
           Your data stays private. We never sell or share your information.
         </p>
       </div>
