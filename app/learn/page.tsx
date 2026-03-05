@@ -144,36 +144,45 @@ const categories = [
   { key: 'science', label: 'Science', icon: '🧬' },
 ];
 
+const F = "'Courier New', Courier, monospace";
+const C = {
+  bg: '#fafaf9', title: '#1c1917', body: '#57534e', light: '#a8a29e',
+  green: '#059669', card: '#fff', border: '#e7e5e4', sigBorder: '#a7f3d0',
+};
+
 export default function Learn() {
   const [activeCategory, setActiveCategory] = useState('all');
 
-  const filteredArticles = activeCategory === 'all' 
-    ? articles 
+  const filteredArticles = activeCategory === 'all'
+    ? articles
     : articles.filter(a => a.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div style={{ minHeight: '100vh', background: C.bg, fontFamily: F }}>
       <Nav />
-      
-      <main className="max-w-5xl mx-auto px-4 py-6 sm:py-12">
-        
+
+      <main style={{ maxWidth: 540, margin: '0 auto', padding: '32px 16px' }}>
+
         {/* Header */}
-        <header className="mb-10">
-          <h1 className="font-display text-3xl sm:text-4xl text-gray-900 mb-2">Learn</h1>
-          <p className="text-gray-500">Deep dives into the science of natural growth hormone optimization.</p>
+        <header style={{ marginBottom: 32 }}>
+          <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 700, color: C.title, margin: 0, marginBottom: 6 }}>Learn</h1>
+          <p style={{ fontSize: 13, color: C.light, margin: 0 }}>Deep dives into the science of natural growth hormone optimization.</p>
         </header>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap gap-2 mb-8">
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 24 }}>
           {categories.map((cat) => (
             <button
               key={cat.key}
               onClick={() => setActiveCategory(cat.key)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                activeCategory === cat.key
-                  ? 'bg-forest text-white'
-                  : 'bg-white text-gray-600 hover:bg-cream-dark'
-              }`}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 5,
+                padding: '5px 12px', borderRadius: 20, fontSize: 11, fontWeight: 600, fontFamily: F,
+                background: activeCategory === cat.key ? C.card : C.card,
+                color: activeCategory === cat.key ? C.green : C.body,
+                border: `1px solid ${activeCategory === cat.key ? C.green : C.border}`,
+                cursor: 'pointer', transition: 'all 0.15s',
+              }}
             >
               <span>{cat.icon}</span>
               {cat.label}
@@ -182,46 +191,55 @@ export default function Learn() {
         </div>
 
         {/* Featured Article */}
-        <Link href="/learn/how-your-child-grows" className="block bg-gradient-to-br from-forest to-forest-light rounded-2xl sm:rounded-3xl p-6 sm:p-10 text-white mb-8 relative overflow-hidden hover:shadow-xl transition-all no-underline">
-          <div className="absolute top-0 right-0 text-[60px] sm:text-[120px] opacity-10">🧬</div>
-          <span className="bg-white/20 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">Featured</span>
-          <h2 className="font-display text-2xl sm:text-3xl mt-4 mb-3">How Your Child Actually Grows</h2>
-          <p className="text-white/80 max-w-lg mb-6">
+        <Link href="/learn/how-your-child-grows" style={{
+          display: 'block', background: C.card, borderRadius: 16, padding: 24,
+          border: `2px solid ${C.sigBorder}`, marginBottom: 24, textDecoration: 'none', position: 'relative', overflow: 'hidden',
+        }}>
+          <div style={{ position: 'absolute', top: -10, right: -10, fontSize: 80, opacity: 0.06 }}>🧬</div>
+          <span style={{ display: 'inline-block', background: '#ecfdf5', color: C.green, padding: '3px 10px', borderRadius: 20, fontSize: 9, fontWeight: 800, fontFamily: F, textTransform: 'uppercase', letterSpacing: 1 }}>Featured</span>
+          <h2 style={{ fontFamily: F, fontSize: 18, fontWeight: 700, color: C.title, margin: '12px 0 8px' }}>How Your Child Actually Grows</h2>
+          <p style={{ fontSize: 13, color: C.body, margin: '0 0 16px', lineHeight: 1.5, maxWidth: 400 }}>
             The complete guide to the biological cascade that determines your child's growth — and exactly how to optimize it.
           </p>
-          <span className="bg-white text-forest px-6 py-3 rounded-xl font-semibold hover:bg-cream transition-colors inline-block">
+          <span style={{ display: 'inline-block', background: C.green, color: '#fff', padding: '8px 18px', borderRadius: 10, fontSize: 12, fontWeight: 700, fontFamily: F }}>
             Read the Guide →
           </span>
         </Link>
 
-        {/* Articles Grid */}
-        <div className="grid md:grid-cols-2 gap-5">
+        {/* Articles List */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {filteredArticles.map((article) => (
             <Link
               key={article.slug}
               href={`/learn/${article.slug}`}
-              className="card hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer group block no-underline"
+              style={{
+                display: 'block', background: C.card, borderRadius: 14, padding: 16,
+                border: `1px solid ${C.border}`, textDecoration: 'none', transition: 'all 0.15s',
+              }}
             >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-cream rounded-xl flex items-center justify-center text-2xl flex-shrink-0 group-hover:scale-110 transition-transform">
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                <div style={{
+                  width: 38, height: 38, background: C.bg, borderRadius: 10,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0,
+                }}>
                   {article.icon}
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-semibold text-forest uppercase tracking-wider">
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                    <span style={{ fontSize: 9, fontWeight: 800, color: C.green, textTransform: 'uppercase', letterSpacing: 1, fontFamily: F }}>
                       {categories.find(c => c.key === article.category)?.label}
                     </span>
-                    <span className="text-xs text-gray-400">·</span>
-                    <span className="text-xs text-gray-400">{article.readTime}</span>
+                    <span style={{ fontSize: 9, color: C.light }}>·</span>
+                    <span style={{ fontSize: 11, color: C.light, fontFamily: F }}>{article.readTime}</span>
                   </div>
-                  <h3 className="font-semibold text-lg mb-2 group-hover:text-forest transition-colors">
+                  <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 700, color: C.title, margin: '0 0 4px' }}>
                     {article.title}
                   </h3>
-                  <p className="text-sm text-gray-500 leading-relaxed mb-2">
+                  <p style={{ fontSize: 12, color: C.body, margin: 0, lineHeight: 1.5 }}>
                     {article.summary}
                   </p>
                   {article.citation && (
-                    <span className="text-xs text-forest italic">{article.citation}</span>
+                    <span style={{ fontSize: 10, color: C.green, fontStyle: 'italic', fontFamily: F }}>{article.citation}</span>
                   )}
                 </div>
               </div>
@@ -231,21 +249,25 @@ export default function Learn() {
 
         {/* Empty State */}
         {filteredArticles.length === 0 && (
-          <div className="text-center py-16">
-            <div className="text-6xl mb-4">📭</div>
-            <h3 className="font-semibold text-lg mb-2">No articles in this category yet</h3>
-            <p className="text-gray-500">Check back soon — we're adding new content regularly.</p>
+          <div style={{ textAlign: 'center', padding: '48px 0' }}>
+            <div style={{ fontSize: 48, marginBottom: 12 }}>📭</div>
+            <h3 style={{ fontFamily: F, fontSize: 15, fontWeight: 700, color: C.title, marginBottom: 6 }}>No articles in this category yet</h3>
+            <p style={{ fontSize: 13, color: C.light }}>Check back soon — we're adding new content regularly.</p>
           </div>
         )}
 
         {/* Bottom CTA */}
-        <section className="mt-12 bg-amber-50 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center">
-          <div className="text-4xl mb-4">🤖</div>
-          <h3 className="font-display text-2xl mb-2">Have a specific question?</h3>
-          <p className="text-gray-600 mb-6">Ask Jarvis — our AI assistant knows the science inside and out.</p>
-          <a href="/jarvis" className="btn-primary inline-flex items-center gap-2">
+        <section style={{ marginTop: 40, background: '#fffbeb', borderRadius: 16, padding: 28, textAlign: 'center' }}>
+          <div style={{ fontSize: 32, marginBottom: 12 }}>🤖</div>
+          <h3 style={{ fontFamily: F, fontSize: 18, fontWeight: 700, color: C.title, marginBottom: 6 }}>Have a specific question?</h3>
+          <p style={{ fontSize: 13, color: C.body, marginBottom: 18 }}>Ask Jarvis — our AI assistant knows the science inside and out.</p>
+          <a href="/jarvis" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            background: C.green, color: '#fff', padding: '10px 22px', borderRadius: 10,
+            fontSize: 13, fontWeight: 700, fontFamily: F, textDecoration: 'none',
+          }}>
             Ask Jarvis
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </a>

@@ -3,438 +3,441 @@
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 
+const F = "'Courier New', Courier, monospace";
+const C = {
+  bg: '#fafaf9', title: '#1c1917', body: '#57534e', light: '#a8a29e',
+  green: '#059669', card: '#fff', border: '#e7e5e4', sigBorder: '#a7f3d0',
+};
+
 export default function MilkNutrientProfileArticle() {
   return (
-    <div className="min-h-screen bg-cream">
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: F }}>
       <Nav />
 
-      <main className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
+      <main style={{ maxWidth: 540, margin: "0 auto", padding: "32px 16px" }}>
         {/* Back link */}
-        <Link href="/learn" className="inline-flex items-center gap-2 text-sm text-forest font-medium mb-6 hover:underline">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-          Back to Articles
+        <Link href="/learn" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: C.green, fontWeight: 600, fontFamily: F, marginBottom: 20, textDecoration: "none" }}>
+          <span style={{ marginRight: 4 }}>←</span> Back to Articles
         </Link>
 
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs font-semibold text-forest uppercase tracking-wider">Nutrition</span>
-            <span className="text-xs text-gray-400">&middot;</span>
-            <span className="text-xs text-gray-400">9 min read</span>
+        <div style={{ marginBottom: 24 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+            <span style={{ fontSize: 9, fontWeight: 800, color: C.green, textTransform: "uppercase", letterSpacing: 1, fontFamily: F }}>Nutrition</span>
+            <span style={{ fontSize: 9, color: C.light }}>·</span>
+            <span style={{ fontSize: 11, color: C.light, fontFamily: F }}>9 min read</span>
           </div>
-          <h1 className="font-display text-3xl sm:text-4xl text-black mb-3">Milk&apos;s Nutrient Profile: The Ultimate Growth Food</h1>
-          <p className="text-base sm:text-lg text-gray-600 font-mono">A complete breakdown of what&apos;s actually in milk &mdash; and why quality matters.</p>
+          <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 700, color: C.title, margin: "0 0 8px" }}>Milk&apos;s Nutrient Profile: The Ultimate Growth Food</h1>
+          <p style={{ fontSize: 13, color: C.body, fontFamily: F, lineHeight: 1.5, margin: 0 }}>A complete breakdown of what&apos;s actually in milk &mdash; and why quality matters.</p>
         </div>
 
         {/* Article content */}
-        <article className="prose prose-lg max-w-none">
+        <article>
 
           {/* The Big Picture */}
-          <section className="bg-white rounded-2xl p-6 sm:p-8 mb-6 border border-gray-200">
-            <h2 className="font-display text-xl sm:text-2xl text-black mb-4">The Big Picture</h2>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
+          <section style={{ background: C.card, borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.border}` }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>The Big Picture</h2>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 12, fontFamily: F }}>
               Raw milk contains all essential minerals, all 20 standard amino acids (making it a complete protein), a broad spectrum of fatty acids, dozens of functional enzymes, and live bacteria.
             </p>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 12, fontFamily: F }}>
               Not all milk is created equal. Both the cow&apos;s diet and the processing method substantially change this matrix.
             </p>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, fontFamily: F }}>
               High-quality, grass-fed milk is best understood as a whole-food suspension of proteins, lipids, carbohydrates, minerals, vitamins, and bioactive factors that together support child growth, bone development, and immune function.
             </p>
           </section>
 
           {/* Protein */}
-          <section className="bg-white rounded-2xl p-6 sm:p-8 mb-6 border border-gray-200">
-            <h2 className="font-display text-xl sm:text-2xl text-black mb-4">Protein: The Growth Foundation</h2>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
+          <section style={{ background: C.card, borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.border}` }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>Protein: The Growth Foundation</h2>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 8, fontFamily: F }}>
               Bovine milk provides roughly <strong>3&ndash;4g protein per 100ml</strong>, composed of:
             </p>
-            <ul className="space-y-1 mb-4">
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span><strong>80% caseins</strong> (slow-digesting)</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span><strong>20% whey proteins</strong> (fast-digesting)</li>
+            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 12px", display: "flex", flexDirection: "column", gap: 3 }}>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>80% caseins</strong> (slow-digesting)</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>20% whey proteins</strong> (fast-digesting)</li>
             </ul>
 
-            <h3 className="font-semibold text-black text-base mb-2">Why This Matters for Growth</h3>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Why This Matters for Growth</h3>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 8, fontFamily: F }}>
               Milk contains particularly high amounts of lysine, leucine, and other branched-chain amino acids &mdash; critical for muscle protein synthesis and linear growth.
             </p>
-            <p className="text-xs text-forest italic mb-5">[Millward DJ. et al. American Journal of Clinical Nutrition. 2008]</p>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginBottom: 16, fontFamily: F }}>[Millward DJ. et al. American Journal of Clinical Nutrition. 2008]</p>
 
-            <h3 className="font-semibold text-black text-base mb-2">The Two Protein Types</h3>
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>The Two Protein Types</h3>
             <div className="space-y-4 mb-4">
               <div>
                 <h4 className="font-semibold text-black text-sm mb-1">Caseins (&alpha;s1, &alpha;s2, &beta;, and &kappa;):</h4>
-                <ul className="space-y-1">
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Form micelles that carry calcium and phosphate</li>
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Deliver slow, sustained amino acid release</li>
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Support overnight growth processes</li>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Form micelles that carry calcium and phosphate</li>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Deliver slow, sustained amino acid release</li>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Support overnight growth processes</li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-black text-sm mb-1">Whey proteins (&beta;-lactoglobulin, &alpha;-lactalbumin, immunoglobulins):</h4>
-                <ul className="space-y-1">
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Rapidly digested</li>
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Rich in branched-chain amino acids</li>
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>High in sulfur-containing amino acids</li>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Rapidly digested</li>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Rich in branched-chain amino acids</li>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>High in sulfur-containing amino acids</li>
                 </ul>
               </div>
             </div>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, fontFamily: F }}>
               This combination makes milk one of the highest-quality protein sources by classical measures (PDCAAS and DIAAS) &mdash; especially relevant for children whose growth and IGF-1 production depend on regular access to complete protein.
             </p>
-            <p className="text-xs text-forest italic mt-3">[Hoppe C. et al. American Journal of Clinical Nutrition. 2004]</p>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginTop: 8, fontFamily: F }}>[Hoppe C. et al. American Journal of Clinical Nutrition. 2004]</p>
           </section>
 
           {/* Minerals */}
-          <section className="bg-white rounded-2xl p-6 sm:p-8 mb-6 border border-gray-200">
-            <h2 className="font-display text-xl sm:text-2xl text-black mb-4">Minerals: The Bone Builders</h2>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
+          <section style={{ background: C.card, borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.border}` }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>Minerals: The Bone Builders</h2>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 12, fontFamily: F }}>
               Milk delivers a broad panel of macro- and trace minerals:
             </p>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
-                <h3 className="font-semibold text-black text-sm mb-2">Macro-minerals:</h3>
-                <ul className="space-y-1">
-                  <li className="flex gap-2 text-sm text-gray-700"><span className="text-forest font-bold">&#8226;</span>Calcium</li>
-                  <li className="flex gap-2 text-sm text-gray-700"><span className="text-forest font-bold">&#8226;</span>Phosphorus</li>
-                  <li className="flex gap-2 text-sm text-gray-700"><span className="text-forest font-bold">&#8226;</span>Magnesium</li>
-                  <li className="flex gap-2 text-sm text-gray-700"><span className="text-forest font-bold">&#8226;</span>Potassium</li>
-                  <li className="flex gap-2 text-sm text-gray-700"><span className="text-forest font-bold">&#8226;</span>Sodium</li>
+                <h3 style={{ fontFamily: F, fontSize: 12, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Macro-minerals:</h3>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+                  <li className="flex gap-2 text-sm text-gray-700"><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Calcium</li>
+                  <li className="flex gap-2 text-sm text-gray-700"><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Phosphorus</li>
+                  <li className="flex gap-2 text-sm text-gray-700"><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Magnesium</li>
+                  <li className="flex gap-2 text-sm text-gray-700"><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Potassium</li>
+                  <li className="flex gap-2 text-sm text-gray-700"><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Sodium</li>
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-black text-sm mb-2">Trace minerals:</h3>
-                <ul className="space-y-1">
-                  <li className="flex gap-2 text-sm text-gray-700"><span className="text-forest font-bold">&#8226;</span>Zinc</li>
-                  <li className="flex gap-2 text-sm text-gray-700"><span className="text-forest font-bold">&#8226;</span>Iodine</li>
-                  <li className="flex gap-2 text-sm text-gray-700"><span className="text-forest font-bold">&#8226;</span>Selenium</li>
-                  <li className="flex gap-2 text-sm text-gray-700"><span className="text-forest font-bold">&#8226;</span>Iron (small amounts)</li>
+                <h3 style={{ fontFamily: F, fontSize: 12, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Trace minerals:</h3>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+                  <li className="flex gap-2 text-sm text-gray-700"><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Zinc</li>
+                  <li className="flex gap-2 text-sm text-gray-700"><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Iodine</li>
+                  <li className="flex gap-2 text-sm text-gray-700"><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Selenium</li>
+                  <li className="flex gap-2 text-sm text-gray-700"><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Iron (small amounts)</li>
                 </ul>
               </div>
             </div>
-            <p className="text-xs text-forest italic mb-5">[Gaucheron F. Journal of the American College of Nutrition. 2011]</p>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginBottom: 16, fontFamily: F }}>[Gaucheron F. Journal of the American College of Nutrition. 2011]</p>
 
-            <h3 className="font-semibold text-black text-base mb-2">Bioavailability Advantage</h3>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Bioavailability Advantage</h3>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 8, fontFamily: F }}>
               Calcium and phosphorus in milk are <strong>highly bioavailable</strong> due to incorporation in casein micelles and the presence of lactose (which enhances calcium absorption). This is why milk calcium is absorbed better than calcium from most plant sources.
             </p>
 
-            <h3 className="font-semibold text-black text-base mb-2">Key Minerals for Growth:</h3>
-            <ul className="space-y-2">
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span><strong>Zinc:</strong> Supports immune function and IGF-1 receptor signaling</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span><strong>Iodine:</strong> Essential for thyroid function (which regulates the entire growth axis)</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span><strong>Selenium:</strong> Contributes to antioxidant defense and thyroid hormone metabolism</li>
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Key Minerals for Growth:</h3>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 4 }}>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>Zinc:</strong> Supports immune function and IGF-1 receptor signaling</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>Iodine:</strong> Essential for thyroid function (which regulates the entire growth axis)</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>Selenium:</strong> Contributes to antioxidant defense and thyroid hormone metabolism</li>
             </ul>
           </section>
 
           {/* Fats */}
-          <section className="bg-white rounded-2xl p-6 sm:p-8 mb-6 border border-gray-200">
-            <h2 className="font-display text-xl sm:text-2xl text-black mb-4">Fats: More Than Just Calories</h2>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
+          <section style={{ background: C.card, borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.border}` }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>Fats: More Than Just Calories</h2>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 8, fontFamily: F }}>
               The fat fraction of whole milk contains a complex mixture:
             </p>
             <ul className="space-y-1 mb-2">
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Short-chain fatty acids (C4:0, C6:0)</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Medium-chain fatty acids</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Long-chain fatty acids</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Saturated, monounsaturated, and polyunsaturated types</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Short-chain fatty acids (C4:0, C6:0)</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Medium-chain fatty acids</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Long-chain fatty acids</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Saturated, monounsaturated, and polyunsaturated types</li>
             </ul>
-            <p className="text-xs text-forest italic mb-5">[O&apos;Callaghan TF. et al. Scientific Reports. 2020]</p>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginBottom: 16, fontFamily: F }}>[O&apos;Callaghan TF. et al. Scientific Reports. 2020]</p>
 
-            <h3 className="font-semibold text-black text-base mb-2">Why Fat Matters</h3>
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Why Fat Matters</h3>
             <ul className="space-y-1 mb-5">
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Provide energy for growth</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Serve as structural components of cell membranes</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Carry fat-soluble vitamins (A, D, E, K)</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Provide energy for growth</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Serve as structural components of cell membranes</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Carry fat-soluble vitamins (A, D, E, K)</li>
             </ul>
 
-            <h3 className="font-semibold text-black text-base mb-2">The Grass-Fed Advantage</h3>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>The Grass-Fed Advantage</h3>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 8, fontFamily: F }}>
               Milk fat from grass-fed cows has:
             </p>
-            <ul className="space-y-1 mb-3">
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span><strong>Higher n-3 (omega-3) fatty acids</strong></li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span><strong>3&ndash;5&times; more conjugated linoleic acid (CLA)</strong></li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span><strong>Better n-6:n-3 ratio</strong></li>
+            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 8px", display: "flex", flexDirection: "column", gap: 3 }}>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span><strong>Higher n-3 (omega-3) fatty acids</strong></li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span><strong>3&ndash;5&times; more conjugated linoleic acid (CLA)</strong></li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span><strong>Better n-6:n-3 ratio</strong></li>
             </ul>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, fontFamily: F }}>
               CLA has been associated with anti-inflammatory and immunomodulatory effects in experimental models.
             </p>
-            <p className="text-xs text-forest italic mt-3">[Dhiman TR. et al. Journal of Dairy Science. 1999]</p>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginTop: 8, fontFamily: F }}>[Dhiman TR. et al. Journal of Dairy Science. 1999]</p>
           </section>
 
           {/* Vitamins */}
-          <section className="bg-white rounded-2xl p-6 sm:p-8 mb-6 border border-gray-200">
-            <h2 className="font-display text-xl sm:text-2xl text-black mb-4">Vitamins: Fat-Soluble and Water-Soluble</h2>
+          <section style={{ background: C.card, borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.border}` }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>Vitamins: Fat-Soluble and Water-Soluble</h2>
 
-            <h3 className="font-semibold text-black text-base mb-3">Fat-Soluble Vitamins (in the cream):</h3>
-            <div className="overflow-x-auto mb-4">
-              <table className="w-full text-sm sm:text-base">
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 8px" }}>Fat-Soluble Vitamins (in the cream):</h3>
+            <div style={{ overflowX: "auto", marginBottom: 12 }}>
+              <table style={{ width: "100%", fontSize: 12, fontFamily: F, borderCollapse: "collapse" }}>
                 <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-2 pr-4 text-black font-semibold">Vitamin</th>
-                    <th className="text-left py-2 text-black font-semibold">Function</th>
+                  <tr style={{ borderBottom: `1px solid ${C.border}` }}>
+                    <th style={{ textAlign: "left", padding: "6px 12px 6px 0", color: C.title, fontWeight: 700 }}>Vitamin</th>
+                    <th style={{ textAlign: "left", padding: "6px 0", color: C.title, fontWeight: 700 }}>Function</th>
                   </tr>
                 </thead>
-                <tbody className="text-gray-700">
-                  <tr className="border-b border-gray-100">
-                    <td className="py-2 pr-4 font-medium">Vitamin A</td>
-                    <td className="py-2">Vision, immune function, growth</td>
+                <tbody style={{ color: C.body }}>
+                  <tr style={{ borderBottom: "1px solid #f5f5f4" }}>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>Vitamin A</td>
+                    <td style={{ padding: "6px 0" }}>Vision, immune function, growth</td>
                   </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="py-2 pr-4 font-medium">Vitamin D</td>
-                    <td className="py-2">Calcium absorption, bone growth</td>
+                  <tr style={{ borderBottom: "1px solid #f5f5f4" }}>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>Vitamin D</td>
+                    <td style={{ padding: "6px 0" }}>Calcium absorption, bone growth</td>
                   </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="py-2 pr-4 font-medium">Vitamin E</td>
-                    <td className="py-2">Antioxidant protection</td>
+                  <tr style={{ borderBottom: "1px solid #f5f5f4" }}>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>Vitamin E</td>
+                    <td style={{ padding: "6px 0" }}>Antioxidant protection</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pr-4 font-medium">Vitamin K</td>
-                    <td className="py-2">Bone mineralization, blood clotting</td>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>Vitamin K</td>
+                    <td style={{ padding: "6px 0" }}>Bone mineralization, blood clotting</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-5">
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 16, fontFamily: F }}>
               Concentrations are influenced by feed type (pasture vs. stored forage), season, and fat content of the milk.
             </p>
 
-            <h3 className="font-semibold text-black text-base mb-3">Water-Soluble Vitamins:</h3>
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 8px" }}>Water-Soluble Vitamins:</h3>
             <div className="overflow-x-auto mb-2">
-              <table className="w-full text-sm sm:text-base">
+              <table style={{ width: "100%", fontSize: 12, fontFamily: F, borderCollapse: "collapse" }}>
                 <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-2 pr-4 text-black font-semibold">Vitamin</th>
-                    <th className="text-left py-2 text-black font-semibold">Function</th>
+                  <tr style={{ borderBottom: `1px solid ${C.border}` }}>
+                    <th style={{ textAlign: "left", padding: "6px 12px 6px 0", color: C.title, fontWeight: 700 }}>Vitamin</th>
+                    <th style={{ textAlign: "left", padding: "6px 0", color: C.title, fontWeight: 700 }}>Function</th>
                   </tr>
                 </thead>
-                <tbody className="text-gray-700">
-                  <tr className="border-b border-gray-100">
-                    <td className="py-2 pr-4 font-medium">Riboflavin (B2)</td>
-                    <td className="py-2">Energy metabolism</td>
+                <tbody style={{ color: C.body }}>
+                  <tr style={{ borderBottom: "1px solid #f5f5f4" }}>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>Riboflavin (B2)</td>
+                    <td style={{ padding: "6px 0" }}>Energy metabolism</td>
                   </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="py-2 pr-4 font-medium">Vitamin B12</td>
-                    <td className="py-2">Neural development, red blood cells</td>
+                  <tr style={{ borderBottom: "1px solid #f5f5f4" }}>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>Vitamin B12</td>
+                    <td style={{ padding: "6px 0" }}>Neural development, red blood cells</td>
                   </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="py-2 pr-4 font-medium">Vitamin B6</td>
-                    <td className="py-2">Protein metabolism</td>
+                  <tr style={{ borderBottom: "1px solid #f5f5f4" }}>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>Vitamin B6</td>
+                    <td style={{ padding: "6px 0" }}>Protein metabolism</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pr-4 font-medium">Folate</td>
-                    <td className="py-2">Cell division, growth</td>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>Folate</td>
+                    <td style={{ padding: "6px 0" }}>Cell division, growth</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, fontFamily: F }}>
               These contribute significantly to recommended intakes in children.
             </p>
-            <p className="text-xs text-forest italic mt-3">[Haug A. et al. Lipids in Health and Disease. 2007]</p>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginTop: 8, fontFamily: F }}>[Haug A. et al. Lipids in Health and Disease. 2007]</p>
           </section>
 
           {/* Bioactive Proteins */}
-          <section className="bg-white rounded-2xl p-6 sm:p-8 mb-6 border border-gray-200">
-            <h2 className="font-display text-xl sm:text-2xl text-black mb-4">Bioactive Proteins: The Immune Components</h2>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
+          <section style={{ background: C.card, borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.border}` }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>Bioactive Proteins: The Immune Components</h2>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 12, fontFamily: F }}>
               Raw milk carries immunologically active proteins:
             </p>
             <div className="space-y-4 mb-4">
               <div>
                 <h3 className="font-semibold text-black text-sm mb-1">Lactoferrin:</h3>
-                <ul className="space-y-1">
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Binds iron</li>
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Antimicrobial activity</li>
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Supports immune function</li>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Binds iron</li>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Antimicrobial activity</li>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Supports immune function</li>
                 </ul>
               </div>
               <div>
                 <h3 className="font-semibold text-black text-sm mb-1">Lysozyme:</h3>
-                <ul className="space-y-1">
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Lyses bacterial cell walls</li>
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Natural antimicrobial</li>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Lyses bacterial cell walls</li>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Natural antimicrobial</li>
                 </ul>
               </div>
               <div>
                 <h3 className="font-semibold text-black text-sm mb-1">Immunoglobulins (IgG, IgA, IgM):</h3>
-                <ul className="space-y-1">
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Provide passive immune protection</li>
-                  <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Support gut barrier function</li>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Provide passive immune protection</li>
+                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Support gut barrier function</li>
                 </ul>
               </div>
             </div>
-            <p className="text-xs text-forest italic mb-4">[L&ouml;nnerdal B. American Journal of Clinical Nutrition. 2003]</p>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginBottom: 12, fontFamily: F }}>[L&ouml;nnerdal B. American Journal of Clinical Nutrition. 2003]</p>
 
-            <h3 className="font-semibold text-black text-base mb-2">Processing Impact</h3>
-            <ul className="space-y-1">
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Standard pasteurization reduces but doesn&apos;t eliminate activity</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>UHT treatment has more marked effects</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Raw milk retains full activity (but carries safety considerations)</li>
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Processing Impact</h3>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Standard pasteurization reduces but doesn&apos;t eliminate activity</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>UHT treatment has more marked effects</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Raw milk retains full activity (but carries safety considerations)</li>
             </ul>
           </section>
 
           {/* Enzymes and Microbiota */}
-          <section className="bg-white rounded-2xl p-6 sm:p-8 mb-6 border border-gray-200">
-            <h2 className="font-display text-xl sm:text-2xl text-black mb-4">Enzymes and Microbiota</h2>
+          <section style={{ background: C.card, borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.border}` }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>Enzymes and Microbiota</h2>
 
-            <h3 className="font-semibold text-black text-base mb-2">Endogenous Enzymes</h3>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Endogenous Enzymes</h3>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 8, fontFamily: F }}>
               Raw milk contains dozens of functional enzymes:
             </p>
             <ul className="space-y-1 mb-5">
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Alkaline phosphatase</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Lipoprotein lipase</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Proteases</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Peroxidases</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Alkaline phosphatase</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Lipoprotein lipase</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Proteases</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Peroxidases</li>
             </ul>
 
-            <h3 className="font-semibold text-black text-base mb-2">Living Microbiota</h3>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Living Microbiota</h3>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 8, fontFamily: F }}>
               Raw milk hosts beneficial bacteria:
             </p>
             <ul className="space-y-1 mb-2">
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Lactobacillus</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Lactococcus</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Leuconostoc</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest font-bold">&#8226;</span>Bifidobacterium species</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Lactobacillus</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Lactococcus</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Leuconostoc</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span>Bifidobacterium species</li>
             </ul>
-            <p className="text-xs text-forest italic mb-4">[Quigley L. et al. FEMS Microbiology Reviews. 2013]</p>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginBottom: 12, fontFamily: F }}>[Quigley L. et al. FEMS Microbiology Reviews. 2013]</p>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 12, fontFamily: F }}>
               Some research suggests raw milk consumption is associated with lower risk of atopic diseases in farm children, possibly via these microbial and immunomodulatory components.
             </p>
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-              <p className="text-sm sm:text-base text-amber-900 leading-relaxed font-medium">
+            <div style={{ background: "#fffbeb", borderRadius: 10, padding: 12, border: "1px solid #fde68a" }}>
+              <p style={{ fontSize: 13, color: "#78350f", lineHeight: 1.6, fontWeight: 600, fontFamily: F }}>
                 Important: Public health authorities recommend pasteurization to prevent foodborne infections, which also reduces enzymatic activities and viable beneficial bacteria.
               </p>
             </div>
           </section>
 
           {/* How Processing Changes Milk */}
-          <section className="bg-white rounded-2xl p-6 sm:p-8 mb-6 border border-gray-200">
-            <h2 className="font-display text-xl sm:text-2xl text-black mb-4">How Processing Changes Milk</h2>
-            <div className="overflow-x-auto mb-4">
-              <table className="w-full text-sm sm:text-base">
+          <section style={{ background: C.card, borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.border}` }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>How Processing Changes Milk</h2>
+            <div style={{ overflowX: "auto", marginBottom: 12 }}>
+              <table style={{ width: "100%", fontSize: 12, fontFamily: F, borderCollapse: "collapse" }}>
                 <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-2 pr-4 text-black font-semibold">Processing</th>
-                    <th className="text-left py-2 text-black font-semibold">Effect</th>
+                  <tr style={{ borderBottom: `1px solid ${C.border}` }}>
+                    <th style={{ textAlign: "left", padding: "6px 12px 6px 0", color: C.title, fontWeight: 700 }}>Processing</th>
+                    <th style={{ textAlign: "left", padding: "6px 0", color: C.title, fontWeight: 700 }}>Effect</th>
                   </tr>
                 </thead>
-                <tbody className="text-gray-700">
-                  <tr className="border-b border-gray-100">
-                    <td className="py-2 pr-4 font-medium">Pasteurization (72&deg;C/15s)</td>
-                    <td className="py-2">Minimal impact on protein/minerals; partially reduces heat-labile vitamins; inactivates enzymes and most microflora</td>
+                <tbody style={{ color: C.body }}>
+                  <tr style={{ borderBottom: "1px solid #f5f5f4" }}>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>Pasteurization (72&deg;C/15s)</td>
+                    <td style={{ padding: "6px 0" }}>Minimal impact on protein/minerals; partially reduces heat-labile vitamins; inactivates enzymes and most microflora</td>
                   </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="py-2 pr-4 font-medium">Homogenization</td>
-                    <td className="py-2">Disrupts fat globules; modifies gastric emptying; little effect on total nutrients</td>
+                  <tr style={{ borderBottom: "1px solid #f5f5f4" }}>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>Homogenization</td>
+                    <td style={{ padding: "6px 0" }}>Disrupts fat globules; modifies gastric emptying; little effect on total nutrients</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pr-4 font-medium">UHT (135&ndash;150&deg;C)</td>
-                    <td className="py-2">Extensive protein denaturation; greater vitamin loss; near-sterile, long shelf life</td>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>UHT (135&ndash;150&deg;C)</td>
+                    <td style={{ padding: "6px 0" }}>Extensive protein denaturation; greater vitamin loss; near-sterile, long shelf life</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, fontFamily: F }}>
               <strong>Across all processing:</strong> Macronutrients (protein, fat, lactose) and most minerals remain largely intact. The main differences are in enzymatic, microbial, and some vitamin/peptide functions.
             </p>
-            <p className="text-xs text-forest italic mt-3">[Claeys WL. et al. Food Control. 2013]</p>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginTop: 8, fontFamily: F }}>[Claeys WL. et al. Food Control. 2013]</p>
           </section>
 
           {/* Quality Hierarchy */}
-          <section className="bg-forest/5 rounded-2xl p-6 sm:p-8 mb-6 border border-forest/20">
-            <h2 className="font-display text-xl sm:text-2xl text-black mb-4">Quality Hierarchy: Best to Worst</h2>
-            <h3 className="font-semibold text-black text-base mb-3">For Maximum Nutrient Density:</h3>
+          <section style={{ background: "#f0fdf4", borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.sigBorder}` }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>Quality Hierarchy: Best to Worst</h2>
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 8px" }}>For Maximum Nutrient Density:</h3>
             <ol className="space-y-2 list-decimal list-inside mb-5">
-              <li className="text-sm sm:text-base text-gray-700"><strong>Raw grass-fed milk</strong> (from tested, trusted sources)</li>
-              <li className="text-sm sm:text-base text-gray-700"><strong>Pasteurized grass-fed whole milk</strong></li>
-              <li className="text-sm sm:text-base text-gray-700"><strong>Pasteurized organic whole milk</strong></li>
-              <li className="text-sm sm:text-base text-gray-700"><strong>Conventional whole milk</strong></li>
-              <li className="text-sm sm:text-base text-gray-700"><strong>Reduced-fat milk</strong></li>
-              <li className="text-sm sm:text-base text-gray-700"><strong>UHT/ultra-pasteurized milk</strong></li>
+              <li style={{ fontSize: 13, color: C.body, fontFamily: F }}><strong>Raw grass-fed milk</strong> (from tested, trusted sources)</li>
+              <li style={{ fontSize: 13, color: C.body, fontFamily: F }}><strong>Pasteurized grass-fed whole milk</strong></li>
+              <li style={{ fontSize: 13, color: C.body, fontFamily: F }}><strong>Pasteurized organic whole milk</strong></li>
+              <li style={{ fontSize: 13, color: C.body, fontFamily: F }}><strong>Conventional whole milk</strong></li>
+              <li style={{ fontSize: 13, color: C.body, fontFamily: F }}><strong>Reduced-fat milk</strong></li>
+              <li style={{ fontSize: 13, color: C.body, fontFamily: F }}><strong>UHT/ultra-pasteurized milk</strong></li>
             </ol>
 
-            <h3 className="font-semibold text-black text-base mb-2">Why Grass-Fed Matters:</h3>
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Why Grass-Fed Matters:</h3>
             <ul className="space-y-1 mb-5">
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Higher omega-3 fatty acids</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>More CLA</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>More fat-soluble vitamins</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-forest">&#10003;</span>Better fatty acid ratios</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Higher omega-3 fatty acids</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>More CLA</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>More fat-soluble vitamins</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Better fatty acid ratios</li>
             </ul>
 
-            <h3 className="font-semibold text-black text-base mb-2">Why Whole Milk Matters:</h3>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Why Whole Milk Matters:</h3>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 8, fontFamily: F }}>
               Reducing fat content without fortification lowers:
             </p>
-            <ul className="space-y-1">
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-red-500">&#10007;</span>Vitamins A, D, E, K</li>
-              <li className="flex gap-2 text-sm sm:text-base text-gray-700"><span className="text-red-500">&#10007;</span>Long-chain fatty acids critical for neural and hormonal development</li>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: "#ef4444" }}>&#10007;</span>Vitamins A, D, E, K</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: "#ef4444" }}>&#10007;</span>Long-chain fatty acids critical for neural and hormonal development</li>
             </ul>
-            <p className="text-xs text-forest italic mt-3">[Benbrook CM. et al. PLOS ONE. 2013]</p>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginTop: 8, fontFamily: F }}>[Benbrook CM. et al. PLOS ONE. 2013]</p>
           </section>
 
           {/* Practical Recommendations */}
-          <section className="bg-forest/5 rounded-2xl p-6 sm:p-8 mb-6 border border-forest/20">
-            <h2 className="font-display text-xl sm:text-2xl text-black mb-4">Practical Recommendations</h2>
+          <section style={{ background: "#f0fdf4", borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.sigBorder}` }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>Practical Recommendations</h2>
 
-            <h3 className="font-semibold text-black text-base mb-3">Daily Milk Targets by Age:</h3>
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 8px" }}>Daily Milk Targets by Age:</h3>
             <div className="overflow-x-auto mb-5">
-              <table className="w-full text-sm sm:text-base">
+              <table style={{ width: "100%", fontSize: 12, fontFamily: F, borderCollapse: "collapse" }}>
                 <thead>
-                  <tr className="border-b border-forest/20">
-                    <th className="text-left py-2 pr-4 text-black font-semibold">Age</th>
-                    <th className="text-left py-2 text-black font-semibold">Amount</th>
+                  <tr style={{ borderBottom: `1px solid ${C.sigBorder}` }}>
+                    <th style={{ textAlign: "left", padding: "6px 12px 6px 0", color: C.title, fontWeight: 700 }}>Age</th>
+                    <th style={{ textAlign: "left", padding: "6px 0", color: C.title, fontWeight: 700 }}>Amount</th>
                   </tr>
                 </thead>
-                <tbody className="text-gray-700">
-                  <tr className="border-b border-gray-200">
-                    <td className="py-2 pr-4 font-medium">1&ndash;2 years</td>
-                    <td className="py-2">16&ndash;24 oz</td>
+                <tbody style={{ color: C.body }}>
+                  <tr style={{ borderBottom: `1px solid ${C.border}` }}>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>1&ndash;2 years</td>
+                    <td style={{ padding: "6px 0" }}>16&ndash;24 oz</td>
                   </tr>
-                  <tr className="border-b border-gray-200">
-                    <td className="py-2 pr-4 font-medium">3&ndash;5 years</td>
-                    <td className="py-2">16&ndash;20 oz</td>
+                  <tr style={{ borderBottom: `1px solid ${C.border}` }}>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>3&ndash;5 years</td>
+                    <td style={{ padding: "6px 0" }}>16&ndash;20 oz</td>
                   </tr>
-                  <tr className="border-b border-gray-200">
-                    <td className="py-2 pr-4 font-medium">6&ndash;9 years</td>
-                    <td className="py-2">16&ndash;24 oz</td>
+                  <tr style={{ borderBottom: `1px solid ${C.border}` }}>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>6&ndash;9 years</td>
+                    <td style={{ padding: "6px 0" }}>16&ndash;24 oz</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pr-4 font-medium">10+ years</td>
-                    <td className="py-2">24&ndash;32 oz</td>
+                    <td style={{ padding: "6px 12px 6px 0", fontWeight: 600 }}>10+ years</td>
+                    <td style={{ padding: "6px 0" }}>24&ndash;32 oz</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h3 className="font-semibold text-black text-base mb-2">Quality Priorities:</h3>
-            <ol className="space-y-2 list-decimal list-inside">
-              <li className="text-sm sm:text-base text-gray-700"><strong>Always whole milk</strong> &mdash; never reduced fat for growing children</li>
-              <li className="text-sm sm:text-base text-gray-700"><strong>Grass-fed when possible</strong> &mdash; better fatty acid profile</li>
-              <li className="text-sm sm:text-base text-gray-700"><strong>A2 milk if available</strong> &mdash; less inflammatory (<Link href="/learn/a1-vs-a2-milk" className="text-forest underline">see our A1 vs A2 article</Link>)</li>
-              <li className="text-sm sm:text-base text-gray-700"><strong>Avoid UHT</strong> &mdash; most nutrient degradation</li>
-              <li className="text-sm sm:text-base text-gray-700"><strong>Raw milk only from trusted, tested sources</strong> &mdash; if legal and safe in your area</li>
+            <h3 style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: C.title, margin: "0 0 6px" }}>Quality Priorities:</h3>
+            <ol style={{ padding: 0, margin: 0, paddingLeft: 16, display: "flex", flexDirection: "column", gap: 4 }}>
+              <li style={{ fontSize: 13, color: C.body, fontFamily: F }}><strong>Always whole milk</strong> &mdash; never reduced fat for growing children</li>
+              <li style={{ fontSize: 13, color: C.body, fontFamily: F }}><strong>Grass-fed when possible</strong> &mdash; better fatty acid profile</li>
+              <li style={{ fontSize: 13, color: C.body, fontFamily: F }}><strong>A2 milk if available</strong> &mdash; less inflammatory (<Link href="/learn/a1-vs-a2-milk" className="text-forest underline">see our A1 vs A2 article</Link>)</li>
+              <li style={{ fontSize: 13, color: C.body, fontFamily: F }}><strong>Avoid UHT</strong> &mdash; most nutrient degradation</li>
+              <li style={{ fontSize: 13, color: C.body, fontFamily: F }}><strong>Raw milk only from trusted, tested sources</strong> &mdash; if legal and safe in your area</li>
             </ol>
           </section>
 
           {/* Bottom Line */}
-          <section className="bg-forest text-white rounded-2xl p-6 sm:p-8 mb-6">
-            <h2 className="font-display text-xl sm:text-2xl mb-4">The Bottom Line</h2>
+          <section style={{ background: C.green, color: "#fff", borderRadius: 14, padding: 20, marginBottom: 16 }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: "#fff", margin: "0 0 12px" }}>The Bottom Line</h2>
             <p className="text-sm sm:text-base text-white/90 leading-relaxed mb-3">
               High-quality whole milk &mdash; especially from grass-fed cows &mdash; provides:
             </p>
-            <ul className="space-y-1 mb-4">
+            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 12px", display: "flex", flexDirection: "column", gap: 3 }}>
               <li className="flex gap-2 text-sm sm:text-base text-white/90"><span>&#10003;</span>Complete amino acid profile</li>
               <li className="flex gap-2 text-sm sm:text-base text-white/90"><span>&#10003;</span>Broad, bioavailable mineral spectrum</li>
               <li className="flex gap-2 text-sm sm:text-base text-white/90"><span>&#10003;</span>Complex, favorable fatty acid profile</li>
               <li className="flex gap-2 text-sm sm:text-base text-white/90"><span>&#10003;</span>Multiple bioactive proteins and peptides</li>
             </ul>
-            <p className="text-sm sm:text-base text-white/90 leading-relaxed mb-4">
+            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.9)", lineHeight: 1.6, marginBottom: 12, fontFamily: F }}>
               Processing for safety changes some components, but even processed whole milk remains <strong>one of the most nutrient-dense single foods in a child&apos;s diet.</strong>
             </p>
             <p className="text-sm sm:text-base text-white font-semibold leading-relaxed">
@@ -443,9 +446,9 @@ export default function MilkNutrientProfileArticle() {
           </section>
 
           {/* References */}
-          <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200">
-            <h2 className="font-display text-lg text-black mb-4">References</h2>
-            <ul className="space-y-3 text-xs sm:text-sm text-gray-500 leading-relaxed">
+          <section style={{ background: C.card, borderRadius: 14, padding: 20, border: `1px solid ${C.border}` }}>
+            <h2 style={{ fontFamily: F, fontSize: 15, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>References</h2>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
               <li>Millward DJ, et al. Protein quality assessment: impact of expanding understanding of protein and amino acid needs for optimal health. <em>American Journal of Clinical Nutrition</em>. 2008;87(5):1576S-1581S.</li>
               <li>Hoppe C, et al. High intakes of milk, but not meat, increase s-insulin and insulin resistance in 8-year-old boys. <em>American Journal of Clinical Nutrition</em>. 2004;80(2):447-452.</li>
               <li>Gaucheron F. Milk and dairy products: a unique micronutrient combination. <em>Journal of the American College of Nutrition</em>. 2011;30(sup5):470S-476S.</li>
@@ -462,12 +465,9 @@ export default function MilkNutrientProfileArticle() {
         </article>
 
         {/* Back link */}
-        <div className="mt-8 text-center">
-          <Link href="/learn" className="inline-flex items-center gap-2 text-forest font-semibold hover:underline">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to all articles
+        <div style={{ marginTop: 28, textAlign: "center" }}>
+          <Link href="/learn" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: C.green, fontWeight: 700, fontFamily: F, fontSize: 13, textDecoration: "none" }}>
+            <span style={{ marginRight: 4 }}>←</span> Back to all articles
           </Link>
         </div>
 
