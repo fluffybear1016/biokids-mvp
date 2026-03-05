@@ -4,9 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Nav from '@/components/Nav';
-import { Child, GrowthWindow, getGrowthStage, stageInfo, createClient } from '@/lib/supabase';
+import { Child, getGrowthStage, stageInfo, createClient } from '@/lib/supabase';
 
-// ── Articles data (merged from Learn page) ──────────────────────────
+// ── Articles data ──────────────────────────
 const articles = [
   {
     slug: 'growth-blockers-to-avoid',
@@ -114,8 +114,8 @@ const articles = [
   },
   {
     slug: 'zinc-gh-igf1-axis',
-    title: 'Zinc and the GH–IGF‑1 Axis: Why This Mineral Controls Three Stages of Growth',
-    summary: 'Zinc is required at every level of the growth hormone pathway — pituitary secretion, liver IGF‑1 production, and growth plate signaling.',
+    title: 'Zinc and the GH–IGF\u20111 Axis: Why This Mineral Controls Three Stages of Growth',
+    summary: 'Zinc is required at every level of the growth hormone pathway — pituitary secretion, liver IGF\u20111 production, and growth plate signaling.',
     category: 'nutrition',
     readTime: '6 min',
     citation: '[Brown KH. Am J Clin Nutr. 2002]',
@@ -123,86 +123,15 @@ const articles = [
 ];
 
 const articleCategories = [
-  { key: 'all', label: 'All Topics' },
-  { key: 'sleep', label: 'Sleep' },
+  { key: 'all', label: 'All' },
   { key: 'nutrition', label: 'Nutrition' },
   { key: 'exercise', label: 'Exercise' },
-  { key: 'circadian', label: 'Circadian' },
-  { key: 'height', label: 'Height' },
   { key: 'toxins', label: 'Toxins' },
   { key: 'science', label: 'Science' },
 ];
 
-// Right sidebar secrets - rotates daily
-const sidebarSecrets = [
-  "Kids are wired for whole foods until sugar rewires them. Never let junk compete. Fruit first, fill up on protein/milk/vegetables. Result: No food battles.",
-  "70% of growth hormone is released in the first 3 hours of sleep. An 8:30pm bedtime captures the critical 10pm-1am surge.",
-  "30-second sprints trigger 771% GH increase. Steady cardio doesn't come close.",
-  "Eating within 2 hours of sleep suppresses GH by up to 80%.",
-  "Morning sunlight within 30 min of waking sets the master clock for optimal GH release.",
-  "Excess body fat produces estrogen, signaling growth plates to close earlier.",
-];
-
-// Growth Secrets - rotates daily
-const growthSecrets = [
-  {
-    icon: '',
-    title: '70% of GH in the First 3 Hours',
-    text: 'Growth hormone is released in pulses during deep sleep, with 70% occurring in the first 3 sleep cycles. An 8:30pm bedtime captures the critical 10pm-1am surge.',
-    citation: '[Van Cauter E. Sleep. 2000]',
-  },
-  {
-    icon: '',
-    title: 'The Insulin-GH Trade-off',
-    text: 'Eating within 2 hours of sleep spikes insulin, which suppresses growth hormone by up to 80%. That bedtime snack? It\'s costing inches.',
-    citation: '[Ho KY. J Clin Endocrinol Metab. 1988]',
-  },
-  {
-    icon: '',
-    title: 'The 771% Sprint Effect',
-    text: '30-second all-out sprints trigger GH release up to 771% above baseline. Steady-state cardio doesn\'t come close. Six sprints, 3x per week.',
-    citation: '[Stokes KA. Sports Med. 2002]',
-  },
-  {
-    icon: '',
-    title: 'Why the Dutch Are Tallest',
-    text: 'The Netherlands has the tallest population on Earth — and the highest milk consumption. A2 casein proteins directly support IGF-1 production.',
-    citation: '[Hoppe C. Am J Clin Nutr. 2004]',
-  },
-  {
-    icon: '',
-    title: 'Fat Closes Growth Plates',
-    text: 'Excess body fat produces estrogen via aromatase. Elevated estrogen signals growth plates to ossify (close) earlier — potentially costing years of growth.',
-    citation: '[Nilsson O. Endocr Rev. 2005]',
-  },
-  {
-    icon: '',
-    title: 'Morning Light Sets the Clock',
-    text: '10-30 minutes of sunlight within 30 minutes of waking synchronizes the master clock, which controls melatonin timing — and melatonin gates GH release.',
-    citation: '[Roenneberg T. Curr Biol. 2007]',
-  },
-];
-
-const defaultGrowthWindow: GrowthWindow = {
-  id: '1',
-  child_id: '1',
-  sleep_avg_hours: 9.2,
-  sleep_avg_bedtime: '20:24:00',
-  sleep_nights_on_protocol: 6,
-  sleep_status: 'optimal',
-  height_percentile: 78,
-  height_previous_percentile: 65,
-  circadian_days_aligned: 6,
-  circadian_avg_wake_time: '06:45:00',
-  circadian_morning_sunlight_days: 4,
-  circadian_status: 'check',
-  week_of: '2026-01-27',
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString(),
-};
-
 // Shared style tokens
-const font = "'Courier New', Courier, monospace";
+const F = "'Courier New', Courier, monospace";
 const col = {
   bg: '#fafaf9',
   title: '#1c1917',
@@ -217,7 +146,6 @@ const col = {
 export default function Dashboard() {
   const router = useRouter();
   const [child, setChild] = useState<Child | null>(null);
-  const [growthWindow, setGrowthWindow] = useState<GrowthWindow>(defaultGrowthWindow);
   const [currentHour, setCurrentHour] = useState(new Date().getHours());
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
@@ -260,70 +188,27 @@ export default function Dashboard() {
     });
   }, []);
 
-  // Time-based active phase data
+  // Time-based active phase
   const getActivePhase = (hour: number) => {
     if (hour >= 6 && hour < 10) {
-      return {
-        emoji: '',
-        title: 'Morning Light',
-        subtitle: 'Circadian rhythm syncing',
-        tip: 'Get 10-30 minutes of direct sunlight within 30 minutes of waking to set the master clock.',
-      };
+      return { title: 'Morning Light', tip: 'Get 10-30 min of direct sunlight within 30 min of waking to set the master clock.' };
     } else if (hour >= 10 && hour < 14) {
-      return {
-        emoji: '',
-        title: 'Peak Activity',
-        subtitle: 'Growth hormone primed',
-        tip: 'Ideal time for sprint intervals — 6x30 second all-out efforts trigger up to 771% GH increase.',
-      };
+      return { title: 'Peak Activity', tip: 'Ideal time for sprint intervals — 6x30s all-out efforts trigger up to 771% GH increase.' };
     } else if (hour >= 14 && hour < 18) {
-      return {
-        emoji: '',
-        title: 'Active Play',
-        subtitle: 'Movement window open',
-        tip: 'Encourage jumping, climbing, and active play. Impact activities stimulate bone growth.',
-      };
+      return { title: 'Active Play', tip: 'Encourage jumping, climbing, and active play. Impact activities stimulate bone growth.' };
     } else if (hour >= 18 && hour < 20) {
-      return {
-        emoji: '',
-        title: 'Wind Down',
-        subtitle: 'Preparing for GH release',
-        tip: 'Dim lights, finish dinner, and avoid screens. Blue light after sunset suppresses melatonin.',
-      };
+      return { title: 'Wind Down', tip: 'Dim lights, finish dinner, avoid screens. Blue light after sunset suppresses melatonin.' };
     } else if (hour >= 20 && hour < 22) {
-      return {
-        emoji: '',
-        title: 'Golden Sleep',
-        subtitle: 'Growth hormone releasing',
-        tip: 'Maintain consistent bedtime. Consider magnesium-rich foods or bath for deeper sleep.',
-      };
+      return { title: 'Golden Sleep', tip: 'Maintain consistent bedtime. Consider magnesium-rich foods or a warm bath for deeper sleep.' };
     } else {
-      return {
-        emoji: '',
-        title: 'Deep Sleep',
-        subtitle: 'Peak GH secretion',
-        tip: 'Avoid waking them — 70% of growth hormone is released in the first 3 hours of sleep.',
-      };
+      return { title: 'Deep Sleep', tip: '70% of growth hormone is released in the first 3 hours of sleep. Protect this window.' };
     }
   };
 
   const activePhase = getActivePhase(currentHour);
 
-  // Rotate secret based on day of year
-  const [currentSecret, setCurrentSecret] = useState(growthSecrets[0]);
-  const [sidebarSecret, setSidebarSecret] = useState(sidebarSecrets[0]);
-
   useEffect(() => {
-    const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
-    const secretIndex = dayOfYear % growthSecrets.length;
-    const sidebarSecretIndex = dayOfYear % sidebarSecrets.length;
-    setCurrentSecret(growthSecrets[secretIndex]);
-    setSidebarSecret(sidebarSecrets[sidebarSecretIndex]);
-
-    // Update current hour every minute
-    const interval = setInterval(() => {
-      setCurrentHour(new Date().getHours());
-    }, 60000);
+    const interval = setInterval(() => setCurrentHour(new Date().getHours()), 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -336,21 +221,23 @@ export default function Dashboard() {
   const stageData = stageInfo[stage];
   const childName = child?.name || (typeof window !== 'undefined' && localStorage.getItem('childName')) || 'Your child';
 
+  const filteredArticles = activeCategory === 'all' ? articles : articles.filter(a => a.category === activeCategory);
+
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', background: col.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ fontFamily: font, color: col.body }}>Loading...</div>
+        <div style={{ fontFamily: F, color: col.body }}>Loading...</div>
       </div>
     );
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: col.bg }}>
+    <div style={{ minHeight: '100vh', background: col.bg, fontFamily: F }}>
       <Nav currentChild={child} />
 
       <div style={{ maxWidth: 540, margin: '0 auto', padding: '0 20px', paddingTop: 32, paddingBottom: 64 }}>
 
-        {/* Search Bar */}
+        {/* Search → Jarvis */}
         <form
           onSubmit={(e) => { e.preventDefault(); if (searchQuery.trim()) router.push(`/jarvis?q=${encodeURIComponent(searchQuery.trim())}`); }}
           style={{ marginBottom: 44 }}
@@ -359,77 +246,50 @@ export default function Dashboard() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Ask anything about growth optimization..."
+            placeholder="Ask anything about growth..."
             style={{
-              width: '100%',
-              padding: '14px 16px',
-              fontSize: 14,
-              fontFamily: font,
-              color: col.title,
-              background: col.card,
-              border: `1px solid ${col.border}`,
-              borderRadius: 14,
-              outline: 'none',
-              boxSizing: 'border-box',
+              width: '100%', padding: '14px 16px', fontSize: 14, fontFamily: F, color: col.title,
+              background: col.card, border: `1px solid ${col.border}`, borderRadius: 14,
+              outline: 'none', boxSizing: 'border-box',
             }}
           />
         </form>
 
-        {/* Page Title */}
-        <h1 style={{
-          fontFamily: font,
-          fontSize: 22,
-          fontWeight: 800,
-          color: col.title,
-          letterSpacing: '-0.02em',
-          marginBottom: 8,
-        }}>
+        {/* Stage Title */}
+        <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: col.title, letterSpacing: '-0.02em', marginBottom: 8 }}>
           {stageData.label}
         </h1>
-        <p style={{
-          fontFamily: font,
-          fontSize: 14,
-          color: col.body,
-          lineHeight: 1.75,
-          marginBottom: 44,
-        }}>
-          {stage === 'infancy' && `The foundation is being built. ${childName}'s growth hormone system is establishing its rhythm — this is when receptor sensitivity and nutritional foundations are set for everything that follows.`}
-          {stage === 'early-childhood' && `${childName}'s growth velocity is among the highest it will ever be. The habits you build now — sleep, nutrition, movement — wire the GH system for the next decade.`}
-          {stage === 'mid-childhood' && `${childName}'s growth hormone system is running at full capacity. This is the steady-state window where consistent daily actions compound quietly into real results.`}
-          {stage === 'pre-puberty' && `This is prime time. ${childName}'s growth plates are wide open and the pre-puberty window is the highest-leverage stage for supporting natural growth. Small consistent actions now make a big difference.`}
-          {stage === 'early-puberty' && `${childName} is entering the growth acceleration phase. Puberty amplifies everything — sleep quality, nutrition, and movement all have an outsized impact on peak growth velocity right now.`}
-          {stage === 'active-puberty' && `${childName} is in the peak growth velocity window. Every month matters. The protocols you follow now determine how much of ${childName}'s genetic potential is expressed before the growth plates begin to close.`}
-          {stage === 'late-growth' && `${childName}'s growth plates are in their final phase. There is still meaningful opportunity — spinal health, posture optimization, and hormonal support can add real height even now.`}
-          {(stage === 'prenatal' || stage === 'adult') && `${childName} is in the ${stageData.label.toLowerCase()} stage. Every action you take supports long-term growth potential.`}
+        <p style={{ fontFamily: F, fontSize: 14, color: col.body, lineHeight: 1.75, marginBottom: 32 }}>
+          {stage === 'infancy' && `${childName}'s growth hormone system is establishing its rhythm. Receptor sensitivity and nutritional foundations are being set for everything that follows.`}
+          {stage === 'early-childhood' && `${childName}'s growth velocity is among the highest it will ever be. The habits you build now wire the GH system for the next decade.`}
+          {stage === 'mid-childhood' && `${childName}'s growth hormone system is at full capacity. Consistent daily actions compound quietly into real results.`}
+          {stage === 'pre-puberty' && `This is prime time. ${childName}'s growth plates are wide open — small consistent actions now make the biggest difference.`}
+          {stage === 'early-puberty' && `${childName} is entering growth acceleration. Sleep, nutrition, and movement all have outsized impact on peak velocity right now.`}
+          {stage === 'active-puberty' && `${childName} is in peak growth velocity. Every month matters — the protocols you follow now determine how much genetic potential is expressed.`}
+          {stage === 'late-growth' && `${childName}'s growth plates are in their final phase. Spinal health, posture, and hormonal support can still add real height.`}
+          {(stage === 'prenatal' || stage === 'adult') && `${childName} is in the ${stageData.label.toLowerCase()} stage. Every action supports long-term growth potential.`}
         </p>
 
-        {/* Window Status */}
+        {/* Active Now — the one dynamic element */}
         <div style={{
-          background: col.card,
-          border: `2px solid ${col.sigBorder}`,
-          borderRadius: 20,
-          padding: '14px 18px',
-          marginBottom: 44,
-          display: 'flex',
-          alignItems: 'center',
-          gap: 10,
+          background: col.card, border: `2px solid ${col.sigBorder}`, borderRadius: 20,
+          padding: '18px 20px', marginBottom: 44,
         }}>
-          <span style={{
-            width: 8,
-            height: 8,
-            background: col.green,
-            borderRadius: '50%',
-            display: 'inline-block',
-          }} />
-          <span style={{ fontFamily: font, fontSize: 14, fontWeight: 800, color: col.green }}>
-            Window is OPEN
-          </span>
-          <span style={{ fontFamily: font, fontSize: 14, color: col.body, marginLeft: 'auto' }}>
-            Where {childName} is right now
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+            <span style={{ width: 8, height: 8, background: col.green, borderRadius: '50%', display: 'inline-block' }} />
+            <span style={{ fontFamily: F, fontSize: 11, fontWeight: 800, color: col.green, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}>
+              Right Now
+            </span>
+          </div>
+          <div style={{ fontFamily: F, fontSize: 15, fontWeight: 800, color: col.title, marginBottom: 6 }}>
+            {activePhase.title}
+          </div>
+          <p style={{ fontFamily: F, fontSize: 14, color: col.body, lineHeight: 1.75, margin: 0 }}>
+            {activePhase.tip}
+          </p>
         </div>
 
-        {/* Category Cards */}
+        {/* Three Pillars */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 44 }}>
           {[
             { href: '/windows/sleep-circadian', label: 'Sleep' },
@@ -437,147 +297,56 @@ export default function Dashboard() {
             { href: '/windows/physical-activity', label: 'Movement' },
           ].map(({ href, label }) => (
             <Link key={href} href={href} style={{
-              background: col.card,
-              border: `1px solid ${col.border}`,
-              borderRadius: 14,
-              padding: '16px 12px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textDecoration: 'none',
-              fontFamily: font,
-              fontSize: 14,
-              fontWeight: 800,
-              color: col.title,
+              background: col.card, border: `1px solid ${col.border}`, borderRadius: 14,
+              padding: '16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              textDecoration: 'none', fontFamily: F, fontSize: 13, fontWeight: 700, color: col.title,
             }}>
               {label}
             </Link>
           ))}
         </div>
 
+        {/* Stage Deep Dive */}
         <Link
           href="/stage"
           style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-            fontFamily: font,
-            fontSize: 14,
-            fontWeight: 800,
-            color: col.green,
-            textDecoration: 'none',
-            marginBottom: 44,
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            background: col.card, border: `1px solid ${col.border}`, borderRadius: 14,
+            padding: '14px 18px', marginBottom: 44, textDecoration: 'none',
           }}
         >
-          See what matters most →
-        </Link>
-
-        {/* Active Now */}
-        <div style={{
-          background: col.card,
-          border: `2px solid ${col.sigBorder}`,
-          borderRadius: 20,
-          padding: '14px 18px',
-          marginBottom: 44,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-            <span style={{ fontFamily: font, fontSize: 11, fontWeight: 800, color: col.light, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}>Active Now</span>
-            <span style={{
-              fontFamily: font,
-              fontSize: 11,
-              fontWeight: 800,
-              color: col.green,
-              background: '#ecfdf5',
-              padding: '2px 8px',
-              borderRadius: 99,
-            }}>Live</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
-            <span style={{ fontSize: 24 }}>{activePhase.emoji}</span>
-            <div>
-              <div style={{ fontFamily: font, fontSize: 14, fontWeight: 800, color: col.title }}>{activePhase.title}</div>
-              <div style={{ fontFamily: font, fontSize: 14, color: col.light }}>{activePhase.subtitle}</div>
+          <div>
+            <div style={{ fontFamily: F, fontSize: 14, fontWeight: 700, color: col.title }}>
+              What matters most at this stage
+            </div>
+            <div style={{ fontFamily: F, fontSize: 12, color: col.light, marginTop: 2 }}>
+              Priorities for the {stageData.label.toLowerCase()} window
             </div>
           </div>
-          <p style={{ fontFamily: font, fontSize: 14, color: col.body, lineHeight: 1.75 }}>
-            {activePhase.tip}
-          </p>
-        </div>
+          <svg style={{ width: 16, height: 16, color: col.green, flexShrink: 0 }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </Link>
 
-        {/* Why We're Confident */}
-        <div style={{
-          background: col.card,
-          border: `1px solid ${col.border}`,
-          borderRadius: 14,
-          padding: '14px 18px',
-          marginBottom: 44,
-        }}>
-          <div style={{ fontFamily: font, fontSize: 11, fontWeight: 800, color: col.light, textTransform: 'uppercase' as const, letterSpacing: '0.05em', marginBottom: 14 }}>Why We're Confident</div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <span style={{ fontFamily: font, fontSize: 14, color: col.body }}>Studies indexed</span>
-            <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, color: col.green }}>312</span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-            <span style={{ fontFamily: font, fontSize: 14, color: col.body }}>Research hours</span>
-            <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, color: col.green }}>2,400+</span>
-          </div>
-          <div style={{ borderTop: `1px solid ${col.border}`, paddingTop: 14 }}>
-            <p style={{ fontFamily: font, fontSize: 14, color: col.light, lineHeight: 1.75 }}>
-              Every recommendation is backed by high end academic peer-reviewed research.
-            </p>
-          </div>
-        </div>
-
-        {/* Growth Secret of the Day */}
-        <div style={{
-          background: col.card,
-          border: `1px solid ${col.border}`,
-          borderRadius: 14,
-          padding: '14px 18px',
-          marginBottom: 44,
-        }}>
-          <div style={{ fontFamily: font, fontSize: 11, fontWeight: 800, color: col.light, textTransform: 'uppercase' as const, letterSpacing: '0.05em', marginBottom: 14 }}>Growth Secret</div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-            <span style={{ fontSize: 20 }}>{currentSecret.icon}</span>
-            <span style={{ fontFamily: font, fontSize: 14, fontWeight: 800, color: col.title }}>{currentSecret.title}</span>
-          </div>
-          <p style={{ fontFamily: font, fontSize: 14, color: col.body, lineHeight: 1.75, marginBottom: 10 }}>
-            {currentSecret.text}
-          </p>
-          <p style={{ fontFamily: font, fontSize: 14, color: col.light }}>
-            {currentSecret.citation}
-          </p>
-          <div style={{ borderTop: `1px solid ${col.border}`, marginTop: 14, paddingTop: 10 }}>
-            <span style={{ fontFamily: font, fontSize: 14, color: col.light }}>Daily tip · Refreshes tomorrow</span>
-          </div>
-        </div>
-
-        {/* ── Articles Section ── */}
-        <div ref={articlesRef} id="articles" style={{ borderTop: `1px solid ${col.border}`, marginTop: 20, paddingTop: 32 }}>
-          <h2 style={{
-            fontFamily: font,
-            fontSize: 22,
-            fontWeight: 800,
-            color: col.title,
-            marginBottom: 6,
-          }}>
-            Articles
+        {/* ── Research ── */}
+        <div ref={articlesRef} id="articles">
+          <h2 style={{ fontFamily: F, fontSize: 18, fontWeight: 800, color: col.title, marginBottom: 6 }}>
+            Research
           </h2>
-          <p style={{ fontFamily: font, fontSize: 13, color: col.light, marginBottom: 20 }}>
-            Deep dives into the science of natural growth hormone optimization.
+          <p style={{ fontFamily: F, fontSize: 13, color: col.light, marginBottom: 20 }}>
+            {articles.length} peer-reviewed deep dives. Every claim cited.
           </p>
 
-          {/* Category Filter Pills */}
+          {/* Filter Pills */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 24 }}>
             {articleCategories.map((cat) => (
               <button
                 key={cat.key}
                 onClick={() => setActiveCategory(cat.key)}
                 style={{
-                  display: 'flex', alignItems: 'center', gap: 5,
-                  padding: '5px 12px', borderRadius: 20, fontSize: 11, fontWeight: 600, fontFamily: font,
-                  background: col.card,
-                  color: activeCategory === cat.key ? col.green : col.body,
+                  padding: '5px 12px', borderRadius: 20, fontSize: 11, fontWeight: 600, fontFamily: F,
+                  background: activeCategory === cat.key ? col.green : col.card,
+                  color: activeCategory === cat.key ? '#fff' : col.body,
                   border: `1px solid ${activeCategory === cat.key ? col.green : col.border}`,
                   cursor: 'pointer', transition: 'all 0.15s',
                 }}
@@ -589,75 +358,67 @@ export default function Dashboard() {
 
           {/* Featured Article */}
           <Link href="/learn/how-your-child-grows" style={{
-            display: 'block', background: col.card, borderRadius: 16, padding: 24,
-            border: `2px solid ${col.sigBorder}`, marginBottom: 24, textDecoration: 'none', position: 'relative', overflow: 'hidden',
+            display: 'block', background: col.card, borderRadius: 16, padding: 20,
+            border: `2px solid ${col.sigBorder}`, marginBottom: 16, textDecoration: 'none',
           }}>
-            <span style={{ display: 'inline-block', background: '#ecfdf5', color: col.green, padding: '3px 10px', borderRadius: 20, fontSize: 9, fontWeight: 800, fontFamily: font, textTransform: 'uppercase', letterSpacing: 1 }}>Featured</span>
-            <h3 style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: col.title, margin: '12px 0 8px' }}>How Your Child Actually Grows</h3>
-            <p style={{ fontFamily: font, fontSize: 13, color: col.body, margin: '0 0 16px', lineHeight: 1.5, maxWidth: 400 }}>
-              The complete guide to the biological cascade that determines your child&apos;s growth — and exactly how to optimize it.
-            </p>
-            <span style={{ display: 'inline-block', background: col.green, color: '#fff', padding: '8px 18px', borderRadius: 10, fontSize: 12, fontWeight: 700, fontFamily: font }}>
-              Read the Guide
+            <span style={{ display: 'inline-block', background: '#ecfdf5', color: col.green, padding: '3px 10px', borderRadius: 20, fontSize: 9, fontWeight: 800, fontFamily: F, textTransform: 'uppercase', letterSpacing: 1 }}>
+              Start Here
             </span>
+            <h3 style={{ fontFamily: F, fontSize: 16, fontWeight: 700, color: col.title, margin: '10px 0 6px' }}>
+              How Your Child Actually Grows
+            </h3>
+            <p style={{ fontFamily: F, fontSize: 13, color: col.body, margin: 0, lineHeight: 1.5 }}>
+              The biological cascade that determines height — and how to optimize it.
+            </p>
           </Link>
 
           {/* Article Cards */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {(activeCategory === 'all' ? articles : articles.filter(a => a.category === activeCategory)).map((article) => (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {filteredArticles.map((article) => (
               <Link
                 key={article.slug}
                 href={`/learn/${article.slug}`}
                 style={{
-                  display: 'block', background: col.card, borderRadius: 14, padding: 16,
-                  border: `1px solid ${col.border}`, textDecoration: 'none', transition: 'all 0.15s',
+                  display: 'flex', alignItems: 'flex-start', gap: 14, background: col.card, borderRadius: 14,
+                  padding: '14px 16px', border: `1px solid ${col.border}`, textDecoration: 'none',
                 }}
               >
-                <div>
+                <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                    <span style={{ fontSize: 9, fontWeight: 800, color: col.green, textTransform: 'uppercase', letterSpacing: 1, fontFamily: font }}>
+                    <span style={{ fontSize: 9, fontWeight: 800, color: col.green, textTransform: 'uppercase', letterSpacing: 1, fontFamily: F }}>
                       {articleCategories.find(c => c.key === article.category)?.label}
                     </span>
                     <span style={{ fontSize: 9, color: col.light }}>·</span>
-                    <span style={{ fontSize: 11, color: col.light, fontFamily: font }}>{article.readTime}</span>
+                    <span style={{ fontSize: 11, color: col.light, fontFamily: F }}>{article.readTime}</span>
                   </div>
-                  <h3 style={{ fontFamily: font, fontSize: 14, fontWeight: 700, color: col.title, margin: '0 0 4px' }}>
+                  <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 700, color: col.title, margin: '0 0 4px' }}>
                     {article.title}
                   </h3>
-                  <p style={{ fontFamily: font, fontSize: 12, color: col.body, margin: 0, lineHeight: 1.5 }}>
+                  <p style={{ fontFamily: F, fontSize: 12, color: col.body, margin: 0, lineHeight: 1.5 }}>
                     {article.summary}
                   </p>
-                  {article.citation && (
-                    <span style={{ fontSize: 10, color: col.green, fontStyle: 'italic', fontFamily: font }}>{article.citation}</span>
-                  )}
                 </div>
+                <svg style={{ width: 16, height: 16, color: col.light, flexShrink: 0, marginTop: 4 }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             ))}
           </div>
 
           {/* Empty State */}
-          {(activeCategory !== 'all' && articles.filter(a => a.category === activeCategory).length === 0) && (
+          {filteredArticles.length === 0 && (
             <div style={{ textAlign: 'center', padding: '48px 0' }}>
-              <h3 style={{ fontFamily: font, fontSize: 15, fontWeight: 700, color: col.title, marginBottom: 6 }}>No articles in this category yet</h3>
-              <p style={{ fontFamily: font, fontSize: 13, color: col.light }}>Check back soon — we&apos;re adding new content regularly.</p>
+              <h3 style={{ fontFamily: F, fontSize: 15, fontWeight: 700, color: col.title, marginBottom: 6 }}>No articles in this category yet</h3>
+              <p style={{ fontFamily: F, fontSize: 13, color: col.light }}>Check back soon.</p>
             </div>
           )}
+        </div>
 
-          {/* Bottom CTA */}
-          <section style={{ marginTop: 40, background: '#fffbeb', borderRadius: 16, padding: 28, textAlign: 'center' }}>
-            <h3 style={{ fontFamily: font, fontSize: 18, fontWeight: 700, color: col.title, marginBottom: 6 }}>Have a specific question?</h3>
-            <p style={{ fontFamily: font, fontSize: 13, color: col.body, marginBottom: 18 }}>Ask Jarvis — our AI assistant knows the science inside and out.</p>
-            <a href="/jarvis" style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6,
-              background: col.green, color: '#fff', padding: '10px 22px', borderRadius: 10,
-              fontSize: 13, fontWeight: 700, fontFamily: font, textDecoration: 'none',
-            }}>
-              Ask Jarvis
-              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </a>
-          </section>
+        {/* Closing */}
+        <div style={{ textAlign: 'center', marginTop: 44 }}>
+          <p style={{ fontFamily: F, fontSize: 12, color: col.light, lineHeight: 1.7 }}>
+            Every recommendation backed by peer-reviewed research. Have a question? <Link href="/jarvis" style={{ color: col.green, fontWeight: 700, textDecoration: 'none' }}>Ask Jarvis</Link>
+          </p>
         </div>
 
       </div>
