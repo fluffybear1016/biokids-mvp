@@ -388,68 +388,84 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
     "Dennis Raney — Jump training effects on femur/tibia length and diameter",
   ];
 
+
+  // Design tokens
+  const F = "'Courier New', Courier, monospace";
+  const CC = {
+    bg: '#fafaf9', card: '#fff', border: '#e7e5e4', sigBorder: '#a7f3d0',
+    title: '#1c1917', body: '#57534e', light: '#a8a29e', green: '#059669', red: '#dc2626',
+  };
+
+  const CitationBlock = ({ citations }: { citations: { text: string; url: string }[] }) => (
+    <div style={{ marginTop: 12, background: CC.bg, borderRadius: 14, padding: 12, fontFamily: F }}>
+      <p style={{ fontSize: 10, color: CC.light, fontWeight: 800, marginBottom: 4 }}>Peer-reviewed:</p>
+      {citations.map((c, ci) => (
+        <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
+          style={{ display: 'block', fontSize: 10, color: CC.green, textDecoration: 'underline', paddingLeft: 8, borderLeft: `2px solid ${CC.sigBorder}`, marginBottom: 4 }}>
+          {c.text}
+        </a>
+      ))}
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-cream">
+    <div style={{ minHeight: '100vh', background: CC.bg }}>
       <Nav currentChild={child} />
 
-      <main className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
+      <div style={{ maxWidth: 540, margin: '0 auto', padding: '0 20px', paddingTop: 32, paddingBottom: 64 }}>
 
         {/* Back Link */}
-        <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-forest mb-6">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <Link href="/dashboard" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: F, fontSize: 14, color: CC.light, textDecoration: 'none', marginBottom: 24 }}>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
           Back to Dashboard
         </Link>
 
-        {/* Header */}
-        <header className="bg-gradient-to-br from-forest to-forest-dark rounded-3xl p-8 sm:p-10 text-white mb-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 text-[120px] sm:text-[150px] opacity-15">🏃</div>
-          <div className="flex justify-between items-start mb-5 relative">
-            <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-semibold">Movement Window</span>
-            <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
-              <span className="w-2 h-2 bg-green-300 rounded-full" />
-              Optimal
-            </span>
-          </div>
-          <h1 className="font-display text-4xl sm:text-5xl mb-4 relative">Movement</h1>
-          <p className="text-base sm:text-lg text-white/90 max-w-xl relative">
-            High-intensity exercise triggers GH spikes up to 771%. Impact activities stimulate growth plates. Sprinting builds elite power without weights.
-          </p>
-          <div className="flex flex-wrap gap-4 sm:gap-6 mt-8 pt-6 border-t border-white/20">
-            <div>
-              <span className="font-display text-3xl sm:text-4xl">771%</span>
-              <span className="text-sm text-white/80 block sm:inline sm:ml-2">GH from sprints</span>
-            </div>
-            <div>
-              <span className="font-display text-3xl sm:text-4xl">6×30s</span>
-              <span className="text-sm text-white/80 block sm:inline sm:ml-2">sprint protocol</span>
-            </div>
-            <div>
-              <span className="font-display text-3xl sm:text-4xl">0 lbs</span>
-              <span className="text-sm text-white/80 block sm:inline sm:ml-2">weights needed</span>
-            </div>
-          </div>
-        </header>
+        {/* Page Title */}
+        <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', marginBottom: 8 }}>
+          Movement
+        </h1>
+        <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 24 }}>
+          High-intensity exercise triggers GH spikes up to 771%. Impact activities stimulate growth plates. Sprinting builds elite power without weights.
+        </p>
 
-        {/* Age-based recommendations bar */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm mb-6 flex flex-wrap items-center gap-3 sm:gap-6">
-          <span className="text-sm font-semibold text-gray-600">
-            {child ? `${child.name}'s protocol` : 'Age-based protocol'}:
-          </span>
-          <span className="text-sm bg-forest/10 text-forest px-3 py-1 rounded-full font-medium">
-            Age {Math.floor(ageInYears)}
-          </span>
-          <span className="text-sm bg-forest/10 text-forest px-3 py-1 rounded-full font-medium">
-            {ageInYears < 8 ? "Play-based sprints" : ageInYears <= 12 ? "Structured 4-6 reps" : "Advanced 6×30s"}
-          </span>
-          <span className="text-sm bg-forest/10 text-forest px-3 py-1 rounded-full font-medium">
-            {ageInYears < 13 ? "2-3×/week" : "1-2×/week"}
-          </span>
+        {/* Key Stats — signature card */}
+        <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 44, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <div>
+            <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 22, color: CC.green }}>771%</div>
+            <div style={{ fontFamily: F, fontSize: 14, color: CC.light }}>GH from sprints</div>
+          </div>
+          <div>
+            <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 22, color: CC.green }}>6x30s</div>
+            <div style={{ fontFamily: F, fontSize: 14, color: CC.light }}>sprint protocol</div>
+          </div>
+          <div>
+            <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 22, color: CC.green }}>0 lbs</div>
+            <div style={{ fontFamily: F, fontSize: 14, color: CC.light }}>weights needed</div>
+          </div>
         </div>
 
-        {/* Tabs */}
-        <div className="flex flex-wrap gap-1 mb-0">
+        {/* Age-based recommendations */}
+        <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 44 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <span style={{ fontFamily: F, fontSize: 14, color: CC.light }}>
+              {child ? `${child.name}'s protocol` : 'Age-based protocol'}:
+            </span>
+            {[
+              { label: 'Age', value: String(Math.floor(ageInYears)) },
+              { label: 'Type', value: ageInYears < 8 ? "Play-based sprints" : ageInYears <= 12 ? "Structured 4-6 reps" : "Advanced 6x30s" },
+              { label: 'Freq', value: ageInYears < 13 ? "2-3x/week" : "1-2x/week" },
+            ].map((item, i) => (
+              <span key={i} style={{ fontFamily: F, fontSize: 13, color: CC.body, background: CC.bg, padding: '6px 12px', borderRadius: 20 }}>
+                {item.label}: <strong style={{ color: CC.title }}>{item.value}</strong>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Tab Bar */}
+        <div style={{ display: 'flex', gap: 4, marginBottom: 0, background: CC.bg, padding: 4, borderRadius: '14px 14px 0 0', overflowX: 'auto', WebkitOverflowScrolling: 'touch', border: `1px solid ${CC.border}`, borderBottom: 'none' }}>
           {[
             { id: 'home', label: 'Home' },
             { id: 'levers', label: 'Levers' },
@@ -460,291 +476,247 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
-              className={`px-4 py-2.5 text-sm font-semibold rounded-t-xl transition-all flex-1 sm:flex-initial ${
-                activeTab === tab.id
-                  ? 'bg-white text-forest shadow-sm'
-                  : 'bg-cream-dark text-gray-500 hover:text-gray-700'
-              }`}
+              style={{
+                padding: '10px 14px', border: 'none',
+                background: activeTab === tab.id ? CC.card : 'transparent',
+                borderRadius: 10, fontSize: 13, fontFamily: F,
+                fontWeight: activeTab === tab.id ? 800 : 400,
+                color: activeTab === tab.id ? CC.title : CC.light,
+                cursor: 'pointer', transition: 'all 0.2s',
+                whiteSpace: 'nowrap' as const, flexShrink: 0, flex: 1,
+              }}
             >
               {tab.label}
             </button>
           ))}
         </div>
 
-        {/* ═══ TAB: HOME ═══ */}
-        {activeTab === 'home' && (
-          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
-            <MovementHomeTab age={Math.floor(ageInMonths / 12)} />
-          </div>
-        )}
+        {/* Tab Content */}
+        <div style={{ background: CC.card, borderRadius: '0 0 14px 14px', padding: 18, border: `1px solid ${CC.border}`, borderTop: 'none', marginBottom: 44 }}>
 
-        {/* ═══ TAB: LEVERS ═══ */}
-        {activeTab === 'levers' && (
-          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
-            <div className="text-center mb-6">
-              <h2 className="font-display text-2xl text-gray-900 mb-1">Movement Levers</h2>
-              <p className="text-sm text-gray-500">Ranked by impact on height and development. Do #1 first.</p>
+          {/* ═══ TAB: HOME ═══ */}
+          {activeTab === 'home' && (
+            <div style={{ padding: 8 }}>
+              <MovementHomeTab age={Math.floor(ageInMonths / 12)} />
             </div>
+          )}
 
-            <div className="space-y-3">
-              {movementLevers.map((lever, i) => {
+          {/* ═══ TAB: LEVERS ═══ */}
+          {activeTab === 'levers' && (
+            <div>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px', textAlign: 'center' }}>Movement Levers</h2>
+              <p style={{ textAlign: 'center', fontFamily: F, color: CC.light, fontSize: 14, marginBottom: 24 }}>Ranked by impact on height and development. Do #1 first.</p>
+
+              {movementLevers.map((lever) => {
                 const isExpanded = expandedLever === lever.id;
                 return (
-                  <div key={lever.id}>
+                  <div key={lever.id} style={{ marginBottom: 8 }}>
                     <button
                       onClick={() => setExpandedLever(isExpanded ? null : lever.id)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all ${
-                        isExpanded ? 'bg-forest/5 border-forest/20' : 'bg-cream border-cream hover:border-forest/20'
-                      }`}
+                      style={{
+                        width: '100%', display: 'flex', alignItems: 'flex-start', gap: 14,
+                        padding: '14px 18px', fontFamily: F, textAlign: 'left',
+                        background: isExpanded ? '#ecfdf5' : CC.bg,
+                        border: isExpanded ? `1px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
+                        borderRadius: isExpanded ? '14px 14px 0 0' : 14, cursor: 'pointer',
+                      }}
                     >
-                      <div className="flex items-center gap-3">
-                        <span className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm ${
-                          lever.rank <= 3 ? 'bg-forest' : lever.rank <= 6 ? 'bg-forest/80' : 'bg-forest/60'
-                        }`}>
-                          {lever.rank}
-                        </span>
-                        <div className="flex-1">
-                          <div className="font-semibold text-gray-900">{lever.title}</div>
-                          <div className="text-sm text-gray-500 mt-0.5">{lever.subtitle}</div>
-                        </div>
-                        <span className="text-forest text-sm">{isExpanded ? '▲' : '▼'}</span>
+                      <span style={{
+                        width: 28, height: 28, background: CC.green, color: 'white', borderRadius: '50%',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 13, fontFamily: F, fontWeight: 800, flexShrink: 0,
+                      }}>{lever.rank}</span>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: 800, fontSize: 14, color: CC.title, marginBottom: 4 }}>{lever.title}</div>
+                        <div style={{ fontSize: 13, color: CC.body, lineHeight: 1.75 }}>{lever.subtitle}</div>
                       </div>
+                      <span style={{ color: CC.light, fontSize: 18 }}>{isExpanded ? '▲' : '▼'}</span>
                     </button>
                     {isExpanded && (
-                      <div className="px-4 pb-4 pt-2 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20">
-                        <p className="text-sm text-gray-700 leading-relaxed mb-3">{lever.content}</p>
+                      <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none' }}>
+                        <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 12 }}>{lever.content}</p>
                         {lever.extra && (
-                          <p className="text-sm text-gray-600 leading-relaxed mb-3 whitespace-pre-line">{lever.extra}</p>
+                          <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 12, whiteSpace: 'pre-line' as const }}>{lever.extra}</p>
                         )}
-                        <div className="text-sm bg-forest/10 text-forest px-3 py-2 rounded-lg font-medium">
+                        <div style={{ fontFamily: F, fontSize: 13, fontWeight: 800, color: CC.green, background: CC.card, padding: '8px 12px', borderRadius: 10, border: `1px solid ${CC.sigBorder}` }}>
                           Timing: {lever.timing}
                         </div>
-                        {lever.citations && (
-                          <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
-                            <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
-                            {lever.citations.map((c: { text: string; url: string }, ci: number) => (
-                              <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                                className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
-                                {c.text}
-                              </a>
-                            ))}
-                          </div>
-                        )}
+                        {lever.citations && <CitationBlock citations={lever.citations} />}
                       </div>
                     )}
                   </div>
                 );
               })}
-            </div>
 
-            {/* Never section */}
-            <div className="mt-8 bg-coral-light rounded-2xl p-6">
-              <div className="text-sm font-bold text-coral uppercase tracking-wider mb-4">Never</div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {[
-                  "Weight lifting before age 19",
-                  "Long slow cardio (>20 min kills fast-twitch)",
-                  "Sedentary lifestyle",
-                  "Overtraining without rest days",
-                  "Single-sport before age 14",
-                  "Training through illness/fatigue",
-                  "Screens over outdoor play",
-                  "Fear-based coaching",
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                    <span className="text-coral font-bold">✕</span>
-                    {item}
-                  </div>
-                ))}
+              {/* Never section */}
+              <div style={{ marginTop: 24, background: CC.card, borderRadius: 14, padding: '14px 18px', border: `1px solid ${CC.border}` }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.red, marginBottom: 10 }}>Never</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 8 }}>
+                  {[
+                    "Weight lifting before age 19",
+                    "Long slow cardio (>20 min kills fast-twitch)",
+                    "Sedentary lifestyle",
+                    "Overtraining without rest days",
+                    "Single-sport before age 14",
+                    "Training through illness/fatigue",
+                    "Screens over outdoor play",
+                    "Fear-based coaching",
+                  ].map((item, i) => (
+                    <div key={i} style={{ fontFamily: F, fontSize: 13, color: CC.body, lineHeight: 1.75 }}>✕ {item}</div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ═══ TAB: SPRINT ═══ */}
-        {activeTab === 'sprint' && (
-          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
-            <h2 className="font-display text-2xl text-gray-900 mb-6">Sprint Protocol</h2>
+          {/* ═══ TAB: SPRINT ═══ */}
+          {activeTab === 'sprint' && (
+            <div>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 24px' }}>Sprint Protocol</h2>
 
-            {/* Age-appropriate protocols */}
-            <div className="space-y-3 mb-8">
+              {/* Age-appropriate protocols */}
               {sprintProtocols.map((p, i) => (
-                <div
-                  key={i}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    p.active ? 'bg-forest/5 border-forest' : 'bg-cream border-transparent'
-                  }`}
-                >
-                  <div className={`font-semibold mb-2 ${p.active ? 'text-forest' : 'text-gray-500'}`}>
+                <div key={i} style={{
+                  padding: '14px 18px', borderRadius: p.active ? 20 : 14, marginBottom: 8,
+                  background: p.active ? '#ecfdf5' : CC.card,
+                  border: p.active ? `2px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
+                }}>
+                  <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: p.active ? CC.green : CC.light, marginBottom: 4 }}>
                     {p.title}
                   </div>
-                  <div className={`text-sm leading-relaxed ${p.active ? 'text-gray-700' : 'text-gray-400'}`}>
+                  <div style={{ fontFamily: F, fontSize: 14, color: p.active ? CC.body : CC.light, lineHeight: 1.75 }}>
                     {p.content}
                   </div>
-                  {p.citations && (
-                    <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
-                      <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
-                      {p.citations.map((c: { text: string; url: string }, ci: number) => (
-                        <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                          className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
-                          {c.text}
-                        </a>
-                      ))}
-                    </div>
-                  )}
+                  {p.citations && <CitationBlock citations={p.citations} />}
                 </div>
               ))}
-            </div>
 
-            {/* The Stack */}
-            <h3 className="font-display text-lg text-gray-900 mb-4 pb-2 border-b-2 border-forest/20">The Sprint Nutrition Stack</h3>
-            <div className="space-y-3 mb-8">
+              {/* The Stack */}
+              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 16, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>The Sprint Nutrition Stack</div>
               {sprintStack.map((s, i) => (
-                <div key={i} className={`rounded-xl p-4 ${
-                  s.color === 'forest' ? 'bg-forest/5' :
-                  s.color === 'amber' ? 'bg-amber/5' :
-                  s.color === 'coral' ? 'bg-coral-light' :
-                  'bg-purple-50'
-                }`}>
-                  <div className={`font-semibold text-sm mb-2 ${
-                    s.color === 'forest' ? 'text-forest' :
-                    s.color === 'amber' ? 'text-amber' :
-                    s.color === 'coral' ? 'text-coral' :
-                    'text-purple-600'
-                  }`}>
+                <div key={i} style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 8 }}>
+                  <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.green, marginBottom: 8 }}>
                     {s.emoji} {s.phase}
                   </div>
                   {s.items.map((item, ii) => (
-                    <div key={ii} className="text-sm text-gray-700 leading-relaxed pl-2">• {item}</div>
+                    <div key={ii} style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, paddingLeft: 8 }}>&bull; {item}</div>
                   ))}
                 </div>
               ))}
-            </div>
 
-            {/* Sprint vs Weights */}
-            <h3 className="font-display text-lg text-gray-900 mb-4 pb-2 border-b-2 border-forest/20">Sprint vs Weight Lifting</h3>
-            <div className="overflow-x-auto mb-8">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-forest/5">
-                    <th className="p-3 text-left font-bold">Factor</th>
-                    <th className="p-3 text-center text-forest font-bold">Sprinting</th>
-                    <th className="p-3 text-center text-coral font-bold">Weights</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sprintVsWeights.map(([factor, sprint, weight], i) => (
-                    <tr key={i} className="border-b border-gray-100">
-                      <td className="p-3 font-medium">{factor}</td>
-                      <td className="p-3 text-center text-forest">{sprint}</td>
-                      <td className="p-3 text-center text-coral">{weight}</td>
+              {/* Sprint vs Weights */}
+              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 16, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>Sprint vs Weight Lifting</div>
+              <div style={{ overflowX: 'auto', marginBottom: 24 }}>
+                <table style={{ width: '100%', fontSize: 13, fontFamily: F, borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ background: CC.bg }}>
+                      <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: 800, color: CC.title, borderBottom: `2px solid ${CC.border}` }}>Factor</th>
+                      <th style={{ padding: '10px 12px', textAlign: 'center', fontWeight: 800, color: CC.green, borderBottom: `2px solid ${CC.border}` }}>Sprinting</th>
+                      <th style={{ padding: '10px 12px', textAlign: 'center', fontWeight: 800, color: CC.red, borderBottom: `2px solid ${CC.border}` }}>Weights</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {sprintVsWeights.map(([factor, sprint, weight], i) => (
+                      <tr key={i} style={{ borderBottom: `1px solid ${CC.border}` }}>
+                        <td style={{ padding: '10px 12px', fontWeight: 800, color: CC.title }}>{factor}</td>
+                        <td style={{ padding: '10px 12px', textAlign: 'center', color: CC.green }}>{sprint}</td>
+                        <td style={{ padding: '10px 12px', textAlign: 'center', color: CC.red }}>{weight}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-            {/* Jamaican Method */}
-            <h3 className="font-display text-lg text-gray-900 mb-4 pb-2 border-b-2 border-forest/20">The Jamaican High School Method</h3>
-            <div className="space-y-2">
+              {/* Jamaican Method */}
+              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 16, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>The Jamaican High School Method</div>
               {jamaicanMethod.map((phase) => {
                 const isExpanded = expandedJam === phase.id;
                 return (
-                  <div key={phase.id}>
+                  <div key={phase.id} style={{ marginBottom: 8 }}>
                     <button
                       onClick={() => setExpandedJam(isExpanded ? null : phase.id)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all ${
-                        isExpanded ? 'bg-forest/5 border-forest/20' : 'bg-cream border-cream hover:border-forest/20'
-                      }`}
+                      style={{
+                        width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        padding: '14px 18px', fontFamily: F, textAlign: 'left',
+                        background: isExpanded ? '#ecfdf5' : CC.bg,
+                        border: isExpanded ? `1px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
+                        borderRadius: isExpanded ? '14px 14px 0 0' : 14, cursor: 'pointer',
+                      }}
                     >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-semibold text-gray-900">{phase.title}</div>
-                          <div className="text-sm text-gray-500">{phase.subtitle}</div>
-                        </div>
-                        <span className="text-forest text-sm">{isExpanded ? '▲' : '▼'}</span>
+                      <div>
+                        <div style={{ fontWeight: 800, fontSize: 14, color: CC.title }}>{phase.title}</div>
+                        <div style={{ fontSize: 13, color: CC.light }}>{phase.subtitle}</div>
                       </div>
+                      <span style={{ color: CC.light }}>{isExpanded ? '▲' : '▼'}</span>
                     </button>
                     {isExpanded && (
-                      <div className="px-4 pb-4 pt-2 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20">
-                        <p className="text-sm text-gray-700 leading-relaxed">{phase.content}</p>
+                      <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                        {phase.content}
                       </div>
                     )}
                   </div>
                 );
               })}
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ═══ TAB: ATHLETES ═══ */}
-        {activeTab === 'athletes' && (
-          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
-            <h2 className="font-display text-2xl text-gray-900 mb-2">Case Studies</h2>
-            <p className="text-sm text-gray-500 mb-6">Real athletes and cultures that prove these principles work.</p>
+          {/* ═══ TAB: ATHLETES ═══ */}
+          {activeTab === 'athletes' && (
+            <div>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px' }}>Case Studies</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 24 }}>Real athletes and cultures that prove these principles work.</p>
 
-            <div className="space-y-3">
               {caseStudies.map((cs, i) => {
                 const isExpanded = expandedCase === i;
                 return (
-                  <div key={cs.id}>
+                  <div key={cs.id} style={{ marginBottom: 8 }}>
                     <button
                       onClick={() => setExpandedCase(isExpanded ? null : i)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all ${
-                        isExpanded ? 'bg-forest/5 border-forest/20' : 'bg-cream border-cream hover:border-forest/20'
-                      }`}
+                      style={{
+                        width: '100%', display: 'flex', alignItems: 'center', gap: 12,
+                        padding: '14px 18px', fontFamily: F, textAlign: 'left',
+                        background: isExpanded ? '#ecfdf5' : CC.bg,
+                        border: isExpanded ? `1px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
+                        borderRadius: isExpanded ? '14px 14px 0 0' : 14, cursor: 'pointer',
+                      }}
                     >
-                      <div className="flex items-center gap-3">
-                        <span className="text-3xl">{cs.icon}</span>
-                        <div className="flex-1">
-                          <div className="font-semibold text-gray-900">{cs.title}</div>
-                        </div>
-                        <span className="text-forest text-sm">{isExpanded ? '▲' : '▼'}</span>
+                      <span style={{ fontSize: 24 }}>{cs.icon}</span>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: 800, fontSize: 14, color: CC.title }}>{cs.title}</div>
                       </div>
+                      <span style={{ color: CC.light }}>{isExpanded ? '▲' : '▼'}</span>
                     </button>
                     {isExpanded && (
-                      <div className="px-4 pb-4 pt-3 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20">
-                        <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{cs.content}</p>
-                        {cs.citations && (
-                          <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
-                            <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
-                            {cs.citations.map((c: { text: string; url: string }, ci: number) => (
-                              <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                                className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
-                                {c.text}
-                              </a>
-                            ))}
-                          </div>
-                        )}
+                      <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, whiteSpace: 'pre-line' as const }}>
+                        {cs.content}
+                        {cs.citations && <CitationBlock citations={cs.citations} />}
                       </div>
                     )}
                   </div>
                 );
               })}
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ═══ TAB: SCIENCE ═══ */}
-        {activeTab === 'science' && (
-          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
-            <h2 className="font-display text-2xl text-gray-900 mb-6">The Science</h2>
+          {/* ═══ TAB: SCIENCE ═══ */}
+          {activeTab === 'science' && (
+            <div>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 24px' }}>The Science</h2>
 
-            <div className="bg-forest/5 border-l-4 border-forest rounded-r-xl p-5 mb-6">
-              <p className="text-sm text-gray-700 leading-relaxed mb-4">
-                High-intensity exercise (sprints, jumps) triggers acute GH release through lactate accumulation and neural activation. 30-second all-out sprints can increase GH by <strong>771% above baseline</strong> (Stokes KA. Sports Med. 2002).
-              </p>
-              <p className="text-sm text-gray-700 leading-relaxed mb-4">
-                Impact loading — jumping, running — mechanically stimulates growth plate chondrocytes through <strong>piezoelectric effects</strong>. The ground-reaction forces of 2-4× body weight trigger mechanotransduction, signaling osteoblasts to increase bone mineral deposition.
-              </p>
-              <p className="text-sm text-gray-700 leading-relaxed">
-                <strong>Intensity matters more than duration.</strong> Anaerobic threshold work produces the strongest GH response. Steady-state cardio doesn't produce the same effect. GH is released in pulses, with the largest spikes during high-intensity exercise and deep sleep recovery periods.
-              </p>
-            </div>
+              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 24 }}>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 12 }}>
+                  High-intensity exercise (sprints, jumps) triggers acute GH release through lactate accumulation and neural activation. 30-second all-out sprints can increase GH by <strong>771% above baseline</strong> (Stokes KA. Sports Med. 2002).
+                </p>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 12 }}>
+                  Impact loading — jumping, running — mechanically stimulates growth plate chondrocytes through <strong>piezoelectric effects</strong>. The ground-reaction forces of 2-4x body weight trigger mechanotransduction, signaling osteoblasts to increase bone mineral deposition.
+                </p>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                  <strong>Intensity matters more than duration.</strong> Anaerobic threshold work produces the strongest GH response. Steady-state cardio doesn't produce the same effect. GH is released in pulses, with the largest spikes during high-intensity exercise and deep sleep recovery periods.
+                </p>
+              </div>
 
-            <div className="bg-blue-50 border-l-4 border-blue-600 rounded-r-xl p-5 mb-6">
-              <div className="font-bold text-blue-600 mb-3">Key Principles</div>
-              <div className="space-y-2 text-sm">
+              <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 24 }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.title, marginBottom: 12 }}>Key Principles</div>
                 {[
                   ["Sprint > steady cardio", "771% GH from sprints vs minimal from jogging. Lactate is the GH secretagogue."],
                   ["Impact stimulates plates", "Jumping creates microfractures that heal longer. Stretch immediately after."],
@@ -752,25 +724,23 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
                   ["Recovery is growth", "The sprint triggers the signal. Rest and sleep are when the body actually builds."],
                   ["Multi-sport wins", "Coordination before strength. Diverse movement rewires the cerebellum."],
                 ].map(([title, desc], i) => (
-                  <div key={i}>
-                    <strong className="text-gray-900">{title}:</strong> <span className="text-gray-700">{desc}</span>
+                  <div key={i} style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 8 }}>
+                    <strong style={{ color: CC.title }}>{title}:</strong> {desc}
                   </div>
                 ))}
               </div>
-            </div>
 
-            <h3 className="font-display text-lg text-gray-900 mb-4">Key Citations</h3>
-            <div className="space-y-2">
+              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginBottom: 12 }}>Key Citations</div>
               {citations.map((c, i) => (
-                <div key={i} className="text-sm text-gray-600 p-2 bg-cream rounded-lg font-mono">
+                <div key={i} style={{ fontFamily: F, fontSize: 13, color: CC.light, padding: '6px 0', lineHeight: 1.75 }}>
                   {c}
                 </div>
               ))}
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
-      </main>
+      </div>
     </div>
   );
 }
