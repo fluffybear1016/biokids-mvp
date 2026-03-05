@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import { Child } from '@/lib/supabase';
-import { MovementHomeTab } from '@/components/HomeTabs';
 
 export default function PhysicalActivityWindow() {
   const [child, setChild] = useState<Child | null>(null);
   const [ageInMonths, setAgeInMonths] = useState(96); // Default 8 years
-  const [activeTab, setActiveTab] = useState<'home' | 'levers' | 'sprint' | 'athletes' | 'science'>('science');
+  const [activeTab, setActiveTab] = useState<'science' | 'yard' | 'deep'>('science');
+  const [expandedJump, setExpandedJump] = useState<string | null>(null);
+  const [expandedStretch, setExpandedStretch] = useState<string | null>(null);
   const [expandedLever, setExpandedLever] = useState<string | null>(null);
   const [expandedCase, setExpandedCase] = useState<number | null>(null);
   const [expandedJam, setExpandedJam] = useState<string | null>(null);
@@ -446,45 +447,45 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
           </div>
         </div>
 
-        {/* Age-based recommendations */}
-        <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 44 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-            <span style={{ fontFamily: F, fontSize: 14, color: CC.light }}>
-              {child ? `${child.name}'s protocol` : 'Age-based protocol'}:
-            </span>
+        {/* Hero: Personalized Protocol */}
+        <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '20px 22px', marginBottom: 44 }}>
+          <div style={{ fontFamily: F, fontSize: 11, fontWeight: 800, color: CC.green, textTransform: 'uppercase' as const, letterSpacing: '0.08em', marginBottom: 14 }}>
+            {child ? `${child.name}'s movement protocol` : 'Movement protocol'}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
             {[
-              { label: 'Age', value: String(Math.floor(ageInYears)) },
-              { label: 'Type', value: ageInYears < 8 ? "Play-based sprints" : ageInYears <= 12 ? "Structured 4-6 reps" : "Advanced 6x30s" },
-              { label: 'Freq', value: ageInYears < 13 ? "2-3x/week" : "1-2x/week" },
+              { label: 'Sprints', value: ageInYears < 8 ? "Play-based" : ageInYears <= 12 ? "4-6 reps" : "6×30s", sub: ageInYears < 13 ? "2-3×/week" : "1-2×/week" },
+              { label: 'Jumping', value: "Daily", sub: "10-15 min impact" },
+              { label: 'Stretching', value: "Daily", sub: "morning + post-impact" },
             ].map((item, i) => (
-              <span key={i} style={{ fontFamily: F, fontSize: 13, color: CC.body, background: CC.bg, padding: '6px 12px', borderRadius: 20 }}>
-                {item.label}: <strong style={{ color: CC.title }}>{item.value}</strong>
-              </span>
+              <div key={i}>
+                <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: 800, fontSize: 20, color: CC.green, lineHeight: 1.2 }}>{item.value}</div>
+                <div style={{ fontFamily: F, fontSize: 12, fontWeight: 800, color: CC.title, marginTop: 4 }}>{item.label}</div>
+                <div style={{ fontFamily: F, fontSize: 11, color: CC.light }}>{item.sub}</div>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Tab Bar */}
-        <div style={{ display: 'flex', gap: 0, marginBottom: 0, overflowX: 'auto', WebkitOverflowScrolling: 'touch', borderBottom: `1px solid ${CC.border}` }}>
+        {/* Tab Bar — 3 tabs */}
+        <div style={{ display: 'flex', gap: 0, marginBottom: 0, borderBottom: `1px solid ${CC.border}` }}>
           {[
             { id: 'science', label: 'Science' },
-            { id: 'levers', label: 'Levers' },
-            { id: 'sprint', label: 'Sprint' },
-            { id: 'athletes', label: 'Athletes' },
-            { id: 'home', label: 'Overview' },
+            { id: 'yard', label: 'Training' },
+            { id: 'deep', label: 'Deep Dive' },
           ].map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
               style={{
-                padding: '10px 16px', border: 'none',
+                flex: 1,
+                padding: '12px 16px', border: 'none',
                 background: 'transparent',
                 borderBottom: activeTab === tab.id ? `2px solid ${CC.green}` : '2px solid transparent',
-                fontSize: 12, fontFamily: F,
+                fontSize: 13, fontFamily: F,
                 fontWeight: activeTab === tab.id ? 700 : 500,
                 color: activeTab === tab.id ? CC.green : CC.light,
                 cursor: 'pointer', transition: 'all 0.2s',
-                whiteSpace: 'nowrap' as const, flexShrink: 0,
               }}
             >
               {tab.label}
@@ -495,18 +496,15 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
         {/* Tab Content */}
         <div style={{ padding: '24px 0', marginBottom: 44 }}>
 
-          {/* ═══ TAB: HOME ═══ */}
-          {activeTab === 'home' && (
-            <div style={{ padding: 8 }}>
-              <MovementHomeTab age={Math.floor(ageInMonths / 12)} />
-            </div>
-          )}
-
-          {/* ═══ TAB: LEVERS ═══ */}
-          {activeTab === 'levers' && (
+          {/* ═══ TAB: TRAINING ═══ */}
+          {activeTab === 'yard' && (
             <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px', textAlign: 'center' }}>Movement Levers</h2>
-              <p style={{ textAlign: 'center', fontFamily: F, color: CC.light, fontSize: 14, marginBottom: 24 }}>Ranked by impact on height and development. Do #1 first.</p>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Training</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 28 }}>Every lever ranked by impact. Sprint, jump, stretch — in that order.</p>
+
+              {/* ── Section: Movement Levers ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginBottom: 4 }}>Movement Levers</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>Ranked by impact on height and development. Do #1 first.</p>
 
               {movementLevers.map((lever) => {
                 const isExpanded = expandedLever === lever.id;
@@ -549,33 +547,10 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
                 );
               })}
 
-              {/* Never section */}
-              <div style={{ marginTop: 24, background: CC.card, borderRadius: 14, padding: '14px 18px', border: `1px solid ${CC.border}` }}>
-                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.red, marginBottom: 10 }}>Never</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 8 }}>
-                  {[
-                    "Weight lifting before age 19",
-                    "Long slow cardio (>20 min kills fast-twitch)",
-                    "Sedentary lifestyle",
-                    "Overtraining without rest days",
-                    "Single-sport before age 14",
-                    "Training through illness/fatigue",
-                    "Screens over outdoor play",
-                    "Fear-based coaching",
-                  ].map((item, i) => (
-                    <div key={i} style={{ fontFamily: F, fontSize: 13, color: CC.body, lineHeight: 1.75 }}>✕ {item}</div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
+              {/* ── Section: Sprint Protocol ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4 }}>Sprint Protocol</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>Age-appropriate progressions. Your child&apos;s current stage is highlighted.</p>
 
-          {/* ═══ TAB: SPRINT ═══ */}
-          {activeTab === 'sprint' && (
-            <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 24px' }}>Sprint Protocol</h2>
-
-              {/* Age-appropriate protocols */}
               {sprintProtocols.map((p, i) => (
                 <div key={i} style={{
                   padding: '14px 18px', borderRadius: p.active ? 20 : 14, marginBottom: 8,
@@ -592,8 +567,114 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
                 </div>
               ))}
 
-              {/* The Stack */}
-              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 16, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>The Sprint Nutrition Stack</div>
+              {/* ── Section: Jumping Protocol ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4 }}>Jumping Protocol</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>Impact loading stimulates growth plates directly. Jump training increased femur length, tibia length, and bone diameter in research.</p>
+
+              {/* Jump hero stat */}
+              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 20 }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 28, color: CC.green }}>2-4×</div>
+                <div style={{ fontFamily: F, fontSize: 14, color: CC.body, marginTop: 4 }}>body weight in ground-reaction force per jump — triggering mechanotransduction at growth plates.</div>
+                <div style={{ fontFamily: F, fontSize: 13, color: CC.light, marginTop: 8 }}>Gunter KB. Bone. 2008 · McKay HA. J Bone Miner Res. 2005 · Dennis Raney — femur/tibia research</div>
+              </div>
+
+              {[
+                { id: "j1", title: "Jump Rope", sub: "30-60 seconds × 10-15 sets", content: "Rhythmic bilateral impact. Develops coordination, timing, and calf strength. Low injury risk, high repetition count means hundreds of micro-impacts per session. The simplest daily jumping tool.", timing: "Daily. Great warm-up before sprints." },
+                { id: "j2", title: "Broad Jumps & Box Jumps", sub: "3-5 sets of 8-10 reps", content: "Maximum ground-reaction force. Broad jumps develop horizontal power (sprinting transfer). Box jumps develop vertical explosiveness. Both create substantial growth plate stimulation through high-force landings.", timing: "2-3×/week. On grass or mats for joint protection." },
+                { id: "j3", title: "Masai Vertical Jumps", sub: "Tall, straight, minimal knee bend", content: "The Maasai people of East Africa are among the tallest populations on Earth. Their traditional jumping dance (adumu) involves straight-legged vertical jumps with minimal knee bend — maximizing axial loading through the spine and lower extremities. This style emphasizes height of jump over depth of squat.", timing: "Daily. Can be done anywhere. 3-5 sets of 10." },
+                { id: "j4", title: "Trampoline & Rebounding", sub: "10-15 minutes of varied jumping", content: "Lower joint impact than hard surfaces while maintaining growth plate stimulation. Excellent for younger children (ages 3-7) who need high-volume jumping in a play context. Develops balance and proprioception.", timing: "Daily for young children. Supplement — not replacement — for ground-based jumping." },
+                { id: "j5", title: "Single-Leg Hops & Bounds", sub: "Sport-specific power development", content: "Unilateral jumping develops balance, corrects asymmetries, and creates higher per-leg force than bilateral jumps. Bounding (alternating single-leg jumps covering distance) is the foundation of sprint acceleration mechanics. Every elite sprinter bounds.", timing: "2-3×/week for ages 8+. Start bilateral, progress to single-leg." },
+              ].map((jump) => {
+                const isExpanded = expandedJump === jump.id;
+                return (
+                  <div key={jump.id} style={{ marginBottom: 8 }}>
+                    <button
+                      onClick={() => setExpandedJump(isExpanded ? null : jump.id)}
+                      style={{
+                        width: '100%', textAlign: 'left', padding: '14px 18px', fontFamily: F,
+                        background: isExpanded ? '#ecfdf5' : CC.bg,
+                        border: `1px solid ${isExpanded ? CC.sigBorder : CC.border}`,
+                        borderRadius: isExpanded ? '14px 14px 0 0' : 14, cursor: 'pointer',
+                      }}
+                    >
+                      <div style={{ fontWeight: 800, fontSize: 14, color: CC.title }}>{jump.title}</div>
+                      <div style={{ fontSize: 13, color: CC.green, marginTop: 2 }}>{jump.sub}</div>
+                    </button>
+                    {isExpanded && (
+                      <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                        <p style={{ marginBottom: 12 }}>{jump.content}</p>
+                        <div style={{ fontSize: 13, fontWeight: 800, color: CC.green, background: CC.card, padding: '8px 12px', borderRadius: 10, border: `1px solid ${CC.sigBorder}` }}>
+                          Timing: {jump.timing}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+
+              <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginTop: 12 }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 13, color: CC.green, marginBottom: 6 }}>Critical window</div>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                  Ages 3-5 are critical — children who jump regularly develop significantly higher bone mineral density that persists into adulthood. Don&apos;t wait for organized sports. Hopscotch, jumping off steps, and trampoline play count.
+                </p>
+              </div>
+
+              {/* ── Section: Stretching Protocol ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4 }}>Stretching Protocol</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>Impact creates microfractures. These heal in whatever position the bone is held. Stretch during repair = healing in an elongated position.</p>
+
+              {/* Stretch hero stat */}
+              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 20 }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 28, color: CC.green }}>+2.7–7.7mm</div>
+                <div style={{ fontFamily: F, fontSize: 14, color: CC.body, marginTop: 4 }}>measurable height gain from inflatable cushion decompression protocol alone (Dennis Raney research).</div>
+                <div style={{ fontFamily: F, fontSize: 13, color: CC.light, marginTop: 8 }}>Nachemson AL. Spine. 1981 · Healey EL. Man Ther. 2012</div>
+              </div>
+
+              {[
+                { id: "s1", title: "Dead Hangs", sub: "30-60 sec × multiple sets. Progress to ankle weights (10-30 lbs).", content: "Spinal decompression under gravity. Reverses the ~1cm of compression that accumulates throughout the day. Stretches the entire posterior chain — lats, shoulders, spine, hip flexors. Michael Jordan hung from bars during his growth years. Flutter kicks while hanging add posterior chain engagement.", timing: "Morning (spine is longest after sleep) + after every sprint/jump session. Daily." },
+                { id: "s2", title: "The Cobra Stretch", sub: "Prone, push chest up, hold 20-30 sec × 3-5 reps", content: "Decompresses the lumbar spine and opens the anterior chain. Extends the hip flexors which become shortened from sitting. For developing athletes, tight hip flexors limit sprint stride length and can compress the lower spine during growth.", timing: "Morning + evening. Essential for kids who sit at school all day." },
+                { id: "s3", title: "Cat-Cow", sub: "Hands and knees, alternate rounding and arching", content: "Mobilizes every segment of the spine. The rounding (cat) stretches the posterior chain; the arching (cow) stretches the anterior chain. Together they pump fluid into intervertebral discs, maintaining disc height and spinal flexibility. Play-friendly for all ages.", timing: "Morning warm-up. 10-15 slow repetitions." },
+                { id: "s4", title: "The Ultimate Fascia Stretch", sub: "Full body elongation targeting fascia chains", content: "Fascia — the connective tissue wrapping every muscle and bone — can create restrictions that limit growth if it becomes tight or adhered. Full-body elongation stretches (reaching overhead while extending through the toes) target the superficial back line, a continuous fascial chain from the plantar fascia through the hamstrings, up the erectors, over the skull to the brow.", timing: "Daily. Hold 30 seconds, repeat 3-5 times." },
+                { id: "s5", title: "Inversion Table / Incline Stretch", sub: "60-90° angle, 1-5 min per set", content: "Reverses gravitational compression on the spine. Traction separates vertebrae and allows disc rehydration. The inflatable cushion protocol (Dennis Raney) showed 2.766mm to 7.66mm height gain. For children, gentle incline stretching (feet elevated, head down on a slant board) achieves similar decompression without the equipment.", timing: "Multiple times daily if possible. Start with 1 min, progress to 5 min." },
+                { id: "s6", title: "Resistance Band Shin/Femur Stretches", sub: "20-30 second holds for tensile loading", content: "Resistance bands wrapped around the lower leg create gentle tensile stress along the tibia and femur — the two bones most responsive to longitudinal growth. This tensile loading, combined with the microfracture healing from jumping, creates the mechanical environment for bone elongation. Not compression (weights) but tension (bands).", timing: "Post-impact sessions. 3-5 sets of 20-30 second holds per leg." },
+              ].map((stretch) => {
+                const isExpanded = expandedStretch === stretch.id;
+                return (
+                  <div key={stretch.id} style={{ marginBottom: 8 }}>
+                    <button
+                      onClick={() => setExpandedStretch(isExpanded ? null : stretch.id)}
+                      style={{
+                        width: '100%', textAlign: 'left', padding: '14px 18px', fontFamily: F,
+                        background: isExpanded ? '#ecfdf5' : CC.bg,
+                        border: `1px solid ${isExpanded ? CC.sigBorder : CC.border}`,
+                        borderRadius: isExpanded ? '14px 14px 0 0' : 14, cursor: 'pointer',
+                      }}
+                    >
+                      <div style={{ fontWeight: 800, fontSize: 14, color: CC.title }}>{stretch.title}</div>
+                      <div style={{ fontSize: 13, color: CC.green, marginTop: 2 }}>{stretch.sub}</div>
+                    </button>
+                    {isExpanded && (
+                      <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                        <p style={{ marginBottom: 12 }}>{stretch.content}</p>
+                        <div style={{ fontSize: 13, fontWeight: 800, color: CC.green, background: CC.card, padding: '8px 12px', borderRadius: 10, border: `1px solid ${CC.sigBorder}` }}>
+                          Timing: {stretch.timing}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+
+              <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginTop: 12 }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 13, color: CC.green, marginBottom: 6 }}>By age</div>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                  Toddlers: play-based &quot;animal walks,&quot; reaching for toys. Preschoolers: cat-cow, child&apos;s pose, cobra. School-age: structured 5-10 min daily. ALL ages: never force — should feel good, not painful.
+                </p>
+              </div>
+
+              {/* ── Section: Sprint Nutrition Stack ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4 }}>The Sprint Nutrition Stack</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>What to eat before, during, and after — to convert the GH spike into actual growth.</p>
               {sprintStack.map((s, i) => (
                 <div key={i} style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 8 }}>
                   <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.green, marginBottom: 8 }}>
@@ -605,67 +686,35 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
                 </div>
               ))}
 
-              {/* Sprint vs Weights */}
-              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 16, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>Sprint vs Weight Lifting</div>
-              <div style={{ overflowX: 'auto', marginBottom: 24 }}>
-                <table style={{ width: '100%', fontSize: 13, fontFamily: F, borderCollapse: 'collapse' }}>
-                  <thead>
-                    <tr style={{ background: CC.bg }}>
-                      <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: 800, color: CC.title, borderBottom: `2px solid ${CC.border}` }}>Factor</th>
-                      <th style={{ padding: '10px 12px', textAlign: 'center', fontWeight: 800, color: CC.green, borderBottom: `2px solid ${CC.border}` }}>Sprinting</th>
-                      <th style={{ padding: '10px 12px', textAlign: 'center', fontWeight: 800, color: CC.red, borderBottom: `2px solid ${CC.border}` }}>Weights</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sprintVsWeights.map(([factor, sprint, weight], i) => (
-                      <tr key={i} style={{ borderBottom: `1px solid ${CC.border}` }}>
-                        <td style={{ padding: '10px 12px', fontWeight: 800, color: CC.title }}>{factor}</td>
-                        <td style={{ padding: '10px 12px', textAlign: 'center', color: CC.green }}>{sprint}</td>
-                        <td style={{ padding: '10px 12px', textAlign: 'center', color: CC.red }}>{weight}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Jamaican Method */}
-              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 16, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>The Jamaican High School Method</div>
-              {jamaicanMethod.map((phase) => {
-                const isExpanded = expandedJam === phase.id;
-                return (
-                  <div key={phase.id} style={{ marginBottom: 8 }}>
-                    <button
-                      onClick={() => setExpandedJam(isExpanded ? null : phase.id)}
-                      style={{
-                        width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                        padding: '14px 18px', fontFamily: F, textAlign: 'left',
-                        background: isExpanded ? '#ecfdf5' : CC.bg,
-                        border: isExpanded ? `1px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
-                        borderRadius: isExpanded ? '14px 14px 0 0' : 14, cursor: 'pointer',
-                      }}
-                    >
-                      <div>
-                        <div style={{ fontWeight: 800, fontSize: 14, color: CC.title }}>{phase.title}</div>
-                        <div style={{ fontSize: 13, color: CC.light }}>{phase.subtitle}</div>
-                      </div>
-                      <span style={{ color: CC.light }}>{isExpanded ? '▲' : '▼'}</span>
-                    </button>
-                    {isExpanded && (
-                      <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
-                        {phase.content}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+              {/* ── Section: Never ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.red, marginTop: 44, marginBottom: 4 }}>What to Avoid</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>These directly interfere with development.</p>
+              {[
+                ["Weight lifting before age 19", "Compression damages open growth plates. Sprints give better GH stimulus anyway."],
+                ["Long slow cardio (>20 min)", "Kills fast-twitch fibers. Steady-state doesn't trigger GH."],
+                ["Single-sport before age 14", "Overuse injuries, burnout, missed coordination windows."],
+                ["Overtraining without rest days", "Chronic cortisol directly suppresses GH. Growth happens during recovery."],
+                ["Training through illness/fatigue", "Immune stress + training stress = net negative."],
+                ["Screens over outdoor play", "Every hour on screens is an hour not moving."],
+                ["Fear-based coaching", "Anxiety raises cortisol. Confidence and swagger build athletes."],
+                ["Sedentary lifestyle", "A child who eats perfectly but is sedentary misses local IGF-1 stimulation at growth plates."],
+              ].map(([item, reason], i) => (
+                <div key={i} style={{ fontFamily: F, fontSize: 13, color: CC.body, padding: '6px 0', lineHeight: 1.75 }}>
+                  <span style={{ color: CC.red, fontWeight: 800 }}>✕</span> <strong>{item}</strong> — {reason}
+                </div>
+              ))}
             </div>
           )}
 
-          {/* ═══ TAB: ATHLETES ═══ */}
-          {activeTab === 'athletes' && (
+          {/* ═══ TAB: DEEP DIVE ═══ */}
+          {activeTab === 'deep' && (
             <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px' }}>Case Studies</h2>
-              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 24 }}>Real athletes and cultures that prove these principles work.</p>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Deep Dive</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 28 }}>Case studies, training methods, and the evidence that this approach builds elite athletes.</p>
+
+              {/* ── Case Studies ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginBottom: 4 }}>Case Studies</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>Real athletes and cultures that prove these principles work.</p>
 
               {caseStudies.map((cs, i) => {
                 const isExpanded = expandedCase === i;
@@ -691,6 +740,61 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
                       <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, whiteSpace: 'pre-line' as const }}>
                         {cs.content}
                         {cs.citations && <CitationBlock citations={cs.citations} />}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+
+              {/* ── Sprint vs Weights ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 16 }}>Sprint vs Weight Lifting</div>
+              <div style={{ overflowX: 'auto', marginBottom: 24 }}>
+                <table style={{ width: '100%', fontSize: 13, fontFamily: F, borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ background: CC.bg }}>
+                      <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: 800, color: CC.title, borderBottom: `2px solid ${CC.border}` }}>Factor</th>
+                      <th style={{ padding: '10px 12px', textAlign: 'center', fontWeight: 800, color: CC.green, borderBottom: `2px solid ${CC.border}` }}>Sprinting</th>
+                      <th style={{ padding: '10px 12px', textAlign: 'center', fontWeight: 800, color: CC.red, borderBottom: `2px solid ${CC.border}` }}>Weights</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sprintVsWeights.map(([factor, sprint, weight], i) => (
+                      <tr key={i} style={{ borderBottom: `1px solid ${CC.border}` }}>
+                        <td style={{ padding: '10px 12px', fontWeight: 800, color: CC.title }}>{factor}</td>
+                        <td style={{ padding: '10px 12px', textAlign: 'center', color: CC.green }}>{sprint}</td>
+                        <td style={{ padding: '10px 12px', textAlign: 'center', color: CC.red }}>{weight}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* ── Jamaican Method ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4 }}>The Jamaican High School Method</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>How a 3-million-person island produces 70-80% of top global 100m times. No weights.</p>
+              {jamaicanMethod.map((phase) => {
+                const isExpanded = expandedJam === phase.id;
+                return (
+                  <div key={phase.id} style={{ marginBottom: 8 }}>
+                    <button
+                      onClick={() => setExpandedJam(isExpanded ? null : phase.id)}
+                      style={{
+                        width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        padding: '14px 18px', fontFamily: F, textAlign: 'left',
+                        background: isExpanded ? '#ecfdf5' : CC.bg,
+                        border: isExpanded ? `1px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
+                        borderRadius: isExpanded ? '14px 14px 0 0' : 14, cursor: 'pointer',
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontWeight: 800, fontSize: 14, color: CC.title }}>{phase.title}</div>
+                        <div style={{ fontSize: 13, color: CC.light }}>{phase.subtitle}</div>
+                      </div>
+                      <span style={{ color: CC.light }}>{isExpanded ? '▲' : '▼'}</span>
+                    </button>
+                    {isExpanded && (
+                      <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                        {phase.content}
                       </div>
                     )}
                   </div>

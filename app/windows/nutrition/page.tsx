@@ -262,7 +262,7 @@ export default function NutritionWindow() {
         <div style={{ display: 'flex', gap: 0, marginBottom: 0, borderBottom: `1px solid ${CC.border}` }}>
           {[
             { id: 'science', label: 'Science' },
-            { id: 'protocol', label: 'Protocol' },
+            { id: 'protocol', label: 'Kitchen' },
             { id: 'deep', label: 'Deep Dive' },
           ].map(tab => (
             <button
