@@ -27,6 +27,21 @@ function calculateAgeInYears(birthDate: string): number {
   return age;
 }
 
+// Design tokens
+const F = "'Courier New', Courier, monospace";
+const C = {
+  bg: '#fafaf9',
+  card: '#fff',
+  border: '#e7e5e4',
+  sigBorder: '#a7f3d0',
+  title: '#1c1917',
+  body: '#57534e',
+  light: '#a8a29e',
+  green: '#059669',
+  red: '#dc2626',
+  redLight: '#7f1d1d',
+};
+
 export default function SleepCircadianWindow() {
   const [child, setChild] = useState<Child>(mockChild);
   const [activeTab, setActiveTab] = useState('home');
@@ -703,30 +718,30 @@ Zero tolerance.`,
 
   const AgeTable = ({ data, columns, title }: { data: Record<string, unknown>[]; columns: { header: string; key: string }[]; title: string }) => (
     <div style={{ marginTop: 16, marginBottom: 16 }}>
-      <div style={{ fontWeight: 600, fontSize: 14, color: '#1B4332', marginBottom: 8 }}>{title}</div>
+      <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: C.title, marginBottom: 8 }}>{title}</div>
       <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, fontFamily: F }}>
           <thead>
-            <tr style={{ background: '#f5f5f5' }}>
+            <tr style={{ background: C.bg }}>
               {columns.map((col, i) => (
-                <th key={i} style={{ padding: '10px 12px', textAlign: 'left', borderBottom: '2px solid #e5e5e5', fontWeight: 600 }}>{col.header}</th>
+                <th key={i} style={{ padding: '10px 12px', textAlign: 'left', borderBottom: `2px solid ${C.border}`, fontWeight: 800, color: C.title }}>{col.header}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {data.map((row, i) => (
               <tr key={i} style={{
-                background: isActiveRow(row.range as number[]) ? '#dcfce7' : 'white',
-                fontWeight: isActiveRow(row.range as number[]) ? 600 : 400
+                background: isActiveRow(row.range as number[]) ? '#ecfdf5' : C.card,
+                fontWeight: isActiveRow(row.range as number[]) ? 800 : 400
               }}>
                 {columns.map((col, j) => (
                   <td key={j} style={{
                     padding: '10px 12px',
-                    borderBottom: '1px solid #eee',
-                    color: isActiveRow(row.range as number[]) ? '#166534' : '#333'
+                    borderBottom: `1px solid ${C.border}`,
+                    color: isActiveRow(row.range as number[]) ? C.green : C.body
                   }}>
                     {row[col.key] as string}
-                    {isActiveRow(row.range as number[]) && j === 0 && <span style={{ marginLeft: 8, fontSize: 11, background: '#166534', color: 'white', padding: '2px 6px', borderRadius: 4 }}>YOUR CHILD</span>}
+                    {isActiveRow(row.range as number[]) && j === 0 && <span style={{ marginLeft: 8, fontSize: 11, fontFamily: F, background: C.green, color: 'white', padding: '2px 6px', borderRadius: 4 }}>YOUR CHILD</span>}
                   </td>
                 ))}
               </tr>
@@ -737,53 +752,61 @@ Zero tolerance.`,
     </div>
   );
 
+  // Citation block helper
+  const CitationBlock = ({ citations }: { citations: { text: string; url: string }[] }) => (
+    <div style={{ marginTop: 12, background: C.bg, borderRadius: 14, padding: 12, fontFamily: F }}>
+      <p style={{ fontSize: 10, color: C.light, fontWeight: 800, marginBottom: 4 }}>Peer-reviewed:</p>
+      {citations.map((c, ci) => (
+        <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
+          style={{ display: 'block', fontSize: 10, color: C.green, textDecoration: 'underline', paddingLeft: 8, borderLeft: `2px solid ${C.sigBorder}`, marginBottom: 4 }}>
+          {c.text}
+        </a>
+      ))}
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-cream">
+    <div style={{ minHeight: '100vh', background: C.bg }}>
       <Nav currentChild={child} />
 
-      <main className="max-w-3xl mx-auto px-4 py-6 sm:py-12">
+      <div style={{ maxWidth: 540, margin: '0 auto', padding: '0 20px', paddingTop: 32, paddingBottom: 64 }}>
 
         {/* Back Link */}
-        <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-forest mb-6">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <Link href="/dashboard" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: F, fontSize: 14, color: C.light, textDecoration: 'none', marginBottom: 24 }}>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
           Back to Dashboard
         </Link>
 
-        {/* Header Card */}
-        <div style={{ background: 'linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)', borderRadius: 16, padding: '20px', marginBottom: 20, color: 'white', position: 'relative' }} className="sm:!p-8">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
-            <span style={{ background: 'rgba(255,255,255,0.2)', padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 600 }}>🌙 Sleep Window</span>
-            <span style={{ background: 'rgba(255,255,255,0.2)', padding: '6px 14px', borderRadius: 20, fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ width: 8, height: 8, background: '#4ade80', borderRadius: '50%', display: 'inline-block' }}></span>
-              Optimal
-            </span>
+        {/* Page Title */}
+        <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', marginBottom: 8 }}>
+          Sleep & Circadian
+        </h1>
+        <p style={{ fontFamily: F, fontSize: 14, color: C.body, lineHeight: 1.75, marginBottom: 24 }}>
+          Sleep is the #1 lever a parent has to grow a taller, stronger child. Each night of deep sleep is a growth rep for the GH axis. Your job: maximize sleep reps, every night, for years. <em>Growth only happens lying down.</em>
+        </p>
+
+        {/* Key Stats — signature card */}
+        <div style={{ background: C.card, border: `2px solid ${C.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 44, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <div>
+            <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 22, color: C.green }}>60-80%</div>
+            <div style={{ fontFamily: F, fontSize: 14, color: C.light }}>GH in first 3 hours</div>
           </div>
-          <h1 style={{ fontWeight: 700, margin: '0 0 12px' }} className="text-2xl sm:text-[32px]">Sleep & Circadian</h1>
-          <p style={{ fontSize: 15, opacity: 0.9, lineHeight: 1.6, maxWidth: 600 }}>
-            Sleep is the #1 lever a parent has to grow a taller, stronger child. Each night of deep sleep is a growth rep for the GH axis. Your job: maximize sleep reps, every night, for years. <em>Growth only happens lying down.</em>
-          </p>
-          <div style={{ display: 'flex', gap: 16, marginTop: 24, flexWrap: 'wrap' }} className="sm:!gap-8">
-            <div>
-              <div style={{ fontSize: 28, fontWeight: 700 }}>60-80%</div>
-              <div style={{ fontSize: 13, opacity: 0.8 }}>GH in first 3 hours</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 28, fontWeight: 700 }}>25-40%</div>
-              <div style={{ fontSize: 13, opacity: 0.8 }}>children&apos;s SWS vs 15-25% adults</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 28, fontWeight: 700 }}>10-1 AM</div>
-              <div style={{ fontSize: 13, opacity: 0.8 }}>peak GH window</div>
-            </div>
+          <div>
+            <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 22, color: C.green }}>25-40%</div>
+            <div style={{ fontFamily: F, fontSize: 14, color: C.light }}>children&apos;s SWS vs 15-25% adults</div>
+          </div>
+          <div>
+            <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 22, color: C.green }}>10-1 AM</div>
+            <div style={{ fontFamily: F, fontSize: 14, color: C.light }}>peak GH window</div>
           </div>
         </div>
 
-        {/* Age Selector + Targets Bar */}
-        <div style={{ background: 'white', borderRadius: 12, padding: '16px 20px', marginBottom: 20, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        {/* Age Selector + Targets */}
+        <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 44 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-            <span style={{ fontSize: 14, color: '#666' }}>Child&apos;s age:</span>
+            <span style={{ fontFamily: F, fontSize: 14, color: C.light }}>Child&apos;s age:</span>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <input
                 type="range"
@@ -793,22 +816,28 @@ Zero tolerance.`,
                 onChange={(e) => setChildAge(Number(e.target.value))}
                 style={{ width: 120 }}
               />
-              <span style={{ background: '#1B4332', color: 'white', padding: '6px 14px', borderRadius: 20, fontSize: 14, fontWeight: 600, minWidth: 60, textAlign: 'center' }}>
+              <span style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.green, background: '#ecfdf5', padding: '6px 14px', borderRadius: 20, minWidth: 60, textAlign: 'center' }}>
                 {childAge < 1 ? `${Math.round(childAge * 12)} mo` : `${childAge} yr`}
               </span>
             </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginTop: 12 }}>
-            <span style={{ background: '#f0f0f0', padding: '6px 12px', borderRadius: 20, fontSize: 13 }}>Sleep: <strong>{currentSleep.target}</strong></span>
-            <span style={{ background: '#f0f0f0', padding: '6px 12px', borderRadius: 20, fontSize: 13 }}>Bedtime: <strong>{currentBedtime.bedtime}</strong></span>
-            <span style={{ background: '#f0f0f0', padding: '6px 12px', borderRadius: 20, fontSize: 13 }}>Milk: <strong>{currentMilk.amount}</strong></span>
-            <span style={{ background: '#f0f0f0', padding: '6px 12px', borderRadius: 20, fontSize: 13 }}>Tart cherry: <strong>{currentCherry.dose}</strong></span>
-            <span style={{ background: '#f0f0f0', padding: '6px 12px', borderRadius: 20, fontSize: 13 }}>Mg bath: <strong>{getMagnesiumDose()}</strong></span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
+            {[
+              { label: 'Sleep', value: currentSleep.target },
+              { label: 'Bedtime', value: currentBedtime.bedtime },
+              { label: 'Milk', value: currentMilk.amount },
+              { label: 'Tart cherry', value: currentCherry.dose },
+              { label: 'Mg bath', value: getMagnesiumDose() },
+            ].map((item, i) => (
+              <span key={i} style={{ fontFamily: F, fontSize: 13, color: C.body, background: C.bg, padding: '6px 12px', borderRadius: 20 }}>
+                {item.label}: <strong style={{ color: C.title }}>{item.value}</strong>
+              </span>
+            ))}
           </div>
         </div>
 
         {/* Tab Bar */}
-        <div style={{ display: 'flex', gap: 4, marginBottom: 0, background: '#f5f5f5', padding: 4, borderRadius: '12px 12px 0 0', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        <div style={{ display: 'flex', gap: 4, marginBottom: 0, background: C.bg, padding: 4, borderRadius: '14px 14px 0 0', overflowX: 'auto', WebkitOverflowScrolling: 'touch', border: `1px solid ${C.border}`, borderBottom: 'none' }}>
           {tabs.map(tab => (
             <button
               key={tab.id}
@@ -816,11 +845,12 @@ Zero tolerance.`,
               style={{
                 padding: '10px 14px',
                 border: 'none',
-                background: activeTab === tab.id ? 'white' : 'transparent',
-                borderRadius: 8,
+                background: activeTab === tab.id ? C.card : 'transparent',
+                borderRadius: 10,
                 fontSize: 13,
-                fontWeight: activeTab === tab.id ? 600 : 400,
-                color: activeTab === tab.id ? '#1B4332' : '#666',
+                fontFamily: F,
+                fontWeight: activeTab === tab.id ? 800 : 400,
+                color: activeTab === tab.id ? C.title : C.light,
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 whiteSpace: 'nowrap' as const,
@@ -833,7 +863,7 @@ Zero tolerance.`,
         </div>
 
         {/* Tab Content */}
-        <div style={{ background: 'white', borderRadius: '0 12px 12px 12px', padding: 24, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div style={{ background: C.card, borderRadius: '0 0 14px 14px', padding: '18px', border: `1px solid ${C.border}`, borderTop: 'none', marginBottom: 44 }}>
 
           {/* HOME TAB */}
           {activeTab === 'home' && (
@@ -845,8 +875,8 @@ Zero tolerance.`,
           {/* TODAY TAB */}
           {activeTab === 'today' && (
             <div>
-              <h2 style={{ fontSize: 22, fontWeight: 700, color: '#1B4332', margin: '0 0 8px', textAlign: 'center' }}>Sleep Levers</h2>
-              <p style={{ textAlign: 'center', color: '#888', fontSize: 14, marginBottom: 24 }}>Ranked by impact on slow-wave sleep. Do #1 first.</p>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 8px', textAlign: 'center' }}>Sleep Levers</h2>
+              <p style={{ textAlign: 'center', fontFamily: F, color: C.light, fontSize: 14, marginBottom: 24 }}>Ranked by impact on slow-wave sleep. Do #1 first.</p>
 
               {levers.map((lever, i) => (
                 <div key={i} style={{ marginBottom: 8 }}>
@@ -857,10 +887,11 @@ Zero tolerance.`,
                       display: 'flex',
                       alignItems: 'flex-start',
                       gap: 14,
-                      padding: '16px 18px',
-                      background: expandedLever === i ? '#f0fdf4' : '#fafafa',
-                      border: expandedLever === i ? '1px solid #bbf7d0' : '1px solid #eee',
-                      borderRadius: expandedLever === i ? '12px 12px 0 0' : 12,
+                      padding: '14px 18px',
+                      fontFamily: F,
+                      background: expandedLever === i ? '#ecfdf5' : C.bg,
+                      border: expandedLever === i ? `1px solid ${C.sigBorder}` : `1px solid ${C.border}`,
+                      borderRadius: expandedLever === i ? '14px 14px 0 0' : 14,
                       cursor: 'pointer',
                       textAlign: 'left'
                     }}
@@ -868,45 +899,36 @@ Zero tolerance.`,
                     <span style={{
                       width: 28,
                       height: 28,
-                      background: '#1B4332',
+                      background: C.green,
                       color: 'white',
                       borderRadius: '50%',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       fontSize: 13,
-                      fontWeight: 600,
+                      fontFamily: F,
+                      fontWeight: 800,
                       flexShrink: 0
                     }}>{i + 1}</span>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontWeight: 600, fontSize: 15, color: '#1B4332', marginBottom: 4 }}>{lever.title}</div>
-                      <div style={{ fontSize: 13, color: '#666', lineHeight: 1.5 }}>{lever.what}</div>
+                      <div style={{ fontWeight: 800, fontSize: 14, color: C.title, marginBottom: 4 }}>{lever.title}</div>
+                      <div style={{ fontSize: 13, color: C.body, lineHeight: 1.75 }}>{lever.what}</div>
                     </div>
-                    <span style={{ color: '#999', fontSize: 18 }}>{expandedLever === i ? '\u25B2' : '\u25BC'}</span>
+                    <span style={{ color: C.light, fontSize: 18 }}>{expandedLever === i ? '\u25B2' : '\u25BC'}</span>
                   </button>
                   {expandedLever === i && (
-                    <div style={{ padding: '16px 18px', background: '#f0fdf4', borderRadius: '0 0 12px 12px', border: '1px solid #bbf7d0', borderTop: 'none' }}>
-                      <div style={{ fontSize: 14, color: '#444', lineHeight: 1.7, marginBottom: 12, whiteSpace: 'pre-line' }}>{lever.why}</div>
-                      <div style={{ fontSize: 13, color: '#1B4332', fontWeight: 600, background: '#dcfce7', padding: '8px 12px', borderRadius: 6 }}>\u23F0 {lever.timing}</div>
-                      {lever.citations && (
-                        <div style={{ marginTop: 12, background: '#f5f5f4', borderRadius: 8, padding: 12, fontFamily: "'Courier New', Courier, monospace" }}>
-                          <p style={{ fontSize: 10, color: '#78716c', fontWeight: 500, marginBottom: 4 }}>Peer-reviewed:</p>
-                          {lever.citations.map((c: { text: string; url: string }, ci: number) => (
-                            <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                              style={{ display: 'block', fontSize: 10, color: '#047857', textDecoration: 'underline', paddingLeft: 8, borderLeft: '2px solid #a7f3d0', marginBottom: 4 }}>
-                              {c.text}
-                            </a>
-                          ))}
-                        </div>
-                      )}
+                    <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${C.sigBorder}`, borderTop: 'none' }}>
+                      <div style={{ fontFamily: F, fontSize: 14, color: C.body, lineHeight: 1.75, marginBottom: 12, whiteSpace: 'pre-line' }}>{lever.why}</div>
+                      <div style={{ fontFamily: F, fontSize: 13, fontWeight: 800, color: C.green, background: C.card, padding: '8px 12px', borderRadius: 10, border: `1px solid ${C.sigBorder}` }}>{lever.timing}</div>
+                      {lever.citations && <CitationBlock citations={lever.citations} />}
                     </div>
                   )}
                 </div>
               ))}
 
               {/* Full Age Tables */}
-              <div style={{ marginTop: 32, padding: 20, background: '#f9fafb', borderRadius: 12 }}>
-                <h3 style={{ fontSize: 18, fontWeight: 700, color: '#1B4332', marginBottom: 16 }}>📊 Complete Age-Based Reference Tables</h3>
+              <div style={{ marginTop: 44, padding: '14px 18px', background: C.card, borderRadius: 14, border: `1px solid ${C.border}` }}>
+                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.title, marginBottom: 16 }}>Complete Age-Based Reference Tables</h3>
 
                 <AgeTable
                   title="Sleep Duration Targets"
@@ -952,11 +974,11 @@ Zero tolerance.`,
               </div>
 
               {/* Never Box */}
-              <div style={{ marginTop: 24, background: '#fef2f2', borderRadius: 12, padding: '18px 22px', border: '1px solid #fecaca' }}>
-                <div style={{ fontWeight: 700, fontSize: 15, color: '#dc2626', marginBottom: 10 }}>🚫 Never</div>
+              <div style={{ marginTop: 24, background: C.card, borderRadius: 14, padding: '14px 18px', border: `1px solid ${C.border}` }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: C.red, marginBottom: 10 }}>Never</div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: '8px' }}>
                   {neverList.map((item, i) => (
-                    <div key={i} style={{ fontSize: 13, color: '#7f1d1d', padding: '4px 0' }}>\u2715 {item}</div>
+                    <div key={i} style={{ fontFamily: F, fontSize: 13, color: C.body, padding: '4px 0', lineHeight: 1.75 }}>\u2715 {item}</div>
                   ))}
                 </div>
               </div>
@@ -966,7 +988,7 @@ Zero tolerance.`,
           {/* ROUTINE TAB */}
           {activeTab === 'routine' && (
             <div>
-              <h2 style={{ fontSize: 22, fontWeight: 700, color: '#1B4332', margin: '0 0 24px' }}>The Complete Wind-Down Sequence</h2>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 24px' }}>The Complete Wind-Down Sequence</h2>
 
               {[
                 { time: '60 min before bed', items: [
@@ -975,22 +997,22 @@ Zero tolerance.`,
                   'Add lavender or chamomile essential oil if tolerated',
                   'Bath \u2192 cooling mechanism: raises surface temp, subsequent cooling triggers core temp drop that initiates deep sleep (physiological trigger, not just behavioral)',
                   'Multi-modal relaxation tool: warmth + magnesium + aromatherapy + subsequent cooling'
-                ], color: '#2D6A4F' },
+                ] },
                 { time: 'After bath', items: [
                   'Pajamas (organic cotton or linen only \u2014 avoid synthetic fabrics that trap heat, off-gas chemicals, and disrupt temperature regulation)',
                   'All blue light OFF \u2014 dim warm lights only',
                   'Devices charge outside bedroom'
-                ], color: '#3B82F6' },
+                ] },
                 { time: '60-90 min before lights out', items: [
                   `Bedtime milk (${currentMilk.amount}, warm, plain, unsweetened)`,
                   'Can add \u00BD-1 tsp raw honey for blood sugar stabilization'
-                ], color: '#8B5CF6' },
+                ] },
                 { time: '30-45 min before lights out (only if sleep onset is a problem)', items: [
                   `Tart cherry juice (${currentCherry.dose} diluted ${currentCherry.dilution})`,
                   '100% tart cherry only, no blends, no added sugar',
                   `${currentCherry.frequency}`,
                   'If child already sleeps well \u2014 skip this entirely'
-                ], color: '#EC4899' },
+                ] },
                 { time: '15-30 min before lights out', items: [
                   'Magnesium lotion on feet (magnesium glycinate preferred)',
                   'Thin layer on soles, gentle 1-2 min massage',
@@ -999,36 +1021,33 @@ Zero tolerance.`,
                   'Calm conversation',
                   'Calming phrases, gentle stories, or recorded parent voice scripts played softly',
                   'Cuddling, gentle voice (reduces cortisol)'
-                ], color: '#F59E0B' },
+                ] },
                 { time: 'At lights out', items: [
                   '\u201CThird eye\u201D technique: gentle forehead rubbing or light pressure between eyebrows during drowsiness (anecdotal but many parents report it helps children settle)',
                   'Complete darkness (blackout shades, cover every light source)',
                   'Pink noise on (or quiet)'
-                ], color: '#1B4332' }
+                ] }
               ].map((block, i) => (
-                <div key={i} style={{ display: 'flex', gap: 16, marginBottom: 24 }}>
-                  <div style={{ width: 4, background: block.color, borderRadius: 2 }}></div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 15, color: block.color, marginBottom: 10 }}>{block.time}</div>
-                    {block.items.map((item, j) => (
-                      <div key={j} style={{ fontSize: 14, color: '#444', padding: '4px 0', lineHeight: 1.6 }}>&bull; {item}</div>
-                    ))}
-                  </div>
+                <div key={i} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 12 }}>
+                  <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: C.green, marginBottom: 10 }}>{block.time}</div>
+                  {block.items.map((item, j) => (
+                    <div key={j} style={{ fontFamily: F, fontSize: 14, color: C.body, padding: '4px 0', lineHeight: 1.75 }}>&bull; {item}</div>
+                  ))}
                 </div>
               ))}
 
-              <div style={{ background: '#fef3c7', borderRadius: 12, padding: '16px 20px', marginTop: 24, border: '1px solid #fde68a' }}>
-                <div style={{ fontWeight: 700, fontSize: 14, color: '#92400e', marginBottom: 8 }}>💛 Emotional Safety</div>
-                <div style={{ fontSize: 14, color: '#78350f', lineHeight: 1.7 }}>
+              <div style={{ background: C.card, borderRadius: 14, padding: '14px 18px', marginTop: 24, border: `2px solid ${C.sigBorder}` }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: C.title, marginBottom: 8 }}>Emotional Safety</div>
+                <div style={{ fontFamily: F, fontSize: 14, color: C.body, lineHeight: 1.75 }}>
                   Cortisol directly antagonizes GH. A child who goes to bed stressed, scared, or overstimulated has reduced SWS and blunted GH. A child who feels safe falls asleep faster and stays in deeper sleep longer.
                   <br /><br />
                   For anxious children or those with bedtime fears: gentle co-sleeping or proximity strategies (start in child&apos;s room, fade gradually) and soothing scripts can reduce anxiety-driven awakenings and protect consolidated deep sleep without creating dependency.
                 </div>
               </div>
 
-              <div style={{ background: '#f0f9ff', borderRadius: 12, padding: '16px 20px', marginTop: 16, border: '1px solid #bae6fd' }}>
-                <div style={{ fontWeight: 700, fontSize: 14, color: '#0369a1', marginBottom: 8 }}>📋 Example Sequence Summary</div>
-                <ol style={{ fontSize: 14, color: '#0c4a6e', lineHeight: 1.8, margin: 0, paddingLeft: 20 }}>
+              <div style={{ background: C.card, borderRadius: 14, padding: '14px 18px', marginTop: 12, border: `1px solid ${C.border}` }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: C.title, marginBottom: 8 }}>Example Sequence Summary</div>
+                <ol style={{ fontFamily: F, fontSize: 14, color: C.body, lineHeight: 1.75, margin: 0, paddingLeft: 20 }}>
                   <li>Magnesium bath with Epsom salts and lavender (10-20 minutes, 60 minutes before bed)</li>
                   <li>Pajamas (organic cotton or linen)</li>
                   <li>Dim warm lights only (all blue-rich light already off)</li>
@@ -1047,7 +1066,7 @@ Zero tolerance.`,
           {/* ENVIRONMENT TAB */}
           {activeTab === 'environment' && (
             <div>
-              <h2 style={{ fontSize: 22, fontWeight: 700, color: '#1B4332', margin: '0 0 24px' }}>Sleep Environment Checklist</h2>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 24px' }}>Sleep Environment Checklist</h2>
 
               {envItems.map((item, i) => (
                 <div key={i} style={{ marginBottom: 8 }}>
@@ -1059,30 +1078,21 @@ Zero tolerance.`,
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       padding: '14px 18px',
-                      background: expandedEnv === i ? '#f0fdf4' : '#fafafa',
-                      border: expandedEnv === i ? '1px solid #bbf7d0' : '1px solid #eee',
-                      borderRadius: expandedEnv === i ? '10px 10px 0 0' : 10,
+                      fontFamily: F,
+                      background: expandedEnv === i ? '#ecfdf5' : C.bg,
+                      border: expandedEnv === i ? `1px solid ${C.sigBorder}` : `1px solid ${C.border}`,
+                      borderRadius: expandedEnv === i ? '14px 14px 0 0' : 14,
                       cursor: 'pointer',
                       textAlign: 'left'
                     }}
                   >
-                    <span style={{ fontWeight: 600, fontSize: 14, color: '#1B4332' }}>{item.title}</span>
-                    <span style={{ color: '#999' }}>{expandedEnv === i ? '\u25B2' : '\u25BC'}</span>
+                    <span style={{ fontWeight: 800, fontSize: 14, color: C.title }}>{item.title}</span>
+                    <span style={{ color: C.light }}>{expandedEnv === i ? '\u25B2' : '\u25BC'}</span>
                   </button>
                   {expandedEnv === i && (
-                    <div style={{ padding: '14px 18px', background: '#f0fdf4', borderRadius: '0 0 10px 10px', border: '1px solid #bbf7d0', borderTop: 'none', fontSize: 14, color: '#444', lineHeight: 1.7 }}>
+                    <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${C.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: C.body, lineHeight: 1.75 }}>
                       {item.content}
-                      {item.citations && (
-                        <div style={{ marginTop: 12, background: '#f5f5f4', borderRadius: 8, padding: 12, fontFamily: "'Courier New', Courier, monospace" }}>
-                          <p style={{ fontSize: 10, color: '#78716c', fontWeight: 500, marginBottom: 4 }}>Peer-reviewed:</p>
-                          {item.citations.map((c: { text: string; url: string }, ci: number) => (
-                            <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                              style={{ display: 'block', fontSize: 10, color: '#047857', textDecoration: 'underline', paddingLeft: 8, borderLeft: '2px solid #a7f3d0', marginBottom: 4 }}>
-                              {c.text}
-                            </a>
-                          ))}
-                        </div>
-                      )}
+                      {item.citations && <CitationBlock citations={item.citations} />}
                     </div>
                   )}
                 </div>
@@ -1093,7 +1103,7 @@ Zero tolerance.`,
           {/* WARNINGS TAB */}
           {activeTab === 'warnings' && (
             <div>
-              <h2 style={{ fontSize: 22, fontWeight: 700, color: '#dc2626', margin: '0 0 24px' }}>⚠️ Critical Issues That Wreck GH \u2014 Address Immediately</h2>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.red, letterSpacing: '-0.02em', margin: '0 0 24px' }}>Critical Issues That Wreck GH \u2014 Address Immediately</h2>
 
               {warnings.map((warn, i) => (
                 <div key={i} style={{ marginBottom: 8 }}>
@@ -1105,30 +1115,21 @@ Zero tolerance.`,
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       padding: '14px 18px',
-                      background: expandedWarn === i ? '#fef2f2' : '#fff5f5',
-                      border: expandedWarn === i ? '1px solid #fecaca' : '1px solid #fee2e2',
-                      borderRadius: expandedWarn === i ? '10px 10px 0 0' : 10,
+                      fontFamily: F,
+                      background: expandedWarn === i ? C.card : C.bg,
+                      border: `1px solid ${C.border}`,
+                      borderRadius: expandedWarn === i ? '14px 14px 0 0' : 14,
                       cursor: 'pointer',
                       textAlign: 'left'
                     }}
                   >
-                    <span style={{ fontWeight: 600, fontSize: 14, color: '#dc2626' }}>{warn.title}</span>
-                    <span style={{ color: '#f87171' }}>{expandedWarn === i ? '\u25B2' : '\u25BC'}</span>
+                    <span style={{ fontWeight: 800, fontSize: 14, color: C.red }}>{warn.title}</span>
+                    <span style={{ color: C.light }}>{expandedWarn === i ? '\u25B2' : '\u25BC'}</span>
                   </button>
                   {expandedWarn === i && (
-                    <div style={{ padding: '14px 18px', background: '#fef2f2', borderRadius: '0 0 10px 10px', border: '1px solid #fecaca', borderTop: 'none', fontSize: 14, color: '#7f1d1d', lineHeight: 1.7, whiteSpace: 'pre-line' }}>
+                    <div style={{ padding: '14px 18px', background: C.card, borderRadius: '0 0 14px 14px', border: `1px solid ${C.border}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: C.body, lineHeight: 1.75, whiteSpace: 'pre-line' }}>
                       {warn.content}
-                      {warn.citations && (
-                        <div style={{ marginTop: 12, background: '#f5f5f4', borderRadius: 8, padding: 12, fontFamily: "'Courier New', Courier, monospace" }}>
-                          <p style={{ fontSize: 10, color: '#78716c', fontWeight: 500, marginBottom: 4 }}>Peer-reviewed:</p>
-                          {warn.citations.map((c: { text: string; url: string }, ci: number) => (
-                            <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                              style={{ display: 'block', fontSize: 10, color: '#047857', textDecoration: 'underline', paddingLeft: 8, borderLeft: '2px solid #a7f3d0', marginBottom: 4 }}>
-                              {c.text}
-                            </a>
-                          ))}
-                        </div>
-                      )}
+                      {warn.citations && <CitationBlock citations={warn.citations} />}
                     </div>
                   )}
                 </div>
@@ -1139,70 +1140,70 @@ Zero tolerance.`,
           {/* SCIENCE TAB */}
           {activeTab === 'science' && (
             <div>
-              <h2 style={{ fontSize: 22, fontWeight: 700, color: '#1B4332', margin: '0 0 24px' }}>The Science</h2>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 24px' }}>The Science</h2>
 
-              <div style={{ fontSize: 15, color: '#333', lineHeight: 1.8 }}>
-                <h3 style={{ fontSize: 17, color: '#1B4332', marginTop: 0 }}>The Core Mechanism</h3>
-                <p style={{ marginBottom: 16 }}>
+              <div style={{ fontFamily: F, fontSize: 14, color: C.body, lineHeight: 1.75 }}>
+                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.title, marginTop: 0 }}>The Core Mechanism</h3>
+                <p style={{ marginBottom: 24 }}>
                   Growth hormone is released in large pulses during slow-wave (deep, N3) sleep, with 60-80% of daily growth hormone secretion occurring in the first major deep-sleep episode within roughly 3 hours after sleep onset. This pulse is tightly time-locked to slow-wave sleep itself: when slow waves appear, growth hormone rises with a lag of about 5-15 minutes. When slow-wave sleep is experimentally suppressed, growth hormone secretion is delayed and reduced. When slow-wave sleep is enhanced, growth hormone rises.
                 </p>
 
-                <h3 style={{ fontSize: 17, color: '#1B4332' }}>Sleep-dependent, not clock-dependent</h3>
-                <p style={{ marginBottom: 16 }}>
+                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.title }}>Sleep-dependent, not clock-dependent</h3>
+                <p style={{ marginBottom: 24 }}>
                   This is sleep-dependent, not clock-dependent. If you shift the entire sleep period by 12 hours, the growth hormone surge shifts with it. The trigger is slow-wave sleep, not the time on the clock. But in real life, sleep is anchored to night \u2014 and anchoring it consistently is what makes the system reliable.
                 </p>
 
-                <h3 style={{ fontSize: 17, color: '#1B4332' }}>Children have more SWS than adults</h3>
-                <p style={{ marginBottom: 16 }}>
+                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.title }}>Children have more SWS than adults</h3>
+                <p style={{ marginBottom: 24 }}>
                   Children naturally have significantly more slow-wave sleep than adults \u2014 25-40% of total sleep time versus 15-25% in adults, peaking in early childhood. This is why childhood sleep is extraordinarily valuable for growth. Every hour of a child&apos;s sleep contains more growth hormone-releasing deep sleep than an adult&apos;s. And when sleep is restricted, deep stages are stripped first \u2014 meaning the growth hormone window is the first casualty of lost sleep.
                 </p>
 
-                <h3 style={{ fontSize: 17, color: '#1B4332' }}>The growth set concept</h3>
-                <p style={{ marginBottom: 16 }}>
+                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.title }}>The growth set concept</h3>
+                <p style={{ marginBottom: 24 }}>
                   Think of each complete 90-minute sleep cycle as one &quot;growth set.&quot; You want as many complete, high-quality sets as possible before early morning. A child sleeping 12 hours gets 8 complete sets. A child sleeping 8 hours gets only 5. Those 3 missing sets contain deep-sleep stages where growth hormone is released. You&apos;re not just losing sleep \u2014 you&apos;re losing growth reps. Population studies confirm this: shorter and more irregular nighttime sleep is associated with shorter stature. Longer and more regular nighttime sleep is associated with taller stature and clearer growth spurts.
                 </p>
 
-                <h3 style={{ fontSize: 17, color: '#1B4332' }}>Deep sleep also optimizes testosterone</h3>
-                <p style={{ marginBottom: 16 }}>
+                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.title }}>Deep sleep also optimizes testosterone</h3>
+                <p style={{ marginBottom: 24 }}>
                   Deep sleep also optimizes testosterone production, which becomes critical during puberty. Testosterone supports muscle development, bone density, and interacts with the growth hormone axis to amplify growth. Insufficient sleep reduces both growth hormone and testosterone output.
                 </p>
 
-                <h3 style={{ fontSize: 17, color: '#1B4332' }}>Melatonin as &quot;nighttime repair&quot; signal</h3>
-                <p style={{ marginBottom: 16 }}>
+                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.title }}>Melatonin as &quot;nighttime repair&quot; signal</h3>
+                <p style={{ marginBottom: 24 }}>
                   Melatonin, triggered by darkness and a stable circadian rhythm, rises in the evening and acts as a &quot;nighttime repair&quot; signal that facilitates deep sleep and growth hormone release. Melatonin also inhibits aromatase \u2014 the enzyme that converts testosterone to estrogen \u2014 providing an additional mechanism for preserving the hormonal environment that supports growth. In children, higher nighttime melatonin is positively correlated with robust nocturnal growth hormone and healthy growth patterns. For children on an early schedule, being asleep by around 8:00-8:30 PM means their first deep-sleep block \u2014 and thus the largest growth hormone surge \u2014 falls in the roughly 10 PM-1 AM window, provided sleep is continuous and deep.
                 </p>
 
-                <h3 style={{ fontSize: 17, color: '#1B4332' }}>Clock genes (BMAL1, PER2)</h3>
-                <p style={{ marginBottom: 16 }}>
+                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.title }}>Clock genes (BMAL1, PER2)</h3>
+                <p style={{ marginBottom: 24 }}>
                   Circadian misalignment and sleep loss alter expression of clock genes (BMAL1, PER2) that regulate growth hormone synthesis and downstream signaling. Chronic circadian disruption doesn&apos;t just reduce tonight&apos;s growth hormone \u2014 it changes the gene expression patterns that control growth hormone production over time. Irregular schedules cause shifting melatonin and fragmented slow-wave sleep, disrupting the entire growth hormone-insulin-like growth factor 1 cascade.
                 </p>
 
-                <h3 style={{ fontSize: 17, color: '#1B4332' }}>Blue light and DLMO</h3>
-                <p style={{ marginBottom: 16 }}>
+                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.title }}>Blue light and DLMO</h3>
+                <p style={{ marginBottom: 24 }}>
                   Blue-enriched light in the 1-2 hours before bedtime suppresses melatonin by well over 50% and shifts the dim-light melatonin onset later \u2014 sometimes by hours. This doesn&apos;t just make it harder to fall asleep. It delays sleep, compresses slow-wave sleep, and blunts or scatters the growth hormone surge. In preschoolers, bedtime and evening light together explain about 50% of melatonin timing variance.
                 </p>
 
-                <h3 style={{ fontSize: 17, color: '#1B4332' }}>Growth only happens lying down</h3>
+                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.title }}>Growth only happens lying down</h3>
                 <p style={{ marginBottom: 24 }}>
                   Growth only happens when the body is lying down. Linear bone growth requires the body to be horizontal \u2014 gravity-free spinal position, decompressed growth plates, and the physiological state of deep sleep combine to create the conditions for growth. This is not metaphorical. The physical position matters. A child who is sleeping is growing. A child who is not sleeping is not growing.
                 </p>
 
-                <div style={{ background: '#f0fdf4', padding: '16px 20px', borderRadius: 10, marginBottom: 20, border: '1px solid #bbf7d0' }}>
-                  <strong style={{ color: '#166534' }}>Pathway Summary:</strong>
-                  <p style={{ margin: '8px 0 0', fontSize: 14, color: '#166534', lineHeight: 1.7 }}>
+                <div style={{ background: C.card, padding: '14px 18px', borderRadius: 20, marginBottom: 20, border: `2px solid ${C.sigBorder}` }}>
+                  <strong style={{ fontFamily: F, fontWeight: 800, color: C.green }}>Pathway Summary:</strong>
+                  <p style={{ margin: '8px 0 0', fontFamily: F, fontSize: 14, color: C.body, lineHeight: 1.75 }}>
                     Growth hormone released in pulses during slow-wave (N3) sleep \u2192 60-80% of daily secretion in first 3 hours \u2192 GH rises 5-15 minutes after slow waves appear \u2192 Sleep-dependent, not clock-dependent \u2192 Children have 25-40% SWS vs adults 15-25% \u2192 Childhood sleep is extraordinarily valuable \u2192 Sleep restriction strips deep stages first \u2192 Each 90-minute cycle is one &quot;growth set&quot; \u2192 More sets = more growth reps \u2192 Short sleep = shorter stature \u2192 Deep sleep also optimizes testosterone \u2192 Melatonin acts as &quot;nighttime repair&quot; signal and inhibits aromatase \u2192 Clock genes (BMAL1, PER2) regulate GH synthesis \u2192 Circadian disruption changes GH gene expression \u2192 Blue light suppresses melatonin 50%+ and shifts DLMO by hours \u2192 Growth only happens lying down
                   </p>
                 </div>
 
-                <div style={{ background: '#f5f5f5', padding: '16px 20px', borderRadius: 10, fontSize: 13, color: '#666', fontFamily: "'Courier New', Courier, monospace" }}>
-                  <strong>Citations:</strong> Van Cauter E. Sleep. 2000; Takahashi Y. J Clin Invest. 1968; Wetterberg L. J Pineal Res. 2006; Sassin JF. Science. 1969; LeBourgeois MK. Mind Brain Educ. 2017; Ohlsson C. Front Endocrinol. 2023
+                <div style={{ background: C.bg, padding: '14px 18px', borderRadius: 14, fontSize: 13, color: C.light, fontFamily: F, border: `1px solid ${C.border}` }}>
+                  <strong style={{ color: C.title }}>Citations:</strong> Van Cauter E. Sleep. 2000; Takahashi Y. J Clin Invest. 1968; Wetterberg L. J Pineal Res. 2006; Sassin JF. Science. 1969; LeBourgeois MK. Mind Brain Educ. 2017; Ohlsson C. Front Endocrinol. 2023
                 </div>
               </div>
             </div>
           )}
         </div>
 
-      </main>
+      </div>
     </div>
   );
 }
