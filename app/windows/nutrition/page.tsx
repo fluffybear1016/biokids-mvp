@@ -4,12 +4,11 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import { Child } from '@/lib/supabase';
-import { NutritionHomeTab } from '@/components/HomeTabs';
 
 export default function NutritionWindow() {
   const [child, setChild] = useState<Child | null>(null);
   const [ageInMonths, setAgeInMonths] = useState(96); // Default 8 years
-  const [activeTab, setActiveTab] = useState<'home' | 'today' | 'milk' | 'foods' | 'mechanisms' | 'science'>('science');
+  const [activeTab, setActiveTab] = useState<'science' | 'protocol' | 'deep'>('science');
   const [expandedLever, setExpandedLever] = useState<string | null>(null);
   const [expandedFood, setExpandedFood] = useState<string | null>(null);
   const [expandedMech, setExpandedMech] = useState<number | null>(null);
@@ -238,51 +237,49 @@ export default function NutritionWindow() {
           </div>
         </div>
 
-        {/* Age-based recommendations */}
-        <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 44 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-            <span style={{ fontFamily: F, fontSize: 14, color: CC.light }}>
-              {child ? `${child.name}'s targets` : 'Age-based targets'}:
-            </span>
+        {/* Hero: Personalized Daily Targets */}
+        <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '20px 22px', marginBottom: 44 }}>
+          <div style={{ fontFamily: F, fontSize: 11, fontWeight: 800, color: CC.green, textTransform: 'uppercase' as const, letterSpacing: '0.08em', marginBottom: 14 }}>
+            {child ? `${child.name}'s daily targets` : 'Daily targets'}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
             {[
-              { label: 'Age', value: String(Math.floor(ageInYears)) },
-              { label: 'Protein', value: getProtein() },
-              { label: 'CLO', value: getCLO() },
-              { label: 'Milk', value: getMilkAmount() },
+              { label: 'Protein', value: getProtein(), sub: 'per kg body weight' },
+              { label: 'Milk', value: getMilkAmount(), sub: 'A2 or raw preferred' },
+              { label: 'Cod Liver Oil', value: getCLO(), sub: 'every morning' },
+              { label: 'Age', value: `${Math.floor(ageInYears)} years`, sub: 'protocols adjusted' },
             ].map((item, i) => (
-              <span key={i} style={{ fontFamily: F, fontSize: 13, color: CC.body, background: CC.bg, padding: '6px 12px', borderRadius: 20 }}>
-                {item.label}: <strong style={{ color: CC.title }}>{item.value}</strong>
-              </span>
+              <div key={i}>
+                <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: 800, fontSize: 22, color: CC.green, lineHeight: 1.2 }}>{item.value}</div>
+                <div style={{ fontFamily: F, fontSize: 12, fontWeight: 800, color: CC.title, marginTop: 4 }}>{item.label}</div>
+                <div style={{ fontFamily: F, fontSize: 11, color: CC.light }}>{item.sub}</div>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Tab Bar */}
-        <div style={{ display: 'flex', gap: 0, marginBottom: 0, overflowX: 'auto', WebkitOverflowScrolling: 'touch', borderBottom: `1px solid ${CC.border}` }}>
+        {/* Tab Bar — 3 tabs */}
+        <div style={{ display: 'flex', gap: 0, marginBottom: 0, borderBottom: `1px solid ${CC.border}` }}>
           {[
             { id: 'science', label: 'Science' },
-            { id: 'today', label: 'Levers' },
-            { id: 'milk', label: 'Milk' },
-            { id: 'foods', label: 'Foods' },
-            { id: 'mechanisms', label: 'Why' },
-            { id: 'home', label: 'Overview' },
+            { id: 'protocol', label: 'Protocol' },
+            { id: 'deep', label: 'Deep Dive' },
           ].map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
               style={{
-                padding: '10px 16px',
+                flex: 1,
+                padding: '12px 16px',
                 border: 'none',
                 background: 'transparent',
                 borderBottom: activeTab === tab.id ? `2px solid ${CC.green}` : '2px solid transparent',
-                fontSize: 12,
+                fontSize: 13,
                 fontFamily: F,
                 fontWeight: activeTab === tab.id ? 700 : 500,
                 color: activeTab === tab.id ? CC.green : CC.light,
                 cursor: 'pointer',
                 transition: 'all 0.2s',
-                whiteSpace: 'nowrap' as const,
-                flexShrink: 0,
               }}
             >
               {tab.label}
@@ -293,18 +290,15 @@ export default function NutritionWindow() {
         {/* Tab Content */}
         <div style={{ padding: '24px 0', marginBottom: 44 }}>
 
-          {/* ═══ TAB: HOME ═══ */}
-          {activeTab === 'home' && (
-            <div style={{ padding: 8 }}>
-              <NutritionHomeTab age={Math.floor(ageInMonths / 12)} />
-            </div>
-          )}
-
-          {/* ═══ TAB: TODAY ═══ */}
-          {activeTab === 'today' && (
+          {/* ═══ TAB: PROTOCOL ═══ */}
+          {activeTab === 'protocol' && (
             <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px', textAlign: 'center' }}>Nutrition Levers</h2>
-              <p style={{ textAlign: 'center', fontFamily: F, color: CC.light, fontSize: 14, marginBottom: 24 }}>Ranked by impact on height. Do #1 first.</p>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>The Protocol</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 28 }}>Everything to do, eat, and avoid — in order of impact.</p>
+
+              {/* ── Section: Levers ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginBottom: 4 }}>Daily Levers</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>Ranked by impact on height. Do #1 first.</p>
 
               {nutritionLevers.map((lever, i) => {
                 const isExpanded = expandedLever === `today-${i}`;
@@ -350,43 +344,20 @@ export default function NutritionWindow() {
                 );
               })}
 
-              {/* Never section */}
-              <div style={{ marginTop: 24, background: CC.card, borderRadius: 14, padding: '14px 18px', border: `1px solid ${CC.border}` }}>
-                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.red, marginBottom: 10 }}>Never</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 8 }}>
-                  {[
-                    "A1 milk (inflammatory BCM-7)",
-                    "Sugar after lunch",
-                    "Food 2-3h before bed (except milk)",
-                    "Ultra-processed foods",
-                    "Skipping meals / under-eating",
-                    "Vinegar around meals",
-                    "Soy",
-                    "Bread, pasta, rice, oats",
-                  ].map((item, i) => (
-                    <div key={i} style={{ fontFamily: F, fontSize: 13, color: CC.body, lineHeight: 1.75 }}>✕ {item}</div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
+              {/* ── Section: Milk Primer ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4 }}>The Milk Primer</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>The single most studied food for child growth.</p>
 
-          {/* ═══ TAB: MILK ═══ */}
-          {activeTab === 'milk' && (
-            <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px' }}>The Milk Primer</h2>
-              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 24 }}>Milk is the single most studied food for child growth. This is everything you need to know.</p>
-
-              {/* Hero stat */}
-              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 24 }}>
+              {/* Milk hero stat */}
+              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 20 }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 28, color: CC.green }}>+0.39cm</div>
                 <div style={{ fontFamily: F, fontSize: 14, color: CC.body, marginTop: 4 }}>per 8oz of milk per day — the most replicated finding in pediatric growth nutrition.</div>
                 <div style={{ fontFamily: F, fontSize: 13, color: CC.light, marginTop: 8 }}>Hoppe C. Am J Clin Nutr. 2004 | Netherlands 25% more dairy = world's tallest country</div>
               </div>
 
-              {/* Dosing by age */}
-              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginBottom: 16, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>How Much — By Age</div>
-              <div style={{ marginBottom: 24 }}>
+              {/* Milk dosing by age */}
+              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginBottom: 12 }}>How Much — By Age</div>
+              <div style={{ marginBottom: 20 }}>
                 {milkDosingTable.map((row, i) => {
                   const isHighlighted = getMilkAgeHighlight() === row.age;
                   return (
@@ -408,7 +379,7 @@ export default function NutritionWindow() {
                 })}
               </div>
 
-              {/* Expandable sections */}
+              {/* Milk deep sections */}
               {milkSections.map((section, i) => {
                 const isExpanded = expandedMilkSection === i;
                 return (
@@ -435,16 +406,11 @@ export default function NutritionWindow() {
                   </div>
                 );
               })}
-            </div>
-          )}
 
-          {/* ═══ TAB: FOODS ═══ */}
-          {activeTab === 'foods' && (
-            <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px' }}>Master Food Chart</h2>
-              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 24 }}>Every food ranked with timing, combinations, and which pathway it activates. Tap any food to expand.</p>
+              {/* ── Section: Master Food Chart ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4 }}>Master Food Chart</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>Every food ranked with timing, combinations, and which pathway it activates.</p>
 
-              {/* Food tier renderer */}
               {[
                 { title: 'Tier 1 — Daily Anchors', sub: 'Strong evidence. Non-negotiables.', foods: tier1Foods },
                 { title: 'Tier 2 — Power Adds', sub: 'Moderate evidence. Rotate these in weekly.', foods: tier2Foods },
@@ -490,8 +456,9 @@ export default function NutritionWindow() {
                 </div>
               ))}
 
-              {/* Avoid section */}
-              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.red, marginBottom: 12, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>What to Avoid</div>
+              {/* ── Section: What to Avoid ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.red, marginTop: 44, marginBottom: 4 }}>What to Avoid</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>These directly interfere with the GH→IGF-1 axis.</p>
               {[
                 ["Sugar / high-glycemic carbs", "Spikes insulin → suppresses GH up to 80%"],
                 ["Ultra-processed foods", "DIRECTLY damage growth plates and chondrocytes"],
@@ -505,15 +472,17 @@ export default function NutritionWindow() {
                 ["Keto / very low-carb", "Liver REQUIRES insulin (from carbs) to make IGF-1"],
                 ["Soy", "Phytoestrogen concerns per framework"],
                 ["Caffeine", "Disrupts deep sleep architecture"],
+                ["Bread, pasta, rice, oats", "High-glycemic; spikes insulin"],
+                ["Skipping meals / under-eating", "AMPK survival mode shuts down growth"],
               ].map(([item, reason], i) => (
                 <div key={i} style={{ fontFamily: F, fontSize: 13, color: CC.body, padding: '6px 0', lineHeight: 1.75 }}>
                   <span style={{ color: CC.red, fontWeight: 800 }}>✕</span> <strong>{item}</strong> — {reason}
                 </div>
               ))}
 
-              {/* Supplement Map */}
-              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 12, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>Supplement → Food Replacement Map</div>
-              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 16 }}>
+              {/* ── Section: Supplement → Food Map ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4 }}>Supplement → Food Replacement Map</div>
+              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 16, marginTop: 12 }}>
                 <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
                   According to peer-reviewed research, these compounds can produce 157% to 44-fold increases in growth hormone — but those results come from isolated, pharmacologic-dose supplements. For children, <strong>making it a lifestyle through food is superior</strong>. Whole foods deliver the same active compounds alongside cofactors, minerals, and complementary nutrients. A food-based lifestyle creates the <em>environment</em> for growth day after day, month after month.
                 </p>
@@ -565,28 +534,29 @@ export default function NutritionWindow() {
             </div>
           )}
 
-          {/* ═══ TAB: MECHANISMS ═══ */}
-          {activeTab === 'mechanisms' && (
+          {/* ═══ TAB: DEEP DIVE ═══ */}
+          {activeTab === 'deep' && (
             <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px' }}>Mechanisms & Pathways</h2>
-              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 24 }}>What to do at each stage — and why it works. Tap any food lever to see the science behind it.</p>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Deep Dive</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 28 }}>The complete science — every mechanism, every pathway, every lever explained.</p>
 
-              {/* Three Stage Model */}
-              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginBottom: 16, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>The Three-Stage Model</div>
+              {/* ── Three Stage Model ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginBottom: 4 }}>The Three-Stage Model</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>What to do at each stage — and why it works. Tap any lever to see the science.</p>
               {[
-                { stage: "Stage 1: Pituitary", sub: "Release the GH pulse", icon: "", levers: [
+                { stage: "Stage 1: Pituitary", sub: "Release the GH pulse", levers: [
                   { food: "Pumpkin seeds, turkey, eggs, beef, lentils", action: "Suppress somatostatin (the GH brake)", science: "Arginine, ornithine, and lysine compete with somatostatin signaling. Copenhagen Study: habitual 2.8-3.2g/day arginine = +0.33 cm/yr." },
                   { food: "Eggs before sprints (2-3 daily)", action: "Prime the pituitary communication highway", science: "Choline (147mg/egg) → acetylcholine → the neurotransmitter that carries GH-release signals. Pre-exercise eggs make the pituitary \"permissive\" for max GH amplitude." },
                   { food: "Fermented foods (yogurt, kefir, kimchi)", action: "Reduce somatostatin via gut-brain GABA", science: "GABA-producing lactic acid bacteria reduce somatostatin \"noise\" through the gut-brain axis. Sustained somatostatin suppression during the sleep-GH window." },
                   { food: "Bone broth / gelatin (evening, 2-3h pre-bed)", action: "Deeper sleep → bigger GH pulses", science: "Glycine lowers core body temperature → deeper slow-wave sleep → reduced somatostatin during the GH pulse window." },
                 ]},
-                { stage: "Stage 2: Liver", sub: "Convert GH → IGF-1 via JAK2-STAT5", icon: "", levers: [
+                { stage: "Stage 2: Liver", sub: "Convert GH → IGF-1 via JAK2-STAT5", levers: [
                   { food: "Eat enough calories (surplus 300-1000 kcal/day)", action: "#1 priority — without this, nothing else works", science: "Low energy activates AMPK (survival mode), which shuts down mTORC1 and causes functional GH resistance. Adequate calories normalize AMPK and allow growth signaling." },
                   { food: "Adequate protein (0.9-1.5 g/kg/day)", action: "Building blocks for IGF-1 + mTOR activation", science: "IGF-1 is a protein — you need amino acids to build it. Leucine specifically activates mTOR. UK Biobank: both animal and plant protein contribute to IGF-1." },
                   { food: "Zinc-rich foods (oysters, beef, pumpkin seeds)", action: "GH receptor REQUIRES zinc to function", science: "Zinc is the cofactor for GH receptor signaling and IGF-1 gene expression. Without sufficient zinc, JAK2-STAT5 can't activate properly." },
                   { food: "Salmon, CLO, sunlight (Vitamin D)", action: "GH receptor expression + calcium absorption", science: "Vitamin D upregulates GH receptor expression at the liver — more receptors = more GH signal captured." },
                 ]},
-                { stage: "Stage 3: Growth Plate", sub: "IGF-1 → actual bone growth", icon: "", levers: [
+                { stage: "Stage 3: Growth Plate", sub: "IGF-1 → actual bone growth", levers: [
                   { food: "Sprints + jumping + active play (3x/week)", action: "Local IGF-1 production directly at growth plates", science: "Growth plates produce their own IGF-1 in response to mechanical load. A child who eats perfectly but is sedentary misses this local IGF-1 stimulation." },
                   { food: "Dairy, leafy greens, sardines (calcium)", action: "Bone matrix mineralization", science: "Calcium and phosphorus provide the mineral component of bone matrix. Fermented dairy has the highest calcium bioavailability." },
                   { food: "Beans / lentils DAILY + cruciferous veg", action: "Keep growth plates OPEN longer (delay puberty)", science: "Higher plant protein ages 3-6 = later puberty onset. Cruciferous vegetables modify estrogen metabolism. This extends the genetic height runway." },
@@ -594,12 +564,9 @@ export default function NutritionWindow() {
                 ]},
               ].map((stage, si) => (
                 <div key={si} style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 12 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                    <span style={{ fontSize: 20 }}>{stage.icon}</span>
-                    <div>
-                      <span style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.green }}>{stage.stage}</span>
-                      <span style={{ fontFamily: F, fontSize: 13, color: CC.light, marginLeft: 8 }}>{stage.sub}</span>
-                    </div>
+                  <div style={{ marginBottom: 12 }}>
+                    <span style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.green }}>{stage.stage}</span>
+                    <span style={{ fontFamily: F, fontSize: 13, color: CC.light, marginLeft: 8 }}>{stage.sub}</span>
                   </div>
                   {stage.levers.map((lever, li) => {
                     const leverId = `${si}-${li}`;
@@ -628,9 +595,9 @@ export default function NutritionWindow() {
                 </div>
               ))}
 
-              {/* Somatostatin explainer */}
-              <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginTop: 24, marginBottom: 24 }}>
-                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.red, marginBottom: 8 }}>Somatostatin: Why It Matters</div>
+              {/* ── Somatostatin ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4 }}>Somatostatin: The GH Brake</div>
+              <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginTop: 12, marginBottom: 20 }}>
                 <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 12 }}>
                   Somatostatin is a hormone that tells the pituitary to <strong>stop releasing growth hormone</strong>. Think of it as the brake pedal. When somatostatin is high, GH pulses are smaller and less frequent — even if everything else is perfect.
                 </p>
@@ -639,7 +606,6 @@ export default function NutritionWindow() {
                 </p>
               </div>
 
-              {/* 5 ways to suppress somatostatin */}
               <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginBottom: 12 }}>Removing the Brakes — 5 Ways Food Suppresses Somatostatin</div>
               {somatostatinTable.map((row, i) => (
                 <div key={i} style={{ padding: '14px 18px', borderRadius: 14, background: CC.card, border: `1px solid ${CC.border}`, marginBottom: 8 }}>
@@ -649,9 +615,9 @@ export default function NutritionWindow() {
                 </div>
               ))}
 
-              {/* All 16 Pathways */}
-              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>Deep Dive: All 16 Pathways — Ranked by Impact</div>
-              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 12 }}>The complete science behind each recommendation, ranked by real impact on height.</p>
+              {/* ── All 16 Pathways ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4 }}>All 16 Pathways — Ranked by Impact</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 16 }}>The complete science behind each recommendation.</p>
               {mechanisms.map((m, i) => {
                 const isExpanded = expandedMech === i;
                 return (
@@ -695,17 +661,17 @@ export default function NutritionWindow() {
           {/* ═══ TAB: SCIENCE ═══ */}
           {activeTab === 'science' && (
             <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px' }}>The Science</h2>
-              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 24 }}>Understanding the GH-IGF-1 connection and how nutrition controls the conversion cascade.</p>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>The Science</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 28 }}>Understanding the GH→IGF-1 connection and how nutrition controls the conversion cascade.</p>
 
               {/* Mechanism */}
-              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 24 }}>
-                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.green, marginBottom: 12 }}>Mechanism</div>
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginBottom: 12 }}>Mechanism</div>
+              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '18px 22px', marginBottom: 28 }}>
                 <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 12 }}>
                   Growth hormone (GH) is released in pulses from the pituitary gland, primarily during deep slow-wave sleep (SWS), with 60-80% of daily secretion in the first 3 hours after sleep onset. GH alone does not cause bones to grow. The liver must convert GH into Insulin-like Growth Factor 1 (IGF-1), which is the actual mediator of longitudinal bone growth.
                 </p>
                 <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 12 }}>
-                  Before the liver releases IGF-1, it checks multiple signals simultaneously: blood glucose must be adequate, insulin must be present in a permissive range (not spiked), amino acids must be available, thyroid hormone must be sufficient, and inflammation must be low. Think of the liver asking: <em>"Is this a safe time to build a bigger body?"</em> Only when all conditions are favorable does it produce IGF-1.
+                  Before the liver releases IGF-1, it checks multiple signals simultaneously: blood glucose must be adequate, insulin must be present in a permissive range (not spiked), amino acids must be available, thyroid hormone must be sufficient, and inflammation must be low. Think of the liver asking: <em>&quot;Is this a safe time to build a bigger body?&quot;</em> Only when all conditions are favorable does it produce IGF-1.
                 </p>
                 <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
                   In children, GH is already abundant. The constraint is sleep quality, nutrient sufficiency, and timing — not stimulation. The growth plate problem compounds this: testosterone rises during puberty → converts to estrogen via aromatase → estrogen closes growth plates permanently. This creates a finite window where optimizing the GH→IGF-1 axis matters most.
@@ -713,8 +679,8 @@ export default function NutritionWindow() {
               </div>
 
               {/* Five Levers */}
-              <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 24 }}>
-                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.title, marginBottom: 12 }}>The Five Levers That Actually Matter</div>
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginBottom: 12 }}>The Five Levers That Actually Matter</div>
+              <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '18px 22px', marginBottom: 28 }}>
                 {[
                   ["Eat enough calories", "The #1 priority. Under-eating = low IGF-1 regardless of food quality. Surplus 300-1000 kcal/day for active youth. AMPK overrides ALL growth signals when energy is low."],
                   ["Eat enough protein", "IGF-1 is a protein — you need building blocks to make it. 0.9-1.5 g/kg/day. Both animal and plant protein contribute to IGF-1. Plant protein = later puberty (bonus)."],
@@ -722,20 +688,41 @@ export default function NutritionWindow() {
                   ["Keep inflammation low", "Inflammation activates SOCS proteins — a \"dimmer switch\" that blocks the liver from hearing GH. Anti-inflammatory foods keep the dimmer off."],
                   ["Optimize sleep", "70% of GH released during deep sleep. Sleep quality is the #1 modifiable factor. Everything else optimizes around this window."],
                 ].map(([title, desc], i) => (
-                  <div key={i} style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 8 }}>
+                  <div key={i} style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: i < 4 ? 12 : 0 }}>
                     <strong style={{ color: CC.title }}>{title}:</strong> {desc}
                   </div>
                 ))}
               </div>
 
-              {/* Pathway */}
-              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px' }}>
-                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.green, marginBottom: 12 }}>Pathway</div>
-                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, fontStyle: 'italic', lineHeight: 1.75 }}>
-                  Pituitary releases GH during deep sleep → GH travels to liver → Liver checks: insulin permissive? amino acids available? zinc sufficient? inflammation low? → If yes: JAK2-STAT5 signaling activates → IGF-1 produced → IGFBP-3 carries IGF-1 to growth plates → mTOR activates chondrocyte proliferation → Bones grow → Local IGF-1 from exercise adds to systemic → Estrogen eventually closes plates → Growth window is finite → <strong style={{ fontStyle: 'normal' }}>Timing beats stimulation</strong>
-                </p>
-                <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginTop: 16 }}>
-                  Van Cauter E. Sleep. 2000; Hoppe C. Am J Clin Nutr. 2004; Prasad AS. Nutrition. 1998; Iannotti LL. Pediatrics. 2017; Copenhagen Study; UK Biobank
+              {/* Pathway — numbered cascade */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: CC.title, marginBottom: 12 }}>The Pathway</div>
+              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '18px 22px' }}>
+                {[
+                  "Pituitary releases GH during deep sleep",
+                  "GH travels to liver",
+                  "Liver checks: insulin permissive? amino acids available? zinc sufficient? inflammation low?",
+                  "If yes → JAK2-STAT5 signaling activates",
+                  "IGF-1 produced",
+                  "IGFBP-3 carries IGF-1 to growth plates",
+                  "mTOR activates chondrocyte proliferation → bones grow",
+                  "Local IGF-1 from exercise adds to systemic",
+                  "Estrogen eventually closes plates → growth window is finite",
+                ].map((step, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 12, marginBottom: i < 8 ? 10 : 0, alignItems: 'flex-start' }}>
+                    <span style={{
+                      width: 22, height: 22, borderRadius: '50%', flexShrink: 0, marginTop: 1,
+                      background: i === 8 ? CC.red : CC.green, color: 'white',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: 10, fontFamily: F, fontWeight: 800,
+                    }}>{i + 1}</span>
+                    <span style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.6 }}>{step}</span>
+                  </div>
+                ))}
+                <div style={{ fontFamily: F, fontSize: 15, fontWeight: 800, color: CC.green, marginTop: 16, textAlign: 'center' as const }}>
+                  Timing beats stimulation.
+                </div>
+                <p style={{ fontFamily: F, fontSize: 12, color: CC.light, marginTop: 16, lineHeight: 1.6 }}>
+                  Van Cauter E. Sleep. 2000 · Hoppe C. Am J Clin Nutr. 2004 · Prasad AS. Nutrition. 1998 · Iannotti LL. Pediatrics. 2017 · Copenhagen Study · UK Biobank
                 </p>
               </div>
             </div>
