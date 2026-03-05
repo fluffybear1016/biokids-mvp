@@ -33,14 +33,6 @@ const articles = [
     citation: '[Mills PJ. JAMA. 2017]',
   },
   {
-    slug: 'gh-igf1-axis',
-    title: 'How Your Child Actually Grows: The GH-IGF-1 Axis Explained',
-    summary: 'Understanding the biological system that controls your child\'s height — and how to optimize it.',
-    category: 'science',
-    readTime: '6 min',
-    citation: '[Van Cauter E. JAMA. 2000]',
-  },
-  {
     slug: 'dennis-rodman-growth',
     title: 'The Dennis Rodman Growth Story',
     summary: 'How delayed puberty and a sudden nutrition upgrade created one of the most dramatic growth spurts in sports history.',
@@ -221,7 +213,9 @@ export default function Dashboard() {
   const stageData = stageInfo[stage];
   const childName = child?.name || (typeof window !== 'undefined' && localStorage.getItem('childName')) || 'Your child';
 
-  const filteredArticles = activeCategory === 'all' ? articles : articles.filter(a => a.category === activeCategory);
+  // Filter out the hero article (shown separately at top) and apply category filter
+  const nonHeroArticles = articles.filter(a => a.slug !== 'how-your-child-grows');
+  const filteredArticles = activeCategory === 'all' ? nonHeroArticles : nonHeroArticles.filter(a => a.category === activeCategory);
 
   if (loading) {
     return (
@@ -240,7 +234,7 @@ export default function Dashboard() {
         {/* Search → Jarvis */}
         <form
           onSubmit={(e) => { e.preventDefault(); if (searchQuery.trim()) router.push(`/jarvis?q=${encodeURIComponent(searchQuery.trim())}`); }}
-          style={{ marginBottom: 44 }}
+          style={{ marginBottom: 32 }}
         >
           <input
             type="text"
@@ -255,42 +249,45 @@ export default function Dashboard() {
           />
         </form>
 
-        {/* Stage Title */}
-        <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: col.title, letterSpacing: '-0.02em', marginBottom: 8 }}>
-          {stageData.label}
-        </h1>
-        <p style={{ fontFamily: F, fontSize: 14, color: col.body, lineHeight: 1.75, marginBottom: 32 }}>
-          {stage === 'infancy' && `${childName}'s growth hormone system is establishing its rhythm. Receptor sensitivity and nutritional foundations are being set for everything that follows.`}
-          {stage === 'early-childhood' && `${childName}'s growth velocity is among the highest it will ever be. The habits you build now wire the GH system for the next decade.`}
-          {stage === 'mid-childhood' && `${childName}'s growth hormone system is at full capacity. Consistent daily actions compound quietly into real results.`}
-          {stage === 'pre-puberty' && `This is prime time. ${childName}'s growth plates are wide open — small consistent actions now make the biggest difference.`}
-          {stage === 'early-puberty' && `${childName} is entering growth acceleration. Sleep, nutrition, and movement all have outsized impact on peak velocity right now.`}
-          {stage === 'active-puberty' && `${childName} is in peak growth velocity. Every month matters — the protocols you follow now determine how much genetic potential is expressed.`}
-          {stage === 'late-growth' && `${childName}'s growth plates are in their final phase. Spinal health, posture, and hormonal support can still add real height.`}
-          {(stage === 'prenatal' || stage === 'adult') && `${childName} is in the ${stageData.label.toLowerCase()} stage. Every action supports long-term growth potential.`}
-        </p>
-
-        {/* Active Now — the one dynamic element */}
-        <div style={{
-          background: col.card, border: `2px solid ${col.sigBorder}`, borderRadius: 20,
-          padding: '18px 20px', marginBottom: 44,
+        {/* ── Hero: The foundational article ── */}
+        <Link href="/learn/how-your-child-grows" style={{
+          display: 'block', background: col.card, borderRadius: 20, padding: '24px 22px',
+          border: `2px solid ${col.sigBorder}`, marginBottom: 32, textDecoration: 'none',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-            <span style={{ width: 8, height: 8, background: col.green, borderRadius: '50%', display: 'inline-block' }} />
-            <span style={{ fontFamily: F, fontSize: 11, fontWeight: 800, color: col.green, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}>
-              Right Now
-            </span>
+          <span style={{ display: 'inline-block', background: '#ecfdf5', color: col.green, padding: '3px 10px', borderRadius: 20, fontSize: 9, fontWeight: 800, fontFamily: F, textTransform: 'uppercase', letterSpacing: 1 }}>
+            Start Here
+          </span>
+          <h2 style={{ fontFamily: F, fontSize: 18, fontWeight: 800, color: col.title, margin: '12px 0 8px', letterSpacing: '-0.01em' }}>
+            How Your Child Actually Grows
+          </h2>
+          <p style={{ fontFamily: F, fontSize: 13, color: col.body, margin: 0, lineHeight: 1.6 }}>
+            The biological cascade that determines height — and exactly how to optimize it. Everything else on this page builds on this.
+          </p>
+        </Link>
+
+        {/* ── Stage + Active Phase (compact) ── */}
+        <div style={{
+          background: col.card, border: `1px solid ${col.border}`, borderRadius: 18,
+          padding: '18px 20px', marginBottom: 16,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
+            <h1 style={{ fontFamily: F, fontSize: 17, fontWeight: 800, color: col.title, margin: 0 }}>
+              {stageData.label}
+            </h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ width: 6, height: 6, background: col.green, borderRadius: '50%', display: 'inline-block' }} />
+              <span style={{ fontFamily: F, fontSize: 10, fontWeight: 700, color: col.green, textTransform: 'uppercase' as const, letterSpacing: '0.04em' }}>
+                {activePhase.title}
+              </span>
+            </div>
           </div>
-          <div style={{ fontFamily: F, fontSize: 15, fontWeight: 800, color: col.title, marginBottom: 6 }}>
-            {activePhase.title}
-          </div>
-          <p style={{ fontFamily: F, fontSize: 14, color: col.body, lineHeight: 1.75, margin: 0 }}>
+          <p style={{ fontFamily: F, fontSize: 13, color: col.body, lineHeight: 1.65, margin: 0 }}>
             {activePhase.tip}
           </p>
         </div>
 
-        {/* Three Pillars */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 44 }}>
+        {/* Three Pillars + Stage Deep Dive (one row) */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 10 }}>
           {[
             { href: '/windows/sleep-circadian', label: 'Sleep' },
             { href: '/windows/nutrition', label: 'Nutrition' },
@@ -298,32 +295,31 @@ export default function Dashboard() {
           ].map(({ href, label }) => (
             <Link key={href} href={href} style={{
               background: col.card, border: `1px solid ${col.border}`, borderRadius: 14,
-              padding: '16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              textDecoration: 'none', fontFamily: F, fontSize: 13, fontWeight: 700, color: col.title,
+              padding: '14px 10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              textDecoration: 'none', fontFamily: F, fontSize: 12, fontWeight: 700, color: col.title,
             }}>
               {label}
             </Link>
           ))}
         </div>
 
-        {/* Stage Deep Dive */}
         <Link
           href="/stage"
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             background: col.card, border: `1px solid ${col.border}`, borderRadius: 14,
-            padding: '14px 18px', marginBottom: 44, textDecoration: 'none',
+            padding: '12px 16px', marginBottom: 40, textDecoration: 'none',
           }}
         >
           <div>
-            <div style={{ fontFamily: F, fontSize: 14, fontWeight: 700, color: col.title }}>
+            <div style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: col.title }}>
               What matters most at this stage
             </div>
-            <div style={{ fontFamily: F, fontSize: 12, color: col.light, marginTop: 2 }}>
+            <div style={{ fontFamily: F, fontSize: 11, color: col.light, marginTop: 2 }}>
               Priorities for the {stageData.label.toLowerCase()} window
             </div>
           </div>
-          <svg style={{ width: 16, height: 16, color: col.green, flexShrink: 0 }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg style={{ width: 14, height: 14, color: col.green, flexShrink: 0 }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </Link>
@@ -355,22 +351,6 @@ export default function Dashboard() {
               </button>
             ))}
           </div>
-
-          {/* Featured Article */}
-          <Link href="/learn/how-your-child-grows" style={{
-            display: 'block', background: col.card, borderRadius: 16, padding: 20,
-            border: `2px solid ${col.sigBorder}`, marginBottom: 16, textDecoration: 'none',
-          }}>
-            <span style={{ display: 'inline-block', background: '#ecfdf5', color: col.green, padding: '3px 10px', borderRadius: 20, fontSize: 9, fontWeight: 800, fontFamily: F, textTransform: 'uppercase', letterSpacing: 1 }}>
-              Start Here
-            </span>
-            <h3 style={{ fontFamily: F, fontSize: 16, fontWeight: 700, color: col.title, margin: '10px 0 6px' }}>
-              How Your Child Actually Grows
-            </h3>
-            <p style={{ fontFamily: F, fontSize: 13, color: col.body, margin: 0, lineHeight: 1.5 }}>
-              The biological cascade that determines height — and how to optimize it.
-            </p>
-          </Link>
 
           {/* Article Cards */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

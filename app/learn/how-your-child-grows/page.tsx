@@ -226,6 +226,17 @@ export default function HowYourChildGrowsArticle() {
               If any one is missing &rarr; IGF-1 drops.
             </p>
             <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginBottom: 12, fontFamily: F }}>[Thissen JP. et al. Endocrine Reviews. 1994]</p>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 8, fontWeight: 600, fontFamily: F }}>
+              The liver also requires these micronutrients to produce and use IGF-1:
+            </p>
+            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 12px", display: "flex", flexDirection: "column", gap: 3 }}>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>Zinc</strong> &mdash; required for IGF-1 receptor function at the growth plate</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>Vitamin D</strong> &mdash; GH receptor sensitivity</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>Calcium</strong> &mdash; bone mineralization (turning cartilage into strong bone)</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>Iodine</strong> &mdash; thyroid function (the power setting for the whole system)</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>Magnesium</strong> &mdash; enzyme cofactor for hundreds of growth-related reactions</li>
+            </ul>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginBottom: 12, fontFamily: F }}>[Hoppe C. et al. American Journal of Clinical Nutrition. 2004]</p>
             <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 8, fontFamily: F }}>
               This is why:
             </p>
@@ -466,6 +477,24 @@ export default function HowYourChildGrowsArticle() {
             </p>
           </section>
 
+          {/* The Growth Windows */}
+          <section style={{ background: "#fffbeb", borderRadius: 14, padding: 20, marginBottom: 16, border: "1px solid #fde68a" }}>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>The Growth Windows</h2>
+            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, marginBottom: 12, fontFamily: F }}>
+              Growth is not one window &mdash; it&apos;s a series of windows, and the most controllable ones are still ahead for most children.
+            </p>
+            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>The first 1,000 days</strong> (conception to age 2) set the baseline &mdash; but that baseline can be built upon.</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>Ages 3&ndash;10</strong> are when sleep, nutrition, and movement habits compound quietly into real results.</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>Pre-puberty and puberty</strong> are the highest-leverage period &mdash; GH surges, growth plates are wide open, and every protocol matters.</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green, fontWeight: 700 }}>&#8226;</span><strong>Even late teens</strong> still have meaningful growth while plates remain open.</li>
+            </ul>
+            <p style={{ fontSize: 13, color: "#78350f", lineHeight: 1.6, fontWeight: 600, fontFamily: F }}>
+              Wherever your child is right now &mdash; that&apos;s the best time to start. The system responds to what you do today.
+            </p>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginTop: 8, fontFamily: F }}>[Victora CG. et al. Lancet. 2008]</p>
+          </section>
+
           {/* The Action Summary */}
           <section style={{ background: "#f0fdf4", borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.sigBorder}` }}>
             <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 12px" }}>The Action Summary</h2>
@@ -537,6 +566,7 @@ export default function HowYourChildGrowsArticle() {
               <li>Clemmons DR, et al. Factors controlling blood concentration of somatomedin C. <em>Journal of Clinical Endocrinology &amp; Metabolism</em>. 1981;13(1):113-143.</li>
               <li>Street ME, et al. Inflammation is a modulator of the insulin-like growth factor (IGF)/IGF-binding protein system inducing reduced bioactivity of IGFs in cystic fibrosis. <em>Cytokine &amp; Growth Factor Reviews</em>. 2011;22(1):59-65.</li>
               <li>Robson H, et al. Interactions between GH, IGF-I, glucocorticoids, and thyroid hormones during skeletal growth. <em>Journal of Endocrinology</em>. 2002;174(2):295-309.</li>
+              <li>Victora CG, et al. Maternal and child undernutrition: consequences for adult health and human capital. <em>Lancet</em>. 2008;371(9609):340-357.</li>
             </ul>
           </section>
 
