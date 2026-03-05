@@ -500,6 +500,24 @@ export default function Dashboard() {
   const doneCount = Object.values(done).filter(Boolean).length;
   const pct = Math.round((doneCount / total) * 100);
 
+  // Core items = green-bordered cards (tier 0 or sig)
+  const coreItems = allItems.filter(i => i.sig || i.tier === 0);
+  const coreTotal = coreItems.length;
+  const coreDoneCount = coreItems.filter(i => done[i.id]).length;
+  const corePct = coreTotal > 0 ? Math.round((coreDoneCount / coreTotal) * 100) : 0;
+  const allCoreDone = coreDoneCount === coreTotal && coreTotal > 0;
+  const allDone = doneCount === total && total > 0;
+
+  // Celebration state — tracks if user has seen core celebration
+  const [showCoreCelebration, setShowCoreCelebration] = useState(false);
+  const prevCoreDone = useRef(false);
+  useEffect(() => {
+    if (allCoreDone && !prevCoreDone.current) {
+      setShowCoreCelebration(true);
+    }
+    prevCoreDone.current = allCoreDone;
+  }, [allCoreDone]);
+
   const [introOpen, setIntroOpen] = useState(true);
 
   // Time-based auto-scroll to current period
@@ -530,6 +548,45 @@ export default function Dashboard() {
   return (
     <div style={{ minHeight:"100vh", backgroundColor:"#fafaf9" }}>
       <Nav currentChild={child} />
+
+      {/* Sticky progress bar — floats at top while scrolling */}
+      {doneCount > 0 && (
+        <div style={{
+          position:"sticky", top:0, zIndex:90,
+          background: allCoreDone ? "rgba(236,253,245,0.95)" : "rgba(250,250,249,0.92)",
+          backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
+          borderBottom: allCoreDone ? "1px solid #a7f3d0" : "1px solid #e7e5e4",
+          padding:"10px 20px 12px",
+          transition:"all 0.5s ease",
+        }}>
+          <div style={{ maxWidth:540, margin:"0 auto" }}>
+            {/* Core progress (primary) */}
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color: allCoreDone ? "#059669" : "#a8a29e" }}>
+                {allCoreDone ? "Core goals complete" : "Core goals"}
+              </span>
+              <span style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, color:"#059669" }}>
+                {coreDoneCount}/{coreTotal}
+              </span>
+            </div>
+            <div style={{ height:4, borderRadius:2, background: allCoreDone ? "#a7f3d0" : "#e7e5e4", overflow:"hidden", marginBottom:6 }}>
+              <div style={{ height:"100%", borderRadius:2, background:"#059669", width:`${corePct}%`, transition:"width 0.4s ease" }} />
+            </div>
+            {/* Bonus progress (secondary — smaller) */}
+            {(doneCount - coreDoneCount > 0 || allCoreDone) && (
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline" }}>
+                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#c8c3bc" }}>
+                  {allDone ? "Everything done" : "Bonus"}
+                </span>
+                <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:11, color:"#a8a29e", fontWeight:700 }}>
+                  {doneCount - coreDoneCount}/{total - coreTotal}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <div style={{ maxWidth:540, margin:"0 auto", padding:"0 20px" }}>
 
         {/* Header */}
@@ -557,16 +614,8 @@ export default function Dashboard() {
           </>}
         </div>
 
-        {/* Progress — only visible after first check */}
-        {doneCount > 0 && <div style={{ margin:"24px 0 0" }}>
-          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:8 }}>
-            <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#a8a29e" }}>Today&apos;s progress</span>
-            <span style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, color:"#059669" }}>{doneCount}/{total}</span>
-          </div>
-          <div style={{ height:4, borderRadius:2, background:"#e7e5e4", overflow:"hidden" }}>
-            <div style={{ height:"100%", borderRadius:2, background:"#059669", width:`${pct}%`, transition:"width 0.4s ease" }} />
-          </div>
-        </div>}
+        {/* Progress spacer — reserves space when sticky bar is visible */}
+        {doneCount > 0 && <div style={{ height:48 }} />}
 
         {/* Breath before the day begins */}
         <div style={{ height:1, background:"#e7e5e4", margin:"36px 0 40px" }} />
