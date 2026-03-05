@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Nav from '@/components/Nav';
 import { Child } from '@/lib/supabase';
 import { useChildName } from '@/lib/useChildName';
@@ -502,6 +502,31 @@ export default function Dashboard() {
 
   const [introOpen, setIntroOpen] = useState(true);
 
+  // Time-based auto-scroll to current period
+  const periodRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [activePeriod, setActivePeriod] = useState<string>('');
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    let current = 'Morning';
+    if (hour >= 18) current = 'Evening';
+    else if (hour >= 15) current = 'Late Afternoon';
+    else if (hour >= 12) current = 'Afternoon';
+    else if (hour >= 6) current = 'Morning';
+    else current = 'Evening'; // before 6am = still evening/sleep territory
+    setActivePeriod(current);
+
+    // Auto-scroll to current period after a brief delay for render
+    setTimeout(() => {
+      const el = periodRefs.current[current];
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Offset for nav
+        setTimeout(() => window.scrollBy(0, -80), 400);
+      }
+    }, 300);
+  }, []);
+
   return (
     <div style={{ minHeight:"100vh", backgroundColor:"#fafaf9" }}>
       <Nav currentChild={child} />
@@ -548,11 +573,17 @@ export default function Dashboard() {
 
         {/* Day sections */}
         {dayData.map((p, pi) => (
-          <div key={p.period} style={{ marginBottom: pi < dayData.length - 1 ? 44 : 0 }}>
+          <div key={p.period} ref={el => { periodRefs.current[p.period] = el; }} style={{ marginBottom: pi < dayData.length - 1 ? 44 : 0 }}>
             <div style={{ marginBottom:16 }}>
               <div style={{ display:"flex", alignItems:"baseline", gap:10 }}>
                 <span style={{ fontSize:22, fontWeight:800, color:"#1c1917", letterSpacing:"-0.02em" }}>{p.period}</span>
                 <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#c8c3bc" }}>{p.time}</span>
+                {activePeriod === p.period && (
+                  <span style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#ecfdf5", padding:"2px 8px", borderRadius:10 }}>
+                    <span style={{ width:5, height:5, background:"#059669", borderRadius:"50%", display:"inline-block" }} />
+                    <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#059669", textTransform:"uppercase", letterSpacing:"0.04em" }}>Now</span>
+                  </span>
+                )}
               </div>
               {p.note && <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#059669", marginTop:4, fontWeight:600 }}>{p.note}</div>}
             </div>

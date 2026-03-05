@@ -94,7 +94,7 @@ function LoginForm() {
         const hasLocalChild = !!localStorage.getItem('childName');
 
         if (hasSubscription) {
-          const redirectTo = searchParams.get('redirect') || '/dashboard';
+          const redirectTo = searchParams.get('redirect') || '/home';
           router.push(redirectTo);
         } else if (hasLocalChild) {
           // User started onboarding but may not have paid — send to Stripe step

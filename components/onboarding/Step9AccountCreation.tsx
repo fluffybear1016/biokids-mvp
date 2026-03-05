@@ -43,7 +43,7 @@ export default function Step9AccountCreation({ data, onBack }: Props) {
       if (!supabase) {
         // Supabase not configured, skip auth and go to dashboard
         clearOnboardingData();
-        router.push('/dashboard');
+        router.push('/home');
         return;
       }
 
@@ -105,7 +105,7 @@ export default function Step9AccountCreation({ data, onBack }: Props) {
         clearOnboardingData();
 
         // Redirect to dashboard
-        router.push('/dashboard');
+        router.push('/home');
       }
     } catch (err) {
       setError('An error occurred. Please try again.');

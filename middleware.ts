@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createMiddlewareSupabaseClient } from '@/lib/supabase-server';
 
 const PROTECTED_PREFIXES = [
-  '/dashboard',
+  '/home',
   '/windows',
   '/jarvis',
   '/protocol',
@@ -17,7 +17,7 @@ function isProtectedRoute(pathname: string): boolean {
   );
 }
 
-// Routes where logged-in users with active subscriptions should be redirected to /dashboard
+// Routes where logged-in users with active subscriptions should be redirected to /home
 const REDIRECT_IF_AUTHED = ['/', '/login', '/signup'];
 
 export async function middleware(request: NextRequest) {
@@ -53,7 +53,7 @@ export async function middleware(request: NextRequest) {
 
     const status = profile?.subscription_status;
     if (status === 'active' || status === 'trial') {
-      return NextResponse.redirect(new URL('/dashboard', request.url));
+      return NextResponse.redirect(new URL('/home', request.url));
     }
 
     return response;
