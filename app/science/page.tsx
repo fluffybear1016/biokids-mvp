@@ -74,6 +74,19 @@ const defaultGrowthWindow: GrowthWindow = {
   updated_at: new Date().toISOString(),
 };
 
+// Shared style tokens
+const font = "'Courier New', Courier, monospace";
+const col = {
+  bg: '#fafaf9',
+  title: '#1c1917',
+  body: '#57534e',
+  light: '#a8a29e',
+  green: '#059669',
+  card: '#fff',
+  border: '#e7e5e4',
+  sigBorder: '#a7f3d0',
+};
+
 export default function Dashboard() {
   const router = useRouter();
   const [child, setChild] = useState<Child | null>(null);
@@ -189,140 +202,220 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-cream flex items-center justify-center">
-        <div className="text-forest font-mono">Loading...</div>
+      <div style={{ minHeight: '100vh', background: col.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ fontFamily: font, color: col.body }}>Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div style={{ minHeight: '100vh', background: col.bg }}>
       <Nav currentChild={child} />
 
-      <div className="flex">
-        {/* Main Content */}
-        <main className="flex-1 max-w-4xl mx-auto px-4 py-6 sm:py-12">
+      <div style={{ maxWidth: 540, margin: '0 auto', padding: '0 20px', paddingTop: 32, paddingBottom: 64 }}>
 
         {/* Search Bar */}
         <form
           onSubmit={(e) => { e.preventDefault(); if (searchQuery.trim()) router.push(`/jarvis?q=${encodeURIComponent(searchQuery.trim())}`); }}
-          style={{ marginBottom: 24 }}
+          style={{ marginBottom: 44 }}
         >
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Ask anything about growth optimization..."
-            style={{ width: '100%', padding: '14px 16px', fontSize: 14, color: '#1B4332', background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, outline: 'none' }}
+            style={{
+              width: '100%',
+              padding: '14px 16px',
+              fontSize: 14,
+              fontFamily: font,
+              color: col.title,
+              background: col.card,
+              border: `1px solid ${col.border}`,
+              borderRadius: 14,
+              outline: 'none',
+              boxSizing: 'border-box',
+            }}
           />
         </form>
 
-        {/* Stage Hero */}
-        <section className="bg-gradient-to-br from-forest to-forest-light rounded-2xl sm:rounded-3xl p-5 sm:p-10 text-white mb-6 sm:mb-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-radial from-white/10 to-transparent opacity-50" />
+        {/* Page Title */}
+        <h1 style={{
+          fontFamily: font,
+          fontSize: 22,
+          fontWeight: 800,
+          color: col.title,
+          letterSpacing: '-0.02em',
+          marginBottom: 8,
+        }}>
+          {stageData.label}
+        </h1>
+        <p style={{
+          fontFamily: font,
+          fontSize: 14,
+          color: col.body,
+          lineHeight: 1.75,
+          marginBottom: 44,
+        }}>
+          {stage === 'infancy' && `The foundation is being built. ${childName}'s growth hormone system is establishing its rhythm — this is when receptor sensitivity and nutritional foundations are set for everything that follows.`}
+          {stage === 'early-childhood' && `${childName}'s growth velocity is among the highest it will ever be. The habits you build now — sleep, nutrition, movement — wire the GH system for the next decade.`}
+          {stage === 'mid-childhood' && `${childName}'s growth hormone system is running at full capacity. This is the steady-state window where consistent daily actions compound quietly into real results.`}
+          {stage === 'pre-puberty' && `This is prime time. ${childName}'s growth plates are wide open and the pre-puberty window is the highest-leverage stage for supporting natural growth. Small consistent actions now make a big difference.`}
+          {stage === 'early-puberty' && `${childName} is entering the growth acceleration phase. Puberty amplifies everything — sleep quality, nutrition, and movement all have an outsized impact on peak growth velocity right now.`}
+          {stage === 'active-puberty' && `${childName} is in the peak growth velocity window. Every month matters. The protocols you follow now determine how much of ${childName}'s genetic potential is expressed before the growth plates begin to close.`}
+          {stage === 'late-growth' && `${childName}'s growth plates are in their final phase. There is still meaningful opportunity — spinal health, posture optimization, and hormonal support can add real height even now.`}
+          {(stage === 'prenatal' || stage === 'adult') && `${childName} is in the ${stageData.label.toLowerCase()} stage. Every action you take supports long-term growth potential.`}
+        </p>
 
-          <div className="flex justify-between items-start mb-4 sm:mb-6 relative">
-            <span className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
-              <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-green-400 rounded-full animate-pulse-dot" />
-              Window is OPEN
-            </span>
-          </div>
-
-          <div className="relative">
-            <div className="text-xs sm:text-sm text-white/70 mb-1 sm:mb-2">Where {childName} is right now</div>
-            <h1 className="font-display text-3xl sm:text-5xl mb-2 sm:mb-3">{stageData.label}</h1>
-            <p className="text-sm sm:text-lg text-white/90 max-w-lg">
-              {stage === 'infancy' && `The foundation is being built. ${childName}'s growth hormone system is establishing its rhythm — this is when receptor sensitivity and nutritional foundations are set for everything that follows.`}
-              {stage === 'early-childhood' && `${childName}'s growth velocity is among the highest it will ever be. The habits you build now — sleep, nutrition, movement — wire the GH system for the next decade.`}
-              {stage === 'mid-childhood' && `${childName}'s growth hormone system is running at full capacity. This is the steady-state window where consistent daily actions compound quietly into real results.`}
-              {stage === 'pre-puberty' && `This is prime time. ${childName}'s growth plates are wide open and the pre-puberty window is the highest-leverage stage for supporting natural growth. Small consistent actions now make a big difference.`}
-              {stage === 'early-puberty' && `${childName} is entering the growth acceleration phase. Puberty amplifies everything — sleep quality, nutrition, and movement all have an outsized impact on peak growth velocity right now.`}
-              {stage === 'active-puberty' && `${childName} is in the peak growth velocity window. Every month matters. The protocols you follow now determine how much of ${childName}'s genetic potential is expressed before the growth plates begin to close.`}
-              {stage === 'late-growth' && `${childName}'s growth plates are in their final phase. There is still meaningful opportunity — spinal health, posture optimization, and hormonal support can add real height even now.`}
-              {(stage === 'prenatal' || stage === 'adult') && `${childName} is in the ${stageData.label.toLowerCase()} stage. Every action you take supports long-term growth potential.`}
-            </p>
-            <Link
-              href="/stage"
-              className="inline-flex items-center gap-2 bg-white text-forest px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold mt-4 sm:mt-6 hover:bg-cream transition-colors text-sm sm:text-base"
-            >
-              See what matters most →
-            </Link>
-          </div>
-        </section>
+        {/* Window Status */}
+        <div style={{
+          background: col.card,
+          border: `2px solid ${col.sigBorder}`,
+          borderRadius: 20,
+          padding: '14px 18px',
+          marginBottom: 44,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+        }}>
+          <span style={{
+            width: 8,
+            height: 8,
+            background: col.green,
+            borderRadius: '50%',
+            display: 'inline-block',
+          }} />
+          <span style={{ fontFamily: font, fontSize: 14, fontWeight: 800, color: col.green }}>
+            Window is OPEN
+          </span>
+          <span style={{ fontFamily: font, fontSize: 14, color: col.body, marginLeft: 'auto' }}>
+            Where {childName} is right now
+          </span>
+        </div>
 
         {/* Category Cards */}
-        <section className="grid grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
-          <Link href="/windows/sleep-circadian" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: 14, fontWeight: 600, color: '#1B4332', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-1">
-            Sleep
-          </Link>
-          <Link href="/windows/nutrition" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: 14, fontWeight: 600, color: '#1B4332', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-1">
-            Nutrition
-          </Link>
-          <Link href="/windows/physical-activity" style={{ background: 'white', border: '1px solid #e5e5e5', borderRadius: 10, padding: '16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: 14, fontWeight: 600, color: '#1B4332', transition: 'all 0.2s' }} className="hover:shadow-lg hover:-translate-y-1">
-            Movement
-          </Link>
-        </section>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 44 }}>
+          {[
+            { href: '/windows/sleep-circadian', label: 'Sleep' },
+            { href: '/windows/nutrition', label: 'Nutrition' },
+            { href: '/windows/physical-activity', label: 'Movement' },
+          ].map(({ href, label }) => (
+            <Link key={href} href={href} style={{
+              background: col.card,
+              border: `1px solid ${col.border}`,
+              borderRadius: 14,
+              padding: '16px 12px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+              fontFamily: font,
+              fontSize: 14,
+              fontWeight: 800,
+              color: col.title,
+            }}>
+              {label}
+            </Link>
+          ))}
+        </div>
 
-      </main>
+        <Link
+          href="/stage"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            fontFamily: font,
+            fontSize: 14,
+            fontWeight: 800,
+            color: col.green,
+            textDecoration: 'none',
+            marginBottom: 44,
+          }}
+        >
+          See what matters most →
+        </Link>
 
-        {/* Right Sidebar - xl screens only */}
-        <aside className="hidden xl:block sticky top-0 h-screen w-72 flex-shrink-0 p-4 space-y-4 overflow-y-auto">
-          {/* Active Now */}
-          <div className="bg-white rounded-2xl p-5 border-l-4 border-green-500 shadow-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Active Now</span>
-              <span className="inline-flex items-center gap-1.5 bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                Live
-              </span>
-            </div>
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center text-2xl">
-                {activePhase.emoji}
-              </div>
-              <div>
-                <h3 className="font-semibold text-forest">{activePhase.title}</h3>
-                <p className="text-xs text-gray-500">{activePhase.subtitle}</p>
-              </div>
-            </div>
-            <div className="bg-green-50 rounded-lg p-3 border border-green-100">
-              <p className="text-xs text-green-800 leading-relaxed">
-                <span className="font-semibold">💡</span> {activePhase.tip}
-              </p>
+        {/* Active Now */}
+        <div style={{
+          background: col.card,
+          border: `2px solid ${col.sigBorder}`,
+          borderRadius: 20,
+          padding: '14px 18px',
+          marginBottom: 44,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+            <span style={{ fontFamily: font, fontSize: 11, fontWeight: 800, color: col.light, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}>Active Now</span>
+            <span style={{
+              fontFamily: font,
+              fontSize: 11,
+              fontWeight: 800,
+              color: col.green,
+              background: '#ecfdf5',
+              padding: '2px 8px',
+              borderRadius: 99,
+            }}>Live</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+            <span style={{ fontSize: 24 }}>{activePhase.emoji}</span>
+            <div>
+              <div style={{ fontFamily: font, fontSize: 14, fontWeight: 800, color: col.title }}>{activePhase.title}</div>
+              <div style={{ fontFamily: font, fontSize: 14, color: col.light }}>{activePhase.subtitle}</div>
             </div>
           </div>
+          <p style={{ fontFamily: font, fontSize: 14, color: col.body, lineHeight: 1.75 }}>
+            {activePhase.tip}
+          </p>
+        </div>
 
-          {/* Why We're Confident */}
-          <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm">
-            <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Why We're Confident</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Studies indexed</span>
-                <span className="font-semibold text-forest">312</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Research hours</span>
-                <span className="font-semibold text-forest">2,400+</span>
-              </div>
-            </div>
-            <p className="text-xs text-gray-500 mt-4 pt-4 border-t border-gray-100 leading-relaxed">
+        {/* Why We're Confident */}
+        <div style={{
+          background: col.card,
+          border: `1px solid ${col.border}`,
+          borderRadius: 14,
+          padding: '14px 18px',
+          marginBottom: 44,
+        }}>
+          <div style={{ fontFamily: font, fontSize: 11, fontWeight: 800, color: col.light, textTransform: 'uppercase' as const, letterSpacing: '0.05em', marginBottom: 14 }}>Why We're Confident</div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+            <span style={{ fontFamily: font, fontSize: 14, color: col.body }}>Studies indexed</span>
+            <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, color: col.green }}>312</span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+            <span style={{ fontFamily: font, fontSize: 14, color: col.body }}>Research hours</span>
+            <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, color: col.green }}>2,400+</span>
+          </div>
+          <div style={{ borderTop: `1px solid ${col.border}`, paddingTop: 14 }}>
+            <p style={{ fontFamily: font, fontSize: 14, color: col.light, lineHeight: 1.75 }}>
               Every recommendation is backed by high end academic peer-reviewed research.
             </p>
           </div>
+        </div>
 
-          {/* Growth Secrets */}
-          <div className="bg-amber-50 rounded-2xl p-5 border border-amber-200">
-            <h3 className="text-xs font-bold text-amber-600 uppercase tracking-wider mb-4 flex items-center gap-2">
-              🔒 Growth Secrets
-            </h3>
-            <p className="text-sm text-amber-900 leading-relaxed">
-              {sidebarSecret}
-            </p>
-            <div className="mt-4 pt-3 border-t border-amber-200">
-              <span className="text-xs text-amber-600">💡 Daily tip • Refreshes tomorrow</span>
-            </div>
+        {/* Growth Secret of the Day */}
+        <div style={{
+          background: col.card,
+          border: `1px solid ${col.border}`,
+          borderRadius: 14,
+          padding: '14px 18px',
+          marginBottom: 44,
+        }}>
+          <div style={{ fontFamily: font, fontSize: 11, fontWeight: 800, color: col.light, textTransform: 'uppercase' as const, letterSpacing: '0.05em', marginBottom: 14 }}>Growth Secret</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+            <span style={{ fontSize: 20 }}>{currentSecret.icon}</span>
+            <span style={{ fontFamily: font, fontSize: 14, fontWeight: 800, color: col.title }}>{currentSecret.title}</span>
           </div>
-        </aside>
+          <p style={{ fontFamily: font, fontSize: 14, color: col.body, lineHeight: 1.75, marginBottom: 10 }}>
+            {currentSecret.text}
+          </p>
+          <p style={{ fontFamily: font, fontSize: 14, color: col.light }}>
+            {currentSecret.citation}
+          </p>
+          <div style={{ borderTop: `1px solid ${col.border}`, marginTop: 14, paddingTop: 10 }}>
+            <span style={{ fontFamily: font, fontSize: 14, color: col.light }}>Daily tip · Refreshes tomorrow</span>
+          </div>
+        </div>
+
       </div>
     </div>
   );
