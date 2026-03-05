@@ -272,7 +272,7 @@ export default function Dashboard() {
         }}>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
             <h1 style={{ fontFamily: F, fontSize: 17, fontWeight: 800, color: col.title, margin: 0 }}>
-              {stageData.label}
+              {childName}&apos;s {stageData.label}
             </h1>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ width: 6, height: 6, background: col.green, borderRadius: '50%', display: 'inline-block' }} />
@@ -313,10 +313,10 @@ export default function Dashboard() {
         >
           <div>
             <div style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: col.title }}>
-              What matters most at this stage
+              What matters most for {childName} right now
             </div>
             <div style={{ fontFamily: F, fontSize: 11, color: col.light, marginTop: 2 }}>
-              Priorities for the {stageData.label.toLowerCase()} window
+              {stageData.label} priorities
             </div>
           </div>
           <svg style={{ width: 14, height: 14, color: col.green, flexShrink: 0 }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
