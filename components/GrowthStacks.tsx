@@ -2,11 +2,16 @@
 
 import { useState } from 'react';
 
+const F = "'Courier New', Courier, monospace";
+const C = {
+  bg: '#fafaf9', title: '#1c1917', body: '#57534e', light: '#a8a29e',
+  green: '#059669', card: '#fff', border: '#e7e5e4',
+};
+
 const stacks = [
   {
     id: 'sprint',
     name: 'Sprint Stack',
-    icon: '',
     subtitle: '771% GH spike → converted to IGF-1',
     steps: [
       { time: '2 hrs before', action: 'Beef liver', why: 'Retinol primes GH receptors' },
@@ -20,7 +25,6 @@ const stacks = [
   {
     id: 'sleep',
     name: 'Sleep Stack',
-    icon: '',
     subtitle: 'Maximize slow-wave sleep + GH release',
     steps: [
       { time: 'Dinner', action: 'Bone broth + high-arginine protein', why: 'Glycine + GH precursors' },
@@ -36,7 +40,6 @@ const stacks = [
   {
     id: 'morning',
     name: 'Morning Stack',
-    icon: '',
     subtitle: 'Prime IGF-1 axis for the day',
     steps: [
       { time: 'Within 30 min of waking', action: 'Sunlight 10-30 min', why: 'Sets circadian phase + vitamin D' },
@@ -49,7 +52,6 @@ const stacks = [
   {
     id: 'puberty-delay',
     name: 'Puberty Delay Stack',
-    icon: '',
     subtitle: 'Extend the growth window',
     steps: [
       { time: 'Daily', action: 'Beans/lentils', why: 'Phytoestrogen competition delays puberty' },
@@ -63,7 +65,6 @@ const stacks = [
   {
     id: 'height-preservation',
     name: 'Height Preservation',
-    icon: '',
     subtitle: 'Ages 19-25: Spinal gains after plates close',
     steps: [
       { time: 'Sleep', action: '10+ hours on back, thin pillow', why: 'Disc rehydration overnight' },
@@ -81,57 +82,57 @@ export default function GrowthStacks() {
   const currentStack = stacks.find(s => s.id === activeStack)!;
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
+    <div style={{ background: C.card, borderRadius: 14, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
       {/* Tab Navigation */}
-      <div className="flex overflow-x-auto border-b border-stone-200 bg-stone-50">
+      <div style={{ display: 'flex', overflowX: 'auto', borderBottom: `1px solid ${C.border}`, background: C.bg }}>
         {stacks.map((stack) => (
           <button
             key={stack.id}
             onClick={() => setActiveStack(stack.id)}
-            className={`flex-shrink-0 px-4 py-3 text-sm font-medium transition-colors ${
-              activeStack === stack.id
-                ? 'bg-white text-emerald-700 border-b-2 border-emerald-600'
-                : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100'
-            }`}
+            style={{
+              flexShrink: 0, padding: '10px 14px', fontSize: 11, fontWeight: 600,
+              fontFamily: F, cursor: 'pointer', transition: 'all 0.15s', border: 'none',
+              borderBottom: activeStack === stack.id ? `2px solid ${C.green}` : '2px solid transparent',
+              background: activeStack === stack.id ? C.card : 'transparent',
+              color: activeStack === stack.id ? C.green : C.body,
+            }}
           >
-            <span className="mr-1.5">{stack.icon}</span>
             {stack.name}
           </button>
         ))}
       </div>
 
       {/* Stack Content */}
-      <div className="p-6">
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold text-stone-900 flex items-center gap-2">
-            <span className="text-2xl">{currentStack.icon}</span>
+      <div style={{ padding: 20 }}>
+        <div style={{ marginBottom: 14 }}>
+          <h3 style={{ fontFamily: F, fontSize: 15, fontWeight: 700, color: C.title, margin: '0 0 4px' }}>
             {currentStack.name}
           </h3>
-          <p className="text-emerald-700 text-sm mt-1">{currentStack.subtitle}</p>
+          <p style={{ fontSize: 12, color: C.green, margin: 0, fontFamily: F }}>{currentStack.subtitle}</p>
         </div>
 
         {/* Steps */}
-        <div className="space-y-3">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {currentStack.steps.map((step, index) => (
             <div
               key={index}
-              className="flex items-start gap-4 p-3 bg-stone-50 rounded-lg"
+              style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: 10, background: C.bg, borderRadius: 10 }}
             >
-              <div className="flex-shrink-0 w-20 text-xs font-medium text-stone-500 pt-0.5">
+              <div style={{ flexShrink: 0, width: 80, fontSize: 10, fontWeight: 600, color: C.light, paddingTop: 2, fontFamily: F }}>
                 {step.time}
               </div>
-              <div className="flex-1">
-                <div className="font-medium text-stone-900">{step.action}</div>
-                <div className="text-sm text-stone-600 mt-0.5">{step.why}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: C.title, fontFamily: F }}>{step.action}</div>
+                <div style={{ fontSize: 11, color: C.body, marginTop: 2, fontFamily: F }}>{step.why}</div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Note */}
-        <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-          <p className="text-sm text-amber-800">
-            <span className="font-medium">Key insight:</span> {currentStack.note}
+        <div style={{ marginTop: 14, padding: 10, background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 10 }}>
+          <p style={{ fontSize: 12, color: '#78350f', margin: 0, fontFamily: F, lineHeight: 1.5 }}>
+            <span style={{ fontWeight: 700 }}>Key insight:</span> {currentStack.note}
           </p>
         </div>
       </div>
