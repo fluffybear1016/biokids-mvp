@@ -180,71 +180,85 @@ export default function NutritionWindow() {
     { age: "13-18 years", amount: "24oz (3 cups)", timing: "Breakfast + Post-school + Bedtime", benefit: "Final growth spurts. Peak bone mass. Boys: supports last 4-8cm gains. Girls: density against estrogen-driven fusion." },
   ];
 
+
+  // Design tokens
+  const F = "'Courier New', Courier, monospace";
+  const CC = {
+    bg: '#fafaf9', card: '#fff', border: '#e7e5e4', sigBorder: '#a7f3d0',
+    title: '#1c1917', body: '#57534e', light: '#a8a29e', green: '#059669', red: '#dc2626',
+  };
+
+  const CitationBlock = ({ citations }: { citations: { text: string; url: string }[] }) => (
+    <div style={{ marginTop: 12, background: CC.bg, borderRadius: 14, padding: 12, fontFamily: F }}>
+      <p style={{ fontSize: 10, color: CC.light, fontWeight: 800, marginBottom: 4 }}>Peer-reviewed:</p>
+      {citations.map((c, ci) => (
+        <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
+          style={{ display: 'block', fontSize: 10, color: CC.green, textDecoration: 'underline', paddingLeft: 8, borderLeft: `2px solid ${CC.sigBorder}`, marginBottom: 4 }}>
+          {c.text}
+        </a>
+      ))}
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-cream">
+    <div style={{ minHeight: '100vh', background: CC.bg }}>
       <Nav currentChild={child} />
 
-      <main className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
+      <div style={{ maxWidth: 540, margin: '0 auto', padding: '0 20px', paddingTop: 32, paddingBottom: 64 }}>
 
         {/* Back Link */}
-        <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-forest mb-6">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <Link href="/dashboard" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: F, fontSize: 14, color: CC.light, textDecoration: 'none', marginBottom: 24 }}>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
           Back to Dashboard
         </Link>
 
-        {/* Header */}
-        <header className="bg-gradient-to-br from-green-600 to-green-700 rounded-3xl p-8 sm:p-10 text-white mb-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 text-[120px] sm:text-[150px] opacity-15">🥛</div>
-          <div className="flex justify-between items-start mb-5 relative">
-            <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-semibold">Nutrition Window</span>
-            <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
-              <span className="w-2 h-2 bg-green-300 rounded-full" />
-              Optimal
-            </span>
-          </div>
-          <h1 className="font-display text-4xl sm:text-5xl mb-4 relative">Nutrition & GH→IGF-1</h1>
-          <p className="text-base sm:text-lg text-white/90 max-w-xl relative">
-            Every meal is a signal to the growth hormone axis. Your job: provide the right nutrients at the right time so the pituitary releases GH, the liver converts it to IGF-1, and the growth plates respond. <em>Timing beats stimulation.</em>
-          </p>
-          <div className="flex flex-wrap gap-4 sm:gap-6 mt-8 pt-6 border-t border-white/20">
-            <div>
-              <span className="font-display text-3xl sm:text-4xl">3 stages</span>
-              <span className="text-sm text-white/80 block sm:inline sm:ml-2">Pituitary → Liver → Plate</span>
-            </div>
-            <div>
-              <span className="font-display text-3xl sm:text-4xl">+0.39cm</span>
-              <span className="text-sm text-white/80 block sm:inline sm:ml-2">per 8oz milk/day</span>
-            </div>
-            <div>
-              <span className="font-display text-3xl sm:text-4xl">70%</span>
-              <span className="text-sm text-white/80 block sm:inline sm:ml-2">GH during deep sleep</span>
-            </div>
-          </div>
-        </header>
+        {/* Page Title */}
+        <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', marginBottom: 8 }}>
+          Nutrition & GH→IGF-1
+        </h1>
+        <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 24 }}>
+          Every meal is a signal to the growth hormone axis. Your job: provide the right nutrients at the right time so the pituitary releases GH, the liver converts it to IGF-1, and the growth plates respond. <em>Timing beats stimulation.</em>
+        </p>
 
-        {/* Age-based recommendations bar */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm mb-6 flex flex-wrap items-center gap-3 sm:gap-6">
-          <span className="text-sm font-semibold text-gray-600">
-            {child ? `${child.name}'s targets` : 'Age-based targets'}:
-          </span>
-          <span className="text-sm bg-forest/10 text-forest px-3 py-1 rounded-full font-medium">
-            Age {Math.floor(ageInYears)}
-          </span>
-          <span className="text-sm bg-forest/10 text-forest px-3 py-1 rounded-full font-medium">
-            Protein: <strong>{getProtein()}</strong>
-          </span>
-          <span className="text-sm bg-forest/10 text-forest px-3 py-1 rounded-full font-medium">
-            CLO: <strong>{getCLO()}</strong>
-          </span>
-          <span className="text-sm bg-forest/10 text-forest px-3 py-1 rounded-full font-medium">
-            Milk: <strong>{getMilkAmount()}</strong>
-          </span>
+        {/* Key Stats — signature card */}
+        <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 44, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <div>
+            <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 22, color: CC.green }}>3 stages</div>
+            <div style={{ fontFamily: F, fontSize: 14, color: CC.light }}>Pituitary → Liver → Plate</div>
+          </div>
+          <div>
+            <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 22, color: CC.green }}>+0.39cm</div>
+            <div style={{ fontFamily: F, fontSize: 14, color: CC.light }}>per 8oz milk/day</div>
+          </div>
+          <div>
+            <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 22, color: CC.green }}>70%</div>
+            <div style={{ fontFamily: F, fontSize: 14, color: CC.light }}>GH during deep sleep</div>
+          </div>
         </div>
 
-        {/* Tabs */}
-        <div className="flex flex-wrap gap-1 mb-0">
+        {/* Age-based recommendations */}
+        <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 44 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <span style={{ fontFamily: F, fontSize: 14, color: CC.light }}>
+              {child ? `${child.name}'s targets` : 'Age-based targets'}:
+            </span>
+            {[
+              { label: 'Age', value: String(Math.floor(ageInYears)) },
+              { label: 'Protein', value: getProtein() },
+              { label: 'CLO', value: getCLO() },
+              { label: 'Milk', value: getMilkAmount() },
+            ].map((item, i) => (
+              <span key={i} style={{ fontFamily: F, fontSize: 13, color: CC.body, background: CC.bg, padding: '6px 12px', borderRadius: 20 }}>
+                {item.label}: <strong style={{ color: CC.title }}>{item.value}</strong>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Tab Bar */}
+        <div style={{ display: 'flex', gap: 4, marginBottom: 0, background: CC.bg, padding: 4, borderRadius: '14px 14px 0 0', overflowX: 'auto', WebkitOverflowScrolling: 'touch', border: `1px solid ${CC.border}`, borderBottom: 'none' }}>
           {[
             { id: 'home', label: 'Home' },
             { id: 'today', label: 'Levers' },
@@ -256,329 +270,229 @@ export default function NutritionWindow() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
-              className={`px-4 py-2.5 text-sm font-semibold rounded-t-xl transition-all flex-1 sm:flex-initial ${
-                activeTab === tab.id
-                  ? 'bg-white text-forest shadow-sm'
-                  : 'bg-cream-dark text-gray-500 hover:text-gray-700'
-              }`}
+              style={{
+                padding: '10px 14px',
+                border: 'none',
+                background: activeTab === tab.id ? CC.card : 'transparent',
+                borderRadius: 10,
+                fontSize: 13,
+                fontFamily: F,
+                fontWeight: activeTab === tab.id ? 800 : 400,
+                color: activeTab === tab.id ? CC.title : CC.light,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                whiteSpace: 'nowrap' as const,
+                flexShrink: 0,
+                flex: 1,
+              }}
             >
               {tab.label}
             </button>
           ))}
         </div>
 
-        {/* ═══ TAB: HOME ═══ */}
-        {activeTab === 'home' && (
-          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
-            <NutritionHomeTab age={Math.floor(ageInMonths / 12)} />
-          </div>
-        )}
+        {/* Tab Content */}
+        <div style={{ background: CC.card, borderRadius: '0 0 14px 14px', padding: 18, border: `1px solid ${CC.border}`, borderTop: 'none', marginBottom: 44 }}>
 
-        {/* ═══ TAB: TODAY ═══ */}
-        {activeTab === 'today' && (
-          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
-            <div className="text-center mb-6">
-              <h2 className="font-display text-2xl text-gray-900 mb-1">Nutrition Levers</h2>
-              <p className="text-sm text-gray-500">Ranked by impact on height. Do #1 first.</p>
+          {/* ═══ TAB: HOME ═══ */}
+          {activeTab === 'home' && (
+            <div style={{ padding: 8 }}>
+              <NutritionHomeTab age={Math.floor(ageInMonths / 12)} />
             </div>
+          )}
 
-            <div className="space-y-3">
+          {/* ═══ TAB: TODAY ═══ */}
+          {activeTab === 'today' && (
+            <div>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px', textAlign: 'center' }}>Nutrition Levers</h2>
+              <p style={{ textAlign: 'center', fontFamily: F, color: CC.light, fontSize: 14, marginBottom: 24 }}>Ranked by impact on height. Do #1 first.</p>
+
               {nutritionLevers.map((lever, i) => {
                 const isExpanded = expandedLever === `today-${i}`;
                 return (
-                  <div key={i}>
+                  <div key={i} style={{ marginBottom: 8 }}>
                     <button
                       onClick={() => setExpandedLever(isExpanded ? null : `today-${i}`)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all ${
-                        isExpanded ? 'bg-forest/5 border-forest/20' : 'bg-cream border-cream hover:border-forest/20'
-                      }`}
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: 14,
+                        padding: '14px 18px',
+                        fontFamily: F,
+                        background: isExpanded ? '#ecfdf5' : CC.bg,
+                        border: isExpanded ? `1px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
+                        borderRadius: isExpanded ? '14px 14px 0 0' : 14,
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                      }}
                     >
-                      <div className="flex items-center gap-3">
-                        <span className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm ${
-                          i < 3 ? 'bg-forest' : i < 6 ? 'bg-forest/80' : 'bg-forest/60'
-                        }`}>
-                          {lever.rank}
-                        </span>
-                        <div className="flex-1">
-                          <div className="font-semibold text-gray-900">{lever.title}</div>
-                          <div className="text-sm text-gray-500 mt-0.5">{lever.what}</div>
-                        </div>
-                        <span className="text-forest text-sm">{isExpanded ? '▲' : '▼'}</span>
+                      <span style={{
+                        width: 28, height: 28, background: CC.green, color: 'white', borderRadius: '50%',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 13, fontFamily: F, fontWeight: 800, flexShrink: 0,
+                      }}>{lever.rank}</span>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: 800, fontSize: 14, color: CC.title, marginBottom: 4 }}>{lever.title}</div>
+                        <div style={{ fontSize: 13, color: CC.body, lineHeight: 1.75 }}>{lever.what}</div>
                       </div>
+                      <span style={{ color: CC.light, fontSize: 18 }}>{isExpanded ? '▲' : '▼'}</span>
                     </button>
                     {isExpanded && (
-                      <div className="px-4 pb-4 pt-2 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20">
-                        <p className="text-sm text-gray-700 leading-relaxed mb-3">{lever.why}</p>
-                        <div className="text-sm bg-forest/10 text-forest px-3 py-2 rounded-lg font-medium">
+                      <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none' }}>
+                        <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 12 }}>{lever.why}</p>
+                        <div style={{ fontFamily: F, fontSize: 13, fontWeight: 800, color: CC.green, background: CC.card, padding: '8px 12px', borderRadius: 10, border: `1px solid ${CC.sigBorder}` }}>
                           Timing: {lever.timing}
                         </div>
-                        {lever.citations && (
-                          <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
-                            <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
-                            {lever.citations.map((c: { text: string; url: string }, ci: number) => (
-                              <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                                className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
-                                {c.text}
-                              </a>
-                            ))}
-                          </div>
-                        )}
+                        {lever.citations && <CitationBlock citations={lever.citations} />}
                       </div>
                     )}
                   </div>
                 );
               })}
-            </div>
 
-            {/* Never section */}
-            <div className="mt-8 bg-coral-light rounded-2xl p-6">
-              <div className="text-sm font-bold text-coral uppercase tracking-wider mb-4">Never</div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {[
-                  "A1 milk (inflammatory BCM-7)",
-                  "Sugar after lunch",
-                  "Food 2-3h before bed (except milk)",
-                  "Ultra-processed foods",
-                  "Skipping meals / under-eating",
-                  "Vinegar around meals",
-                  "Soy",
-                  "Bread, pasta, rice, oats",
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                    <span className="text-coral font-bold">✕</span>
-                    {item}
-                  </div>
-                ))}
+              {/* Never section */}
+              <div style={{ marginTop: 24, background: CC.card, borderRadius: 14, padding: '14px 18px', border: `1px solid ${CC.border}` }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.red, marginBottom: 10 }}>Never</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 8 }}>
+                  {[
+                    "A1 milk (inflammatory BCM-7)",
+                    "Sugar after lunch",
+                    "Food 2-3h before bed (except milk)",
+                    "Ultra-processed foods",
+                    "Skipping meals / under-eating",
+                    "Vinegar around meals",
+                    "Soy",
+                    "Bread, pasta, rice, oats",
+                  ].map((item, i) => (
+                    <div key={i} style={{ fontFamily: F, fontSize: 13, color: CC.body, lineHeight: 1.75 }}>✕ {item}</div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ═══ TAB: MILK ═══ */}
-        {activeTab === 'milk' && (
-          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
-            <h2 className="font-display text-2xl text-gray-900 mb-2">The Milk Primer</h2>
-            <p className="text-sm text-gray-500 mb-6">Milk is the single most studied food for child growth. This is everything you need to know.</p>
+          {/* ═══ TAB: MILK ═══ */}
+          {activeTab === 'milk' && (
+            <div>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px' }}>The Milk Primer</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 24 }}>Milk is the single most studied food for child growth. This is everything you need to know.</p>
 
-            {/* Hero stat */}
-            <div className="bg-gradient-to-br from-forest to-forest-dark rounded-2xl p-6 text-white mb-6">
-              <div className="font-display text-4xl sm:text-5xl">+0.39cm</div>
-              <div className="text-white/90 mt-2">per 8oz of milk per day — the most replicated finding in pediatric growth nutrition.</div>
-              <div className="text-xs text-white/60 mt-3">Hoppe C. Am J Clin Nutr. 2004 | Netherlands 25% more dairy = world's tallest country</div>
-            </div>
+              {/* Hero stat */}
+              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 24 }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 28, color: CC.green }}>+0.39cm</div>
+                <div style={{ fontFamily: F, fontSize: 14, color: CC.body, marginTop: 4 }}>per 8oz of milk per day — the most replicated finding in pediatric growth nutrition.</div>
+                <div style={{ fontFamily: F, fontSize: 13, color: CC.light, marginTop: 8 }}>Hoppe C. Am J Clin Nutr. 2004 | Netherlands 25% more dairy = world's tallest country</div>
+              </div>
 
-            {/* Dosing by age */}
-            <h3 className="font-display text-lg text-gray-900 mb-4 pb-2 border-b-2 border-forest/20">How Much — By Age</h3>
-            <div className="space-y-3 mb-8">
-              {milkDosingTable.map((row, i) => {
-                const isHighlighted = getMilkAgeHighlight() === row.age;
-                return (
-                  <div
-                    key={i}
-                    className={`p-4 rounded-xl border-2 transition-all ${
-                      isHighlighted ? 'bg-forest/5 border-forest' : 'bg-cream border-transparent'
-                    }`}
-                  >
-                    <div className="flex justify-between items-center mb-2">
-                      <span className={`font-semibold ${isHighlighted ? 'text-forest' : 'text-gray-600'}`}>{row.age}</span>
-                      <span className={`font-bold ${isHighlighted ? 'text-forest' : 'text-gray-500'}`}>{row.amount}</span>
+              {/* Dosing by age */}
+              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginBottom: 16, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>How Much — By Age</div>
+              <div style={{ marginBottom: 24 }}>
+                {milkDosingTable.map((row, i) => {
+                  const isHighlighted = getMilkAgeHighlight() === row.age;
+                  return (
+                    <div key={i} style={{
+                      padding: '14px 18px',
+                      borderRadius: 14,
+                      border: isHighlighted ? `2px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
+                      background: isHighlighted ? '#ecfdf5' : CC.card,
+                      marginBottom: 8,
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                        <span style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: isHighlighted ? CC.green : CC.title }}>{row.age}</span>
+                        <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, color: isHighlighted ? CC.green : CC.body }}>{row.amount}</span>
+                      </div>
+                      <div style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 2 }}>{row.timing}</div>
+                      <div style={{ fontFamily: F, fontSize: 14, color: CC.body }}>{row.benefit}</div>
                     </div>
-                    <div className={`text-xs mb-1 ${isHighlighted ? 'text-forest' : 'text-gray-400'}`}>{row.timing}</div>
-                    <div className={`text-sm ${isHighlighted ? 'text-gray-700' : 'text-gray-500'}`}>{row.benefit}</div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
 
-            {/* Expandable sections */}
-            <div className="space-y-2">
+              {/* Expandable sections */}
               {milkSections.map((section, i) => {
                 const isExpanded = expandedMilkSection === i;
                 return (
-                  <div key={i}>
+                  <div key={i} style={{ marginBottom: 8 }}>
                     <button
                       onClick={() => setExpandedMilkSection(isExpanded ? null : i)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between ${
-                        isExpanded ? 'bg-forest/5 border-forest/20' : 'bg-cream border-cream hover:border-forest/20'
-                      }`}
+                      style={{
+                        width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        padding: '14px 18px', fontFamily: F, textAlign: 'left',
+                        background: isExpanded ? '#ecfdf5' : CC.bg,
+                        border: isExpanded ? `1px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
+                        borderRadius: isExpanded ? '14px 14px 0 0' : 14, cursor: 'pointer',
+                      }}
                     >
-                      <span className="font-semibold text-gray-900">{section.title}</span>
-                      <span className="text-forest text-sm">{isExpanded ? '▲' : '▼'}</span>
+                      <span style={{ fontWeight: 800, fontSize: 14, color: CC.title }}>{section.title}</span>
+                      <span style={{ color: CC.light }}>{isExpanded ? '▲' : '▼'}</span>
                     </button>
                     {isExpanded && (
-                      <div className="px-4 pb-4 pt-3 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20">
-                        <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{section.content}</p>
-                        {section.citations && (
-                          <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
-                            <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
-                            {section.citations.map((c: { text: string; url: string }, ci: number) => (
-                              <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                                className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
-                                {c.text}
-                              </a>
-                            ))}
-                          </div>
-                        )}
+                      <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, whiteSpace: 'pre-line' as const }}>
+                        {section.content}
+                        {section.citations && <CitationBlock citations={section.citations} />}
                       </div>
                     )}
                   </div>
                 );
               })}
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ═══ TAB: FOODS ═══ */}
-        {activeTab === 'foods' && (
-          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
-            <h2 className="font-display text-2xl text-gray-900 mb-2">Master Food Chart</h2>
-            <p className="text-sm text-gray-500 mb-6">Every food ranked with timing, combinations, and which pathway it activates. Tap any food to expand.</p>
+          {/* ═══ TAB: FOODS ═══ */}
+          {activeTab === 'foods' && (
+            <div>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px' }}>Master Food Chart</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 24 }}>Every food ranked with timing, combinations, and which pathway it activates. Tap any food to expand.</p>
 
-            {/* Tier 1 */}
-            <h3 className="font-display text-lg text-forest mb-3 pb-2 border-b-2 border-forest/30">Tier 1 — Daily Anchors</h3>
-            <p className="text-xs text-gray-500 mb-4">Strong evidence. Non-negotiables.</p>
-            <div className="space-y-2 mb-8">
-              {tier1Foods.map((food, i) => {
-                const isExpanded = expandedFood === food.name;
-                return (
-                  <div key={i}>
-                    <button
-                      onClick={() => setExpandedFood(isExpanded ? null : food.name)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all ${
-                        isExpanded ? 'bg-forest/5 border-forest/20' : 'bg-cream border-cream hover:border-forest/20'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">{food.emoji}</span>
-                        <div className="flex-1">
-                          <span className="font-semibold text-gray-900">{food.name}</span>
-                          {food.target && <span className="text-xs text-gray-500 ml-2">({food.target})</span>}
-                        </div>
-                        <span className="text-xs text-forest font-medium">{food.when} {isExpanded ? '▲' : '▼'}</span>
-                      </div>
-                    </button>
-                    {isExpanded && (
-                      <div className="px-4 pb-4 pt-3 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20 text-sm space-y-3">
-                        <div><strong className="text-gray-700">How to combine:</strong> <span className="text-gray-600">{food.combine}</span></div>
-                        <div><strong className="text-gray-700">Why it works:</strong> <span className="text-gray-600">{food.why}</span></div>
-                        <div className="bg-purple-50 border-l-4 border-purple-400 p-3 rounded-r-lg">
-                          <strong className="text-purple-700 text-xs">Replaces this supplement:</strong> <span className="text-gray-600 text-xs">{food.suppCorollary}</span>
-                        </div>
-                        {food.citations && (
-                          <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
-                            <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
-                            {food.citations.map((c: { text: string; url: string }, ci: number) => (
-                              <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                                className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
-                                {c.text}
-                              </a>
-                            ))}
+              {/* Food tier renderer */}
+              {[
+                { title: 'Tier 1 — Daily Anchors', sub: 'Strong evidence. Non-negotiables.', foods: tier1Foods },
+                { title: 'Tier 2 — Power Adds', sub: 'Moderate evidence. Rotate these in weekly.', foods: tier2Foods },
+                { title: 'Tier 3 — Signaling & Extras', sub: 'Niche or indirect — helpful but not core.', foods: tier3Foods },
+              ].map((tier, ti) => (
+                <div key={ti} style={{ marginBottom: 24 }}>
+                  <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginBottom: 4, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>{tier.title}</div>
+                  <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 12 }}>{tier.sub}</p>
+                  {tier.foods.map((food, i) => {
+                    const isExpanded = expandedFood === food.name;
+                    return (
+                      <div key={i} style={{ marginBottom: 8 }}>
+                        <button
+                          onClick={() => setExpandedFood(isExpanded ? null : food.name)}
+                          style={{
+                            width: '100%', display: 'flex', alignItems: 'center', gap: 12,
+                            padding: '14px 18px', fontFamily: F, textAlign: 'left',
+                            background: isExpanded ? '#ecfdf5' : CC.bg,
+                            border: isExpanded ? `1px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
+                            borderRadius: isExpanded ? '14px 14px 0 0' : 14, cursor: 'pointer',
+                          }}
+                        >
+                          <span style={{ fontSize: 20 }}>{food.emoji}</span>
+                          <div style={{ flex: 1 }}>
+                            <span style={{ fontWeight: 800, fontSize: 14, color: CC.title }}>{food.name}</span>
+                            {'target' in food && (food as { target?: string }).target && <span style={{ fontSize: 13, color: CC.light, marginLeft: 8 }}>({(food as { target?: string }).target})</span>}
+                          </div>
+                          <span style={{ fontSize: 13, color: CC.green }}>{food.when} {isExpanded ? '▲' : '▼'}</span>
+                        </button>
+                        {isExpanded && (
+                          <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                            {'combine' in food && (food as { combine?: string }).combine && <div style={{ marginBottom: 8 }}><strong style={{ color: CC.title }}>How to combine:</strong> {(food as { combine?: string }).combine}</div>}
+                            <div style={{ marginBottom: 8 }}><strong style={{ color: CC.title }}>Why it works:</strong> {food.why}</div>
+                            <div style={{ background: CC.bg, borderLeft: `3px solid ${CC.sigBorder}`, padding: '8px 12px', borderRadius: '0 10px 10px 0', marginBottom: 8 }}>
+                              <strong style={{ fontSize: 13, color: CC.green }}>Replaces this supplement:</strong> <span style={{ fontSize: 13, color: CC.body }}>{food.suppCorollary}</span>
+                            </div>
+                            {food.citations && <CitationBlock citations={food.citations} />}
                           </div>
                         )}
                       </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                    );
+                  })}
+                </div>
+              ))}
 
-            {/* Tier 2 */}
-            <h3 className="font-display text-lg text-amber mb-3 pb-2 border-b-2 border-amber/30">Tier 2 — Power Adds</h3>
-            <p className="text-xs text-gray-500 mb-4">Moderate evidence. Rotate these in weekly.</p>
-            <div className="space-y-2 mb-8">
-              {tier2Foods.map((food, i) => {
-                const isExpanded = expandedFood === food.name;
-                return (
-                  <div key={i}>
-                    <button
-                      onClick={() => setExpandedFood(isExpanded ? null : food.name)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all ${
-                        isExpanded ? 'bg-amber/5 border-amber/20' : 'bg-cream border-cream hover:border-amber/20'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">{food.emoji}</span>
-                        <div className="flex-1">
-                          <span className="font-semibold text-gray-900">{food.name}</span>
-                          {food.target && <span className="text-xs text-gray-500 ml-2">({food.target})</span>}
-                        </div>
-                        <span className="text-xs text-amber font-medium">{food.when} {isExpanded ? '▲' : '▼'}</span>
-                      </div>
-                    </button>
-                    {isExpanded && (
-                      <div className="px-4 pb-4 pt-3 bg-amber/5 rounded-b-xl -mt-2 border border-t-0 border-amber/20 text-sm space-y-3">
-                        <div><strong className="text-gray-700">How to combine:</strong> <span className="text-gray-600">{food.combine}</span></div>
-                        <div><strong className="text-gray-700">Why it works:</strong> <span className="text-gray-600">{food.why}</span></div>
-                        <div className="bg-purple-50 border-l-4 border-purple-400 p-3 rounded-r-lg">
-                          <strong className="text-purple-700 text-xs">Replaces this supplement:</strong> <span className="text-gray-600 text-xs">{food.suppCorollary}</span>
-                        </div>
-                        {food.citations && (
-                          <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
-                            <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
-                            {food.citations.map((c: { text: string; url: string }, ci: number) => (
-                              <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                                className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
-                                {c.text}
-                              </a>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Tier 3 */}
-            <h3 className="font-display text-lg text-blue-600 mb-3 pb-2 border-b-2 border-blue-600/30">Tier 3 — Signaling & Extras</h3>
-            <p className="text-xs text-gray-500 mb-4">Niche or indirect — helpful but not core.</p>
-            <div className="space-y-2 mb-8">
-              {tier3Foods.map((food, i) => {
-                const isExpanded = expandedFood === food.name;
-                return (
-                  <div key={i}>
-                    <button
-                      onClick={() => setExpandedFood(isExpanded ? null : food.name)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all ${
-                        isExpanded ? 'bg-blue-50 border-blue-200' : 'bg-cream border-cream hover:border-blue-200'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">{food.emoji}</span>
-                        <div className="flex-1">
-                          <span className="font-semibold text-gray-900">{food.name}</span>
-                        </div>
-                        <span className="text-xs text-blue-600 font-medium">{food.when} {isExpanded ? '▲' : '▼'}</span>
-                      </div>
-                    </button>
-                    {isExpanded && (
-                      <div className="px-4 pb-4 pt-3 bg-blue-50 rounded-b-xl -mt-2 border border-t-0 border-blue-200 text-sm space-y-3">
-                        <div><strong className="text-gray-700">Why it works:</strong> <span className="text-gray-600">{food.why}</span></div>
-                        <div className="bg-purple-50 border-l-4 border-purple-400 p-3 rounded-r-lg">
-                          <strong className="text-purple-700 text-xs">Replaces this supplement:</strong> <span className="text-gray-600 text-xs">{food.suppCorollary}</span>
-                        </div>
-                        {food.citations && (
-                          <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
-                            <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
-                            {food.citations.map((c: { text: string; url: string }, ci: number) => (
-                              <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                                className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
-                                {c.text}
-                              </a>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Avoid section */}
-            <h3 className="font-display text-lg text-coral mb-3 pb-2 border-b-2 border-coral/30">What to Avoid</h3>
-            <div className="space-y-2">
+              {/* Avoid section */}
+              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.red, marginBottom: 12, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>What to Avoid</div>
               {[
                 ["Sugar / high-glycemic carbs", "Spikes insulin → suppresses GH up to 80%"],
                 ["Ultra-processed foods", "DIRECTLY damage growth plates and chondrocytes"],
@@ -593,57 +507,56 @@ export default function NutritionWindow() {
                 ["Soy", "Phytoestrogen concerns per framework"],
                 ["Caffeine", "Disrupts deep sleep architecture"],
               ].map(([item, reason], i) => (
-                <div key={i} className={`text-sm p-3 rounded-lg flex gap-2 ${i % 2 === 0 ? 'bg-coral-light' : 'bg-red-50'}`}>
-                  <span className="text-coral font-bold">✕</span>
-                  <span><strong>{item}</strong> — {reason}</span>
+                <div key={i} style={{ fontFamily: F, fontSize: 13, color: CC.body, padding: '6px 0', lineHeight: 1.75 }}>
+                  <span style={{ color: CC.red, fontWeight: 800 }}>✕</span> <strong>{item}</strong> — {reason}
                 </div>
               ))}
-            </div>
 
-            {/* Supplement Map */}
-            <h3 className="font-display text-lg text-purple-600 mt-10 mb-3 pb-2 border-b-2 border-purple-600/30">Supplement → Food Replacement Map</h3>
-            <div className="bg-purple-50 border-l-4 border-purple-400 p-4 rounded-r-xl mb-4">
-              <p className="text-sm text-gray-700 leading-relaxed">
-                According to peer-reviewed research, these compounds can produce 157% to 44-fold increases in growth hormone — but those results come from isolated, pharmacologic-dose supplements. For children, <strong>making it a lifestyle through food is superior</strong>. Whole foods deliver the same active compounds alongside cofactors, minerals, and complementary nutrients. A food-based lifestyle creates the <em>environment</em> for growth day after day, month after month.
-              </p>
-            </div>
-            <div className="space-y-2">
+              {/* Supplement Map */}
+              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 12, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>Supplement → Food Replacement Map</div>
+              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 16 }}>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                  According to peer-reviewed research, these compounds can produce 157% to 44-fold increases in growth hormone — but those results come from isolated, pharmacologic-dose supplements. For children, <strong>making it a lifestyle through food is superior</strong>. Whole foods deliver the same active compounds alongside cofactors, minerals, and complementary nutrients. A food-based lifestyle creates the <em>environment</em> for growth day after day, month after month.
+                </p>
+              </div>
               {suppMap.map((supp, i) => {
                 const isExpanded = expandedSupp === i;
                 return (
-                  <div key={i}>
+                  <div key={i} style={{ marginBottom: 8 }}>
                     <button
                       onClick={() => setExpandedSupp(isExpanded ? null : i)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all ${
-                        isExpanded ? 'bg-purple-50 border-purple-200' : 'bg-cream border-cream hover:border-purple-200'
-                      }`}
+                      style={{
+                        width: '100%', display: 'flex', alignItems: 'center', gap: 12,
+                        padding: '14px 18px', fontFamily: F, textAlign: 'left',
+                        background: isExpanded ? '#ecfdf5' : CC.bg,
+                        border: isExpanded ? `1px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
+                        borderRadius: isExpanded ? '14px 14px 0 0' : 14, cursor: 'pointer',
+                      }}
                     >
-                      <div className="flex items-center gap-3">
-                        <span className="bg-coral/10 text-coral text-xs font-bold px-2 py-1 rounded">{supp.spike}</span>
-                        <span className="font-semibold text-gray-900">{supp.supp}</span>
-                        <span className="text-purple-600 text-sm ml-auto">{isExpanded ? '▲' : '▼'}</span>
+                      <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, color: CC.green, fontSize: 13 }}>{supp.spike}</span>
+                      <div style={{ flex: 1 }}>
+                        <span style={{ fontWeight: 800, fontSize: 14, color: CC.title }}>{supp.supp}</span>
+                        <div style={{ fontSize: 13, color: CC.light, marginTop: 2 }}>{supp.mechanism}</div>
                       </div>
-                      <div className="text-xs text-gray-500 mt-1 ml-16">{supp.mechanism}</div>
+                      <span style={{ color: CC.light }}>{isExpanded ? '▲' : '▼'}</span>
                     </button>
                     {isExpanded && (
-                      <div className="px-4 pb-4 pt-3 bg-purple-50 rounded-b-xl -mt-2 border border-t-0 border-purple-200 text-sm space-y-4">
-                        <div className="text-xs text-gray-500">Supplement dose: {supp.spikeDose}</div>
-                        <div className="font-semibold text-forest">Top 3 Food Replacements</div>
+                      <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                        <div style={{ fontSize: 13, color: CC.light, marginBottom: 12 }}>Supplement dose: {supp.spikeDose}</div>
+                        <div style={{ fontWeight: 800, color: CC.green, marginBottom: 8 }}>Top 3 Food Replacements</div>
                         {supp.top3.map((t, ti) => (
-                          <div key={ti} className={`p-3 rounded-lg ${ti === 0 ? 'bg-forest/10 border border-forest/20' : 'bg-white border border-gray-100'}`}>
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold ${
-                                ti === 0 ? 'bg-forest' : ti === 1 ? 'bg-forest/70' : 'bg-forest/50'
-                              }`}>{t.rank}</span>
-                              <span className="font-semibold">{t.food}</span>
+                          <div key={ti} style={{ padding: '8px 12px', borderRadius: 10, background: ti === 0 ? '#ecfdf5' : CC.card, border: `1px solid ${ti === 0 ? CC.sigBorder : CC.border}`, marginBottom: 6 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                              <span style={{ width: 22, height: 22, borderRadius: '50%', background: CC.green, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800 }}>{t.rank}</span>
+                              <span style={{ fontWeight: 800, color: CC.title }}>{t.food}</span>
                             </div>
-                            <div className="text-xs text-gray-600 ml-8">{t.detail}</div>
-                            <div className="text-xs text-forest ml-8 mt-1">{t.freq}</div>
+                            <div style={{ fontSize: 13, color: CC.body, marginLeft: 30 }}>{t.detail}</div>
+                            <div style={{ fontSize: 13, color: CC.green, marginLeft: 30, marginTop: 2 }}>{t.freq}</div>
                           </div>
                         ))}
-                        <div className="bg-white p-3 rounded-lg border border-gray-100">
-                          <div className="text-xs text-gray-500 mb-1"><strong>When:</strong> {supp.when}</div>
-                          <div className="text-xs text-forest"><strong>Why food is better:</strong> {supp.why}</div>
+                        <div style={{ background: CC.card, padding: '8px 12px', borderRadius: 10, border: `1px solid ${CC.border}`, marginTop: 8 }}>
+                          <div style={{ fontSize: 13, color: CC.light }}><strong>When:</strong> {supp.when}</div>
+                          <div style={{ fontSize: 13, color: CC.green, marginTop: 4 }}><strong>Why food is better:</strong> {supp.why}</div>
                         </div>
                       </div>
                     )}
@@ -651,74 +564,62 @@ export default function NutritionWindow() {
                 );
               })}
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ═══ TAB: MECHANISMS ═══ */}
-        {activeTab === 'mechanisms' && (
-          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
-            <h2 className="font-display text-2xl text-gray-900 mb-2">Mechanisms & Pathways</h2>
-            <p className="text-sm text-gray-500 mb-6">What to do at each stage — and why it works. Tap any food lever to see the science behind it.</p>
+          {/* ═══ TAB: MECHANISMS ═══ */}
+          {activeTab === 'mechanisms' && (
+            <div>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px' }}>Mechanisms & Pathways</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 24 }}>What to do at each stage — and why it works. Tap any food lever to see the science behind it.</p>
 
-            {/* Three Stage Model */}
-            <h3 className="font-display text-lg text-gray-900 mb-4 pb-2 border-b-2 border-forest/20">The Three-Stage Model</h3>
-            {[
-              { stage: "Stage 1: Pituitary", sub: "Release the GH pulse", color: "forest", icon: "🧠", levers: [
-                { food: "Pumpkin seeds, turkey, eggs, beef, lentils", action: "Suppress somatostatin (the GH brake)", science: "Arginine, ornithine, and lysine compete with somatostatin signaling. Copenhagen Study: habitual 2.8-3.2g/day arginine = +0.33 cm/yr." },
-                { food: "Eggs before sprints (2-3 daily)", action: "Prime the pituitary communication highway", science: "Choline (147mg/egg) → acetylcholine → the neurotransmitter that carries GH-release signals. Pre-exercise eggs make the pituitary \"permissive\" for max GH amplitude." },
-                { food: "Fermented foods (yogurt, kefir, kimchi)", action: "Reduce somatostatin via gut-brain GABA", science: "GABA-producing lactic acid bacteria reduce somatostatin \"noise\" through the gut-brain axis. Sustained somatostatin suppression during the sleep-GH window." },
-                { food: "Bone broth / gelatin (evening, 2-3h pre-bed)", action: "Deeper sleep → bigger GH pulses", science: "Glycine lowers core body temperature → deeper slow-wave sleep → reduced somatostatin during the GH pulse window." },
-              ]},
-              { stage: "Stage 2: Liver", sub: "Convert GH → IGF-1 via JAK2-STAT5", color: "amber", icon: "🫀", levers: [
-                { food: "Eat enough calories (surplus 300-1000 kcal/day)", action: "#1 priority — without this, nothing else works", science: "Low energy activates AMPK (survival mode), which shuts down mTORC1 and causes functional GH resistance. Adequate calories normalize AMPK and allow growth signaling." },
-                { food: "Adequate protein (0.9-1.5 g/kg/day)", action: "Building blocks for IGF-1 + mTOR activation", science: "IGF-1 is a protein — you need amino acids to build it. Leucine specifically activates mTOR. UK Biobank: both animal and plant protein contribute to IGF-1." },
-                { food: "Zinc-rich foods (oysters, beef, pumpkin seeds)", action: "GH receptor REQUIRES zinc to function", science: "Zinc is the cofactor for GH receptor signaling and IGF-1 gene expression. Without sufficient zinc, JAK2-STAT5 can't activate properly." },
-                { food: "Salmon, CLO, sunlight (Vitamin D)", action: "GH receptor expression + calcium absorption", science: "Vitamin D upregulates GH receptor expression at the liver — more receptors = more GH signal captured." },
-              ]},
-              { stage: "Stage 3: Growth Plate", sub: "IGF-1 → actual bone growth", color: "blue", icon: "🦴", levers: [
-                { food: "Sprints + jumping + active play (3x/week)", action: "Local IGF-1 production directly at growth plates", science: "Growth plates produce their own IGF-1 in response to mechanical load. A child who eats perfectly but is sedentary misses this local IGF-1 stimulation." },
-                { food: "Dairy, leafy greens, sardines (calcium)", action: "Bone matrix mineralization", science: "Calcium and phosphorus provide the mineral component of bone matrix. Fermented dairy has the highest calcium bioavailability." },
-                { food: "Beans / lentils DAILY + cruciferous veg", action: "Keep growth plates OPEN longer (delay puberty)", science: "Higher plant protein ages 3-6 = later puberty onset. Cruciferous vegetables modify estrogen metabolism. This extends the genetic height runway." },
-                { food: "Tart cherries, raspberries, oats, walnuts", action: "Support melatonin — dual GH + anti-aromatase", science: "Melatonin both deepens SWS for larger GH pulses AND inhibits aromatase (delays growth plate closure)." },
-              ]},
-            ].map((stage, si) => (
-              <div key={si} className={`mb-4 rounded-2xl p-5 border ${
-                stage.color === 'forest' ? 'bg-forest/5 border-forest/20' :
-                stage.color === 'amber' ? 'bg-amber/5 border-amber/20' :
-                'bg-blue-50 border-blue-200'
-              }`}>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-2xl">{stage.icon}</span>
-                  <div>
-                    <span className={`font-bold ${
-                      stage.color === 'forest' ? 'text-forest' :
-                      stage.color === 'amber' ? 'text-amber' :
-                      'text-blue-600'
-                    }`}>{stage.stage}</span>
-                    <span className="text-gray-500 text-sm ml-2">{stage.sub}</span>
+              {/* Three Stage Model */}
+              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginBottom: 16, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>The Three-Stage Model</div>
+              {[
+                { stage: "Stage 1: Pituitary", sub: "Release the GH pulse", icon: "🧠", levers: [
+                  { food: "Pumpkin seeds, turkey, eggs, beef, lentils", action: "Suppress somatostatin (the GH brake)", science: "Arginine, ornithine, and lysine compete with somatostatin signaling. Copenhagen Study: habitual 2.8-3.2g/day arginine = +0.33 cm/yr." },
+                  { food: "Eggs before sprints (2-3 daily)", action: "Prime the pituitary communication highway", science: "Choline (147mg/egg) → acetylcholine → the neurotransmitter that carries GH-release signals. Pre-exercise eggs make the pituitary \"permissive\" for max GH amplitude." },
+                  { food: "Fermented foods (yogurt, kefir, kimchi)", action: "Reduce somatostatin via gut-brain GABA", science: "GABA-producing lactic acid bacteria reduce somatostatin \"noise\" through the gut-brain axis. Sustained somatostatin suppression during the sleep-GH window." },
+                  { food: "Bone broth / gelatin (evening, 2-3h pre-bed)", action: "Deeper sleep → bigger GH pulses", science: "Glycine lowers core body temperature → deeper slow-wave sleep → reduced somatostatin during the GH pulse window." },
+                ]},
+                { stage: "Stage 2: Liver", sub: "Convert GH → IGF-1 via JAK2-STAT5", icon: "🫀", levers: [
+                  { food: "Eat enough calories (surplus 300-1000 kcal/day)", action: "#1 priority — without this, nothing else works", science: "Low energy activates AMPK (survival mode), which shuts down mTORC1 and causes functional GH resistance. Adequate calories normalize AMPK and allow growth signaling." },
+                  { food: "Adequate protein (0.9-1.5 g/kg/day)", action: "Building blocks for IGF-1 + mTOR activation", science: "IGF-1 is a protein — you need amino acids to build it. Leucine specifically activates mTOR. UK Biobank: both animal and plant protein contribute to IGF-1." },
+                  { food: "Zinc-rich foods (oysters, beef, pumpkin seeds)", action: "GH receptor REQUIRES zinc to function", science: "Zinc is the cofactor for GH receptor signaling and IGF-1 gene expression. Without sufficient zinc, JAK2-STAT5 can't activate properly." },
+                  { food: "Salmon, CLO, sunlight (Vitamin D)", action: "GH receptor expression + calcium absorption", science: "Vitamin D upregulates GH receptor expression at the liver — more receptors = more GH signal captured." },
+                ]},
+                { stage: "Stage 3: Growth Plate", sub: "IGF-1 → actual bone growth", icon: "🦴", levers: [
+                  { food: "Sprints + jumping + active play (3x/week)", action: "Local IGF-1 production directly at growth plates", science: "Growth plates produce their own IGF-1 in response to mechanical load. A child who eats perfectly but is sedentary misses this local IGF-1 stimulation." },
+                  { food: "Dairy, leafy greens, sardines (calcium)", action: "Bone matrix mineralization", science: "Calcium and phosphorus provide the mineral component of bone matrix. Fermented dairy has the highest calcium bioavailability." },
+                  { food: "Beans / lentils DAILY + cruciferous veg", action: "Keep growth plates OPEN longer (delay puberty)", science: "Higher plant protein ages 3-6 = later puberty onset. Cruciferous vegetables modify estrogen metabolism. This extends the genetic height runway." },
+                  { food: "Tart cherries, raspberries, oats, walnuts", action: "Support melatonin — dual GH + anti-aromatase", science: "Melatonin both deepens SWS for larger GH pulses AND inhibits aromatase (delays growth plate closure)." },
+                ]},
+              ].map((stage, si) => (
+                <div key={si} style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 12 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                    <span style={{ fontSize: 20 }}>{stage.icon}</span>
+                    <div>
+                      <span style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.green }}>{stage.stage}</span>
+                      <span style={{ fontFamily: F, fontSize: 13, color: CC.light, marginLeft: 8 }}>{stage.sub}</span>
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-2">
                   {stage.levers.map((lever, li) => {
                     const leverId = `${si}-${li}`;
                     const isExpanded = expandedStageLever === leverId;
                     return (
-                      <div key={li}>
+                      <div key={li} style={{ marginBottom: 6 }}>
                         <button
                           onClick={() => setExpandedStageLever(isExpanded ? null : leverId)}
-                          className={`w-full text-left p-3 rounded-lg transition-all ${
-                            isExpanded ? 'bg-white shadow-sm' : 'bg-white/50 hover:bg-white'
-                          }`}
+                          style={{
+                            width: '100%', textAlign: 'left', padding: '8px 12px', fontFamily: F,
+                            background: isExpanded ? '#ecfdf5' : CC.bg, borderRadius: isExpanded ? '10px 10px 0 0' : 10,
+                            border: `1px solid ${isExpanded ? CC.sigBorder : CC.border}`, cursor: 'pointer',
+                          }}
                         >
-                          <div className="font-medium text-gray-900 text-sm">{lever.food}</div>
-                          <div className={`text-xs font-medium mt-0.5 ${
-                            stage.color === 'forest' ? 'text-forest' :
-                            stage.color === 'amber' ? 'text-amber' :
-                            'text-blue-600'
-                          }`}>{lever.action}</div>
+                          <div style={{ fontWeight: 800, fontSize: 13, color: CC.title }}>{lever.food}</div>
+                          <div style={{ fontSize: 13, color: CC.green, marginTop: 2 }}>{lever.action}</div>
                         </button>
                         {isExpanded && (
-                          <div className="bg-white p-3 rounded-b-lg -mt-1 text-sm text-gray-600 leading-relaxed">
+                          <div style={{ background: '#ecfdf5', padding: '8px 12px', borderRadius: '0 0 10px 10px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
                             {lever.science}
                           </div>
                         )}
@@ -726,107 +627,95 @@ export default function NutritionWindow() {
                     );
                   })}
                 </div>
+              ))}
+
+              {/* Somatostatin explainer */}
+              <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginTop: 24, marginBottom: 24 }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.red, marginBottom: 8 }}>Somatostatin: Why It Matters</div>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 12 }}>
+                  Somatostatin is a hormone that tells the pituitary to <strong>stop releasing growth hormone</strong>. Think of it as the brake pedal. When somatostatin is high, GH pulses are smaller and less frequent — even if everything else is perfect.
+                </p>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                  If somatostatin is chronically elevated from poor diet, inflammation, or disrupted sleep, the brake is on and GH can't flow freely. The good news: <strong>specific foods naturally reduce somatostatin</strong>, releasing the brake.
+                </p>
               </div>
-            ))}
 
-            {/* Somatostatin explainer */}
-            <div className="bg-coral-light border-l-4 border-coral rounded-r-xl p-5 my-6">
-              <div className="font-bold text-coral mb-2">Somatostatin: Why It Matters</div>
-              <p className="text-sm text-gray-700 leading-relaxed">
-                Somatostatin is a hormone that tells the pituitary to <strong>stop releasing growth hormone</strong>. Think of it as the brake pedal. When somatostatin is high, GH pulses are smaller and less frequent — even if everything else is perfect.
-              </p>
-              <p className="text-sm text-gray-700 leading-relaxed mt-3">
-                If somatostatin is chronically elevated from poor diet, inflammation, or disrupted sleep, the brake is on and GH can't flow freely. The good news: <strong>specific foods naturally reduce somatostatin</strong>, releasing the brake.
-              </p>
-            </div>
-
-            {/* 5 ways to suppress somatostatin */}
-            <h3 className="font-display text-lg text-coral mb-3">Removing the Brakes — 5 Ways Food Suppresses Somatostatin</h3>
-            <div className="space-y-2 mb-8">
+              {/* 5 ways to suppress somatostatin */}
+              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginBottom: 12 }}>Removing the Brakes — 5 Ways Food Suppresses Somatostatin</div>
               {somatostatinTable.map((row, i) => (
-                <div key={i} className={`p-4 rounded-xl ${i % 2 === 0 ? 'bg-cream' : 'bg-white'}`}>
-                  <div className="font-semibold text-gray-900 mb-1">{row.mechanism}</div>
-                  <div className="text-sm text-gray-600 mb-2">{row.how}</div>
-                  <div className="text-sm text-forest"><strong>Foods:</strong> {row.foods}</div>
+                <div key={i} style={{ padding: '14px 18px', borderRadius: 14, background: CC.card, border: `1px solid ${CC.border}`, marginBottom: 8 }}>
+                  <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.title, marginBottom: 4 }}>{row.mechanism}</div>
+                  <div style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 4 }}>{row.how}</div>
+                  <div style={{ fontFamily: F, fontSize: 14, color: CC.green }}><strong>Foods:</strong> {row.foods}</div>
                 </div>
               ))}
-            </div>
 
-            {/* All 16 Pathways */}
-            <h3 className="font-display text-lg text-gray-900 mb-3 pb-2 border-b-2 border-forest/20">Deep Dive: All 16 Pathways — Ranked by Impact</h3>
-            <p className="text-xs text-gray-500 mb-4">The complete science behind each recommendation, ranked by real impact on height.</p>
-            <div className="space-y-2">
+              {/* All 16 Pathways */}
+              <div style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: CC.title, marginTop: 44, marginBottom: 4, paddingBottom: 8, borderBottom: `1px solid ${CC.border}` }}>Deep Dive: All 16 Pathways — Ranked by Impact</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginBottom: 12 }}>The complete science behind each recommendation, ranked by real impact on height.</p>
               {mechanisms.map((m, i) => {
                 const isExpanded = expandedMech === i;
                 return (
-                  <div key={i}>
+                  <div key={i} style={{ marginBottom: 8 }}>
                     <button
                       onClick={() => setExpandedMech(isExpanded ? null : i)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all ${
-                        isExpanded ? 'bg-forest/5 border-forest/20' : 'bg-cream border-cream hover:border-forest/20'
-                      }`}
+                      style={{
+                        width: '100%', display: 'flex', alignItems: 'flex-start', gap: 12,
+                        padding: '14px 18px', fontFamily: F, textAlign: 'left',
+                        background: isExpanded ? '#ecfdf5' : CC.bg,
+                        border: isExpanded ? `1px solid ${CC.sigBorder}` : `1px solid ${CC.border}`,
+                        borderRadius: isExpanded ? '14px 14px 0 0' : 14, cursor: 'pointer',
+                      }}
                     >
-                      <div className="flex items-center gap-3">
-                        <span className={`w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold ${
-                          m.rank <= 3 ? 'bg-forest' : m.rank <= 8 ? 'bg-forest/70' : 'bg-forest/50'
-                        }`}>{m.rank}</span>
-                        <div className="flex-1">
-                          <div className="font-semibold text-gray-900">{m.title}</div>
-                          <div className="text-xs text-gray-500">{m.subtitle}</div>
-                        </div>
-                        <span className="text-forest text-sm">{isExpanded ? '▲' : '▼'}</span>
+                      <span style={{
+                        width: 24, height: 24, background: CC.green, color: 'white', borderRadius: '50%',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 11, fontFamily: F, fontWeight: 800, flexShrink: 0,
+                      }}>{m.rank}</span>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: 800, fontSize: 14, color: CC.title }}>{m.title}</div>
+                        <div style={{ fontSize: 13, color: CC.light }}>{m.subtitle}</div>
                       </div>
+                      <span style={{ color: CC.light }}>{isExpanded ? '▲' : '▼'}</span>
                     </button>
                     {isExpanded && (
-                      <div className="px-4 pb-4 pt-3 bg-forest/5 rounded-b-xl -mt-2 border border-t-0 border-forest/20 text-sm space-y-3">
-                        <div className="bg-forest/10 px-3 py-2 rounded-lg">
-                          <strong className="text-forest">Parent lever:</strong> {m.parentLever}
+                      <div style={{ padding: '14px 18px', background: '#ecfdf5', borderRadius: '0 0 14px 14px', border: `1px solid ${CC.sigBorder}`, borderTop: 'none', fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                        <div style={{ background: CC.card, padding: '8px 12px', borderRadius: 10, border: `1px solid ${CC.sigBorder}`, marginBottom: 12 }}>
+                          <strong style={{ color: CC.green }}>Parent lever:</strong> {m.parentLever}
                         </div>
-                        <p className="text-gray-700 leading-relaxed whitespace-pre-line">{m.content}</p>
-                        {m.citations && (
-                          <div className="mt-3 bg-stone-50 rounded-lg p-3 font-mono">
-                            <p className="text-[10px] text-stone-500 font-medium mb-1">Peer-reviewed:</p>
-                            {m.citations.map((c: { text: string; url: string }, ci: number) => (
-                              <a key={ci} href={c.url} target="_blank" rel="noopener noreferrer"
-                                className="block text-[10px] text-emerald-700 underline pl-2 border-l-2 border-emerald-200 mb-1 hover:text-emerald-900">
-                                {c.text}
-                              </a>
-                            ))}
-                          </div>
-                        )}
+                        <p style={{ whiteSpace: 'pre-line' as const }}>{m.content}</p>
+                        {m.citations && <CitationBlock citations={m.citations} />}
                       </div>
                     )}
                   </div>
                 );
               })}
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ═══ TAB: SCIENCE ═══ */}
-        {activeTab === 'science' && (
-          <div className="bg-white rounded-b-3xl rounded-tr-3xl p-6 sm:p-8 shadow-sm">
-            <h2 className="font-display text-2xl text-gray-900 mb-2">The Science</h2>
-            <p className="text-sm text-gray-500 mb-6">Understanding the GH-IGF-1 connection and how nutrition controls the conversion cascade.</p>
+          {/* ═══ TAB: SCIENCE ═══ */}
+          {activeTab === 'science' && (
+            <div>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: CC.title, letterSpacing: '-0.02em', margin: '0 0 8px' }}>The Science</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: CC.light, marginBottom: 24 }}>Understanding the GH-IGF-1 connection and how nutrition controls the conversion cascade.</p>
 
-            {/* Mechanism */}
-            <div className="bg-forest/5 border-l-4 border-forest rounded-r-xl p-5 mb-6">
-              <div className="font-bold text-forest mb-3">Mechanism</div>
-              <p className="text-sm text-gray-700 leading-relaxed mb-4">
-                Growth hormone (GH) is released in pulses from the pituitary gland, primarily during deep slow-wave sleep (SWS), with 60-80% of daily secretion in the first 3 hours after sleep onset. GH alone does not cause bones to grow. The liver must convert GH into Insulin-like Growth Factor 1 (IGF-1), which is the actual mediator of longitudinal bone growth.
-              </p>
-              <p className="text-sm text-gray-700 leading-relaxed mb-4">
-                Before the liver releases IGF-1, it checks multiple signals simultaneously: blood glucose must be adequate, insulin must be present in a permissive range (not spiked), amino acids must be available, thyroid hormone must be sufficient, and inflammation must be low. Think of the liver asking: <em>"Is this a safe time to build a bigger body?"</em> Only when all conditions are favorable does it produce IGF-1.
-              </p>
-              <p className="text-sm text-gray-700 leading-relaxed">
-                In children, GH is already abundant. The constraint is sleep quality, nutrient sufficiency, and timing — not stimulation. The growth plate problem compounds this: testosterone rises during puberty → converts to estrogen via aromatase → estrogen closes growth plates permanently. This creates a finite window where optimizing the GH→IGF-1 axis matters most.
-              </p>
-            </div>
+              {/* Mechanism */}
+              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px', marginBottom: 24 }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.green, marginBottom: 12 }}>Mechanism</div>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 12 }}>
+                  Growth hormone (GH) is released in pulses from the pituitary gland, primarily during deep slow-wave sleep (SWS), with 60-80% of daily secretion in the first 3 hours after sleep onset. GH alone does not cause bones to grow. The liver must convert GH into Insulin-like Growth Factor 1 (IGF-1), which is the actual mediator of longitudinal bone growth.
+                </p>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 12 }}>
+                  Before the liver releases IGF-1, it checks multiple signals simultaneously: blood glucose must be adequate, insulin must be present in a permissive range (not spiked), amino acids must be available, thyroid hormone must be sufficient, and inflammation must be low. Think of the liver asking: <em>"Is this a safe time to build a bigger body?"</em> Only when all conditions are favorable does it produce IGF-1.
+                </p>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75 }}>
+                  In children, GH is already abundant. The constraint is sleep quality, nutrient sufficiency, and timing — not stimulation. The growth plate problem compounds this: testosterone rises during puberty → converts to estrogen via aromatase → estrogen closes growth plates permanently. This creates a finite window where optimizing the GH→IGF-1 axis matters most.
+                </p>
+              </div>
 
-            {/* Five Levers */}
-            <div className="bg-blue-50 border-l-4 border-blue-600 rounded-r-xl p-5 mb-6">
-              <div className="font-bold text-blue-600 mb-3">The Five Levers That Actually Matter</div>
-              <div className="space-y-3 text-sm">
+              {/* Five Levers */}
+              <div style={{ background: CC.card, border: `1px solid ${CC.border}`, borderRadius: 14, padding: '14px 18px', marginBottom: 24 }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.title, marginBottom: 12 }}>The Five Levers That Actually Matter</div>
                 {[
                   ["Eat enough calories", "The #1 priority. Under-eating = low IGF-1 regardless of food quality. Surplus 300-1000 kcal/day for active youth. AMPK overrides ALL growth signals when energy is low."],
                   ["Eat enough protein", "IGF-1 is a protein — you need building blocks to make it. 0.9-1.5 g/kg/day. Both animal and plant protein contribute to IGF-1. Plant protein = later puberty (bonus)."],
@@ -834,27 +723,27 @@ export default function NutritionWindow() {
                   ["Keep inflammation low", "Inflammation activates SOCS proteins — a \"dimmer switch\" that blocks the liver from hearing GH. Anti-inflammatory foods keep the dimmer off."],
                   ["Optimize sleep", "70% of GH released during deep sleep. Sleep quality is the #1 modifiable factor. Everything else optimizes around this window."],
                 ].map(([title, desc], i) => (
-                  <div key={i}>
-                    <strong className="text-gray-900">{title}:</strong> <span className="text-gray-700">{desc}</span>
+                  <div key={i} style={{ fontFamily: F, fontSize: 14, color: CC.body, lineHeight: 1.75, marginBottom: 8 }}>
+                    <strong style={{ color: CC.title }}>{title}:</strong> {desc}
                   </div>
                 ))}
               </div>
-            </div>
 
-            {/* Pathway */}
-            <div className="bg-forest/5 border-l-4 border-forest rounded-r-xl p-5">
-              <div className="font-bold text-forest mb-3">Pathway</div>
-              <p className="text-sm text-gray-600 italic leading-relaxed">
-                Pituitary releases GH during deep sleep → GH travels to liver → Liver checks: insulin permissive? amino acids available? zinc sufficient? inflammation low? → If yes: JAK2-STAT5 signaling activates → IGF-1 produced → IGFBP-3 carries IGF-1 to growth plates → mTOR activates chondrocyte proliferation → Bones grow → Local IGF-1 from exercise adds to systemic → Estrogen eventually closes plates → Growth window is finite → <strong className="not-italic">Timing beats stimulation</strong>
-              </p>
-              <p className="text-xs text-gray-400 mt-4">
-                Van Cauter E. Sleep. 2000; Hoppe C. Am J Clin Nutr. 2004; Prasad AS. Nutrition. 1998; Iannotti LL. Pediatrics. 2017; Copenhagen Study; UK Biobank
-              </p>
+              {/* Pathway */}
+              <div style={{ background: CC.card, border: `2px solid ${CC.sigBorder}`, borderRadius: 20, padding: '14px 18px' }}>
+                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: CC.green, marginBottom: 12 }}>Pathway</div>
+                <p style={{ fontFamily: F, fontSize: 14, color: CC.body, fontStyle: 'italic', lineHeight: 1.75 }}>
+                  Pituitary releases GH during deep sleep → GH travels to liver → Liver checks: insulin permissive? amino acids available? zinc sufficient? inflammation low? → If yes: JAK2-STAT5 signaling activates → IGF-1 produced → IGFBP-3 carries IGF-1 to growth plates → mTOR activates chondrocyte proliferation → Bones grow → Local IGF-1 from exercise adds to systemic → Estrogen eventually closes plates → Growth window is finite → <strong style={{ fontStyle: 'normal' }}>Timing beats stimulation</strong>
+                </p>
+                <p style={{ fontFamily: F, fontSize: 13, color: CC.light, marginTop: 16 }}>
+                  Van Cauter E. Sleep. 2000; Hoppe C. Am J Clin Nutr. 2004; Prasad AS. Nutrition. 1998; Iannotti LL. Pediatrics. 2017; Copenhagen Study; UK Biobank
+                </p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
-      </main>
+      </div>
     </div>
   );
 }
