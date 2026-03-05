@@ -16,7 +16,7 @@ export default function GrowthPlatesOpenArticle() {
 
       <main style={{ maxWidth: 540, margin: "0 auto", padding: "32px 16px" }}>
         {/* Back link */}
-        <Link href="/learn" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: C.green, fontWeight: 600, fontFamily: F, marginBottom: 20, textDecoration: "none" }}>
+        <Link href="/science#articles" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: C.green, fontWeight: 600, fontFamily: F, marginBottom: 20, textDecoration: "none" }}>
           <span style={{ marginRight: 4 }}>←</span> Back to Articles
         </Link>
 
@@ -263,7 +263,7 @@ export default function GrowthPlatesOpenArticle() {
 
         {/* Back link */}
         <div style={{ marginTop: 28, textAlign: "center" }}>
-          <Link href="/learn" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: C.green, fontWeight: 700, fontFamily: F, fontSize: 13, textDecoration: "none" }}>
+          <Link href="/science#articles" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: C.green, fontWeight: 700, fontFamily: F, fontSize: 13, textDecoration: "none" }}>
             <span style={{ marginRight: 4 }}>←</span> Back to all articles
           </Link>
         </div>

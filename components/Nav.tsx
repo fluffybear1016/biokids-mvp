@@ -70,11 +70,8 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
   };
   
   const tabs = [
-    { href: '/dashboard', label: 'Home' },
     { href: '/science', label: 'Science' },
     { href: '/protocol', label: 'Protocol' },
-    { href: '/learn', label: 'Articles' },
-    { href: '/jarvis', label: 'gH AI' },
   ];
 
   const isActive = (href: string) => pathname === href;
@@ -83,7 +80,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
     <nav style={{ backgroundColor:'#fafaf9', borderBottom:'1px solid rgba(0,0,0,0.06)' }} className="px-4 md:px-8 py-4 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2" style={{ textDecoration:'none' }}>
+        <Link href="/dashboard" className="flex items-center gap-2" style={{ textDecoration:'none' }}>
           <span style={{ width:10, height:10, borderRadius:'50%', background:'#059669', display:'inline-block' }} />
           <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, fontWeight:600, color:'#059669', letterSpacing:'0.04em' }}>bioKids</span>
         </Link>
