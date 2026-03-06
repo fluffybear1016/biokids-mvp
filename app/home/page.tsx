@@ -118,18 +118,14 @@ const dayData: DayPeriod[] = [
         { p:"Normal sleep advantage", n:"3×", d:"Normal sleep = 3× more peak GH than disrupted" },
       ]},
 
-    { id:"sun", t:"Morning sunlight", sub:"10 min, no sunglasses", gh:"157% GH*", headline:"melatonin tonight — deeper sleep — larger GH pulses", tier:1, cite:"Roenneberg, Curr Biol 2007; Forsling, J Pineal Res 1999", why:"Morning light hits melanopsin receptors — synchronizes the suprachiasmatic nucleus — programs melatonin release 14–16 hours from now. Melatonin raised GH up to 157% in adult studies AND inhibits aromatase (the enzyme that closes growth plates). Combine with 5–10 min outdoor stretching — circadian clock + spinal decompression in one.", tip:"Backyard, bus stop walk, porch breakfast. Overcast still works.",
+    { id:"sun", t:"Morning sunlight + stretch", sub:"10 min outside — dead hang, fold over, cobra, cat-cow", gh:"157% GH*", headline:"melatonin tonight + spinal decompression — two levers in one", tier:1, cite:"Roenneberg, Curr Biol 2007; Forsling, J Pineal Res 1999; Nachemson, Scand J Rehabil Med 1970; Reilly, Ergonomics 1984", why:"Morning light hits melanopsin receptors — synchronizes the suprachiasmatic nucleus — programs melatonin release 14–16 hours from now. Melatonin raised GH up to 157% in adult studies AND inhibits aromatase (the enzyme that closes growth plates). Gravity compresses spinal discs all day — up to 1% of height lost by evening. Dead hang creates pure axial traction that rehydrates discs. Stretching both upper and lower body daily decompresses the spine and allows growth plates to recover. 5–10 minutes is enough — circadian clock + spinal decompression in one.", tip:"Backyard, bus stop walk, porch. Dead hang 3 × 20 sec (thumbs over bar, relax shoulders). Fold over, cobra, cat-cow. Upper and lower body. Overcast still works for light.",
       pumps:[
         { p:"Melatonin timing*", n:"up to 157%", d:"Tonight's melatonin set by this morning's light — raised GH 157% in adults" },
         { p:"Aromatase inhibition", n:"—", d:"Melatonin blocks estrogen — delays growth plate closure" },
         { p:"Vitamin D synthesis", n:"IGF-1 enabler", d:"Deficiency blunts the entire GH — IGF-1 axis" },
+        { p:"Spinal decompression", n:"reverses 1%", d:"Dead hang reverses daily gravitational compression" },
       ]},
 
-    { id:"cold", t:"Cool water rinse", sub:"Last 30–60 sec of shower", gh:"↑ GH", headline:"on rewarming — norepinephrine 200–300%", tier:2, cite:"Okada, JCEM 1970; Sramek, Eur J Appl Physiol 2000", why:"Cold raised GH from <1.1 to >4.2 ng/ml on rewarming. Norepinephrine 200–300%. Water conducts heat 25× faster than air. Start with 10 seconds of cool, progress gradually. Never force it.", tip:"Start 10 seconds cool. Progress to 30–60 seconds over weeks.",
-      pumps:[
-        { p:"GH on rewarming", n:"↑ GH", d:"GH rose from <1.1 to >4.2 ng/ml" },
-        { p:"Norepinephrine", n:"200–300%", d:"Cold stress triggers norepinephrine" },
-      ]},
 
     { id:"bkf", t:"Eggs + citrus", sub:"2–3 pasture-raised, orange slices", gh:"GH axis primer", headline:"choline — acetylcholine — primes every GH pulse today", tier:0, cite:"Ziegenfuss, JISSN 2008; Kawamura, Nutrition 2012", why:"Eggs are the richest whole-food choline source. Choline converts to acetylcholine, which stimulates GHRH neurons, priming the pituitary for every GH pulse all day. This restarts the 24-hour cycle — last night's casein bridged overnight, now choline reignites the axis. Eggs also deliver glutamine, ornithine, lysine + arginine, and tyrosine — all GH-supporting aminos.", tip:"Scrambled or over easy. Skip cereal — always. Serve with orange slices (vitamin C boosts iron 2–3×). No cheese at this meal — calcium competes with egg iron.",
       pumps:[
@@ -196,7 +192,6 @@ const dayData: DayPeriod[] = [
 
     { id:"bp", t:"Light backpack", sub:"Under 10–15% body weight", gh:"—", headline:"heavy loads compress developing spine", tier:3, cite:"Brackley, Spine 2004; Negrini, Spine 2002", why:"Chronic heavy loads affect intervertebral disc height during the years when the spine should be lengthening. Combined with daily gravitational compression, an overweight backpack amplifies the problem.", tip:"Weigh it. Remove what they don't need. A rolling backpack eliminates the issue." },
 
-    { id:"hang", t:"Dead hang", sub:"3 × 20 sec, thumbs over bar", gh:"—", headline:"axial traction — reverses gravity's daily 1% compression", tier:0, cite:"Nachemson, Scand J Rehabil Med 1970; Reilly, Ergonomics 1984", why:"Gravity compresses spinal discs all day — up to 1% of height lost by evening. Hanging creates pure axial traction that rehydrates discs.", tip:"Pull-up bar, playground bar, door-frame bar. Relax shoulders completely." },
   ]},
 
   { period:"Afternoon", time:"12:00 – 5:00pm", items:[
