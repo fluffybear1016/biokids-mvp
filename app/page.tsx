@@ -218,11 +218,14 @@ export default function Home() {
               Start Free Trial
             </Link>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm" style={{ color: '#78716c', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500 }}>
-              <span>Age-specific protocols</span>
-              <span>Daily checklist</span>
+              <span>Daily protocol</span>
               <span>Science library</span>
+              <span>Weekly articles</span>
             </div>
           </div>
+          <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.75rem', color: '#a8a29e', textAlign: 'center', marginTop: '1.25rem', lineHeight: 1.6 }}>
+            This is a living system. New research, new articles, new protocols — delivered as the science evolves.
+          </p>
         </div>
       </section>
 
