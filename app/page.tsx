@@ -6,8 +6,9 @@ export default function Home() {
       {/* Navigation */}
       <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: 'rgba(250, 250, 249, 0.95)', backdropFilter: 'blur(4px)' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Courier New', Courier, monospace", fontSize: 'var(--text-lg, 1.125rem)', color: '#059669', textDecoration: 'none' }}>
-            bioKids
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Courier New', Courier, monospace", textDecoration: 'none' }}>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#059669', display: 'inline-block' }} />
+            <span style={{ fontSize: 13, fontWeight: 600, color: '#059669', letterSpacing: '0.04em' }}>bioKids</span>
           </Link>
           <div className="flex items-center gap-3 sm:gap-6">
             <Link href="/login" style={{ fontSize: '0.875rem', fontWeight: 500, color: '#1c1917', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>Log in</Link>
@@ -45,11 +46,11 @@ export default function Home() {
               <h3 style={{ fontWeight: 600, color: '#1c1917', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem' }} className="sm:text-base">Growth Trajectory</h3>
               <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm" style={{ fontFamily: "'Courier New', Courier, monospace", color: '#1c1917', fontWeight: 500 }}>
                 <span className="flex items-center gap-1.5 sm:gap-2">
-                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-gray-400 rounded-full"></span>
+                  <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#d1d5db', display: 'inline-block' }}></span>
                   Average Child
                 </span>
                 <span className="flex items-center gap-1.5 sm:gap-2">
-                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-forest rounded-full"></span>
+                  <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#059669', display: 'inline-block' }}></span>
                   bioKid
                 </span>
               </div>
@@ -79,17 +80,17 @@ export default function Home() {
                 <path
                   d="M 20 180 Q 50 165, 80 140 Q 120 100, 180 60 Q 250 30, 320 18 Q 360 12, 380 10"
                   fill="none"
-                  stroke="#2D5A47"
+                  stroke="#059669"
                   strokeWidth="3"
                   strokeLinecap="round"
                 />
 
                 {/* Start point - same for both */}
-                <circle cx="20" cy="180" r="6" fill="#2D5A47" />
+                <circle cx="20" cy="180" r="6" fill="#059669" />
 
                 {/* End points */}
                 <circle cx="380" cy="80" r="5" fill="#d1d5db" />
-                <circle cx="380" cy="10" r="6" fill="#2D5A47" />
+                <circle cx="380" cy="10" r="6" fill="#059669" />
               </svg>
 
               {/* X-axis labels */}
@@ -198,7 +199,7 @@ export default function Home() {
       {/* Pricing — single CTA, no free trial */}
       <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#fafaf9' }} className="sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <div style={{ border: '2px solid #a7f3d0', borderRadius: '20px', padding: '2rem 1.5rem', textAlign: 'center', background: '#fff', boxShadow: '0 4px 24px rgba(5,150,105,0.08)' }} className="sm:p-10">
+          <div style={{ border: '2px solid rgba(5, 150, 105, 0.25)', borderRadius: '20px', padding: '2rem 1.5rem', textAlign: 'center', background: '#fff', boxShadow: '0 4px 24px rgba(5,150,105,0.08)' }} className="sm:p-10">
             <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#059669', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: '0.5rem' }}>Full access</p>
             <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.5rem', color: '#1c1917', marginBottom: '0.25rem', fontWeight: 800 }} className="sm:text-3xl">
               <span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2.5rem', color: '#059669' }}>$30</span>
@@ -229,7 +230,10 @@ export default function Home() {
       {/* Footer */}
       <footer style={{ padding: '2rem 1rem', borderTop: '1px solid #e7e5e4', backgroundColor: '#fafaf9' }} className="sm:py-12">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
-          <span style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.125rem', color: '#059669', fontWeight: 800 }} className="sm:text-xl">bioKids</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#059669', display: 'inline-block' }} />
+            <span style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 13, fontWeight: 600, color: '#059669', letterSpacing: '0.04em' }}>bioKids</span>
+          </span>
           <div className="flex gap-6 sm:gap-8 text-sm" style={{ color: '#1c1917', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500 }}>
             <Link href="/privacy" style={{ textDecoration: 'none', color: '#1c1917' }}>Privacy</Link>
             <Link href="/terms" style={{ textDecoration: 'none', color: '#1c1917' }}>Terms</Link>
