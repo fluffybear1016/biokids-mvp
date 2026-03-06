@@ -801,30 +801,40 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Height Potential — vertical tape measure */}
+        {/* Height Potential — family silhouettes */}
         {heightData && (() => {
-          // Generate tick marks for the tape measure
-          const baseFt = parseInt(heightData.rangeLow.split("'")[0]);
-          const baseIn = parseInt(heightData.rangeLow.split("'")[1]);
-          const topFt = parseInt(heightData.bioHigh.split("'")[0]);
-          const topIn = parseInt(heightData.bioHigh.split("'")[1]);
-          const bottomTotal = baseFt * 12 + baseIn;
-          const topTotal = topFt * 12 + topIn;
-          const rangeHighTotal = parseInt(heightData.rangeHigh.split("'")[0]) * 12 + parseInt(heightData.rangeHigh.split("'")[1]);
-          const totalSpan = topTotal - bottomTotal;
-          const geneticPct = ((rangeHighTotal - bottomTotal) / totalSpan) * 100;
+          // Parent heights from active child profile
+          const momFt = activeChild?.motherHeightFt ? parseInt(activeChild.motherHeightFt) : 0;
+          const momIn = activeChild?.motherHeightIn ? parseInt(activeChild.motherHeightIn) : 0;
+          const dadFt = activeChild?.fatherHeightFt ? parseInt(activeChild.fatherHeightFt) : 0;
+          const dadIn = activeChild?.fatherHeightIn ? parseInt(activeChild.fatherHeightIn) : 0;
+          const momTotal = momFt * 12 + momIn;
+          const dadTotal = dadFt * 12 + dadIn;
+          const momLabel = momTotal > 0 ? `${momFt}'${momIn}"` : '';
+          const dadLabel = dadTotal > 0 ? `${dadFt}'${dadIn}"` : '';
 
-          // Build tick marks
-          const ticks: { inches: number; label: string; isFoot: boolean }[] = [];
-          for (let i = bottomTotal; i <= topTotal; i++) {
-            const ft = Math.floor(i / 12);
-            const inch = i % 12;
-            if (inch === 0) {
-              ticks.push({ inches: i, label: `${ft}'0"`, isFoot: true });
-            } else if (i === bottomTotal || i === topTotal || inch % 2 === 0) {
-              ticks.push({ inches: i, label: `${ft}'${inch}"`, isFoot: false });
-            }
-          }
+          // Child bioKids max height in inches
+          const bioHighFt = parseInt(heightData.bioHigh.split("'")[0]);
+          const bioHighIn = parseInt(heightData.bioHigh.split("'")[1]);
+          const childTotal = bioHighFt * 12 + bioHighIn;
+
+          // Scale: tallest figure = 180px, others proportional
+          const maxInches = Math.max(momTotal, dadTotal, childTotal, 60);
+          const scale = (inches: number) => Math.round((inches / maxInches) * 180);
+
+          const momH = scale(momTotal || 64); // fallback 5'4"
+          const dadH = scale(dadTotal || 70); // fallback 5'10"
+          const childH = scale(childTotal);
+
+          // Person silhouette SVG — minimal Ive-style
+          const PersonSVG = ({ h, color, headSize = 10 }: { h: number; color: string; headSize?: number }) => (
+            <svg width={headSize * 3.5} height={h} viewBox={`0 0 ${headSize * 3.5} ${h}`} fill="none">
+              {/* Head */}
+              <circle cx={headSize * 1.75} cy={headSize} r={headSize} fill={color} />
+              {/* Body */}
+              <rect x={headSize * 1.75 - headSize * 0.55} y={headSize * 2 + 2} width={headSize * 1.1} height={h - headSize * 2 - 4} rx={headSize * 0.55} fill={color} />
+            </svg>
+          );
 
           return (
             <div
@@ -834,6 +844,7 @@ export default function Dashboard() {
                 background:"#fafaf9",
                 borderRadius:20, border:"1.5px solid #e7e5e4",
                 padding:"24px 20px 20px", position:"relative",
+                overflow:"hidden",
               }}
             >
               {/* Label */}
@@ -843,103 +854,73 @@ export default function Dashboard() {
                 </span>
               </div>
 
-              {/* Tape measure + labels layout */}
-              <div style={{ display:"flex", gap:16, alignItems:"stretch" }}>
+              {/* Family illustration */}
+              <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"center", gap:6, marginBottom:20, minHeight:200 }}>
 
-                {/* Left labels */}
-                <div style={{ display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"flex-end", position:"relative", height:220, flexShrink:0, width:54 }}>
-                  {/* bioKids Zone label — top */}
-                  <div style={{ textAlign:"right" }}>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.06em" }}>bioKids</div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.06em" }}>Zone</div>
-                  </div>
-                  {/* Genetic label — bottom */}
-                  <div style={{ textAlign:"right" }}>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, fontWeight:600, color:"#a8a29e", textTransform:"uppercase", letterSpacing:"0.06em" }}>Genetic</div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, fontWeight:600, color:"#a8a29e", textTransform:"uppercase", letterSpacing:"0.06em" }}>Target</div>
+                {/* Mother */}
+                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
+                  <PersonSVG h={momH} color="#d6d3d1" headSize={9} />
+                  <div style={{ textAlign:"center" }}>
+                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:13, fontWeight:700, color:"#a8a29e" }}>{momLabel}</div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#c8c3bc", marginTop:1 }}>Mom</div>
                   </div>
                 </div>
 
-                {/* Tape measure bar */}
-                <div style={{ position:"relative", width:32, height:220, flexShrink:0 }}>
-                  {/* Genetic zone (bottom) */}
-                  <div style={{
-                    position:"absolute", bottom:0, left:0, right:0,
-                    height:`${geneticPct}%`,
-                    background:"#f0eeeb",
-                    borderRadius:"0 0 6px 6px",
-                    border:"1px solid #d6d3d1",
-                    borderTop:"none",
-                  }} />
-                  {/* bioKids zone (top) */}
-                  <div style={{
-                    position:"absolute", top:0, left:0, right:0,
-                    height:`${100 - geneticPct}%`,
-                    background:"linear-gradient(to top, #065f46, #059669, #34d399)",
-                    borderRadius:"6px 6px 0 0",
-                    border:"1px solid #065f46",
-                  }} />
-                  {/* Zone divider line */}
-                  <div style={{
-                    position:"absolute", bottom:`${geneticPct}%`, left:-4, right:-4,
-                    height:2, background:"#065f46",
-                  }} />
-
-                  {/* Tick marks */}
-                  {ticks.map((tick) => {
-                    const pct = ((tick.inches - bottomTotal) / totalSpan) * 100;
-                    return (
-                      <div key={tick.inches} style={{
-                        position:"absolute",
-                        bottom:`${pct}%`,
-                        right:-1,
-                        width: tick.isFoot ? 14 : 8,
-                        height:1,
-                        background: tick.inches >= rangeHighTotal ? "rgba(255,255,255,0.5)" : "#c8c3bc",
-                      }} />
-                    );
-                  })}
+                {/* Plus sign */}
+                <div style={{ marginBottom:28, padding:"0 4px" }}>
+                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, color:"#d6d3d1", fontWeight:300 }}>+</span>
                 </div>
 
-                {/* Right side — heights and context */}
-                <div style={{ flex:1, display:"flex", flexDirection:"column", justifyContent:"space-between", height:220 }}>
-                  {/* Top — bioKids height */}
-                  <div>
-                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:28, fontWeight:800, color:"#065f46", lineHeight:1, letterSpacing:"-0.02em" }}>
-                      {heightData.bioHigh}
-                    </div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#065f46", marginTop:4, lineHeight:1.4 }}>
-                      +8&quot; above midpoint
-                    </div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#059669", marginTop:2, lineHeight:1.4 }}>
-                      with optimized environment
-                    </div>
+                {/* Father */}
+                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
+                  <PersonSVG h={dadH} color="#d6d3d1" headSize={9} />
+                  <div style={{ textAlign:"center" }}>
+                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:13, fontWeight:700, color:"#a8a29e" }}>{dadLabel}</div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#c8c3bc", marginTop:1 }}>Dad</div>
                   </div>
+                </div>
 
-                  {/* Middle — bioKids zone range */}
-                  <div style={{ padding:"8px 0" }}>
-                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:14, fontWeight:700, color:"#065f46", lineHeight:1.2 }}>
-                      {heightData.bioLow} — {heightData.bioHigh}
-                    </div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#065f46", marginTop:2 }}>
-                      bioKids range
-                    </div>
-                  </div>
+                {/* Arrow */}
+                <div style={{ marginBottom:28, padding:"0 6px" }}>
+                  <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
+                    <path d="M2 6H16M16 6L12 2M16 6L12 10" stroke="#065f46" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
 
-                  {/* Bottom — genetic target */}
-                  <div>
-                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:14, fontWeight:700, color:"#a8a29e", lineHeight:1.2 }}>
-                      {heightData.rangeLow} — {heightData.rangeHigh}
-                    </div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#a8a29e", marginTop:2 }}>
-                      genetic range
-                    </div>
+                {/* Child — the bioKid */}
+                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
+                  <PersonSVG h={childH} color="#065f46" headSize={10} />
+                  <div style={{ textAlign:"center" }}>
+                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:17, fontWeight:800, color:"#065f46" }}>{heightData.bioHigh}</div>
+                    <div style={{
+                      fontFamily:"'Courier New', Courier, monospace", fontSize:8, fontWeight:700,
+                      color:"#065f46", marginTop:1, background:"#f0fdf4", border:"1px solid #065f46",
+                      borderRadius:6, padding:"2px 6px",
+                    }}>bioKid</div>
                   </div>
                 </div>
               </div>
 
+              {/* Bottom context */}
+              <div style={{
+                background:"#f0fdf4", borderRadius:12, padding:"12px 14px",
+                border:"1px solid #dcfce7",
+              }}>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>
+                  <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#a8a29e" }}>Genetic range</span>
+                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:12, fontWeight:700, color:"#a8a29e" }}>{heightData.rangeLow} — {heightData.rangeHigh}</span>
+                </div>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline" }}>
+                  <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#065f46" }}>bioKids Zone</span>
+                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:12, fontWeight:800, color:"#065f46" }}>{heightData.bioLow} — {heightData.bioHigh}</span>
+                </div>
+                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#059669", marginTop:6, lineHeight:1.4 }}>
+                  Up to +8&quot; above genetic midpoint with optimized sleep, nutrition, and movement.
+                </div>
+              </div>
+
               {/* Tap hint */}
-              <div style={{ display:"flex", justifyContent:"flex-end", marginTop:14 }}>
+              <div style={{ display:"flex", justifyContent:"flex-end", marginTop:12 }}>
                 <span style={{
                   display:"flex", alignItems:"center", gap:4,
                   fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#c8c3bc",
