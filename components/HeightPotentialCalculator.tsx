@@ -141,10 +141,18 @@ export default function HeightPotentialCalculator({
       {showReferences && (
         <div style={{ marginTop: 8, background: '#ecfdf5', borderRadius: 10, padding: '0.75rem', fontFamily: mono }}>
           <p style={{ fontSize: 10, color: '#065f46', marginBottom: 6, lineHeight: 1.5 }}>
-            Standard band based on Luo/Wang et al. 1998 (Nature) and AAFP pediatric guidelines.
+            Standard band based on{' '}
+            <a href="https://pubmed.ncbi.nlm.nih.gov/9773847/" target="_blank" rel="noopener noreferrer" style={{ color: '#057a55', textDecoration: 'underline', textUnderlineOffset: 2 }}>
+              Luo, Albertsson-Wikland &amp; Karlberg 1998 (Pediatric Research)
+            </a>{' '}
+            and AAFP pediatric guidelines.
           </p>
           <p style={{ fontSize: 10, color: '#065f46', lineHeight: 1.5 }}>
-            Maximal expression (+3-4 SD) documented in Zeevi et al. 2024 study of healthy families.
+            Maximal expression (+3-4 SD) documented in{' '}
+            <a href="https://pubmed.ncbi.nlm.nih.gov/39201851/" target="_blank" rel="noopener noreferrer" style={{ color: '#057a55', textDecoration: 'underline', textUnderlineOffset: 2 }}>
+              Zeevi et al. 2024 (Children)
+            </a>{' '}
+            study of healthy families.
           </p>
         </div>
       )}

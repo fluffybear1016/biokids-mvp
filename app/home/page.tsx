@@ -801,66 +801,158 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Height Potential — motivational card */}
-        {heightData && (
-          <div
-            onClick={() => { window.location.href = '/settings'; }}
-            style={{
-              cursor:"pointer", marginTop:32,
-              background:"linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #ecfdf5 100%)",
-              borderRadius:20, border:"2px solid #86efac",
-              padding:"24px 20px 20px", position:"relative",
-              boxShadow:"0 4px 24px rgba(6,95,70,0.08)",
-              overflow:"hidden",
-            }}
-          >
-            {/* Subtle background decoration */}
-            <div style={{ position:"absolute", top:-20, right:-20, width:120, height:120, borderRadius:"50%", background:"rgba(6,95,70,0.03)" }} />
-            <div style={{ position:"absolute", bottom:-30, left:-10, width:90, height:90, borderRadius:"50%", background:"rgba(6,95,70,0.04)" }} />
+        {/* Height Potential — vertical tape measure */}
+        {heightData && (() => {
+          // Generate tick marks for the tape measure
+          const baseFt = parseInt(heightData.rangeLow.split("'")[0]);
+          const baseIn = parseInt(heightData.rangeLow.split("'")[1]);
+          const topFt = parseInt(heightData.bioHigh.split("'")[0]);
+          const topIn = parseInt(heightData.bioHigh.split("'")[1]);
+          const bottomTotal = baseFt * 12 + baseIn;
+          const topTotal = topFt * 12 + topIn;
+          const rangeHighTotal = parseInt(heightData.rangeHigh.split("'")[0]) * 12 + parseInt(heightData.rangeHigh.split("'")[1]);
+          const totalSpan = topTotal - bottomTotal;
+          const geneticPct = ((rangeHighTotal - bottomTotal) / totalSpan) * 100;
 
-            <div style={{ position:"relative" }}>
+          // Build tick marks
+          const ticks: { inches: number; label: string; isFoot: boolean }[] = [];
+          for (let i = bottomTotal; i <= topTotal; i++) {
+            const ft = Math.floor(i / 12);
+            const inch = i % 12;
+            if (inch === 0) {
+              ticks.push({ inches: i, label: `${ft}'0"`, isFoot: true });
+            } else if (i === bottomTotal || i === topTotal || inch % 2 === 0) {
+              ticks.push({ inches: i, label: `${ft}'${inch}"`, isFoot: false });
+            }
+          }
+
+          return (
+            <div
+              onClick={() => { window.location.href = '/settings'; }}
+              style={{
+                cursor:"pointer", marginTop:32,
+                background:"#fafaf9",
+                borderRadius:20, border:"1.5px solid #e7e5e4",
+                padding:"24px 20px 20px", position:"relative",
+              }}
+            >
               {/* Label */}
-              <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:14 }}>
+              <div style={{ marginBottom:20 }}>
                 <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.1em" }}>
                   {childName === 'Your child' ? "Your child's" : `${childName}'s`} height potential
                 </span>
               </div>
 
-              {/* Two-zone horizontal bar */}
-              <div style={{ display:"flex", gap:2, marginBottom:16, borderRadius:12, overflow:"hidden", height:56 }}>
-                {/* Genetic Target zone */}
-                <div style={{ flex:4, background:"#f5f5f0", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 8px" }}>
-                  <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#a8a29e", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>Genetic</span>
-                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, fontWeight:800, color:"#78716c", lineHeight:1.2 }}>{heightData.rangeLow}–{heightData.rangeHigh}</span>
+              {/* Tape measure + labels layout */}
+              <div style={{ display:"flex", gap:16, alignItems:"stretch" }}>
+
+                {/* Left labels */}
+                <div style={{ display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"flex-end", position:"relative", height:220, flexShrink:0, width:54 }}>
+                  {/* bioKids Zone label — top */}
+                  <div style={{ textAlign:"right" }}>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.06em" }}>bioKids</div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.06em" }}>Zone</div>
+                  </div>
+                  {/* Genetic label — bottom */}
+                  <div style={{ textAlign:"right" }}>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, fontWeight:600, color:"#a8a29e", textTransform:"uppercase", letterSpacing:"0.06em" }}>Genetic</div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, fontWeight:600, color:"#a8a29e", textTransform:"uppercase", letterSpacing:"0.06em" }}>Target</div>
+                  </div>
                 </div>
-                {/* Arrow */}
-                <div style={{ display:"flex", alignItems:"center", justifyContent:"center", width:24, background:"linear-gradient(90deg, #f5f5f0, #065f46)" }}>
-                  <span style={{ color:"#fff", fontSize:14, fontWeight:800 }}>›</span>
+
+                {/* Tape measure bar */}
+                <div style={{ position:"relative", width:32, height:220, flexShrink:0 }}>
+                  {/* Genetic zone (bottom) */}
+                  <div style={{
+                    position:"absolute", bottom:0, left:0, right:0,
+                    height:`${geneticPct}%`,
+                    background:"#f0eeeb",
+                    borderRadius:"0 0 6px 6px",
+                    border:"1px solid #d6d3d1",
+                    borderTop:"none",
+                  }} />
+                  {/* bioKids zone (top) */}
+                  <div style={{
+                    position:"absolute", top:0, left:0, right:0,
+                    height:`${100 - geneticPct}%`,
+                    background:"linear-gradient(to top, #065f46, #059669, #34d399)",
+                    borderRadius:"6px 6px 0 0",
+                    border:"1px solid #065f46",
+                  }} />
+                  {/* Zone divider line */}
+                  <div style={{
+                    position:"absolute", bottom:`${geneticPct}%`, left:-4, right:-4,
+                    height:2, background:"#065f46",
+                  }} />
+
+                  {/* Tick marks */}
+                  {ticks.map((tick) => {
+                    const pct = ((tick.inches - bottomTotal) / totalSpan) * 100;
+                    return (
+                      <div key={tick.inches} style={{
+                        position:"absolute",
+                        bottom:`${pct}%`,
+                        right:-1,
+                        width: tick.isFoot ? 14 : 8,
+                        height:1,
+                        background: tick.inches >= rangeHighTotal ? "rgba(255,255,255,0.5)" : "#c8c3bc",
+                      }} />
+                    );
+                  })}
                 </div>
-                {/* bioKids Zone */}
-                <div style={{ flex:6, background:"linear-gradient(135deg, #065f46 0%, #059669 50%, #34d399 100%)", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 8px" }}>
-                  <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"rgba(255,255,255,0.8)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>bioKids Zone</span>
-                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:18, fontWeight:800, color:"#fff", lineHeight:1.2 }}>{heightData.bioLow}–{heightData.bioHigh}</span>
+
+                {/* Right side — heights and context */}
+                <div style={{ flex:1, display:"flex", flexDirection:"column", justifyContent:"space-between", height:220 }}>
+                  {/* Top — bioKids height */}
+                  <div>
+                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:28, fontWeight:800, color:"#065f46", lineHeight:1, letterSpacing:"-0.02em" }}>
+                      {heightData.bioHigh}
+                    </div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#065f46", marginTop:4, lineHeight:1.4 }}>
+                      +8&quot; above midpoint
+                    </div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#059669", marginTop:2, lineHeight:1.4 }}>
+                      with optimized environment
+                    </div>
+                  </div>
+
+                  {/* Middle — bioKids zone range */}
+                  <div style={{ padding:"8px 0" }}>
+                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:14, fontWeight:700, color:"#065f46", lineHeight:1.2 }}>
+                      {heightData.bioLow} — {heightData.bioHigh}
+                    </div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#065f46", marginTop:2 }}>
+                      bioKids range
+                    </div>
+                  </div>
+
+                  {/* Bottom — genetic target */}
+                  <div>
+                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:14, fontWeight:700, color:"#a8a29e", lineHeight:1.2 }}>
+                      {heightData.rangeLow} — {heightData.rangeHigh}
+                    </div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#a8a29e", marginTop:2 }}>
+                      genetic range
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Bottom line */}
-              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#065f46", lineHeight:1.5 }}>
-                  Up to <strong>+8&quot;</strong> above genetic midpoint with optimized environment
-                </span>
+              {/* Tap hint */}
+              <div style={{ display:"flex", justifyContent:"flex-end", marginTop:14 }}>
                 <span style={{
-                  flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center",
-                  width:24, height:24, borderRadius:12, background:"rgba(6,95,70,0.1)",
+                  display:"flex", alignItems:"center", gap:4,
+                  fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#c8c3bc",
                 }}>
+                  Edit heights
                   <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                    <path d="M3.5 2L7 5L3.5 8" stroke="#065f46" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M3.5 2L7 5L3.5 8" stroke="#c8c3bc" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </span>
               </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
 
         {/* Breath before the day begins */}
         <div style={{ height:1, background:"#e7e5e4", margin:"36px 0 40px" }} />
