@@ -801,82 +801,122 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Height Potential — pure typography */}
-        {heightData && (
-          <div
-            onClick={() => { window.location.href = '/settings'; }}
-            style={{
-              cursor:"pointer", marginTop:32,
-              background:"#fafaf9",
-              borderRadius:20, border:"1.5px solid #e7e5e4",
-              padding:"28px 24px 24px", position:"relative",
-            }}
-          >
-            {/* Label */}
-            <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:24 }}>
-              {childName === 'Your child' ? "Your child's" : `${childName}'s`} height potential
-            </div>
+        {/* Height Potential — tape measure + typography */}
+        {heightData && (() => {
+          const rangeHighTotal = parseInt(heightData.rangeHigh.split("'")[0]) * 12 + parseInt(heightData.rangeHigh.split("'")[1]);
+          const rangeLowTotal = parseInt(heightData.rangeLow.split("'")[0]) * 12 + parseInt(heightData.rangeLow.split("'")[1]);
+          const bioHighTotal = parseInt(heightData.bioHigh.split("'")[0]) * 12 + parseInt(heightData.bioHigh.split("'")[1]);
+          const totalSpan = bioHighTotal - rangeLowTotal;
+          const geneticPct = ((rangeHighTotal - rangeLowTotal) / totalSpan) * 100;
 
-            {/* The number — the emotional moment */}
-            <div style={{ textAlign:"center", marginBottom:24 }}>
-              <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:48, fontWeight:800, color:"#065f46", lineHeight:1, letterSpacing:"-0.03em" }}>
-                {heightData.bioHigh}
+          return (
+            <div
+              onClick={() => { window.location.href = '/settings'; }}
+              style={{
+                cursor:"pointer", marginTop:32,
+                background:"#fafaf9",
+                borderRadius:20, border:"1.5px solid #e7e5e4",
+                padding:"28px 24px 24px", position:"relative",
+              }}
+            >
+              {/* Label */}
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:20 }}>
+                {childName === 'Your child' ? "Your child's" : `${childName}'s`} height potential
               </div>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#065f46", marginTop:8 }}>
-                with optimized environment
-              </div>
-            </div>
 
-            {/* The journey — genetic → bioKids */}
-            <div style={{
-              display:"flex", alignItems:"center", justifyContent:"center",
-              gap:12, marginBottom:24,
-            }}>
-              {/* Genetic */}
-              <div style={{ textAlign:"center" }}>
-                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#a8a29e", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:4 }}>Genetic range</div>
-                <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:18, fontWeight:700, color:"#a8a29e" }}>
-                  {heightData.rangeLow}–{heightData.rangeHigh}
+              {/* Main layout: tape measure left, content right */}
+              <div style={{ display:"flex", gap:20, alignItems:"stretch" }}>
+
+                {/* Tape measure — slim vertical bar */}
+                <div style={{ width:20, flexShrink:0, position:"relative", minHeight:200 }}>
+                  {/* Genetic zone (bottom) — warm gray */}
+                  <div style={{
+                    position:"absolute", bottom:0, left:0, right:0,
+                    height:`${geneticPct}%`,
+                    background:"#ebe9e6",
+                    borderRadius:"0 0 10px 10px",
+                  }} />
+                  {/* bioKids zone (top) — green gradient */}
+                  <div style={{
+                    position:"absolute", top:0, left:0, right:0,
+                    height:`${100 - geneticPct}%`,
+                    background:"linear-gradient(to top, #065f46 0%, #059669 40%, #34d399 100%)",
+                    borderRadius:"10px 10px 0 0",
+                  }} />
+
+                  {/* Tick marks — subtle ruler lines */}
+                  {Array.from({ length: totalSpan + 1 }, (_, i) => {
+                    const pct = (i / totalSpan) * 100;
+                    const isInch = true;
+                    const isMajor = i % 2 === 0;
+                    const isZoneLine = i === (rangeHighTotal - rangeLowTotal);
+                    const inGreen = i >= (rangeHighTotal - rangeLowTotal);
+                    return (
+                      <div key={i} style={{
+                        position:"absolute",
+                        bottom:`${pct}%`,
+                        right:0,
+                        width: isZoneLine ? 24 : isMajor ? 10 : 6,
+                        height: isZoneLine ? 2 : 1,
+                        background: isZoneLine ? "#065f46" : inGreen ? "rgba(255,255,255,0.35)" : "rgba(0,0,0,0.08)",
+                        marginLeft: isZoneLine ? -2 : 0,
+                      }} />
+                    );
+                  })}
+                </div>
+
+                {/* Right side — heights stacked vertically */}
+                <div style={{ flex:1, display:"flex", flexDirection:"column", justifyContent:"space-between", minHeight:200 }}>
+
+                  {/* Top — the big aspirational number */}
+                  <div>
+                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:42, fontWeight:800, color:"#065f46", lineHeight:1, letterSpacing:"-0.03em" }}>
+                      {heightData.bioHigh}
+                    </div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#059669", marginTop:6 }}>
+                      with optimized environment
+                    </div>
+                  </div>
+
+                  {/* Middle — bioKids zone range */}
+                  <div style={{ padding:"12px 0" }}>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#065f46", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:3 }}>bioKids Zone</div>
+                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:17, fontWeight:800, color:"#065f46" }}>
+                      {heightData.bioLow} — {heightData.bioHigh}
+                    </div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#065f46", marginTop:2 }}>
+                      +2&quot; to +8&quot; above genetic midpoint
+                    </div>
+                  </div>
+
+                  {/* Bottom — genetic range */}
+                  <div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#a8a29e", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:3 }}>Genetic range</div>
+                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, fontWeight:700, color:"#a8a29e" }}>
+                      {heightData.rangeLow} — {heightData.rangeHigh}
+                    </div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#c8c3bc", marginTop:2 }}>
+                      standard mid-parental prediction
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Arrow */}
-              <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
-                <svg width="32" height="12" viewBox="0 0 32 12" fill="none">
-                  <path d="M2 6H28M28 6L23 2M28 6L23 10" stroke="#065f46" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, color:"#065f46", fontWeight:700 }}>bioKids</span>
-              </div>
-
-              {/* bioKids Zone */}
-              <div style={{ textAlign:"center" }}>
-                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#065f46", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:4 }}>bioKids Zone</div>
-                <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:18, fontWeight:800, color:"#065f46" }}>
-                  {heightData.bioLow}–{heightData.bioHigh}
-                </div>
+              {/* Bottom — edit hint */}
+              <div style={{ display:"flex", justifyContent:"flex-end", marginTop:16 }}>
+                <span style={{
+                  display:"flex", alignItems:"center", gap:4,
+                  fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#c8c3bc",
+                }}>
+                  Edit heights
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <path d="M3.5 2L7 5L3.5 8" stroke="#c8c3bc" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
               </div>
             </div>
-
-            {/* Thin divider */}
-            <div style={{ height:1, background:"#e7e5e4", marginBottom:14 }} />
-
-            {/* Bottom line + edit */}
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", lineHeight:1.4 }}>
-                Up to <span style={{ fontWeight:700, color:"#065f46" }}>+8&quot;</span> above genetic midpoint
-              </span>
-              <span style={{
-                display:"flex", alignItems:"center", gap:4,
-                fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#c8c3bc",
-              }}>
-                Edit
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                  <path d="M3.5 2L7 5L3.5 8" stroke="#c8c3bc" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-            </div>
-          </div>
-        )}
+          );
+        })()}
 
         {/* Breath before the day begins */}
         <div style={{ height:1, background:"#e7e5e4", margin:"36px 0 40px" }} />
