@@ -20,7 +20,6 @@ const stacks = [
       { time: 'Breakfast', action: '8-12 oz whole A2 or raw milk, OR sheep\'s milk yogurt', why: 'Sheep yogurt = GABA pump (fermented) + A2 casein (50-80% more than cow) in one food' },
       { time: 'Breakfast', action: 'Pumpkin seeds on yogurt', why: 'Arginine pump + zinc (IGF-1 receptor loading) + magnesium in one handful' },
       { time: 'Breakfast', action: '2-3 pasture-raised eggs', why: 'Choline → acetylcholine → primes GH axis' },
-      { time: 'Breakfast', action: 'Citrus fruit', why: 'Inositol (part of lysine-inositol-B12 growth pattern) + vitamin C' },
       { time: 'Breakfast', action: 'Cod liver oil (non-liver days only)', why: 'Retinol + vitamin D + omega-3. Skip on beef liver days to avoid excess retinol' },
       { time: 'Breakfast', action: 'No oats or conventional grains', why: 'Glyphosate residues disrupt gut + hormones' },
       { time: 'All day', action: 'Filtered water only', why: 'Remove PFAS, heavy metals, pesticide residues' },

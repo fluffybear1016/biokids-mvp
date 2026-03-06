@@ -61,7 +61,7 @@ export default function Protocol() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {[
-              { num: '01', text: 'Pick one stack. The Sprint Stack and Sleep Stack have the highest impact.' },
+              { num: '01', text: 'Pick one stack.' },
               { num: '02', text: 'Follow it for 7 days straight. Consistency matters more than perfection.' },
               { num: '03', text: 'Add a second stack once the first becomes automatic.' },
             ].map((step) => (

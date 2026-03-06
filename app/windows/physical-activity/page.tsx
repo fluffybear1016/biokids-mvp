@@ -416,7 +416,7 @@ SHARED PATTERN: No compression during growth → height and coordination preserv
       <div style={{ maxWidth: 540, margin: '0 auto', padding: '0 20px', paddingTop: 32, paddingBottom: 64 }}>
 
         {/* Back Link */}
-        <Link href="/home" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: F, fontSize: 14, color: CC.light, textDecoration: 'none', marginBottom: 24 }}>
+        <Link href="/science" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: F, fontSize: 14, color: CC.light, textDecoration: 'none', marginBottom: 24 }}>
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
