@@ -209,6 +209,21 @@ export default function LandingHeightPredictor() {
                   7 days free · then $30/mo · cancel anytime
                 </p>
               </div>
+
+              {/* References */}
+              <div style={{ marginTop: 20, padding: '12px 14px', background: '#f5f5f0', borderRadius: 10 }}>
+                <p style={{ fontFamily: mono, fontSize: 9, color: '#78716c', lineHeight: 1.6, margin: 0 }}>
+                  Standard band based on{' '}
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/9773847/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', textDecoration: 'underline', textUnderlineOffset: 2 }}>
+                    Luo, Albertsson-Wikland &amp; Karlberg 1998
+                  </a>{' '}
+                  and AAFP pediatric guidelines. Maximal expression (+3-4 SD) documented in{' '}
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/39201851/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', textDecoration: 'underline', textUnderlineOffset: 2 }}>
+                    Zeevi et al. 2024
+                  </a>{' '}
+                  study of healthy families.
+                </p>
+              </div>
             </div>
           ) : (
             <div style={{ textAlign: 'center', padding: '16px 0' }}>
