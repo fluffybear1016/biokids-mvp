@@ -660,7 +660,7 @@ function OnboardingContent() {
               Start {name || 'your child'}&apos;s protocol
             </h2>
             <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', textAlign: 'center', marginBottom: 20, lineHeight: 1.6 }}>
-              3-day free trial. Cancel anytime.
+              7-day free trial. Cancel anytime.
             </p>
             <Script
               async

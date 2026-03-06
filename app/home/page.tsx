@@ -128,7 +128,7 @@ const dayData: DayPeriod[] = [
       ]},
 
 
-    { id:"d1", t:"Morning dairy", sub:"8 oz A2 milk or sheep yogurt", gh:"+0.39 cm/8 oz serving", headline:"per 8 oz/day across childhood — IGF-1 shift P=0.005", tier:0, cite:"Hoppe, Eur J Clin Nutr 2008; Kang, Nutrients 2019", why:"Milk proteins directly stimulate hepatic IGF-1 production. Six key proteins: casein (slow-release 6–7 hrs), α-lactalbumin (highest tryptophan — serotonin — melatonin), lactoferrin, lysozyme, sIgA, albumin. IRON-DAIRY RULE: serve milk between meals or post-sprint, not alongside iron meals.", tip:"Dairy FIRST (within 1 hour of waking), then eggs. Add pumpkin seeds to sheep yogurt for arginine + zinc + magnesium in one handful.",
+    { id:"d1", t:"Morning dairy + pumpkin seeds", sub:"8 oz A2 milk or sheep yogurt + handful of pumpkin seeds", gh:"+0.39 cm/8 oz serving", headline:"per 8 oz/day across childhood — IGF-1 shift P=0.005", tier:0, cite:"Hoppe, Eur J Clin Nutr 2008; Kang, Nutrients 2019", why:"Milk proteins directly stimulate hepatic IGF-1 production. Six key proteins: casein (slow-release 6–7 hrs), α-lactalbumin (highest tryptophan — serotonin — melatonin), lactoferrin, lysozyme, sIgA, albumin. IRON-DAIRY RULE: serve milk between meals or post-sprint, not alongside iron meals.", tip:"Dairy FIRST (within 1 hour of waking), then eggs. Add pumpkin seeds to sheep yogurt for arginine + zinc + magnesium in one handful.",
       pumps:[
         { p:"IGF-1 stimulation", n:"10–20%", d:"240 mL/day — measurable IGF-1 shift (P=0.005)" },
         { p:"Height per serving", n:"+0.39cm", d:"Per additional 8 oz/day across childhood" },
@@ -202,7 +202,7 @@ const dayData: DayPeriod[] = [
   ]},
 
   { period:"Afternoon", time:"12:00 – 5:00pm", items:[
-    { id:"lunch", t:"Animal + plant protein, vegetables", sub:"Meat + lentils + cruciferous + fermented + seeds", gh:"+700% GH multi-lever*", headline:"lysine + arginine + glutamine + niacin — stacks multiple GH pathways", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012; Quabbe, JCEM 1983", why:"This meal activates 10+ GH pathways and primes the afternoon sprint. Beef liver has the highest choline density plus retinol, B12, and zinc. Peanuts deliver niacin, which suppresses free fatty acids that brake GH. WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver mixed into ground beef (burgers, meatballs, bolognese) — kids won't taste it. Peanuts prime the sprint. NO DAIRY at this meal.",
+    { id:"lunch", t:"Animal + plant protein, vegetables, pumpkin seeds", sub:"Meat + lentils + cruciferous + fermented + pumpkin seeds", gh:"+700% GH multi-lever*", headline:"lysine + arginine + glutamine + niacin — stacks multiple GH pathways", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012; Quabbe, JCEM 1983", why:"This meal activates 10+ GH pathways and primes the afternoon sprint. Beef liver has the highest choline density plus retinol, B12, and zinc. Peanuts deliver niacin, which suppresses free fatty acids that brake GH. WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver mixed into ground beef (burgers, meatballs, bolognese) — kids won't taste it. Peanuts prime the sprint. NO DAIRY at this meal.",
       pumps:[
         { p:"Lysine + Arginine*", n:"up to 700%", d:"Combined aminos raised GH up to 700% in adult supplement studies" },
         { p:"Glutamine (beef)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — beef delivers meaningful amounts" },

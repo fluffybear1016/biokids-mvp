@@ -37,9 +37,9 @@ export default function Home() {
             </p>
             <div className="flex flex-col items-center gap-3">
               <Link href="/onboarding" style={{ background: '#065f46', color: 'white', padding: '0.75rem 2rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", display: 'inline-block' }} className="sm:text-lg">
-                Get Started — $30/mo
+                Start Free Trial
               </Link>
-              <p style={{ fontSize: '0.875rem', color: '#a8a29e', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-sm">Cancel anytime · Full access from day one</p>
+              <p style={{ fontSize: '0.875rem', color: '#a8a29e', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-sm">7 days free · then $30/mo · cancel anytime</p>
             </div>
           </div>
 
