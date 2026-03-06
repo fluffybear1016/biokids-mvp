@@ -801,139 +801,82 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Height Potential — family silhouettes */}
-        {heightData && (() => {
-          // Parent heights from active child profile
-          const momFt = activeChild?.motherHeightFt ? parseInt(activeChild.motherHeightFt) : 0;
-          const momIn = activeChild?.motherHeightIn ? parseInt(activeChild.motherHeightIn) : 0;
-          const dadFt = activeChild?.fatherHeightFt ? parseInt(activeChild.fatherHeightFt) : 0;
-          const dadIn = activeChild?.fatherHeightIn ? parseInt(activeChild.fatherHeightIn) : 0;
-          const momTotal = momFt * 12 + momIn;
-          const dadTotal = dadFt * 12 + dadIn;
-          const momLabel = momTotal > 0 ? `${momFt}'${momIn}"` : '';
-          const dadLabel = dadTotal > 0 ? `${dadFt}'${dadIn}"` : '';
+        {/* Height Potential — pure typography */}
+        {heightData && (
+          <div
+            onClick={() => { window.location.href = '/settings'; }}
+            style={{
+              cursor:"pointer", marginTop:32,
+              background:"#fafaf9",
+              borderRadius:20, border:"1.5px solid #e7e5e4",
+              padding:"28px 24px 24px", position:"relative",
+            }}
+          >
+            {/* Label */}
+            <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:24 }}>
+              {childName === 'Your child' ? "Your child's" : `${childName}'s`} height potential
+            </div>
 
-          // Child bioKids max height in inches
-          const bioHighFt = parseInt(heightData.bioHigh.split("'")[0]);
-          const bioHighIn = parseInt(heightData.bioHigh.split("'")[1]);
-          const childTotal = bioHighFt * 12 + bioHighIn;
-
-          // Scale: tallest figure = 180px, others proportional
-          const maxInches = Math.max(momTotal, dadTotal, childTotal, 60);
-          const scale = (inches: number) => Math.round((inches / maxInches) * 180);
-
-          const momH = scale(momTotal || 64); // fallback 5'4"
-          const dadH = scale(dadTotal || 70); // fallback 5'10"
-          const childH = scale(childTotal);
-
-          // Person silhouette SVG — minimal Ive-style
-          const PersonSVG = ({ h, color, headSize = 10 }: { h: number; color: string; headSize?: number }) => (
-            <svg width={headSize * 3.5} height={h} viewBox={`0 0 ${headSize * 3.5} ${h}`} fill="none">
-              {/* Head */}
-              <circle cx={headSize * 1.75} cy={headSize} r={headSize} fill={color} />
-              {/* Body */}
-              <rect x={headSize * 1.75 - headSize * 0.55} y={headSize * 2 + 2} width={headSize * 1.1} height={h - headSize * 2 - 4} rx={headSize * 0.55} fill={color} />
-            </svg>
-          );
-
-          return (
-            <div
-              onClick={() => { window.location.href = '/settings'; }}
-              style={{
-                cursor:"pointer", marginTop:32,
-                background:"#fafaf9",
-                borderRadius:20, border:"1.5px solid #e7e5e4",
-                padding:"24px 20px 20px", position:"relative",
-                overflow:"hidden",
-              }}
-            >
-              {/* Label */}
-              <div style={{ marginBottom:20 }}>
-                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.1em" }}>
-                  {childName === 'Your child' ? "Your child's" : `${childName}'s`} height potential
-                </span>
+            {/* The number — the emotional moment */}
+            <div style={{ textAlign:"center", marginBottom:24 }}>
+              <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:48, fontWeight:800, color:"#065f46", lineHeight:1, letterSpacing:"-0.03em" }}>
+                {heightData.bioHigh}
               </div>
-
-              {/* Family illustration */}
-              <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"center", gap:6, marginBottom:20, minHeight:200 }}>
-
-                {/* Mother */}
-                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
-                  <PersonSVG h={momH} color="#d6d3d1" headSize={9} />
-                  <div style={{ textAlign:"center" }}>
-                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:13, fontWeight:700, color:"#a8a29e" }}>{momLabel}</div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#c8c3bc", marginTop:1 }}>Mom</div>
-                  </div>
-                </div>
-
-                {/* Plus sign */}
-                <div style={{ marginBottom:28, padding:"0 4px" }}>
-                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, color:"#d6d3d1", fontWeight:300 }}>+</span>
-                </div>
-
-                {/* Father */}
-                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
-                  <PersonSVG h={dadH} color="#d6d3d1" headSize={9} />
-                  <div style={{ textAlign:"center" }}>
-                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:13, fontWeight:700, color:"#a8a29e" }}>{dadLabel}</div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#c8c3bc", marginTop:1 }}>Dad</div>
-                  </div>
-                </div>
-
-                {/* Arrow */}
-                <div style={{ marginBottom:28, padding:"0 6px" }}>
-                  <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
-                    <path d="M2 6H16M16 6L12 2M16 6L12 10" stroke="#065f46" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-
-                {/* Child — the bioKid */}
-                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
-                  <PersonSVG h={childH} color="#065f46" headSize={10} />
-                  <div style={{ textAlign:"center" }}>
-                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:17, fontWeight:800, color:"#065f46" }}>{heightData.bioHigh}</div>
-                    <div style={{
-                      fontFamily:"'Courier New', Courier, monospace", fontSize:8, fontWeight:700,
-                      color:"#065f46", marginTop:1, background:"#f0fdf4", border:"1px solid #065f46",
-                      borderRadius:6, padding:"2px 6px",
-                    }}>bioKid</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom context */}
-              <div style={{
-                background:"#f0fdf4", borderRadius:12, padding:"12px 14px",
-                border:"1px solid #dcfce7",
-              }}>
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>
-                  <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#a8a29e" }}>Genetic range</span>
-                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:12, fontWeight:700, color:"#a8a29e" }}>{heightData.rangeLow} — {heightData.rangeHigh}</span>
-                </div>
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline" }}>
-                  <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#065f46" }}>bioKids Zone</span>
-                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:12, fontWeight:800, color:"#065f46" }}>{heightData.bioLow} — {heightData.bioHigh}</span>
-                </div>
-                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#059669", marginTop:6, lineHeight:1.4 }}>
-                  Up to +8&quot; above genetic midpoint with optimized sleep, nutrition, and movement.
-                </div>
-              </div>
-
-              {/* Tap hint */}
-              <div style={{ display:"flex", justifyContent:"flex-end", marginTop:12 }}>
-                <span style={{
-                  display:"flex", alignItems:"center", gap:4,
-                  fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#c8c3bc",
-                }}>
-                  Edit heights
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                    <path d="M3.5 2L7 5L3.5 8" stroke="#c8c3bc" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </span>
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#065f46", marginTop:8 }}>
+                with optimized environment
               </div>
             </div>
-          );
-        })()}
+
+            {/* The journey — genetic → bioKids */}
+            <div style={{
+              display:"flex", alignItems:"center", justifyContent:"center",
+              gap:12, marginBottom:24,
+            }}>
+              {/* Genetic */}
+              <div style={{ textAlign:"center" }}>
+                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#a8a29e", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:4 }}>Genetic range</div>
+                <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:18, fontWeight:700, color:"#a8a29e" }}>
+                  {heightData.rangeLow}–{heightData.rangeHigh}
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
+                <svg width="32" height="12" viewBox="0 0 32 12" fill="none">
+                  <path d="M2 6H28M28 6L23 2M28 6L23 10" stroke="#065f46" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, color:"#065f46", fontWeight:700 }}>bioKids</span>
+              </div>
+
+              {/* bioKids Zone */}
+              <div style={{ textAlign:"center" }}>
+                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#065f46", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:4 }}>bioKids Zone</div>
+                <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:18, fontWeight:800, color:"#065f46" }}>
+                  {heightData.bioLow}–{heightData.bioHigh}
+                </div>
+              </div>
+            </div>
+
+            {/* Thin divider */}
+            <div style={{ height:1, background:"#e7e5e4", marginBottom:14 }} />
+
+            {/* Bottom line + edit */}
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", lineHeight:1.4 }}>
+                Up to <span style={{ fontWeight:700, color:"#065f46" }}>+8&quot;</span> above genetic midpoint
+              </span>
+              <span style={{
+                display:"flex", alignItems:"center", gap:4,
+                fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#c8c3bc",
+              }}>
+                Edit
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M3.5 2L7 5L3.5 8" stroke="#c8c3bc" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Breath before the day begins */}
         <div style={{ height:1, background:"#e7e5e4", margin:"36px 0 40px" }} />
