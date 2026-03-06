@@ -179,7 +179,7 @@ export default function Settings() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
           {/* Child Info */}
-          <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+          <div style={{ background: openSection === 'child' ? '#f0fdf4' : '#fff', borderRadius: '14px', border: openSection === 'child' ? '1px solid #065f46' : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('child')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Child Info</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('child')}</span>
@@ -223,7 +223,7 @@ export default function Settings() {
           </div>
 
           {/* Daily Habits */}
-          <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+          <div style={{ background: openSection === 'habits' ? '#f0fdf4' : '#fff', borderRadius: '14px', border: openSection === 'habits' ? '1px solid #065f46' : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('habits')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Daily Habits</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('habits')}</span>
@@ -247,7 +247,7 @@ export default function Settings() {
           </div>
 
           {/* Growth Goal */}
-          <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+          <div style={{ background: openSection === 'goal' ? '#f0fdf4' : '#fff', borderRadius: '14px', border: openSection === 'goal' ? '1px solid #065f46' : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('goal')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Growth Goal</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('goal')}</span>
@@ -291,7 +291,7 @@ export default function Settings() {
           </div>
 
           {/* Height Potential */}
-          <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+          <div style={{ background: openSection === 'height' ? '#f0fdf4' : '#fff', borderRadius: '14px', border: openSection === 'height' ? '1px solid #065f46' : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('height')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Height Potential</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('height')}</span>

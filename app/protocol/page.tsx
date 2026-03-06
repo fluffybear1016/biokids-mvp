@@ -41,7 +41,7 @@ export default function Protocol() {
         </p>
 
         {/* The Principle */}
-        <div style={{ background: col.card, border: `1px solid ${col.border}`, borderTop: `3px solid ${col.green}`, borderRadius: 20, padding: '18px 20px', marginBottom: 44 }}>
+        <div style={{ background: '#f0fdf4', border: `1px solid ${col.green}`, borderRadius: 20, padding: '18px 20px', marginBottom: 44 }}>
           <div style={{ fontFamily: F, fontSize: 11, fontWeight: 800, color: col.green, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 14 }}>
             Why Stacking Works
           </div>
@@ -56,7 +56,7 @@ export default function Protocol() {
         </div>
 
         {/* How to Use */}
-        <div style={{ background: col.card, borderRadius: 14, border: `1px solid ${col.border}`, borderTop: `3px solid ${col.green}`, padding: '14px 18px', marginBottom: 44 }}>
+        <div style={{ background: '#f0fdf4', borderRadius: 14, border: `1px solid ${col.green}`, padding: '14px 18px', marginBottom: 44 }}>
           <div style={{ fontFamily: F, fontSize: 11, fontWeight: 800, color: col.green, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 14 }}>
             How to Start
           </div>

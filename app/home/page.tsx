@@ -437,9 +437,9 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
 
   return (
     <div style={{
-      background:"#fff",
+      background: isSig ? "#f0fdf4" : "#fff",
       borderRadius: isSig ? 20 : 14,
-      border: isSig ? "2px solid #86efac" : item.feat ? "2px solid #fbbf24" : "1px solid #e7e5e4",
+      border: isSig ? "1.5px solid #065f46" : item.feat ? "2px solid #fbbf24" : "1px solid #e7e5e4",
       overflow:"hidden",
       opacity: done ? 0.55 : 1,
       transition:"all 0.3s ease",
@@ -474,7 +474,8 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
               }}>{item.t}</span>
               {!noGH && <span style={{
                 fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif",
-                fontSize:13, color:"#065f46", flexShrink:0,
+                fontSize:11, color:"#065f46", flexShrink:0,
+                background:"#f0fdf4", border:"1px solid #065f46", borderRadius:8, padding:"2px 7px",
               }}>{item.gh}</span>}
             </div>
 
@@ -783,7 +784,7 @@ export default function Dashboard() {
                 <span style={{ fontSize:22, fontWeight:800, color:"#1c1917", letterSpacing:"-0.02em" }}>{p.period}</span>
                 <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#c8c3bc" }}>{p.time}</span>
                 {activePeriod === p.period && (
-                  <span style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#ecfdf5", padding:"2px 8px", borderRadius:10 }}>
+                  <span style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#f0fdf4", border:"1px solid #065f46", padding:"2px 8px", borderRadius:10 }}>
                     <span style={{ width:5, height:5, background:"#065f46", borderRadius:"50%", display:"inline-block" }} />
                     <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.04em" }}>Now</span>
                   </span>

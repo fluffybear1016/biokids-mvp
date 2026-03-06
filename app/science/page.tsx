@@ -251,8 +251,8 @@ export default function Dashboard() {
 
         {/* ── Hero: The foundational article ── */}
         <Link href="/learn/how-your-child-grows" style={{
-          display: 'block', background: col.card, borderRadius: 20, padding: '24px 22px',
-          border: `2px solid ${col.sigBorder}`, marginBottom: 32, textDecoration: 'none',
+          display: 'block', background: '#f0fdf4', borderRadius: 20, padding: '24px 22px',
+          border: `1.5px solid ${col.green}`, marginBottom: 32, textDecoration: 'none',
         }}>
           <span style={{ display: 'inline-block', background: '#ecfdf5', color: col.green, padding: '3px 10px', borderRadius: 20, fontSize: 9, fontWeight: 800, fontFamily: F, textTransform: 'uppercase', letterSpacing: 1 }}>
             Start Here
@@ -267,7 +267,7 @@ export default function Dashboard() {
 
         {/* ── Stage + Active Phase (compact) ── */}
         <div style={{
-          background: col.card, border: `1px solid ${col.border}`, borderTop: `2px solid ${col.green}`, borderRadius: 18,
+          background: '#f0fdf4', border: `1px solid ${col.green}`, borderRadius: 18,
           padding: '18px 20px', marginBottom: 16,
         }}>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -294,9 +294,9 @@ export default function Dashboard() {
             { href: '/windows/physical-activity', label: 'Movement', icon: '▲' },
           ].map(({ href, label, icon }) => (
             <Link key={href} href={href} style={{
-              background: col.card, border: `1px solid ${col.border}`, borderTop: `2px solid ${col.green}`, borderRadius: 14,
+              background: '#f0fdf4', border: `1px solid ${col.green}`, borderRadius: 14,
               padding: '14px 10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6,
-              textDecoration: 'none', fontFamily: F, fontSize: 12, fontWeight: 700, color: col.title,
+              textDecoration: 'none', fontFamily: F, fontSize: 12, fontWeight: 700, color: col.green,
             }}>
               <span style={{ fontSize: 14, color: col.green }}>{icon}</span>
               {label}
@@ -308,7 +308,7 @@ export default function Dashboard() {
           href="/stage"
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            background: col.card, border: `1px solid ${col.border}`, borderLeft: `3px solid ${col.green}`, borderRadius: 14,
+            background: '#f0fdf4', border: `1px solid ${col.green}`, borderRadius: 14,
             padding: '12px 16px', marginBottom: 40, textDecoration: 'none',
           }}
         >

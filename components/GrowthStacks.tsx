@@ -148,7 +148,7 @@ export default function GrowthStacks() {
   const currentStack = stacks.find(s => s.id === activeStack)!;
 
   return (
-    <div style={{ background: C.card, borderRadius: 14, border: `1px solid ${C.border}`, borderTop: `2px solid ${C.green}`, overflow: 'hidden' }}>
+    <div style={{ background: C.card, borderRadius: 14, border: `1px solid ${C.green}`, overflow: 'hidden' }}>
       {/* Tab Navigation */}
       <div style={{ display: 'flex', overflowX: 'auto', borderBottom: `1px solid ${C.border}`, background: C.bg }}>
         {stacks.map((stack) => (
@@ -159,7 +159,7 @@ export default function GrowthStacks() {
               flexShrink: 0, padding: '10px 14px', fontSize: 11, fontWeight: 600,
               fontFamily: F, cursor: 'pointer', transition: 'all 0.15s', border: 'none',
               borderBottom: activeStack === stack.id ? `2px solid ${C.green}` : '2px solid transparent',
-              background: activeStack === stack.id ? C.card : 'transparent',
+              background: activeStack === stack.id ? '#f0fdf4' : 'transparent',
               color: activeStack === stack.id ? C.green : C.body,
             }}
           >
@@ -203,9 +203,9 @@ export default function GrowthStacks() {
         </div>
 
         {/* Note */}
-        <div style={{ marginTop: 14, padding: 10, background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 10 }}>
-          <p style={{ fontSize: 12, color: '#78350f', margin: 0, fontFamily: F, lineHeight: 1.5 }}>
-            <span style={{ fontWeight: 700 }}>Key insight:</span> {currentStack.note}
+        <div style={{ marginTop: 14, padding: 10, background: '#f0fdf4', border: '1px solid ' + C.green, borderRadius: 10 }}>
+          <p style={{ fontSize: 12, color: C.body, margin: 0, fontFamily: F, lineHeight: 1.5 }}>
+            <span style={{ fontWeight: 700, color: C.green }}>Key insight:</span> {currentStack.note}
           </p>
         </div>
       </div>
