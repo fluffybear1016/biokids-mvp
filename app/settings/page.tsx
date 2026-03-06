@@ -212,10 +212,10 @@ export default function Settings() {
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <button onClick={saveChildInfo} style={{ padding: '8px 20px', background: '#059669', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+                  <button onClick={saveChildInfo} style={{ padding: '8px 20px', background: '#065f46', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
                     Save
                   </button>
-                  {saved === 'child' && <span style={{ fontSize: '14px', color: '#059669', fontWeight: 500 }}>Saved!</span>}
+                  {saved === 'child' && <span style={{ fontSize: '14px', color: '#065f46', fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
@@ -236,10 +236,10 @@ export default function Settings() {
                 <ChoiceGroup label="Screen time before bed" options={['None', 'Some', 'A lot']} value={screenTime} onChange={setScreenTime} cols={3} />
                 <ChoiceGroup label="Processed / packaged foods" options={['Rarely', 'Sometimes', 'Often']} value={processedFoods} onChange={setProcessedFoods} cols={3} />
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <button onClick={saveHabits} style={{ padding: '8px 20px', background: '#059669', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+                  <button onClick={saveHabits} style={{ padding: '8px 20px', background: '#065f46', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
                     Save
                   </button>
-                  {saved === 'habits' && <span style={{ fontSize: '14px', color: '#059669', fontWeight: 500 }}>Saved!</span>}
+                  {saved === 'habits' && <span style={{ fontSize: '14px', color: '#065f46', fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
@@ -265,7 +265,7 @@ export default function Settings() {
                       gap: '12px',
                       padding: '16px',
                       borderRadius: '8px',
-                      border: goal === opt.value ? '1px solid #059669' : '1px solid #e7e5e4',
+                      border: goal === opt.value ? '1px solid #065f46' : '1px solid #e7e5e4',
                       textAlign: 'left',
                       background: goal === opt.value ? '#f0fdf4' : '#fff',
                       cursor: 'pointer',
@@ -274,16 +274,16 @@ export default function Settings() {
                     }}
                   >
                     <div>
-                      <p style={{ fontSize: '14px', fontWeight: 600, color: goal === opt.value ? '#059669' : '#1c1917', margin: 0 }}>{opt.label}</p>
+                      <p style={{ fontSize: '14px', fontWeight: 600, color: goal === opt.value ? '#065f46' : '#1c1917', margin: 0 }}>{opt.label}</p>
                       <p style={{ fontSize: '12px', color: '#a8a29e', margin: '4px 0 0 0' }}>{opt.desc}</p>
                     </div>
                   </button>
                 ))}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', paddingTop: '8px' }}>
-                  <button onClick={saveGoal} style={{ padding: '8px 20px', background: '#059669', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+                  <button onClick={saveGoal} style={{ padding: '8px 20px', background: '#065f46', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
                     Save
                   </button>
-                  {saved === 'goal' && <span style={{ fontSize: '14px', color: '#059669', fontWeight: 500 }}>Saved!</span>}
+                  {saved === 'goal' && <span style={{ fontSize: '14px', color: '#065f46', fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
@@ -308,10 +308,10 @@ export default function Settings() {
                         style={{
                           padding: '12px 16px',
                           borderRadius: '8px',
-                          border: childGender === opt.value ? '1px solid #059669' : '1px solid #e7e5e4',
+                          border: childGender === opt.value ? '1px solid #065f46' : '1px solid #e7e5e4',
                           fontSize: '14px',
                           fontWeight: 500,
-                          color: childGender === opt.value ? '#059669' : '#57534e',
+                          color: childGender === opt.value ? '#065f46' : '#57534e',
                           background: childGender === opt.value ? '#f0fdf4' : '#fff',
                           cursor: 'pointer',
                           fontFamily: "'Courier New', Courier, monospace",
@@ -357,10 +357,10 @@ export default function Settings() {
                   />
                 )}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <button onClick={saveHeight} style={{ padding: '8px 20px', background: '#059669', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+                  <button onClick={saveHeight} style={{ padding: '8px 20px', background: '#065f46', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
                     Save
                   </button>
-                  {saved === 'height' && <span style={{ fontSize: '14px', color: '#059669', fontWeight: 500 }}>Saved!</span>}
+                  {saved === 'height' && <span style={{ fontSize: '14px', color: '#065f46', fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
@@ -391,10 +391,10 @@ function ChoiceGroup({ label, options, value, onChange, cols }: {
             style={{
               padding: '12px 16px',
               borderRadius: '8px',
-              border: value === opt ? '1px solid #059669' : '1px solid #e7e5e4',
+              border: value === opt ? '1px solid #065f46' : '1px solid #e7e5e4',
               fontSize: '14px',
               fontWeight: 500,
-              color: value === opt ? '#059669' : '#57534e',
+              color: value === opt ? '#065f46' : '#57534e',
               background: value === opt ? '#f0fdf4' : '#fff',
               cursor: 'pointer',
               fontFamily: "'Courier New', Courier, monospace",

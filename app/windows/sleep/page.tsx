@@ -34,18 +34,18 @@ export default function SleepWindow() {
         </Link>
 
         {/* Header */}
-        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #a7f3d0', padding: '20px', marginBottom: 44 }}>
+        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #86efac', padding: '20px', marginBottom: 44 }}>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1c1917', marginBottom: 16 }}>Golden Sleep Window</h1>
           <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75, marginBottom: 20 }}>
             Growth hormone is released in pulses during deep sleep, with 70% occurring in the first 3 sleep cycles. Peak secretion happens 1-2 hours after sleep onset.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>70%</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>70%</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>of daily GH released during sleep</div>
             </div>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>1-2hr</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>1-2hr</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>after sleep onset = peak</div>
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function SleepWindow() {
               { value: '6/7', label: 'Nights On Protocol' },
             ].map((stat) => (
               <div key={stat.label} style={{ background: '#f5f5f4', borderRadius: 10, padding: '12px', textAlign: 'center' }}>
-                <div style={{ fontSize: 18, fontWeight: 800, color: '#059669' }}>{stat.value}</div>
+                <div style={{ fontSize: 18, fontWeight: 800, color: '#065f46' }}>{stat.value}</div>
                 <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>{stat.label}</div>
               </div>
             ))}
@@ -78,7 +78,7 @@ export default function SleepWindow() {
             Understanding why sleep timing matters more than duration for growth hormone optimization.
           </p>
           <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '16px' }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#059669', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#065f46', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
             <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75 }}>
               GHRH from the hypothalamus triggers pituitary GH release during slow-wave sleep (N3).
               Melatonin gates this release — without proper melatonin signaling, GH pulses are blunted by up to 70%.
@@ -99,14 +99,14 @@ export default function SleepWindow() {
               { text: 'No food 2-3 hours before bed — insulin suppresses GH', citation: '[Ho KY. J Clin Endocrinol Metab. 1988]' },
             ].map((item) => (
               <div key={item.text} style={{ display: 'flex', gap: 12, padding: '12px', background: '#f5f5f4', borderRadius: 10 }}>
-                <div style={{ width: 24, height: 24, background: '#059669', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: 24, height: 24, background: '#065f46', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <svg style={{ width: 16, height: 16, color: 'white' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div>
                   <div style={{ fontSize: 14, color: '#1c1917', fontWeight: 500 }}>{item.text}</div>
-                  <div style={{ fontSize: 12, color: '#059669', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
+                  <div style={{ fontSize: 12, color: '#065f46', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
                 </div>
               </div>
             ))}

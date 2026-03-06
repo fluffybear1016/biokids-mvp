@@ -48,7 +48,7 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
     <div style={{ maxWidth: 440, margin: '0 auto' }}>
       {/* Header */}
       <div style={{ textAlign: 'center', marginBottom: 28 }}>
-        <p style={{ fontFamily: mono, fontSize: 10, color: '#059669', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>
+        <p style={{ fontFamily: mono, fontSize: 10, color: '#065f46', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>
           Setting up {childName}&apos;s profile
         </p>
         <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>
@@ -67,7 +67,7 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
             onClick={() => setSelected(goal.id)}
             style={{
               textAlign: 'left', padding: '1rem 1.25rem', borderRadius: 14, cursor: 'pointer',
-              border: selected === goal.id ? '2px solid #059669' : '1px solid #e7e5e4',
+              border: selected === goal.id ? '2px solid #065f46' : '1px solid #e7e5e4',
               background: selected === goal.id ? '#ecfdf5' : '#fff',
               transition: 'all 0.2s ease',
             }}
@@ -75,10 +75,10 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
               <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: '#1c1917' }}>{goal.title}</span>
               {selected === goal.id && (
-                <span style={{ fontFamily: mono, fontSize: 11, color: '#059669', fontWeight: 700 }}>Selected</span>
+                <span style={{ fontFamily: mono, fontSize: 11, color: '#065f46', fontWeight: 700 }}>Selected</span>
               )}
             </div>
-            <p style={{ fontFamily: mono, fontSize: 12, color: '#059669', fontWeight: 600, marginBottom: 4 }}>{goal.subtitle}</p>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#065f46', fontWeight: 600, marginBottom: 4 }}>{goal.subtitle}</p>
             <p style={{ fontFamily: mono, fontSize: 11, color: '#78716c', lineHeight: 1.5, marginBottom: 6 }}>{goal.description}</p>
             <p style={{ fontFamily: mono, fontSize: 10, color: '#a8a29e' }}>{goal.target}</p>
           </button>
@@ -100,7 +100,7 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
           fontFamily: mono, fontSize: 15, fontWeight: 700,
           width: '100%', padding: '0.875rem', borderRadius: 12,
           border: 'none', cursor: selected ? 'pointer' : 'not-allowed',
-          background: selected ? '#059669' : '#d6d3d1',
+          background: selected ? '#065f46' : '#d6d3d1',
           color: selected ? '#fff' : '#a8a29e',
           transition: 'all 0.2s ease',
         }}

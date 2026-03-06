@@ -244,16 +244,16 @@ function OnboardingContent() {
   const chipStyle = (active: boolean): React.CSSProperties => ({
     fontFamily: mono, fontSize: 13, fontWeight: 600,
     padding: '0.75rem 1rem', borderRadius: 10, cursor: 'pointer',
-    border: active ? '2px solid #059669' : '1px solid #d6d3d1',
+    border: active ? '2px solid #065f46' : '1px solid #d6d3d1',
     background: active ? '#ecfdf5' : '#fff',
-    color: active ? '#059669' : '#57534e',
+    color: active ? '#065f46' : '#57534e',
     transition: 'all 0.2s ease', textAlign: 'center',
   });
   const btnStyle = (disabled?: boolean): React.CSSProperties => ({
     fontFamily: mono, fontSize: 15, fontWeight: 700,
     width: '100%', padding: '0.875rem', borderRadius: 12,
     border: 'none', cursor: disabled ? 'not-allowed' : 'pointer',
-    background: disabled ? '#d6d3d1' : '#059669',
+    background: disabled ? '#d6d3d1' : '#065f46',
     color: disabled ? '#a8a29e' : '#fff',
     transition: 'all 0.2s ease', marginTop: 24,
   });
@@ -281,7 +281,7 @@ function OnboardingContent() {
                 key={s}
                 style={{
                   flex: 1, height: 6, borderRadius: 3,
-                  background: s < step ? '#059669' : s === step ? '#059669' : '#e7e5e4',
+                  background: s < step ? '#065f46' : s === step ? '#065f46' : '#e7e5e4',
                   opacity: s < step ? 0.5 : s === step ? 1 : 0.4,
                   transition: 'all 0.4s ease',
                   animation: s === step ? 'stepPulse 0.5s ease' : 'none',
@@ -489,7 +489,7 @@ function OnboardingContent() {
             background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
             padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
           }}>
-            <p style={{ fontFamily: mono, fontSize: 10, color: '#059669', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 8 }}>
+            <p style={{ fontFamily: mono, fontSize: 10, color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 8 }}>
               This is what&apos;s possible
             </p>
             <h2 style={{ fontFamily: mono, fontSize: 22, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>
@@ -624,14 +624,14 @@ function OnboardingContent() {
                   type="checkbox"
                   checked={agreedToTerms}
                   onChange={(e) => setAgreedToTerms(e.target.checked)}
-                  style={{ marginTop: 3, width: 16, height: 16, accentColor: '#059669' }}
+                  style={{ marginTop: 3, width: 16, height: 16, accentColor: '#065f46' }}
                   required
                 />
                 <span style={{ fontFamily: mono, fontSize: 12, color: '#78716c', lineHeight: 1.5 }}>
                   I agree to the{' '}
-                  <Link href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#059669', fontWeight: 600, textDecoration: 'none' }}>Terms</Link>
+                  <Link href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Terms</Link>
                   {' '}and{' '}
-                  <Link href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#059669', fontWeight: 600, textDecoration: 'none' }}>Privacy Policy</Link>
+                  <Link href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Privacy Policy</Link>
                 </span>
               </label>
               <button
@@ -645,7 +645,7 @@ function OnboardingContent() {
 
             <p style={{ textAlign: 'center', fontFamily: mono, fontSize: 12, color: '#a8a29e', marginTop: 20 }}>
               Already have an account?{' '}
-              <Link href="/login" style={{ color: '#059669', fontWeight: 600, textDecoration: 'none' }}>Log in</Link>
+              <Link href="/login" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Log in</Link>
             </p>
           </div>
         )}

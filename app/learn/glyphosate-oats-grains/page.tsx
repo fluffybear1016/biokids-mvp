@@ -6,7 +6,7 @@ import Nav from '@/components/Nav';
 const F = "'Courier New', Courier, monospace";
 const C = {
   bg: '#fafaf9', title: '#1c1917', body: '#57534e', light: '#a8a29e',
-  green: '#059669', card: '#fff', border: '#e7e5e4', sigBorder: '#a7f3d0',
+  green: '#065f46', card: '#fff', border: '#e7e5e4', sigBorder: '#86efac',
 };
 
 export default function GlyphosateArticle() {

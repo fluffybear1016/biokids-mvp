@@ -34,18 +34,18 @@ export default function PsychologicalWindow() {
         </Link>
 
         {/* Header */}
-        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #a7f3d0', padding: '20px', marginBottom: 44 }}>
+        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #86efac', padding: '20px', marginBottom: 44 }}>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1c1917', marginBottom: 16 }}>Psychological</h1>
           <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75, marginBottom: 20 }}>
             Chronic stress elevates cortisol, which directly suppresses GH secretion. Emotional security and low-stress environments optimize the hormonal milieu for growth.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>Cortisol</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>Cortisol</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>suppresses GH</div>
             </div>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>Secure</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>Secure</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>attachment = growth</div>
             </div>
           </div>
@@ -64,9 +64,9 @@ export default function PsychologicalWindow() {
               { value: '8hr', label: 'Play Time/Week', note: 'Adequate' },
             ].map((stat) => (
               <div key={stat.label} style={{ background: '#f5f5f4', borderRadius: 10, padding: '12px', textAlign: 'center' }}>
-                <div style={{ fontSize: 18, fontWeight: 800, color: '#059669' }}>{stat.value}</div>
+                <div style={{ fontSize: 18, fontWeight: 800, color: '#065f46' }}>{stat.value}</div>
                 <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>{stat.label}</div>
-                {stat.note && <div style={{ fontSize: 12, color: '#059669', fontWeight: 600, marginTop: 4 }}>{stat.note}</div>}
+                {stat.note && <div style={{ fontSize: 12, color: '#065f46', fontWeight: 600, marginTop: 4 }}>{stat.note}</div>}
               </div>
             ))}
           </div>
@@ -79,7 +79,7 @@ export default function PsychologicalWindow() {
             Understanding the stress-growth connection and psychosocial dwarfism.
           </p>
           <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '16px' }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#059669', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#065f46', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
             <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75 }}>
               Cortisol (stress hormone) directly inhibits GH secretion and blocks GH receptor signaling. Chronic stress creates persistently elevated cortisol, continuously suppressing growth.
               "Psychosocial dwarfism" is a documented phenomenon where children in high-stress environments show stunted growth despite adequate nutrition.
@@ -100,14 +100,14 @@ export default function PsychologicalWindow() {
               { text: 'Nature exposure — lowers cortisol within 20 minutes', citation: '[Hunter MR. Front Psychol. 2019]' },
             ].map((item) => (
               <div key={item.text} style={{ display: 'flex', gap: 12, padding: '12px', background: '#f5f5f4', borderRadius: 10 }}>
-                <div style={{ width: 24, height: 24, background: '#059669', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: 24, height: 24, background: '#065f46', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <svg style={{ width: 16, height: 16, color: 'white' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div>
                   <div style={{ fontSize: 14, color: '#1c1917', fontWeight: 500 }}>{item.text}</div>
-                  <div style={{ fontSize: 12, color: '#059669', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
+                  <div style={{ fontSize: 12, color: '#065f46', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
                 </div>
               </div>
             ))}

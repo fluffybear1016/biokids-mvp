@@ -6,12 +6,12 @@ export default function TermsOfService() {
       {/* Navigation */}
       <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: 'rgba(250, 250, 249, 0.95)', backdropFilter: 'blur(4px)', borderBottom: '1px solid #e7e5e4' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Courier New', Courier, monospace", fontSize: 'var(--text-lg, 1.125rem)', color: '#059669', textDecoration: 'none' }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Courier New', Courier, monospace", fontSize: 'var(--text-lg, 1.125rem)', color: '#065f46', textDecoration: 'none' }}>
             bioKids
           </Link>
           <div className="flex items-center gap-3 sm:gap-6">
             <Link href="/login" style={{ fontSize: '0.875rem', fontWeight: 500, color: '#57534e', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>Log in</Link>
-            <Link href="/onboarding" style={{ background: '#059669', color: 'white', padding: '0.5rem 1rem', borderRadius: '10px', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>
+            <Link href="/onboarding" style={{ background: '#065f46', color: 'white', padding: '0.5rem 1rem', borderRadius: '10px', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>
               Get Access
             </Link>
           </div>
@@ -229,7 +229,7 @@ export default function TermsOfService() {
               <p className="mb-4">Palm Beach County, Florida</p>
               <p>
                 For questions or concerns regarding these Terms:<br />
-                Email: <a href="mailto:contact@biokids.me" className="text-green-400 underline hover:text-green-300">contact@biokids.me</a>
+                Email: <a href="mailto:contact@biokids.me" className="text-emerald-800 underline hover:text-emerald-900">contact@biokids.me</a>
               </p>
             </section>
           </div>
@@ -239,7 +239,7 @@ export default function TermsOfService() {
       {/* Footer */}
       <footer style={{ padding: '2rem 1rem', borderTop: '1px solid #e7e5e4', backgroundColor: '#fafaf9' }} className="sm:py-12">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
-          <span style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.125rem', color: '#059669', fontWeight: 800 }} className="sm:text-xl">bioKids</span>
+          <span style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.125rem', color: '#065f46', fontWeight: 800 }} className="sm:text-xl">bioKids</span>
           <div className="flex gap-6 sm:gap-8 text-sm" style={{ color: '#57534e', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500 }}>
             <Link href="/privacy" style={{ textDecoration: 'none', color: '#57534e' }}>Privacy</Link>
             <Link href="/terms" style={{ textDecoration: 'none', color: '#57534e' }}>Terms</Link>

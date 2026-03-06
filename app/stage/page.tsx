@@ -1094,7 +1094,7 @@ export default function StagePage() {
         {/* Back link */}
         <Link
           href="/home"
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#059669', textDecoration: 'none', marginBottom: '32px' }}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#065f46', textDecoration: 'none', marginBottom: '32px' }}
         >
           <svg style={{ width: '16px', height: '16px' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -1111,7 +1111,7 @@ export default function StagePage() {
           <p style={{ fontSize: '20px', color: '#57534e', marginBottom: '12px', lineHeight: 1.75 }}>
             {currentStage.subhead}
           </p>
-          <p style={{ fontSize: '14px', color: '#059669', fontWeight: 500 }}>
+          <p style={{ fontSize: '14px', color: '#065f46', fontWeight: 500 }}>
             {currentStage.supportive}
           </p>
         </header>
@@ -1128,7 +1128,7 @@ export default function StagePage() {
                 style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  <span style={{ width: '32px', height: '32px', background: '#e0f2fe', color: '#059669', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '14px' }}>
+                  <span style={{ width: '32px', height: '32px', background: '#e0f2fe', color: '#065f46', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '14px' }}>
                     {index + 1}
                   </span>
                   <h2 style={{ fontWeight: 600, fontSize: '16px', color: '#1c1917', margin: 0 }}>
@@ -1160,8 +1160,8 @@ export default function StagePage() {
                     </p>
 
                     {/* Flow diagram */}
-                    <div style={{ background: '#f0fdf4', borderRadius: '14px', padding: '14px 18px', border: '1px solid #a7f3d0' }}>
-                      <p style={{ color: '#059669', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, margin: 0 }}>
+                    <div style={{ background: '#f0fdf4', borderRadius: '14px', padding: '14px 18px', border: '1px solid #86efac' }}>
+                      <p style={{ color: '#065f46', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, margin: 0 }}>
                         {section.flow}
                       </p>
                     </div>
@@ -1181,7 +1181,7 @@ export default function StagePage() {
         <div style={{ marginTop: '32px' }}>
           <button
             onClick={() => setShowStages(!showStages)}
-            style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#059669', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500, fontSize: '14px', fontFamily: "'Courier New', Courier, monospace" }}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#065f46', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500, fontSize: '14px', fontFamily: "'Courier New', Courier, monospace" }}
           >
             <span>See all stages</span>
             <svg
@@ -1202,14 +1202,14 @@ export default function StagePage() {
                   <button
                     key={stage.id}
                     onClick={() => handleStageSelect(stage.id)}
-                    style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px', borderRadius: '6px', textAlign: 'left', background: currentStageId === stage.id ? '#e0f2fe' : 'transparent', color: currentStageId === stage.id ? '#059669' : '#57534e', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: currentStageId === stage.id ? 600 : 400, fontFamily: "'Courier New', Courier, monospace", transition: 'background-color 0.2s ease' }}
+                    style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px', borderRadius: '6px', textAlign: 'left', background: currentStageId === stage.id ? '#e0f2fe' : 'transparent', color: currentStageId === stage.id ? '#065f46' : '#57534e', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: currentStageId === stage.id ? 600 : 400, fontFamily: "'Courier New', Courier, monospace", transition: 'background-color 0.2s ease' }}
                   >
-                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: currentStageId === stage.id ? '#059669' : '#d4d4d8' }} />
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: currentStageId === stage.id ? '#065f46' : '#d4d4d8' }} />
                     <span>
                       {stage.label}
                     </span>
                     {currentStageId === stage.id && (
-                      <span style={{ fontSize: '12px', background: '#a7f3d0', color: '#059669', padding: '4px 8px', borderRadius: '999px', marginLeft: 'auto' }}>
+                      <span style={{ fontSize: '12px', background: '#86efac', color: '#065f46', padding: '4px 8px', borderRadius: '999px', marginLeft: 'auto' }}>
                         Current
                       </span>
                     )}

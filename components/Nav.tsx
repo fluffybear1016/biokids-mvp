@@ -82,8 +82,8 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
         {/* Logo */}
         <Link href="/home" className="flex items-center gap-2" style={{ textDecoration:'none' }}>
-          <span style={{ width:10, height:10, borderRadius:'50%', background:'#059669', display:'inline-block' }} />
-          <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, fontWeight:600, color:'#059669', letterSpacing:'0.04em' }}>bioKids</span>
+          <span style={{ width:10, height:10, borderRadius:'50%', background:'#065f46', display:'inline-block' }} />
+          <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, fontWeight:600, color:'#065f46', letterSpacing:'0.04em' }}>bioKids</span>
         </Link>
 
         {/* Navigation Tabs */}

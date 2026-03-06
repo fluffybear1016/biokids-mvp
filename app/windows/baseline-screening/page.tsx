@@ -34,18 +34,18 @@ export default function BaselineScreeningWindow() {
         </Link>
 
         {/* Header */}
-        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #a7f3d0', padding: '20px', marginBottom: 44 }}>
+        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #86efac', padding: '20px', marginBottom: 44 }}>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1c1917', marginBottom: 16 }}>Baseline Screening</h1>
           <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75, marginBottom: 20 }}>
             Establish your child's growth baseline with bone age X-ray, IGF-1 levels, and key hormone markers. This data personalizes the protocol.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>5</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>5</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>key tests</div>
             </div>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>1x/yr</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>1x/yr</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>recommended</div>
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function BaselineScreeningWindow() {
               { value: '—', label: 'Growth Velocity', note: 'Needs data' },
             ].map((stat) => (
               <div key={stat.label} style={{ background: '#f5f5f4', borderRadius: 10, padding: '12px', textAlign: 'center' }}>
-                <div style={{ fontSize: 18, fontWeight: 800, color: '#059669' }}>{stat.value}</div>
+                <div style={{ fontSize: 18, fontWeight: 800, color: '#065f46' }}>{stat.value}</div>
                 <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>{stat.label}</div>
                 {stat.note && <div style={{ fontSize: 12, color: '#f59e0b', fontWeight: 600, marginTop: 4 }}>{stat.note}</div>}
               </div>
@@ -79,7 +79,7 @@ export default function BaselineScreeningWindow() {
             Understanding baseline metrics helps predict growth potential and optimize interventions.
           </p>
           <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '16px' }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#059669', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#065f46', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
             <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75 }}>
               Bone age X-rays reveal skeletal maturity vs. chronological age. Children with bone age younger than their actual age have more growth potential remaining.
               IGF-1 levels indicate GH axis activity. Growth velocity (cm/year) tracks whether interventions are working.
@@ -100,14 +100,14 @@ export default function BaselineScreeningWindow() {
               { text: 'Vitamin D level — essential for bone growth', citation: '[Holick MF. NEJM. 2007]' },
             ].map((item) => (
               <div key={item.text} style={{ display: 'flex', gap: 12, padding: '12px', background: '#f5f5f4', borderRadius: 10 }}>
-                <div style={{ width: 24, height: 24, background: '#059669', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: 24, height: 24, background: '#065f46', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <svg style={{ width: 16, height: 16, color: 'white' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div>
                   <div style={{ fontSize: 14, color: '#1c1917', fontWeight: 500 }}>{item.text}</div>
-                  <div style={{ fontSize: 12, color: '#059669', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
+                  <div style={{ fontSize: 12, color: '#065f46', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
                 </div>
               </div>
             ))}

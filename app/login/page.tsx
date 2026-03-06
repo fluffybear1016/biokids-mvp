@@ -158,7 +158,7 @@ function LoginForm() {
         </div>
         <button
           type="submit"
-          style={{ background: '#059669', color: 'white', borderRadius: '10px', fontFamily: "'Courier New', Courier, monospace", fontWeight: 600, padding: '0.75rem 1rem', fontSize: '1rem', width: '100%', border: 'none', cursor: 'pointer' }}
+          style={{ background: '#065f46', color: 'white', borderRadius: '10px', fontFamily: "'Courier New', Courier, monospace", fontWeight: 600, padding: '0.75rem 1rem', fontSize: '1rem', width: '100%', border: 'none', cursor: 'pointer' }}
           disabled={loading}
         >
           {loading ? 'Logging in...' : 'Log in'}
@@ -169,7 +169,7 @@ function LoginForm() {
         <Link href="/forgot-password" style={{ color: '#a8a29e', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem' }}>
           Forgot password?
         </Link>
-        <Link href="/onboarding" style={{ color: '#059669', fontWeight: 500, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem' }}>
+        <Link href="/onboarding" style={{ color: '#065f46', fontWeight: 500, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem' }}>
           Create account
         </Link>
       </div>
@@ -181,7 +181,7 @@ export default function Login() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#fafaf9', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--p-4, 1rem)' }} className="sm:p-8">
       <div className="w-full max-w-md">
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Courier New', Courier, monospace", fontSize: 'var(--text-lg, 1.125rem)', color: '#059669', marginBottom: 'var(--mb-8, 2rem)', justifyContent: 'center' }} className="sm:mb-12">
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Courier New', Courier, monospace", fontSize: 'var(--text-lg, 1.125rem)', color: '#065f46', marginBottom: 'var(--mb-8, 2rem)', justifyContent: 'center' }} className="sm:mb-12">
           bioKids
         </Link>
 

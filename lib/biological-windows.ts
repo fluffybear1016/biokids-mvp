@@ -109,7 +109,7 @@ export function getStatusBadgeClass(status: WindowStatus): string {
 export function getProgressBarColor(status: WindowStatus): string {
   switch (status) {
     case 'open':
-      return 'bg-green-500';
+      return 'bg-green-700';
     case 'closing':
       return 'bg-amber-500';
     case 'closed':

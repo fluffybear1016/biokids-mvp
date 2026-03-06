@@ -415,7 +415,7 @@ const greenNum = (text: string) => {
   if (!text) return null;
   return text.split(/(\d+[\.,]?\d*%?×?)/g).map((part, i) =>
     /\d/.test(part)
-      ? <span key={i} style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", color:"#059669" }}>{part}</span>
+      ? <span key={i} style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", color:"#065f46" }}>{part}</span>
       : <span key={i}>{part}</span>
   );
 };
@@ -439,11 +439,11 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
     <div style={{
       background:"#fff",
       borderRadius: isSig ? 20 : 14,
-      border: isSig ? "2px solid #a7f3d0" : item.feat ? "2px solid #fbbf24" : "1px solid #e7e5e4",
+      border: isSig ? "2px solid #86efac" : item.feat ? "2px solid #fbbf24" : "1px solid #e7e5e4",
       overflow:"hidden",
       opacity: done ? 0.55 : 1,
       transition:"all 0.3s ease",
-      boxShadow: isSig ? "0 4px 24px rgba(5,150,105,0.08)" : "0 1px 3px rgba(0,0,0,0.02)",
+      boxShadow: isSig ? "0 4px 24px rgba(6,95,70,0.08)" : "0 1px 3px rgba(0,0,0,0.02)",
     }}>
       {/* Collapsed view */}
       <div onClick={onToggle} style={{ cursor:"pointer", padding: isSig ? "18px 20px" : isUtil ? "12px 16px" : "14px 18px" }}>
@@ -454,7 +454,7 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
             style={{
               width:22, height:22, borderRadius:11, flexShrink:0, marginTop:1,
               border: done ? "none" : "2px solid #d6d3d1",
-              background: done ? "#059669" : "transparent",
+              background: done ? "#065f46" : "transparent",
               display:"flex", alignItems:"center", justifyContent:"center",
               cursor:"pointer", transition:"all 0.2s ease",
             }}
@@ -474,7 +474,7 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
               }}>{item.t}</span>
               {!noGH && <span style={{
                 fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif",
-                fontSize:13, color:"#059669", flexShrink:0,
+                fontSize:13, color:"#065f46", flexShrink:0,
               }}>{item.gh}</span>}
             </div>
 
@@ -521,11 +521,11 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
         {item.tip && <p style={{ fontSize:12.5, color:"#78716c", fontStyle:"italic", marginBottom:14, lineHeight:1.55 }}>{item.tip}</p>}
 
         {item.pumps && <div style={{ marginBottom:14 }}>
-          <div style={{ fontSize:8.5, fontWeight:700, color:"#059669", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:4 }}>Growth hormone pathways</div>
+          <div style={{ fontSize:8.5, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:4 }}>Growth hormone pathways</div>
           {item.pumps.some(p => p.p.includes('*')) && <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8.5, color:"#a8a29e", marginBottom:8, lineHeight:1.4 }}>* Percentages from adult studies using isolated amino acids or supplements. Whole foods deliver these pathways at lower but meaningful doses.</div>}
           {item.pumps.map((pump, i) => (
             <div key={i} style={{ display:"flex", alignItems:"baseline", gap:8, padding:"4px 0", borderTop: i > 0 ? "1px solid #f5f5f0" : "none" }}>
-              <span style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", fontSize:13, color:"#059669", minWidth:56, textAlign:"right", flexShrink:0 }}>{pump.n}</span>
+              <span style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", fontSize:13, color:"#065f46", minWidth:56, textAlign:"right", flexShrink:0 }}>{pump.n}</span>
               <span style={{ fontSize:11.5, fontWeight:600, color:"#1c1917" }}>{pump.p}</span>
               <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#a8a29e", flex:1 }}>— {pump.d}</span>
             </div>
@@ -533,7 +533,7 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
         </div>}
 
         {item.foods && <div>
-          <div style={{ fontSize:8.5, fontWeight:700, color:"#059669", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>Food sources</div>
+          <div style={{ fontSize:8.5, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>Food sources</div>
           {item.foods.map((food, i) => (
             <div key={i} style={{ display:"flex", gap:8, padding:"5px 0", borderTop: i > 0 ? "1px solid #f5f5f0" : "none" }}>
               <div style={{ fontSize:12.5, fontWeight:600, color:"#1c1917", flex:1, lineHeight:1.4 }}>{food.f}</div>
@@ -634,22 +634,22 @@ export default function Dashboard() {
           position:"sticky", top:0, zIndex:90,
           background: allCoreDone ? "rgba(236,253,245,0.95)" : "rgba(250,250,249,0.92)",
           backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
-          borderBottom: allCoreDone ? "1px solid #a7f3d0" : "1px solid #e7e5e4",
+          borderBottom: allCoreDone ? "1px solid #86efac" : "1px solid #e7e5e4",
           padding:"10px 20px 12px",
           transition:"all 0.5s ease",
         }}>
           <div style={{ maxWidth:540, margin:"0 auto" }}>
             {/* Core progress (primary) */}
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>
-              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color: allCoreDone ? "#059669" : "#a8a29e" }}>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color: allCoreDone ? "#065f46" : "#a8a29e" }}>
                 {allCoreDone ? "Core goals complete" : "Core goals"}
               </span>
-              <span style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, color:"#059669" }}>
+              <span style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, color:"#065f46" }}>
                 {coreDoneCount}/{coreTotal}
               </span>
             </div>
-            <div style={{ height:4, borderRadius:2, background: allCoreDone ? "#a7f3d0" : "#e7e5e4", overflow:"hidden", marginBottom:6 }}>
-              <div style={{ height:"100%", borderRadius:2, background:"#059669", width:`${corePct}%`, transition:"width 0.4s ease" }} />
+            <div style={{ height:4, borderRadius:2, background: allCoreDone ? "#86efac" : "#e7e5e4", overflow:"hidden", marginBottom:6 }}>
+              <div style={{ height:"100%", borderRadius:2, background:"#065f46", width:`${corePct}%`, transition:"width 0.4s ease" }} />
             </div>
             {/* Bonus progress (secondary — smaller) */}
             {(doneCount - coreDoneCount > 0 || allCoreDone) && (
@@ -674,8 +674,8 @@ export default function Dashboard() {
             onClick={() => setIntroOpen(o => !o)}
             style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:16, fontWeight:600, color:"#1c1917", lineHeight:1.55, maxWidth:460, marginBottom: introOpen ? 16 : 0, cursor:"pointer" }}
           >
-            <span style={{ color:"#059669" }}>bioKids</span> is a state of the art system that optimizes your child&apos;s natural growth — all day, all night, organically.
-            <span style={{ color:"#059669", fontSize:9, transition:"transform 0.2s ease", transform: introOpen ? "rotate(180deg)" : "none", display:"inline-block", marginLeft:6 }}>▼</span>
+            <span style={{ color:"#065f46" }}>bioKids</span> is a state of the art system that optimizes your child&apos;s natural growth — all day, all night, organically.
+            <span style={{ color:"#065f46", fontSize:9, transition:"transform 0.2s ease", transform: introOpen ? "rotate(180deg)" : "none", display:"inline-block", marginLeft:6 }}>▼</span>
           </p>
 
           {introOpen && <>
@@ -700,15 +700,15 @@ export default function Dashboard() {
         {showCoreCelebration && (
           <div style={{
             background:"linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #ecfdf5 100%)",
-            borderRadius:20, border:"2px solid #a7f3d0",
+            borderRadius:20, border:"2px solid #86efac",
             padding:"28px 24px", margin:"24px 0 0",
-            boxShadow:"0 4px 24px rgba(5,150,105,0.12)",
+            boxShadow:"0 4px 24px rgba(6,95,70,0.12)",
             animation:"celebrateFadeIn 0.6s ease",
           }}>
             <div style={{ textAlign:"center" }}>
               <div style={{ fontSize:32, marginBottom:12 }}>&#x2728;</div>
               <p style={{
-                fontSize:18, fontWeight:800, color:"#059669", margin:"0 0 10px",
+                fontSize:18, fontWeight:800, color:"#065f46", margin:"0 0 10px",
                 letterSpacing:"-0.02em",
               }}>
                 Every core goal — done.
@@ -738,7 +738,7 @@ export default function Dashboard() {
               {allDone && (
                 <p style={{
                   fontFamily:"'Courier New', Courier, monospace",
-                  fontSize:12, color:"#059669", fontWeight:700, margin:"8px 0 0",
+                  fontSize:12, color:"#065f46", fontWeight:700, margin:"8px 0 0",
                 }}>
                   Every single item. That&apos;s extraordinary.
                 </p>
@@ -750,9 +750,9 @@ export default function Dashboard() {
         {/* All items complete — full day celebration */}
         {allDone && (
           <div style={{
-            background:"#059669", borderRadius:20,
+            background:"#065f46", borderRadius:20,
             padding:"28px 24px", margin:"16px 0 0",
-            boxShadow:"0 8px 32px rgba(5,150,105,0.25)",
+            boxShadow:"0 8px 32px rgba(6,95,70,0.25)",
           }}>
             <div style={{ textAlign:"center" }}>
               <div style={{ fontSize:32, marginBottom:10 }}>&#x1F31F;</div>
@@ -784,12 +784,12 @@ export default function Dashboard() {
                 <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#c8c3bc" }}>{p.time}</span>
                 {activePeriod === p.period && (
                   <span style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#ecfdf5", padding:"2px 8px", borderRadius:10 }}>
-                    <span style={{ width:5, height:5, background:"#059669", borderRadius:"50%", display:"inline-block" }} />
-                    <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#059669", textTransform:"uppercase", letterSpacing:"0.04em" }}>Now</span>
+                    <span style={{ width:5, height:5, background:"#065f46", borderRadius:"50%", display:"inline-block" }} />
+                    <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.04em" }}>Now</span>
                   </span>
                 )}
               </div>
-              {p.note && <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#059669", marginTop:4, fontWeight:600 }}>{p.note}</div>}
+              {p.note && <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#065f46", marginTop:4, fontWeight:600 }}>{p.note}</div>}
             </div>
 
             <div style={{ display:"flex", flexDirection:"column", gap:10 }}>

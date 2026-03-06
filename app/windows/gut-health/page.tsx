@@ -34,18 +34,18 @@ export default function GutHealthWindow() {
         </Link>
 
         {/* Header */}
-        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #a7f3d0', padding: '20px', marginBottom: 44 }}>
+        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #86efac', padding: '20px', marginBottom: 44 }}>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1c1917', marginBottom: 16 }}>Gut Health</h1>
           <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75, marginBottom: 20 }}>
             The microbiome influences nutrient absorption, inflammation, and even GH signaling. A diverse, healthy gut maximizes the building blocks available for growth.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>70%</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>70%</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>immune system in gut</div>
             </div>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>Diversity</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>Diversity</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}> = health</div>
             </div>
           </div>
@@ -64,9 +64,9 @@ export default function GutHealthWindow() {
               { value: 'Yes', label: 'Fermented Foods', note: 'Regular' },
             ].map((stat) => (
               <div key={stat.label} style={{ background: '#f5f5f4', borderRadius: 10, padding: '12px', textAlign: 'center' }}>
-                <div style={{ fontSize: 18, fontWeight: 800, color: '#059669' }}>{stat.value}</div>
+                <div style={{ fontSize: 18, fontWeight: 800, color: '#065f46' }}>{stat.value}</div>
                 <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>{stat.label}</div>
-                {stat.note && <div style={{ fontSize: 12, color: '#059669', fontWeight: 600, marginTop: 4 }}>{stat.note}</div>}
+                {stat.note && <div style={{ fontSize: 12, color: '#065f46', fontWeight: 600, marginTop: 4 }}>{stat.note}</div>}
               </div>
             ))}
           </div>
@@ -79,7 +79,7 @@ export default function GutHealthWindow() {
             Understanding the gut-growth connection.
           </p>
           <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '16px' }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#059669', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#065f46', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
             <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75 }}>
               The gut microbiome affects growth through multiple pathways: nutrient absorption (protein, minerals, vitamins), systemic inflammation (which suppresses GH), and even direct hormone signaling.
               Certain gut bacteria produce short-chain fatty acids (SCFAs) that reduce inflammation and support IGF-1 activity. Dysbiosis (imbalanced microbiome) impairs nutrient extraction.
@@ -100,14 +100,14 @@ export default function GutHealthWindow() {
               { text: 'Limit antibiotics when possible — preserve diversity', citation: '[Langdon A. Genome Med. 2016]' },
             ].map((item) => (
               <div key={item.text} style={{ display: 'flex', gap: 12, padding: '12px', background: '#f5f5f4', borderRadius: 10 }}>
-                <div style={{ width: 24, height: 24, background: '#059669', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: 24, height: 24, background: '#065f46', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <svg style={{ width: 16, height: 16, color: 'white' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div>
                   <div style={{ fontSize: 14, color: '#1c1917', fontWeight: 500 }}>{item.text}</div>
-                  <div style={{ fontSize: 12, color: '#059669', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
+                  <div style={{ fontSize: 12, color: '#065f46', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
                 </div>
               </div>
             ))}

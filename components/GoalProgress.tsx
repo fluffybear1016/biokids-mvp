@@ -27,7 +27,7 @@ const goalConfig = {
   foundation: {
     title: 'Healthy Foundation',
     icon: '',
-    color: 'text-emerald-600',
+    color: 'text-emerald-800',
     bgColor: 'bg-emerald-100',
     targetPercent: 50,
     getMessage: (percent: number) => {
@@ -75,15 +75,15 @@ export default function GoalProgress({ goal, completedCount, totalCount, childNa
       <div className="mb-3">
         <div className="flex justify-between text-sm mb-1">
           <span className="text-stone-600">{completedCount} of {totalCount} today</span>
-          <span className={`font-medium ${onTrack ? 'text-emerald-600' : 'text-stone-500'}`}>
+          <span className={`font-medium ${onTrack ? 'text-emerald-800' : 'text-stone-500'}`}>
             {percent}%
           </span>
         </div>
         <div className="h-2 bg-stone-100 rounded-full overflow-hidden">
           <div 
             className={`h-full rounded-full transition-all duration-500 ${
-              percent >= 90 ? 'bg-emerald-500' :
-              percent >= 70 ? 'bg-emerald-400' :
+              percent >= 90 ? 'bg-emerald-700' :
+              percent >= 70 ? 'bg-emerald-600' :
               percent >= 50 ? 'bg-amber-400' :
               'bg-stone-300'
             }`}

@@ -151,7 +151,7 @@ export default function SignalPage() {
                 onClick={(e) => toggleComplete(item.id, e)}
                 className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
                   isCompleted 
-                    ? 'border-emerald-600 bg-emerald-600' 
+                    ? 'border-emerald-800 bg-emerald-800' 
                     : 'border-stone-300 hover:border-emerald-400'
                 }`}
               >
@@ -181,7 +181,7 @@ export default function SignalPage() {
                 e.stopPropagation();
                 setExpandedScience(expandedScience === item.id ? null : item.id);
               }}
-              className="text-sm text-emerald-600 hover:text-emerald-800 flex items-center gap-1 font-medium font-mono"
+              className="text-sm text-emerald-800 hover:text-emerald-800 flex items-center gap-1 font-medium font-mono"
             >
               {expandedScience === item.id ? '▼' : '▶'} See the science
             </button>
@@ -206,7 +206,7 @@ export default function SignalPage() {
             ) : (
               <button 
                 onClick={(e) => toggleComplete(item.id, e)}
-                className="mt-4 w-full bg-emerald-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-emerald-700"
+                className="mt-4 w-full bg-emerald-800 text-white py-2 rounded-lg text-sm font-medium hover:bg-emerald-900"
               >
                 ✓ Mark as done
               </button>
@@ -236,7 +236,7 @@ export default function SignalPage() {
             onClick={() => setCurrentPeriod(p)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               currentPeriod === p 
-                ? 'bg-emerald-600 text-white' 
+                ? 'bg-emerald-800 text-white' 
                 : 'bg-white border border-stone-200 text-stone-600 hover:bg-stone-50'
             }`}
           >
@@ -292,7 +292,7 @@ export default function SignalPage() {
             {completedToday.map(item => (
               <div key={item.id} className="px-4 py-3 flex items-center justify-between opacity-50">
                 <div className="flex items-center gap-2">
-                  <span className="text-emerald-600 text-sm">✓</span>
+                  <span className="text-emerald-800 text-sm">✓</span>
                   <p className="text-sm text-stone-600">{item.title}</p>
                 </div>
                 <button 

@@ -69,7 +69,7 @@ export default function ResetPassword() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#fafaf9', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--p-4, 1rem)' }} className="sm:p-8">
       <div className="w-full max-w-md">
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Courier New', Courier, monospace", fontSize: 'var(--text-lg, 1.125rem)', color: '#059669', marginBottom: 'var(--mb-8, 2rem)', justifyContent: 'center', textDecoration: 'none' }} className="sm:mb-12">
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Courier New', Courier, monospace", fontSize: 'var(--text-lg, 1.125rem)', color: '#065f46', marginBottom: 'var(--mb-8, 2rem)', justifyContent: 'center', textDecoration: 'none' }} className="sm:mb-12">
           bioKids
         </Link>
 
@@ -78,7 +78,7 @@ export default function ResetPassword() {
             <>
               <div className="flex justify-center mb-6">
                 <div style={{ width: '4rem', height: '4rem', background: 'rgba(5, 150, 105, 0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} style={{ color: '#059669' }}>
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} style={{ color: '#065f46' }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
@@ -87,7 +87,7 @@ export default function ResetPassword() {
               <p style={{ fontSize: '0.875rem', color: '#57534e', marginBottom: '1.5rem', textAlign: 'center', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }} className="sm:text-base">
                 Your password has been reset successfully. Redirecting to login...
               </p>
-              <Link href="/login" style={{ background: '#059669', color: 'white', borderRadius: '10px', fontFamily: "'Courier New', Courier, monospace", fontWeight: 600, padding: '0.75rem 1rem', fontSize: '1rem', width: '100%', border: 'none', cursor: 'pointer', display: 'block', textAlign: 'center', textDecoration: 'none' }}>
+              <Link href="/login" style={{ background: '#065f46', color: 'white', borderRadius: '10px', fontFamily: "'Courier New', Courier, monospace", fontWeight: 600, padding: '0.75rem 1rem', fontSize: '1rem', width: '100%', border: 'none', cursor: 'pointer', display: 'block', textAlign: 'center', textDecoration: 'none' }}>
                 Go to login
               </Link>
             </>
@@ -131,7 +131,7 @@ export default function ResetPassword() {
                 </div>
                 <button
                   type="submit"
-                  style={{ background: '#059669', color: 'white', borderRadius: '10px', fontFamily: "'Courier New', Courier, monospace", fontWeight: 600, padding: '0.75rem 1rem', fontSize: '1rem', width: '100%', border: 'none', cursor: 'pointer' }}
+                  style={{ background: '#065f46', color: 'white', borderRadius: '10px', fontFamily: "'Courier New', Courier, monospace", fontWeight: 600, padding: '0.75rem 1rem', fontSize: '1rem', width: '100%', border: 'none', cursor: 'pointer' }}
                   disabled={loading}
                 >
                   {loading ? 'Updating...' : 'Update password'}
@@ -139,7 +139,7 @@ export default function ResetPassword() {
               </form>
 
               <p style={{ textAlign: 'center', fontSize: '0.875rem', color: '#57534e', marginTop: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }}>
-                <Link href="/login" style={{ color: '#059669', fontWeight: 500, textDecoration: 'none' }}>Back to login</Link>
+                <Link href="/login" style={{ color: '#065f46', fontWeight: 500, textDecoration: 'none' }}>Back to login</Link>
               </p>
             </>
           )}

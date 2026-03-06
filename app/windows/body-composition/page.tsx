@@ -34,18 +34,18 @@ export default function BodyCompositionWindow() {
         </Link>
 
         {/* Header */}
-        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #a7f3d0', padding: '20px', marginBottom: 44 }}>
+        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #86efac', padding: '20px', marginBottom: 44 }}>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1c1917', marginBottom: 16 }}>Body Composition</h1>
           <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75, marginBottom: 20 }}>
             Excess body fat produces estrogen via aromatase, signaling growth plates to close earlier. Staying lean maximizes GH sensitivity and extends the growth window.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>50-70%</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>50-70%</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>GH reduction with obesity</div>
             </div>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>Earlier</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>Earlier</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>plate closure risk</div>
             </div>
           </div>
@@ -64,9 +64,9 @@ export default function BodyCompositionWindow() {
               { value: 'Lean', label: 'Build Type', note: null },
             ].map((stat) => (
               <div key={stat.label} style={{ background: '#f5f5f4', borderRadius: 10, padding: '12px', textAlign: 'center' }}>
-                <div style={{ fontSize: 18, fontWeight: 800, color: '#059669' }}>{stat.value}</div>
+                <div style={{ fontSize: 18, fontWeight: 800, color: '#065f46' }}>{stat.value}</div>
                 <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>{stat.label}</div>
-                {stat.note && <div style={{ fontSize: 12, color: '#059669', fontWeight: 600, marginTop: 4 }}>{stat.note}</div>}
+                {stat.note && <div style={{ fontSize: 12, color: '#065f46', fontWeight: 600, marginTop: 4 }}>{stat.note}</div>}
               </div>
             ))}
           </div>
@@ -79,7 +79,7 @@ export default function BodyCompositionWindow() {
             Understanding how body fat affects growth hormone and growth plate timing.
           </p>
           <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '16px' }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#059669', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#065f46', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
             <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75 }}>
               Adipose (fat) tissue contains aromatase enzyme that converts androgens to estrogen. Elevated estrogen — even in boys — signals growth plates to undergo ossification (closure).
               Obesity also reduces GH secretion by 50-70% and decreases GH receptor sensitivity. This creates a double penalty: less GH AND earlier plate closure.
@@ -100,14 +100,14 @@ export default function BodyCompositionWindow() {
               { text: 'Adequate sleep — poor sleep promotes fat gain', citation: '[Taheri S. PLoS Med. 2004]' },
             ].map((item) => (
               <div key={item.text} style={{ display: 'flex', gap: 12, padding: '12px', background: '#f5f5f4', borderRadius: 10 }}>
-                <div style={{ width: 24, height: 24, background: '#059669', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: 24, height: 24, background: '#065f46', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <svg style={{ width: 16, height: 16, color: 'white' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div>
                   <div style={{ fontSize: 14, color: '#1c1917', fontWeight: 500 }}>{item.text}</div>
-                  <div style={{ fontSize: 12, color: '#059669', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
+                  <div style={{ fontSize: 12, color: '#065f46', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
                 </div>
               </div>
             ))}

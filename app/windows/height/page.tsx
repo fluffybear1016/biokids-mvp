@@ -34,18 +34,18 @@ export default function HeightWindow() {
         </Link>
 
         {/* Header */}
-        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #a7f3d0', padding: '20px', marginBottom: 44 }}>
+        <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #86efac', padding: '20px', marginBottom: 44 }}>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1c1917', marginBottom: 16 }}>Height Opportunity</h1>
           <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75, marginBottom: 20 }}>
             Epiphyseal plates respond to mechanical loading and hormonal signals. Chondrocyte activity determines growth rate. Plates ossify (close) when estrogen levels rise.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>771%</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>771%</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>GH spike from sprints</div>
             </div>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>1.2-1.5g</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>1.2-1.5g</div>
               <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>protein/kg for IGF-1</div>
             </div>
           </div>
@@ -64,9 +64,9 @@ export default function HeightWindow() {
               { value: '~4yr', label: 'Until Plate Closure', note: null },
             ].map((stat) => (
               <div key={stat.label} style={{ background: '#f5f5f4', borderRadius: 10, padding: '12px', textAlign: 'center' }}>
-                <div style={{ fontSize: 18, fontWeight: 800, color: '#059669' }}>{stat.value}</div>
+                <div style={{ fontSize: 18, fontWeight: 800, color: '#065f46' }}>{stat.value}</div>
                 <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>{stat.label}</div>
-                {stat.note && <div style={{ fontSize: 12, color: '#059669', fontWeight: 600, marginTop: 4 }}>{stat.note}</div>}
+                {stat.note && <div style={{ fontSize: 12, color: '#065f46', fontWeight: 600, marginTop: 4 }}>{stat.note}</div>}
               </div>
             ))}
           </div>
@@ -79,7 +79,7 @@ export default function HeightWindow() {
             Understanding how growth plates work and what signals them to grow — or close.
           </p>
           <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '16px' }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#059669', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#065f46', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mechanism</div>
             <p style={{ fontSize: 14, color: '#57534e', lineHeight: 1.75 }}>
               GH stimulates IGF-1 production in the liver. IGF-1 acts on growth plate chondrocytes, stimulating proliferation and hypertrophy.
               Mechanical loading through impact and stretching further stimulates chondrocyte activity.
@@ -100,14 +100,14 @@ export default function HeightWindow() {
               { text: 'Zinc-rich foods (beef, pumpkin seeds) — essential for GH signaling', citation: '[Prasad AS. Nutrition. 1998]' },
             ].map((item) => (
               <div key={item.text} style={{ display: 'flex', gap: 12, padding: '12px', background: '#f5f5f4', borderRadius: 10 }}>
-                <div style={{ width: 24, height: 24, background: '#059669', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: 24, height: 24, background: '#065f46', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <svg style={{ width: 16, height: 16, color: 'white' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div>
                   <div style={{ fontSize: 14, color: '#1c1917', fontWeight: 500 }}>{item.text}</div>
-                  <div style={{ fontSize: 12, color: '#059669', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
+                  <div style={{ fontSize: 12, color: '#065f46', fontWeight: 500, marginTop: 4 }}>{item.citation}</div>
                 </div>
               </div>
             ))}

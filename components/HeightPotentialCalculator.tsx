@@ -35,12 +35,12 @@ export default function HeightPotentialCalculator({
       <div style={{
         background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)',
         borderRadius: 16, padding: '1.5rem', marginBottom: 20,
-        border: '2px solid #a7f3d0', textAlign: 'center',
+        border: '2px solid #86efac', textAlign: 'center',
       }}>
-        <p style={{ fontFamily: mono, fontSize: 10, color: '#059669', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 8 }}>
+        <p style={{ fontFamily: mono, fontSize: 10, color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 8 }}>
           With optimized environment
         </p>
-        <p style={{ fontFamily: serif, fontSize: 36, fontWeight: 800, color: '#059669', lineHeight: 1, marginBottom: 4 }}>
+        <p style={{ fontFamily: serif, fontSize: 36, fontWeight: 800, color: '#065f46', lineHeight: 1, marginBottom: 4 }}>
           {bioLow} — {bioHigh}
         </p>
         <p style={{ fontFamily: mono, fontSize: 12, color: '#065f46', marginTop: 8, lineHeight: 1.55 }}>
@@ -54,13 +54,13 @@ export default function HeightPotentialCalculator({
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', width: 56, textAlign: 'right', paddingRight: 8, position: 'relative' }}>
           <span style={{ position: 'absolute', bottom: '0%', fontFamily: mono, fontSize: 10, color: '#a8a29e' }}>{rangeLow}</span>
           <span style={{ position: 'absolute', bottom: '36%', fontFamily: mono, fontSize: 10, color: '#a8a29e' }}>{rangeHigh}</span>
-          <span style={{ position: 'absolute', bottom: '92%', fontFamily: mono, fontSize: 10, color: '#059669', fontWeight: 700 }}>{bioHigh}</span>
+          <span style={{ position: 'absolute', bottom: '92%', fontFamily: mono, fontSize: 10, color: '#065f46', fontWeight: 700 }}>{bioHigh}</span>
         </div>
 
         {/* Bar */}
         <div style={{ flex: 1, height: '100%', display: 'flex', flexDirection: 'column', borderRadius: 14, overflow: 'hidden', border: '1px solid #e7e5e4' }}>
           {/* Zone 2: bioKids Zone */}
-          <div style={{ background: 'linear-gradient(to top, #059669, #34d399, #6ee7b7)', height: '60%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ background: 'linear-gradient(to top, #065f46, #4ade80, #86efac)', height: '60%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ textAlign: 'center', padding: '0 0.75rem' }}>
               <p style={{ fontFamily: mono, fontSize: 13, fontWeight: 800, color: '#fff' }}>bioKids Zone</p>
               <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 4, fontWeight: 600 }}>{bioLow} to {bioHigh}</p>
@@ -85,8 +85,8 @@ export default function HeightPotentialCalculator({
             Where most children finish based on mid-parental calculations. Where they land depends on environment — sleep, nutrition, movement.
           </p>
         </div>
-        <div style={{ background: '#ecfdf5', borderRadius: 12, padding: '0.875rem 1rem', border: '1px solid #a7f3d0' }}>
-          <p style={{ fontFamily: mono, fontSize: 12, fontWeight: 700, color: '#059669', marginBottom: 4 }}>bioKids Zone · {bioLow} to {bioHigh}</p>
+        <div style={{ background: '#ecfdf5', borderRadius: 12, padding: '0.875rem 1rem', border: '1px solid #86efac' }}>
+          <p style={{ fontFamily: mono, fontSize: 12, fontWeight: 700, color: '#065f46', marginBottom: 4 }}>bioKids Zone · {bioLow} to {bioHigh}</p>
           <p style={{ fontFamily: mono, fontSize: 11, color: '#065f46', lineHeight: 1.55 }}>
             With optimized sleep, nutrition, and movement, children can express their genetics to the upper end — up to 8 inches above midpoint.
           </p>
@@ -121,7 +121,7 @@ export default function HeightPotentialCalculator({
                   <td style={{ padding: '6px 10px', fontWeight: 700, color: '#1c1917' }}>{cmToFtIn(geneticTargetCm + row.offset * 2.54)}</td>
                   <td style={{ padding: '6px 10px', color: '#78716c' }}>{row.pct}</td>
                   <td style={{ padding: '6px 10px', textAlign: 'right' }}>
-                    {row.bio && <span style={{ color: '#059669', fontWeight: 700, fontSize: 10 }}>bioKids</span>}
+                    {row.bio && <span style={{ color: '#065f46', fontWeight: 700, fontSize: 10 }}>bioKids</span>}
                   </td>
                 </tr>
               ))}
@@ -134,7 +134,7 @@ export default function HeightPotentialCalculator({
       <button
         type="button"
         onClick={() => setShowReferences(!showReferences)}
-        style={{ fontFamily: mono, fontSize: 11, color: '#059669', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+        style={{ fontFamily: mono, fontSize: 11, color: '#065f46', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
       >
         {showReferences ? '\u25BC' : '\u25B6'} References
       </button>
