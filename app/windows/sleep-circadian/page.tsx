@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import { Child } from '@/lib/supabase';
-import { SleepHomeTab } from '@/components/HomeTabs';
+
 
 const mockChild: Child = {
   id: '1',
@@ -44,7 +44,7 @@ const C = {
 
 export default function SleepCircadianWindow() {
   const [child, setChild] = useState<Child>(mockChild);
-  const [activeTab, setActiveTab] = useState('science');
+  const [activeTab, setActiveTab] = useState<'science' | 'bedtime' | 'deep'>('science');
   const [expandedLever, setExpandedLever] = useState<number | null>(null);
   const [expandedEnv, setExpandedEnv] = useState<number | null>(null);
   const [expandedWarn, setExpandedWarn] = useState<number | null>(null);
@@ -709,11 +709,8 @@ Zero tolerance.`,
 
   const tabs = [
     { id: 'science', label: 'Science' },
-    { id: 'today', label: 'Levers' },
-    { id: 'routine', label: 'Routine' },
-    { id: 'environment', label: 'Environment' },
-    { id: 'warnings', label: 'Warnings' },
-    { id: 'home', label: 'Overview' }
+    { id: 'bedtime', label: 'Bedtime' },
+    { id: 'deep', label: 'Deep Dive' },
   ];
 
   const AgeTable = ({ data, columns, title }: { data: Record<string, unknown>[]; columns: { header: string; key: string }[]; title: string }) => (
@@ -836,25 +833,24 @@ Zero tolerance.`,
           </div>
         </div>
 
-        {/* Tab Bar */}
-        <div style={{ display: 'flex', gap: 0, marginBottom: 0, overflowX: 'auto', WebkitOverflowScrolling: 'touch', borderBottom: `1px solid ${C.border}` }}>
+        {/* Tab Bar — 3 tabs */}
+        <div style={{ display: 'flex', gap: 0, marginBottom: 0, borderBottom: `1px solid ${C.border}` }}>
           {tabs.map(tab => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => setActiveTab(tab.id as typeof activeTab)}
               style={{
-                padding: '10px 16px',
+                flex: 1,
+                padding: '12px 16px',
                 border: 'none',
                 background: 'transparent',
                 borderBottom: activeTab === tab.id ? `2px solid ${C.green}` : '2px solid transparent',
-                fontSize: 12,
+                fontSize: 13,
                 fontFamily: F,
                 fontWeight: activeTab === tab.id ? 700 : 500,
                 color: activeTab === tab.id ? C.green : C.light,
                 cursor: 'pointer',
                 transition: 'all 0.2s',
-                whiteSpace: 'nowrap' as const,
-                flexShrink: 0,
               }}
             >
               {tab.label}
@@ -865,50 +861,33 @@ Zero tolerance.`,
         {/* Tab Content */}
         <div style={{ padding: '24px 0', marginBottom: 44 }}>
 
-          {/* HOME TAB */}
-          {activeTab === 'home' && (
-            <div style={{ padding: 8 }}>
-              <SleepHomeTab age={childAge} />
-            </div>
-          )}
-
-          {/* TODAY TAB */}
-          {activeTab === 'today' && (
+          {/* ═══ TAB: BEDTIME ═══ */}
+          {activeTab === 'bedtime' && (
             <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 8px', textAlign: 'center' }}>Sleep Levers</h2>
-              <p style={{ textAlign: 'center', fontFamily: F, color: C.light, fontSize: 14, marginBottom: 24 }}>Ranked by impact on slow-wave sleep. Do #1 first.</p>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Bedtime</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: C.light, marginBottom: 28 }}>Every lever, the nightly routine, and the environment — in one place.</p>
+
+              {/* ── Section: Sleep Levers ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: C.title, marginBottom: 4 }}>Sleep Levers</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: C.light, marginBottom: 16 }}>Ranked by impact on slow-wave sleep. Do #1 first.</p>
 
               {levers.map((lever, i) => (
                 <div key={i} style={{ marginBottom: 8 }}>
                   <button
                     onClick={() => setExpandedLever(expandedLever === i ? null : i)}
                     style={{
-                      width: '100%',
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: 14,
-                      padding: '14px 18px',
-                      fontFamily: F,
+                      width: '100%', display: 'flex', alignItems: 'flex-start', gap: 14,
+                      padding: '14px 18px', fontFamily: F, textAlign: 'left',
                       background: expandedLever === i ? '#ecfdf5' : C.bg,
                       border: expandedLever === i ? `1px solid ${C.sigBorder}` : `1px solid ${C.border}`,
                       borderRadius: expandedLever === i ? '14px 14px 0 0' : 14,
                       cursor: 'pointer',
-                      textAlign: 'left'
                     }}
                   >
                     <span style={{
-                      width: 28,
-                      height: 28,
-                      background: C.green,
-                      color: 'white',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: 13,
-                      fontFamily: F,
-                      fontWeight: 800,
-                      flexShrink: 0
+                      width: 28, height: 28, background: C.green, color: 'white', borderRadius: '50%',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: 13, fontFamily: F, fontWeight: 800, flexShrink: 0
                     }}>{i + 1}</span>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontWeight: 800, fontSize: 14, color: C.title, marginBottom: 4 }}>{lever.title}</div>
@@ -926,80 +905,19 @@ Zero tolerance.`,
                 </div>
               ))}
 
-              {/* Full Age Tables */}
-              <div style={{ marginTop: 44, padding: '14px 18px', background: C.card, borderRadius: 14, border: `1px solid ${C.border}` }}>
-                <h3 style={{ fontFamily: F, fontSize: 14, fontWeight: 800, color: C.title, marginBottom: 16 }}>Complete Age-Based Reference Tables</h3>
-
-                <AgeTable
-                  title="Sleep Duration Targets"
-                  data={sleepTargets as unknown as Record<string, unknown>[]}
-                  columns={[
-                    { header: 'Age', key: 'age' },
-                    { header: 'Minimum', key: 'min' },
-                    { header: 'Target', key: 'target' },
-                    { header: 'Notes', key: 'notes' }
-                  ]}
-                />
-
-                <AgeTable
-                  title="Bedtime Targets"
-                  data={bedtimeTargets as unknown as Record<string, unknown>[]}
-                  columns={[
-                    { header: 'Age', key: 'age' },
-                    { header: 'Bedtime', key: 'bedtime' },
-                    { header: 'Notes', key: 'notes' }
-                  ]}
-                />
-
-                <AgeTable
-                  title="Bedtime Milk Dosing"
-                  data={milkDosing as unknown as Record<string, unknown>[]}
-                  columns={[
-                    { header: 'Age', key: 'age' },
-                    { header: 'Amount', key: 'amount' },
-                    { header: 'Notes', key: 'notes' }
-                  ]}
-                />
-
-                <AgeTable
-                  title="Tart Cherry Juice Dosing"
-                  data={tartCherryDosing as unknown as Record<string, unknown>[]}
-                  columns={[
-                    { header: 'Age', key: 'age' },
-                    { header: 'Dose', key: 'dose' },
-                    { header: 'Dilution', key: 'dilution' },
-                    { header: 'Frequency', key: 'frequency' }
-                  ]}
-                />
-              </div>
-
-              {/* Never Box */}
-              <div style={{ marginTop: 24, background: C.card, borderRadius: 14, padding: '14px 18px', border: `1px solid ${C.border}` }}>
-                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: C.red, marginBottom: 10 }}>Never</div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: '8px' }}>
-                  {neverList.map((item, i) => (
-                    <div key={i} style={{ fontFamily: F, fontSize: 13, color: C.body, padding: '4px 0', lineHeight: 1.75 }}>\u2715 {item}</div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* ROUTINE TAB */}
-          {activeTab === 'routine' && (
-            <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 24px' }}>The Complete Wind-Down Sequence</h2>
+              {/* ── Section: Wind-Down Routine ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: C.title, marginTop: 44, marginBottom: 4 }}>The Wind-Down Sequence</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: C.light, marginBottom: 16 }}>A complete nightly routine — personalized for age {childAge}.</p>
 
               {[
                 { time: '60 min before bed', items: [
                   `Warm bath with Epsom salts/magnesium flakes (${getMagnesiumDose()} for age ${childAge})`,
                   '10-20 min soak, warm not hot',
                   'Add lavender or chamomile essential oil if tolerated',
-                  'Bath \u2192 cooling mechanism: raises surface temp, subsequent cooling triggers core temp drop that initiates deep sleep (physiological trigger, not just behavioral)',
-                  'Multi-modal relaxation tool: warmth + magnesium + aromatherapy + subsequent cooling'
+                  'Bath \u2192 cooling mechanism: raises surface temp, subsequent cooling triggers core temp drop that initiates deep sleep',
                 ] },
                 { time: 'After bath', items: [
-                  'Pajamas (organic cotton or linen only \u2014 avoid synthetic fabrics that trap heat, off-gas chemicals, and disrupt temperature regulation)',
+                  'Pajamas (organic cotton or linen only \u2014 avoid synthetic fabrics that trap heat)',
                   'All blue light OFF \u2014 dim warm lights only',
                   'Devices charge outside bedroom'
                 ] },
@@ -1016,14 +934,12 @@ Zero tolerance.`,
                 { time: '15-30 min before lights out', items: [
                   'Magnesium lotion on feet (magnesium glycinate preferred)',
                   'Thin layer on soles, gentle 1-2 min massage',
-                  'Functions as calming sensory ritual + transdermal delivery',
                   '2-3 short physical books (not screens)',
-                  'Calm conversation',
-                  'Calming phrases, gentle stories, or recorded parent voice scripts played softly',
+                  'Calming phrases, gentle stories, or recorded parent voice scripts',
                   'Cuddling, gentle voice (reduces cortisol)'
                 ] },
                 { time: 'At lights out', items: [
-                  '\u201CThird eye\u201D technique: gentle forehead rubbing or light pressure between eyebrows during drowsiness (anecdotal but many parents report it helps children settle)',
+                  'Gentle forehead rubbing or light pressure between eyebrows during drowsiness',
                   'Complete darkness (blackout shades, cover every light source)',
                   'Pink noise on (or quiet)'
                 ] }
@@ -1036,7 +952,7 @@ Zero tolerance.`,
                 </div>
               ))}
 
-              <div style={{ background: C.card, borderRadius: 14, padding: '14px 18px', marginTop: 24, border: `2px solid ${C.sigBorder}` }}>
+              <div style={{ background: C.card, borderRadius: 14, padding: '14px 18px', marginTop: 12, border: `2px solid ${C.sigBorder}` }}>
                 <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: C.title, marginBottom: 8 }}>Emotional Safety</div>
                 <div style={{ fontFamily: F, fontSize: 14, color: C.body, lineHeight: 1.75 }}>
                   Cortisol directly antagonizes GH. A child who goes to bed stressed, scared, or overstimulated has reduced SWS and blunted GH. A child who feels safe falls asleep faster and stays in deeper sleep longer.
@@ -1045,45 +961,21 @@ Zero tolerance.`,
                 </div>
               </div>
 
-              <div style={{ background: C.card, borderRadius: 14, padding: '14px 18px', marginTop: 12, border: `1px solid ${C.border}` }}>
-                <div style={{ fontFamily: F, fontWeight: 800, fontSize: 14, color: C.title, marginBottom: 8 }}>Example Sequence Summary</div>
-                <ol style={{ fontFamily: F, fontSize: 14, color: C.body, lineHeight: 1.75, margin: 0, paddingLeft: 20 }}>
-                  <li>Magnesium bath with Epsom salts and lavender (10-20 minutes, 60 minutes before bed)</li>
-                  <li>Pajamas (organic cotton or linen)</li>
-                  <li>Dim warm lights only (all blue-rich light already off)</li>
-                  <li>Milk (small amount, 60-90 minutes before lights out)</li>
-                  <li>Tart cherry juice if using (30-45 minutes before lights out)</li>
-                  <li>Magnesium lotion on feet (1-2 minute gentle massage)</li>
-                  <li>2-3 short books or calm conversation (physical books, not screens)</li>
-                  <li>Calming phrases, gentle stories, or recorded parent voice scripts</li>
-                  <li>Gentle forehead rubbing or light pressure between eyebrows during drowsiness</li>
-                  <li>Lights out \u2014 complete darkness</li>
-                </ol>
-              </div>
-            </div>
-          )}
-
-          {/* ENVIRONMENT TAB */}
-          {activeTab === 'environment' && (
-            <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 24px' }}>Sleep Environment Checklist</h2>
+              {/* ── Section: Environment ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: C.title, marginTop: 44, marginBottom: 4 }}>Sleep Environment</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: C.light, marginBottom: 16 }}>The room itself matters. Each item expands with the science.</p>
 
               {envItems.map((item, i) => (
                 <div key={i} style={{ marginBottom: 8 }}>
                   <button
                     onClick={() => setExpandedEnv(expandedEnv === i ? null : i)}
                     style={{
-                      width: '100%',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      padding: '14px 18px',
-                      fontFamily: F,
+                      width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                      padding: '14px 18px', fontFamily: F, textAlign: 'left',
                       background: expandedEnv === i ? '#ecfdf5' : C.bg,
                       border: expandedEnv === i ? `1px solid ${C.sigBorder}` : `1px solid ${C.border}`,
                       borderRadius: expandedEnv === i ? '14px 14px 0 0' : 14,
                       cursor: 'pointer',
-                      textAlign: 'left'
                     }}
                   >
                     <span style={{ fontWeight: 800, fontSize: 14, color: C.title }}>{item.title}</span>
@@ -1097,30 +989,83 @@ Zero tolerance.`,
                   )}
                 </div>
               ))}
+
+              {/* ── Section: Age Tables ── */}
+              <div style={{ marginTop: 44, padding: '14px 18px', background: C.card, borderRadius: 14, border: `1px solid ${C.border}` }}>
+                <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: C.title, marginBottom: 16 }}>Age-Based Reference Tables</div>
+
+                <AgeTable
+                  title="Sleep Duration Targets"
+                  data={sleepTargets as unknown as Record<string, unknown>[]}
+                  columns={[
+                    { header: 'Age', key: 'age' },
+                    { header: 'Minimum', key: 'min' },
+                    { header: 'Target', key: 'target' },
+                    { header: 'Notes', key: 'notes' }
+                  ]}
+                />
+                <AgeTable
+                  title="Bedtime Targets"
+                  data={bedtimeTargets as unknown as Record<string, unknown>[]}
+                  columns={[
+                    { header: 'Age', key: 'age' },
+                    { header: 'Bedtime', key: 'bedtime' },
+                    { header: 'Notes', key: 'notes' }
+                  ]}
+                />
+                <AgeTable
+                  title="Bedtime Milk Dosing"
+                  data={milkDosing as unknown as Record<string, unknown>[]}
+                  columns={[
+                    { header: 'Age', key: 'age' },
+                    { header: 'Amount', key: 'amount' },
+                    { header: 'Notes', key: 'notes' }
+                  ]}
+                />
+                <AgeTable
+                  title="Tart Cherry Juice Dosing"
+                  data={tartCherryDosing as unknown as Record<string, unknown>[]}
+                  columns={[
+                    { header: 'Age', key: 'age' },
+                    { header: 'Dose', key: 'dose' },
+                    { header: 'Dilution', key: 'dilution' },
+                    { header: 'Frequency', key: 'frequency' }
+                  ]}
+                />
+              </div>
+
+              {/* ── Section: Never ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: C.red, marginTop: 44, marginBottom: 4 }}>What to Avoid</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: C.light, marginBottom: 16 }}>These directly sabotage slow-wave sleep and GH.</p>
+              {neverList.map((item, i) => (
+                <div key={i} style={{ fontFamily: F, fontSize: 13, color: C.body, padding: '6px 0', lineHeight: 1.75 }}>
+                  <span style={{ color: C.red, fontWeight: 800 }}>\u2715</span> {item}
+                </div>
+              ))}
             </div>
           )}
 
-          {/* WARNINGS TAB */}
-          {activeTab === 'warnings' && (
+          {/* ═══ TAB: DEEP DIVE ═══ */}
+          {activeTab === 'deep' && (
             <div>
-              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.red, letterSpacing: '-0.02em', margin: '0 0 24px' }}>Critical Issues That Wreck GH \u2014 Address Immediately</h2>
+              <h2 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Deep Dive</h2>
+              <p style={{ fontFamily: F, fontSize: 14, color: C.light, marginBottom: 28 }}>Critical issues to fix and the complete example routine.</p>
+
+              {/* ── Warnings ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: C.red, marginBottom: 4 }}>Critical Issues That Wreck GH</div>
+              <p style={{ fontFamily: F, fontSize: 13, color: C.light, marginBottom: 16 }}>Address these immediately — they override everything else.</p>
 
               {warnings.map((warn, i) => (
                 <div key={i} style={{ marginBottom: 8 }}>
                   <button
                     onClick={() => setExpandedWarn(expandedWarn === i ? null : i)}
                     style={{
-                      width: '100%',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      padding: '14px 18px',
-                      fontFamily: F,
+                      width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                      padding: '14px 18px', fontFamily: F, textAlign: 'left',
                       background: expandedWarn === i ? C.card : C.bg,
                       border: `1px solid ${C.border}`,
                       borderRadius: expandedWarn === i ? '14px 14px 0 0' : 14,
                       cursor: 'pointer',
-                      textAlign: 'left'
                     }}
                   >
                     <span style={{ fontWeight: 800, fontSize: 14, color: C.red }}>{warn.title}</span>
@@ -1134,6 +1079,23 @@ Zero tolerance.`,
                   )}
                 </div>
               ))}
+
+              {/* ── Example Sequence ── */}
+              <div style={{ fontFamily: F, fontSize: 16, fontWeight: 800, color: C.title, marginTop: 44, marginBottom: 12 }}>Example Sequence Summary</div>
+              <div style={{ background: C.card, borderRadius: 14, padding: '14px 18px', border: `1px solid ${C.border}` }}>
+                <ol style={{ fontFamily: F, fontSize: 14, color: C.body, lineHeight: 1.75, margin: 0, paddingLeft: 20 }}>
+                  <li>Magnesium bath with Epsom salts and lavender (10-20 minutes, 60 minutes before bed)</li>
+                  <li>Pajamas (organic cotton or linen)</li>
+                  <li>Dim warm lights only (all blue-rich light already off)</li>
+                  <li>Milk (small amount, 60-90 minutes before lights out)</li>
+                  <li>Tart cherry juice if using (30-45 minutes before lights out)</li>
+                  <li>Magnesium lotion on feet (1-2 minute gentle massage)</li>
+                  <li>2-3 short books or calm conversation (physical books, not screens)</li>
+                  <li>Calming phrases, gentle stories, or recorded parent voice scripts</li>
+                  <li>Gentle forehead rubbing or light pressure between eyebrows during drowsiness</li>
+                  <li>Lights out \u2014 complete darkness</li>
+                </ol>
+              </div>
             </div>
           )}
 
