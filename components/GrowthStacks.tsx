@@ -95,26 +95,45 @@ const stacks = [
 
       // ── Light/circadian ──
       { time: 'Evening', action: 'Full darkness after sunset', why: 'Melatonin directly inhibits aromatase enzyme — light at night = more estrogen' },
+
+      // ── Stretching ──
+      { time: 'Late teens', action: 'Continue stretching aggressively, especially lower limbs', why: 'Growth plates in lower limbs (femur, tibia) usually stay open the longest — aggressive stretching in late teen years maximizes remaining growth window' },
     ],
     note: 'Estrogen — not GH — closes growth plates (Shim 2024). FOOD POWER RANKING: Broccoli sprouts > white button mushrooms > pomegranate > mature broccoli > Brussels sprouts > beans/lentils > citrus peel. Every item here either blocks aromatase, competes at estrogen receptors, or removes environmental estrogens.',
   },
   {
     id: 'height-preservation',
-    name: 'Height Preservation',
+    name: 'Height Preservation & Strength',
     subtitle: 'Ages 19-25: Real gains after plates may have closed, but maybe still can eke out more gains. CONTINUE ALL ITEMS FROM PUBERTY DELAY STACK.',
     steps: [
+      // ── Sleep & Recovery ──
       { time: 'Sleep', action: '10+ hours on back, thin pillow', why: 'Disc rehydration — spinal height peaks each morning' },
+
+      // ── Morning Stretching ──
       { time: 'Morning', action: '60-sec dead hang + spinal stretches', why: 'Decompression after overnight rehydration' },
+      { time: 'Morning', action: 'Cobra stretch, cat-cow, full body elongation stretches', why: 'Maintain and improve spinal mobility. Growth plates may still be open especially in lower limbs — continue stretching aggressively' },
+
+      // ── Strength Training ──
+      { time: 'Training', action: 'Begin lifting weights — start light, gradually work up', why: 'Progressive overload builds bone density + posture-supporting muscle. Focus on back exercises: rows, deadlifts, pull-ups, face pulls' },
+      { time: 'Training', action: 'Back-focused workouts for posture preservation', why: 'Rhomboids, rear delts, erector spinae — counteract forward slouch from sitting. Strong back = taller standing posture' },
+      { time: 'Post-workout', action: 'Consume protein within 1 hour of completing workout', why: 'Maximizes muscle protein synthesis window. Whey or whole food protein paired with the training stimulus' },
+
+      // ── Nutrition ──
       { time: 'Daily', action: 'Continue dairy flooding: 16-24 oz A2/raw milk', why: 'Dairy raises IGF-1 + improves lumbar/hip BMD without accelerating plate closure (Shim 2024, PNAS 2025)' },
       { time: 'Daily', action: 'Sheep\'s milk yogurt + pumpkin seeds', why: 'Highest casein density + zinc + arginine for continued GH-IGF1 axis support' },
-      { time: 'Daily', action: 'Collagen or glycine supplement', why: 'Disc and connective tissue repair substrate' },
+      { time: 'Daily', action: 'Bovine gelatin — max daily intake', why: 'Pure glycine pump for disc, cartilage, and connective tissue repair. Superior to collagen supplements' },
       { time: 'Daily', action: 'Zinc-rich foods + vitamin D', why: 'Maintain all 3 levels of GH axis: pituitary, liver, growth plate' },
+      { time: 'Daily', action: 'Anti-inflammatory whole foods + vitamin C with iron meals', why: 'Systemic inflammation degrades disc/joint tissue. Separate dairy from iron by 2+ hrs' },
+
+      // ── Posture & Decompression ──
       { time: 'Throughout day', action: 'Move every 45 min + posture checks', why: 'Prevent disc compression from sitting' },
       { time: 'Daily', action: 'Inversion table or cushion under back', why: 'Active spinal decompression' },
-      { time: 'Always', action: 'Zero alcohol', why: 'Alcohol suppresses GH 75% + dehydrates discs' },
-      { time: 'Always', action: 'Anti-inflammatory whole foods + vitamin C with iron meals', why: 'Systemic inflammation degrades disc/joint tissue. Separate dairy from iron by 2+ hrs' },
+      { time: 'Daily', action: 'Continue aggressive stretching — especially lower body', why: 'Growth plates in lower limbs may still be open. Dead hangs, hip flexor stretches, hamstring stretches, shin/femur resistance band stretches' },
+
+      // ── Zero tolerance ──
+      { time: 'Always', action: 'Zero smoking, vaping, alcohol exposure', why: 'Alcohol suppresses GH 75% + dehydrates discs. Smoking and vaping accelerate disc degeneration and suppress bone density' },
     ],
-    note: 'Spinal hygiene + dairy flooding can add 0.5-1" in your 20s. Peer-reviewed evidence confirms dairy-driven IGF-1 increases lumbar spine BMD in adults without accelerating plate closure — estrogen, not GH, is what closes plates.',
+    note: 'Spinal hygiene + dairy flooding + strength training can add 0.5-1" in your 20s. Growth plates in lower limbs may still be open — keep stretching aggressively. Peer-reviewed evidence confirms dairy-driven IGF-1 increases lumbar spine BMD in adults without accelerating plate closure — estrogen, not GH, is what closes plates.',
   },
 ];
 
