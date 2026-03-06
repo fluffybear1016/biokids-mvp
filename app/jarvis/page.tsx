@@ -38,15 +38,15 @@ const C = {
   green: '#065f46', card: '#fff', border: '#e7e5e4',
 };
 
-export default function JarvisPage() {
+export default function AustinPage() {
   return (
     <Suspense>
-      <Jarvis />
+      <Austin />
     </Suspense>
   );
 }
 
-function Jarvis() {
+function Austin() {
   const searchParams = useSearchParams();
   const childName = useChildName();
   const child = { ...mockChild, name: childName };
@@ -54,7 +54,7 @@ function Jarvis() {
     {
       id: '1',
       role: 'assistant',
-      content: `Hi! I'm Jarvis, your GH optimization assistant. I can answer questions about growth hormone, sleep timing, nutrition, exercise — anything related to helping your child reach their growth potential.\n\nWhat would you like to know?`,
+      content: `Hi! I'm Austin, your GH optimization assistant. I can answer questions about growth hormone, sleep timing, nutrition, exercise — anything related to helping your child reach their growth potential.\n\nWhat would you like to know?`,
       timestamp: new Date(),
     },
   ]);
@@ -201,7 +201,7 @@ function Jarvis() {
               <path d="M12 15v6" />
             </svg>
           </div>
-          <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Jarvis</h1>
+          <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Austin</h1>
           <p style={{ fontSize: 13, color: C.light, margin: 0, fontFamily: F }}>Your GH optimization AI assistant</p>
         </header>
 
@@ -291,7 +291,7 @@ function Jarvis() {
         </form>
 
         <p style={{ textAlign: 'center', fontSize: 11, color: C.green, opacity: 0.6, marginTop: 14, fontFamily: F }}>
-          Jarvis provides educational information based on peer-reviewed research. Always consult a pediatrician for medical advice.
+          Austin provides educational information based on peer-reviewed research. Always consult a pediatrician for medical advice.
         </p>
 
       </main>

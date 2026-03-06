@@ -234,13 +234,13 @@ export default function Learn() {
         {/* Bottom CTA */}
         <section style={{ marginTop: 40, background: '#fffbeb', borderRadius: 16, padding: 28, textAlign: 'center' }}>
           <h3 style={{ fontFamily: F, fontSize: 18, fontWeight: 700, color: C.title, marginBottom: 6 }}>Have a specific question?</h3>
-          <p style={{ fontSize: 13, color: C.body, marginBottom: 18 }}>Ask Jarvis — our AI assistant knows the science inside and out.</p>
+          <p style={{ fontSize: 13, color: C.body, marginBottom: 18 }}>Ask Austin — our AI assistant knows the science inside and out.</p>
           <a href="/jarvis" style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             background: C.green, color: '#fff', padding: '10px 22px', borderRadius: 10,
             fontSize: 13, fontWeight: 700, fontFamily: F, textDecoration: 'none',
           }}>
-            Ask Jarvis
+            Ask Austin
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>

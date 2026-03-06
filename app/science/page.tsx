@@ -231,7 +231,7 @@ export default function Dashboard() {
 
       <div style={{ maxWidth: 540, margin: '0 auto', padding: '0 20px', paddingTop: 32, paddingBottom: 64 }}>
 
-        {/* Search → Jarvis */}
+        {/* Search → Austin */}
         <form
           onSubmit={(e) => { e.preventDefault(); if (searchQuery.trim()) router.push(`/jarvis?q=${encodeURIComponent(searchQuery.trim())}`); }}
           style={{ marginBottom: 32 }}
@@ -401,7 +401,7 @@ export default function Dashboard() {
         <div style={{ textAlign: 'center', marginTop: 44, padding: '20px 0', borderTop: `1px solid ${col.border}` }}>
           <div style={{ width: 24, height: 3, background: col.green, borderRadius: 2, margin: '0 auto 14px' }} />
           <p style={{ fontFamily: F, fontSize: 12, color: col.light, lineHeight: 1.7 }}>
-            Every recommendation backed by peer-reviewed research. Have a question? <Link href="/jarvis" style={{ color: col.green, fontWeight: 700, textDecoration: 'none' }}>Ask Jarvis</Link>
+            Every recommendation backed by peer-reviewed research. Have a question? <Link href="/jarvis" style={{ color: col.green, fontWeight: 700, textDecoration: 'none' }}>Ask Austin</Link>
           </p>
         </div>
 
