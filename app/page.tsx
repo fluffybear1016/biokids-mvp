@@ -29,8 +29,11 @@ export default function Home() {
             <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(1.875rem, 5vw, 3.75rem)', color: '#1c1917', marginBottom: '1.5rem', fontWeight: 800, lineHeight: 1.2 }}>
               A natural way to optimize your child&apos;s <span style={{ color: '#059669' }}>growth hormone</span>
             </h1>
-            <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#57534e', marginBottom: '2rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }}>
+            <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#57534e', marginBottom: '1.25rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }}>
               The evidence-based system for natural growth hormone optimization—from childhood through the growth years. No prescriptions, no meds, just the levers parents actually control.
+            </p>
+            <p style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: '#059669', marginBottom: '2rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, fontStyle: 'italic' }}>
+              Growth hormone doesn&apos;t just drive height — every GH pulse simultaneously helps optimize brain development.
             </p>
             <div className="flex flex-col items-center gap-3">
               <Link href="/onboarding" style={{ background: '#059669', color: 'white', padding: '0.75rem 2rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", display: 'inline-block' }} className="sm:text-lg">
