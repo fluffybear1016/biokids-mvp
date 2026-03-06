@@ -55,6 +55,61 @@ type DayPeriod = {
   items: DayItem[];
 };
 
+// ═══════════════════
+// CITATION URL MAP
+// ═══════════════════
+const citeUrls: Record<string, string> = {
+  "Brandenberger, Lancet 2000": "https://pubmed.ncbi.nlm.nih.gov/11052586/",
+  "Van Cauter, JAMA 2000": "https://pubmed.ncbi.nlm.nih.gov/10938176/",
+  "Roenneberg, Curr Biol 2007": "https://pubmed.ncbi.nlm.nih.gov/17240323/",
+  "Forsling, J Pineal Res 1999": "https://pubmed.ncbi.nlm.nih.gov/10594526/",
+  "Okada, JCEM 1970": "https://pubmed.ncbi.nlm.nih.gov/5412546/",
+  "Sramek, Eur J Appl Physiol 2000": "https://pubmed.ncbi.nlm.nih.gov/10751106/",
+  "Ziegenfuss, JISSN 2008": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3313098/",
+  "Kawamura, Nutrition 2012": "https://pubmed.ncbi.nlm.nih.gov/22305649/",
+  "Hoppe, Eur J Clin Nutr 2008": "https://pubmed.ncbi.nlm.nih.gov/19174829/",
+  "Kang, Nutrients 2019": "https://pubmed.ncbi.nlm.nih.gov/30839054/",
+  "Balmer, J Lipid Res 2002": "https://pubmed.ncbi.nlm.nih.gov/12401878/",
+  "Soliman, Indian J Endocrinol Metab 2014": "https://pubmed.ncbi.nlm.nih.gov/25538884/",
+  "Hallberg, Am J Clin Nutr 1989": "https://pubmed.ncbi.nlm.nih.gov/2911999/",
+  "Lanzi, Metabolism 1999": "https://pubmed.ncbi.nlm.nih.gov/10487038/",
+  "Hartman, JCEM 1992": "https://pubmed.ncbi.nlm.nih.gov/1548337/",
+  "Berk, FASEB J 2006": "https://pubmed.ncbi.nlm.nih.gov/16574974/",
+  "Berk, Am J Med Sci 1989": "https://pubmed.ncbi.nlm.nih.gov/2556917/",
+  "Brackley, Spine 2004": "https://pubmed.ncbi.nlm.nih.gov/15454714/",
+  "Negrini, Spine 2002": "https://pubmed.ncbi.nlm.nih.gov/11805666/",
+  "Nachemson, Scand J Rehabil Med 1970": "https://pubmed.ncbi.nlm.nih.gov/4257209/",
+  "Reilly, Ergonomics 1984": "https://pubmed.ncbi.nlm.nih.gov/6600017/",
+  "Isidori, Curr Med Res Opin 1981": "https://pubmed.ncbi.nlm.nih.gov/6790230/",
+  "Larnkjaer, J Nutr 2012": "https://pubmed.ncbi.nlm.nih.gov/23077192/",
+  "Kojima, Nature 1999": "https://pubmed.ncbi.nlm.nih.gov/10604470/",
+  "Milner, J Sleep Res 2009": "https://pubmed.ncbi.nlm.nih.gov/19645971/",
+  "Stokes, J Appl Physiol 2008": "https://pubmed.ncbi.nlm.nih.gov/18187617/",
+  "Stokes, J Sports Sci 2002": "https://pubmed.ncbi.nlm.nih.gov/12137178/",
+  "Nevill, J Appl Physiol 1996": "https://pubmed.ncbi.nlm.nih.gov/8925817/",
+  "Cappon, J Appl Physiol 1994": "https://pubmed.ncbi.nlm.nih.gov/8175546/",
+  "Zribi, J Pediatr Endocrinol Metab": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9135997/",
+  "PMC9135997": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9135997/",
+  "Stutz, Sports Med 2019": "https://pubmed.ncbi.nlm.nih.gov/30374942/",
+  "Welbourne, Am J Clin Nutr 1995": "https://pubmed.ncbi.nlm.nih.gov/7733028/",
+  "Kasai, Metabolism 1980": "https://pubmed.ncbi.nlm.nih.gov/622050/",
+  "Kawai, Neuropsychopharmacology 2015": "https://pubmed.ncbi.nlm.nih.gov/25533534/",
+  "Van Cauter, JCEM 1992": "https://pubmed.ncbi.nlm.nih.gov/1592892/",
+  "Crispim, J Clin Sleep Med 2011": "https://pubmed.ncbi.nlm.nih.gov/21512286/",
+  "Gooley, JCEM 2011": "https://pubmed.ncbi.nlm.nih.gov/21193540/",
+  "Figueiro, Neuro Endocrinol Lett 2011": "https://pubmed.ncbi.nlm.nih.gov/21552190/",
+  "Krauchi, Nature 1999": "https://pubmed.ncbi.nlm.nih.gov/10485703/",
+  "Haghayegh, Sleep Med Rev 2019": "https://pubmed.ncbi.nlm.nih.gov/31102877/",
+  "Held, Pharmacopsychiatry 2002": "https://pubmed.ncbi.nlm.nih.gov/12163983/",
+  "Abbasi, J Res Med Sci 2012": "https://pubmed.ncbi.nlm.nih.gov/23853635/",
+  "Howatson, Eur J Nutr 2012": "https://pubmed.ncbi.nlm.nih.gov/22038497/",
+  "Mindell, Sleep 2015": "https://pubmed.ncbi.nlm.nih.gov/25325483/",
+  "Mindell, Sleep 2009": "https://pubmed.ncbi.nlm.nih.gov/19480226/",
+  "Takahashi, J Clin Invest 1968": "https://pubmed.ncbi.nlm.nih.gov/5675428/",
+  "Zajac, J Human Kinetics 2018": "https://doi.org/10.1515/hukin-2017-0183",
+  "Veldhuis, JCEM 1995": "https://pubmed.ncbi.nlm.nih.gov/7775619/",
+};
+
 const dayData: DayPeriod[] = [
   { period:"Morning", time:"6:30 – 8:30am", items:[
     { id:"wake", t:"Same wake time", sub:"±30 min, weekends too", gh:"60–80% GH", headline:"of tonight's GH depends on this morning", tier:1, cite:"Brandenberger, Lancet 2000; Van Cauter, JAMA 2000", why:"Your child's growth hormone pulses tonight are programmed by this morning's wake time. The pituitary releases GH on a circadian schedule set by the suprachiasmatic nucleus. Brandenberger et al. showed normal sleep produces 3× more peak GH than disrupted sleep — the concentrated nocturnal surge is abolished without proper circadian timing. One late Saturday can disrupt pulse timing through Wednesday.", tip:"Same time ±30 min, including weekends. This is the easiest lever and it's free.",
@@ -440,7 +495,13 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
             <div style={{
               fontFamily:"'Courier New', Courier, monospace",
               fontSize:9, color:"#57534e", opacity:0.55, marginTop:4, lineHeight:1.3,
-            }}>{item.cite}</div>
+            }}>{item.cite.split('; ').map((c, i, arr) => {
+              const trimmed = c.trim();
+              const url = citeUrls[trimmed];
+              return <span key={i}>{url
+                ? <a href={url} target="_blank" rel="noopener noreferrer" style={{ color:"#057a55", textDecoration:"underline", textUnderlineOffset:2 }}>{trimmed}</a>
+                : trimmed}{i < arr.length - 1 ? '; ' : ''}</span>;
+            })}</div>
           </div>
 
           {/* Expand arrow */}
