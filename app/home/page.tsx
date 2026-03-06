@@ -620,7 +620,17 @@ export default function Dashboard() {
     prevCoreDone.current = allCoreDone;
   }, [allCoreDone]);
 
-  const [introOpen, setIntroOpen] = useState(true);
+  const [introOpen, setIntroOpen] = useState(false);
+
+  // First-visit welcome — shows once after payment, then never again
+  const [showWelcome, setShowWelcome] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return !localStorage.getItem('biokids_welcomed');
+  });
+  const dismissWelcome = () => {
+    localStorage.setItem('biokids_welcomed', '1');
+    setShowWelcome(false);
+  };
 
   // Time-based auto-scroll to current period
   const periodRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -724,6 +734,51 @@ export default function Dashboard() {
 
         {/* Progress spacer — reserves space when sticky bar is visible */}
         {doneCount > 0 && <div style={{ height:48 }} />}
+
+        {/* First-visit welcome */}
+        {showWelcome && (
+          <div style={{
+            background:"linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)",
+            borderRadius:20, border:"2px solid #86efac",
+            padding:"32px 24px", marginTop:24,
+            boxShadow:"0 4px 24px rgba(6,95,70,0.1)",
+            textAlign:"center",
+            animation:"celebrateFadeIn 0.6s ease",
+          }}>
+            <div style={{ fontSize:28, marginBottom:14 }}>&#x1F331;</div>
+            <p style={{
+              fontSize:20, fontWeight:800, color:"#065f46", margin:"0 0 10px",
+              letterSpacing:"-0.02em", lineHeight:1.3,
+            }}>
+              Welcome{childName !== 'Your child' ? `, ${childName}'s family` : ''}.
+            </p>
+            <p style={{
+              fontFamily:"'Courier New', Courier, monospace",
+              fontSize:13, color:"#065f46", lineHeight:1.65, margin:"0 0 6px",
+              maxWidth:360, marginLeft:"auto", marginRight:"auto",
+            }}>
+              Everything below is your child&apos;s daily growth protocol — built from peer-reviewed research, arranged into a simple checklist.
+            </p>
+            <p style={{
+              fontFamily:"'Courier New', Courier, monospace",
+              fontSize:12, color:"#059669", lineHeight:1.6, margin:"0 0 20px",
+              maxWidth:340, marginLeft:"auto", marginRight:"auto",
+            }}>
+              Check things off as you go. It gets easier every day.
+            </p>
+            <button
+              onClick={dismissWelcome}
+              style={{
+                fontFamily:"'Courier New', Courier, monospace",
+                fontSize:13, fontWeight:700, color:"#fff",
+                background:"#065f46", border:"none", borderRadius:12,
+                padding:"10px 28px", cursor:"pointer",
+              }}
+            >
+              Let&apos;s begin
+            </button>
+          </div>
+        )}
 
         {/* Core goals celebration */}
         {showCoreCelebration && (

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import LandingHeightPredictor from '@/components/LandingHeightPredictor';
 
 export default function Home() {
   return (
@@ -116,6 +117,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Height Predictor — interactive conversion tool */}
+      <LandingHeightPredictor />
 
       {/* The Gap Section */}
       <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#065f46' }} className="sm:py-20">
