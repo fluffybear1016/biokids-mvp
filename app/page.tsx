@@ -199,20 +199,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pricing — single CTA, no free trial */}
+      {/* Pricing */}
       <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#fafaf9' }} className="sm:py-20">
         <div className="max-w-2xl mx-auto">
           <div style={{ border: '2px solid rgba(5, 150, 105, 0.25)', borderRadius: '20px', padding: '2rem 1.5rem', textAlign: 'center', background: '#fff', boxShadow: '0 4px 24px rgba(6,95,70,0.08)' }} className="sm:p-10">
-            <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: '0.5rem' }}>Full access</p>
+            <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: '0.75rem' }}>7-day free trial</p>
             <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.5rem', color: '#1c1917', marginBottom: '0.25rem', fontWeight: 800 }} className="sm:text-3xl">
-              <span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2.5rem', color: '#065f46' }}>$30</span>
-              <span style={{ fontSize: '1rem', color: '#78716c', fontWeight: 500 }}>/month</span>
+              <span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2.5rem', color: '#065f46' }}>$0</span>
+              <span style={{ fontSize: '1rem', color: '#78716c', fontWeight: 500 }}> for 7 days</span>
             </h2>
+            <p style={{ fontSize: '0.8125rem', color: '#a8a29e', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500, marginBottom: '1.25rem' }}>
+              then $30/mo · cancel anytime
+            </p>
             <p style={{ fontSize: '0.875rem', color: '#57534e', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500, marginBottom: '1.5rem', lineHeight: 1.75 }} className="sm:text-base">
-              The complete evidence-based growth protocol. Cancel anytime.
+              The complete evidence-based growth protocol.
             </p>
             <Link href="/onboarding" style={{ background: '#065f46', color: 'white', padding: '0.875rem 2.5rem', borderRadius: '12px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', display: 'inline-block', fontFamily: "'Courier New', Courier, monospace", marginBottom: '1.25rem' }} className="sm:text-lg">
-              Get Started
+              Start Free Trial
             </Link>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm" style={{ color: '#78716c', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500 }}>
               <span>Age-specific protocols</span>
