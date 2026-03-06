@@ -201,7 +201,7 @@ const dayData: DayPeriod[] = [
   ]},
 
   { period:"Afternoon", time:"12:00 – 5:00pm", items:[
-    { id:"lunch", t:"Animal protein + peanuts + broccoli", sub:"Beef liver + eggs + lentils + citrus", gh:"GH multi-lever", headline:"lysine + arginine + glutamine + niacin — stacks multiple GH pathways", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012; Quabbe, JCEM 1983", why:"This meal activates 10+ GH pathways and primes the afternoon sprint. Beef liver has the highest choline density plus retinol, B12, and zinc. Peanuts deliver niacin, which suppresses free fatty acids that brake GH. WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver mixed into ground beef (burgers, meatballs, bolognese) — kids won't taste it. Peanuts prime the sprint. NO DAIRY at this meal.",
+    { id:"lunch", t:"Animal + plant protein, vegetables", sub:"Meat + lentils + cruciferous + fermented + seeds", gh:"GH multi-lever", headline:"lysine + arginine + glutamine + niacin — stacks multiple GH pathways", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012; Quabbe, JCEM 1983", why:"This meal activates 10+ GH pathways and primes the afternoon sprint. Beef liver has the highest choline density plus retinol, B12, and zinc. Peanuts deliver niacin, which suppresses free fatty acids that brake GH. WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver mixed into ground beef (burgers, meatballs, bolognese) — kids won't taste it. Peanuts prime the sprint. NO DAIRY at this meal.",
       pumps:[
         { p:"Lysine + Arginine*", n:"up to 700%", d:"Combined aminos raised GH up to 700% in adult supplement studies" },
         { p:"Glutamine (beef)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — beef delivers meaningful amounts" },
@@ -295,7 +295,7 @@ const dayData: DayPeriod[] = [
   { period:"Evening", time:"6:00 – 9:00pm", note:"Do these in order. By the end, they're drowsy.", items:[
     { id:"nox", t:"No exercise after 6pm", sub:"Core temp must drop for deep sleep", gh:"60–80% GH", headline:"of tonight's GH at risk — late exercise delays sleep onset", tier:2, cite:"Stutz, Sports Med 2019; Brandenberger, Lancet 2000", why:"Core body temp must drop 1–1.5°C to initiate deep sleep. Vigorous exercise within 2 hours of bed raises it, delaying sleep onset and compressing the SWS window.", tip:"Save all sports for afternoon. No competitive evening games." },
 
-    { id:"din", t:"Dinner — done by 6pm", sub:"Animal protein + cruciferous + fermented + broth + citrus", gh:"GH multi-lever", headline:"stacks glutamine + GABA + glycine + aromatase block", tier:0, cite:"Welbourne, Am J Clin Nutr 1995; Kasai, Metabolism 1980", why:"This dinner hits every remaining GH pathway. Beef delivers glutamine, ornithine, and tyrosine. Bone broth delivers glycine (promotes sleep onset + growth plate collagen). Fermented foods provide GABA via Lactobacillus. Broccoli provides DIM for aromatase inhibition — plates stay open. NO DAIRY at dinner — save milk for the Sleep Drink.", tip:"Any meat + cruciferous + fermented side + bone broth + citrus. Vary proteins. NO DAIRY here.",
+    { id:"din", t:"Dinner — done by 6pm", sub:"Animal + plant protein + cruciferous + fermented + broth", gh:"GH multi-lever", headline:"stacks glutamine + GABA + glycine + aromatase block", tier:0, cite:"Welbourne, Am J Clin Nutr 1995; Kasai, Metabolism 1980", why:"This dinner hits every remaining GH pathway. Beef delivers glutamine, ornithine, and tyrosine. Lentils add plant protein, lysine, and inositol. Bone broth delivers glycine (promotes sleep onset + growth plate collagen). Fermented foods provide GABA via Lactobacillus. Broccoli provides DIM for aromatase inhibition — plates stay open. NO DAIRY at dinner — save milk for the Sleep Drink.", tip:"Any meat + lentils + cruciferous + fermented side + bone broth. Vary proteins. NO DAIRY here.",
       pumps:[
         { p:"Glutamine (beef)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — beef delivers meaningful amounts" },
         { p:"GABA (fermented)*", n:"up to 400%", d:"GABA raised GH 400% in adult studies — fermented foods are a natural GABA source" },
@@ -305,7 +305,6 @@ const dayData: DayPeriod[] = [
         { p:"L-DOPA (tyrosine)*", n:"up to 221%", d:"Tyrosine — dopamine — stimulates GHRH in adult studies" },
         { p:"Taurine (meat)", n:"potentiator", d:"Supports bile for fat-soluble vitamin absorption" },
         { p:"Iron (beef + lentils)", n:"growth enabler", d:"Required for oxygen to growing tissues" },
-        { p:"Iron absorption (citrus)", n:"2–3×", d:"Orange slices or lemon water boosts iron uptake" },
         { p:"B12 (beef)", n:"cell division", d:"Chondrocyte division at growth plates" },
         { p:"Fiber (lentils + broccoli)", n:"protected GH", d:"Slows insulin — protects GH" },
         { p:"Inositol (lentils)", n:"ISS pathway", d:"Part of lysine-inositol-B12 growth axis" },
@@ -323,7 +322,7 @@ const dayData: DayPeriod[] = [
         { f:"Bone broth", d:"Richest food source of glycine — GH secretagogue + growth plate collagen." },
         { f:"Sauerkraut / kimchi", d:"Fermented foods produce GABA via Lactobacillus — suppresses somatostatin." },
         { f:"Broccoli / cauliflower", d:"Aromatase inhibition — plates stay open." },
-        { f:"Lentils + citrus", d:"Iron + lysine + inositol. Vitamin C 2–3×." },
+        { f:"Lentils", d:"Iron + lysine + inositol + plant protein — associated with later puberty." },
       ]},
 
     { id:"gly", t:"Gelatin dessert", sub:"Bovine gelatin jello or bone broth", gh:"glycine lever", headline:"glycine — GH secretagogue + lowers core temp + growth plate collagen", tier:1, cite:"Kawai, Neuropsychopharmacology 2015; Kasai, Metabolism 1980", why:"Glycine: (1) lowers core temp via NMDA receptors — triggers sleep onset, (2) a direct GH secretagogue (raised GH up to 300% in adult studies), (3) most abundant amino acid in collagen — the structural protein of growth plates.", tip:"Gelatin in jello with allulose or monk fruit. Gelatin powder has no taste — mix into anything.",
