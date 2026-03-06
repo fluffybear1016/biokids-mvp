@@ -289,15 +289,16 @@ export default function Dashboard() {
         {/* Three Pillars + Stage Deep Dive (one row) */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 10 }}>
           {[
-            { href: '/windows/sleep-circadian', label: 'Sleep' },
-            { href: '/windows/nutrition', label: 'Nutrition' },
-            { href: '/windows/physical-activity', label: 'Movement' },
-          ].map(({ href, label }) => (
+            { href: '/windows/sleep-circadian', label: 'Sleep', icon: '◑' },
+            { href: '/windows/nutrition', label: 'Nutrition', icon: '◆' },
+            { href: '/windows/physical-activity', label: 'Movement', icon: '▲' },
+          ].map(({ href, label, icon }) => (
             <Link key={href} href={href} style={{
-              background: col.card, border: `1px solid ${col.border}`, borderRadius: 14,
-              padding: '14px 10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: col.card, border: `1px solid ${col.border}`, borderTop: `2px solid ${col.green}`, borderRadius: 14,
+              padding: '14px 10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6,
               textDecoration: 'none', fontFamily: F, fontSize: 12, fontWeight: 700, color: col.title,
             }}>
+              <span style={{ fontSize: 14, color: col.green }}>{icon}</span>
               {label}
             </Link>
           ))}
@@ -307,7 +308,7 @@ export default function Dashboard() {
           href="/stage"
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            background: col.card, border: `1px solid ${col.border}`, borderRadius: 14,
+            background: col.card, border: `1px solid ${col.border}`, borderLeft: `3px solid ${col.green}`, borderRadius: 14,
             padding: '12px 16px', marginBottom: 40, textDecoration: 'none',
           }}
         >
@@ -366,6 +367,7 @@ export default function Dashboard() {
               >
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                    <span style={{ width: 5, height: 5, borderRadius: '50%', background: col.green, flexShrink: 0 }} />
                     <span style={{ fontSize: 9, fontWeight: 800, color: col.green, textTransform: 'uppercase', letterSpacing: 1, fontFamily: F }}>
                       {articleCategories.find(c => c.key === article.category)?.label}
                     </span>
@@ -396,7 +398,8 @@ export default function Dashboard() {
         </div>
 
         {/* Closing */}
-        <div style={{ textAlign: 'center', marginTop: 44 }}>
+        <div style={{ textAlign: 'center', marginTop: 44, padding: '20px 0', borderTop: `1px solid ${col.border}` }}>
+          <div style={{ width: 24, height: 3, background: col.green, borderRadius: 2, margin: '0 auto 14px' }} />
           <p style={{ fontFamily: F, fontSize: 12, color: col.light, lineHeight: 1.7 }}>
             Every recommendation backed by peer-reviewed research. Have a question? <Link href="/jarvis" style={{ color: col.green, fontWeight: 700, textDecoration: 'none' }}>Ask Jarvis</Link>
           </p>

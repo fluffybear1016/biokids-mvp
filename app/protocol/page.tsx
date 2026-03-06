@@ -35,13 +35,14 @@ export default function Protocol() {
         <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: col.title, letterSpacing: '-0.02em', marginBottom: 8 }}>
           Growth Stacks
         </h1>
+        <div style={{ width: 32, height: 3, background: col.green, borderRadius: 2, marginBottom: 14 }} />
         <p style={{ fontFamily: F, fontSize: 14, color: col.body, lineHeight: 1.75, marginBottom: 44 }}>
           A single habit helps. Stacked in sequence, they compound. Each stack is a timed cascade — every step primes the next for maximum growth hormone impact.
         </p>
 
         {/* The Principle */}
-        <div style={{ background: col.card, border: `2px solid ${col.sigBorder}`, borderRadius: 20, padding: '18px 20px', marginBottom: 44 }}>
-          <div style={{ fontFamily: F, fontSize: 11, fontWeight: 800, color: col.light, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 14 }}>
+        <div style={{ background: col.card, border: `1px solid ${col.border}`, borderTop: `3px solid ${col.green}`, borderRadius: 20, padding: '18px 20px', marginBottom: 44 }}>
+          <div style={{ fontFamily: F, fontSize: 11, fontWeight: 800, color: col.green, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 14 }}>
             Why Stacking Works
           </div>
           <p style={{ fontFamily: F, fontSize: 14, color: col.body, lineHeight: 1.75, margin: 0 }}>
@@ -55,8 +56,8 @@ export default function Protocol() {
         </div>
 
         {/* How to Use */}
-        <div style={{ background: col.card, borderRadius: 14, border: `1px solid ${col.border}`, padding: '14px 18px', marginBottom: 44 }}>
-          <div style={{ fontFamily: F, fontSize: 11, fontWeight: 800, color: col.light, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 14 }}>
+        <div style={{ background: col.card, borderRadius: 14, border: `1px solid ${col.border}`, borderTop: `3px solid ${col.green}`, padding: '14px 18px', marginBottom: 44 }}>
+          <div style={{ fontFamily: F, fontSize: 11, fontWeight: 800, color: col.green, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 14 }}>
             How to Start
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -75,8 +76,9 @@ export default function Protocol() {
 
 
         {/* Closing */}
-        <div style={{ textAlign: 'center' }}>
-          <p style={{ fontFamily: F, fontSize: 12, color: col.light, lineHeight: 1.7 }}>
+        <div style={{ textAlign: 'center', paddingTop: 20, borderTop: `1px solid ${col.border}` }}>
+          <div style={{ width: 24, height: 3, background: col.green, borderRadius: 2, margin: '0 auto 14px' }} />
+          <p style={{ fontFamily: F, fontSize: 12, color: col.green, opacity: 0.6, lineHeight: 1.7 }}>
             Consistency beats intensity. Small daily habits compound into massive results.
           </p>
         </div>

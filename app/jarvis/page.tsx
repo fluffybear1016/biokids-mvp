@@ -54,7 +54,7 @@ function Jarvis() {
     {
       id: '1',
       role: 'assistant',
-      content: `Hi! I'm Jarvis, your GH optimization assistant. I can answer questions about growth hormone, sleep timing, nutrition, exercise — anything related to helping your child reach their height potential.\n\nWhat would you like to know?`,
+      content: `Hi! I'm Jarvis, your GH optimization assistant. I can answer questions about growth hormone, sleep timing, nutrition, exercise — anything related to helping your child reach their growth potential.\n\nWhat would you like to know?`,
       timestamp: new Date(),
     },
   ]);

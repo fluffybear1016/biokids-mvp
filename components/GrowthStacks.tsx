@@ -148,7 +148,7 @@ export default function GrowthStacks() {
   const currentStack = stacks.find(s => s.id === activeStack)!;
 
   return (
-    <div style={{ background: C.card, borderRadius: 14, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
+    <div style={{ background: C.card, borderRadius: 14, border: `1px solid ${C.border}`, borderTop: `2px solid ${C.green}`, overflow: 'hidden' }}>
       {/* Tab Navigation */}
       <div style={{ display: 'flex', overflowX: 'auto', borderBottom: `1px solid ${C.border}`, background: C.bg }}>
         {stacks.map((stack) => (
@@ -189,9 +189,9 @@ export default function GrowthStacks() {
           {currentStack.steps.map((step, index) => (
             <div
               key={index}
-              style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: 10, background: C.bg, borderRadius: 10 }}
+              style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: 10, background: C.bg, borderRadius: 10, borderLeft: `2px solid ${C.green}` }}
             >
-              <div style={{ flexShrink: 0, width: 80, fontSize: 10, fontWeight: 600, color: C.light, paddingTop: 2, fontFamily: F }}>
+              <div style={{ flexShrink: 0, width: 80, fontSize: 10, fontWeight: 700, color: C.green, paddingTop: 2, fontFamily: F }}>
                 {step.time}
               </div>
               <div style={{ flex: 1 }}>
