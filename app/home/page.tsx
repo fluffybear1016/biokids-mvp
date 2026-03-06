@@ -127,7 +127,7 @@ const dayData: DayPeriod[] = [
       ]},
 
 
-    { id:"d1", t:"Morning dairy", sub:"8 oz A2 milk or sheep yogurt", gh:"+0.39 cm/yr", headline:"per 8 oz/day across childhood — IGF-1 shift P=0.005", tier:0, cite:"Hoppe, Eur J Clin Nutr 2008; Kang, Nutrients 2019", why:"Milk proteins directly stimulate hepatic IGF-1 production. Six key proteins: casein (slow-release 6–7 hrs), α-lactalbumin (highest tryptophan — serotonin — melatonin), lactoferrin, lysozyme, sIgA, albumin. IRON-DAIRY RULE: serve milk between meals or post-sprint, not alongside iron meals.", tip:"Dairy FIRST (within 1 hour of waking), then eggs. Add pumpkin seeds to sheep yogurt for arginine + zinc + magnesium in one handful.",
+    { id:"d1", t:"Morning dairy", sub:"8 oz A2 milk or sheep yogurt", gh:"+0.39 cm/8 oz serving", headline:"per 8 oz/day across childhood — IGF-1 shift P=0.005", tier:0, cite:"Hoppe, Eur J Clin Nutr 2008; Kang, Nutrients 2019", why:"Milk proteins directly stimulate hepatic IGF-1 production. Six key proteins: casein (slow-release 6–7 hrs), α-lactalbumin (highest tryptophan — serotonin — melatonin), lactoferrin, lysozyme, sIgA, albumin. IRON-DAIRY RULE: serve milk between meals or post-sprint, not alongside iron meals.", tip:"Dairy FIRST (within 1 hour of waking), then eggs. Add pumpkin seeds to sheep yogurt for arginine + zinc + magnesium in one handful.",
       pumps:[
         { p:"IGF-1 stimulation", n:"10–20%", d:"240 mL/day — measurable IGF-1 shift (P=0.005)" },
         { p:"Height per serving", n:"+0.39cm", d:"Per additional 8 oz/day across childhood" },
@@ -143,7 +143,7 @@ const dayData: DayPeriod[] = [
         { f:"Full-fat kefir", d:"Milk proteins + fermentation-derived GABA." },
       ]},
 
-    { id:"bkf", t:"Eggs", sub:"2–3 pasture-raised", gh:"GH axis primer", headline:"choline — acetylcholine — primes every GH pulse today", tier:0, cite:"Ziegenfuss, JISSN 2008; Zeisel, Nutr Rev 2009", why:"Eggs are the richest whole-food choline source. Choline converts to acetylcholine, which stimulates GHRH neurons, priming the pituitary for every GH pulse all day. This restarts the 24-hour cycle — last night's casein bridged overnight, now choline reignites the axis. Eggs also deliver glutamine, ornithine, lysine + arginine, and tyrosine — all GH-supporting aminos.", tip:"Scrambled or over easy. Skip cereal — always. No cheese at this meal — calcium competes with egg iron. Pair with a vitamin C source to boost iron absorption.",
+    { id:"bkf", t:"Eggs", sub:"2–3 pasture-raised", gh:"+4,400% GH axis primer", headline:"choline — acetylcholine — primes every GH pulse today", tier:0, cite:"Ziegenfuss, JISSN 2008; Zeisel, Nutr Rev 2009", why:"Eggs are the richest whole-food choline source. Choline converts to acetylcholine, which stimulates GHRH neurons, priming the pituitary for every GH pulse all day. This restarts the 24-hour cycle — last night's casein bridged overnight, now choline reignites the axis. Eggs also deliver glutamine, ornithine, lysine + arginine, and tyrosine — all GH-supporting aminos.", tip:"Scrambled or over easy. Skip cereal — always. No cheese at this meal — calcium competes with egg iron. Pair with a vitamin C source to boost iron absorption.",
       pumps:[
         { p:"Choline → acetylcholine", n:"axis primer", d:"Two eggs ≈ 300mg choline — primes pituitary for GH pulses all day" },
         { p:"Choline pathway*", n:"up to 4,400%", d:"A-GPC (choline metabolite) raised GH up to 4,400% in adult studies" },
