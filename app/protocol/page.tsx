@@ -73,30 +73,6 @@ export default function Protocol() {
           </div>
         </div>
 
-        {/* The Numbers */}
-        <div style={{ background: col.card, borderRadius: 14, border: `1px solid ${col.border}`, padding: '14px 18px', marginBottom: 44 }}>
-          <div style={{ fontFamily: F, fontSize: 11, fontWeight: 800, color: col.light, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 14 }}>
-            The Evidence
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 14 }}>
-            {[
-              { value: '771%', label: 'GH increase from sprint protocol' },
-              { value: '70%', label: 'of GH released in first 3hr of sleep' },
-              { value: '80%', label: 'GH suppressed by late-night insulin' },
-              { value: '3-7hr', label: 'casein releases tryptophan for sleep' },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <div style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 18, color: col.green }}>{stat.value}</div>
-                <div style={{ fontFamily: F, fontSize: 12, color: col.light, marginTop: 4, lineHeight: 1.4 }}>{stat.label}</div>
-              </div>
-            ))}
-          </div>
-          <div style={{ borderTop: `1px solid ${col.border}`, paddingTop: 14 }}>
-            <p style={{ fontFamily: F, fontSize: 12, color: col.light, lineHeight: 1.5, margin: 0 }}>
-              Every recommendation backed by peer-reviewed research. Citations included in each stack.
-            </p>
-          </div>
-        </div>
 
         {/* Closing */}
         <div style={{ textAlign: 'center' }}>
