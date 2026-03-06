@@ -63,9 +63,9 @@ const dayData: DayPeriod[] = [
         { p:"Normal sleep advantage", n:"3×", d:"Normal sleep = 3× more peak GH than disrupted" },
       ]},
 
-    { id:"sun", t:"Morning sunlight", sub:"10 min, no sunglasses", gh:"157% GH", headline:"melatonin tonight — deeper sleep — larger GH pulses", tier:1, cite:"Roenneberg, Curr Biol 2007; Forsling, J Pineal Res 1999", why:"Morning light hits melanopsin receptors — synchronizes the suprachiasmatic nucleus — programs melatonin release 14–16 hours from now. Melatonin increases GH 157% AND inhibits aromatase (the enzyme that closes growth plates). Combine with 5–10 min outdoor stretching — circadian clock + spinal decompression in one.", tip:"Backyard, bus stop walk, porch breakfast. Overcast still works.",
+    { id:"sun", t:"Morning sunlight", sub:"10 min, no sunglasses", gh:"157% GH*", headline:"melatonin tonight — deeper sleep — larger GH pulses", tier:1, cite:"Roenneberg, Curr Biol 2007; Forsling, J Pineal Res 1999", why:"Morning light hits melanopsin receptors — synchronizes the suprachiasmatic nucleus — programs melatonin release 14–16 hours from now. Melatonin raised GH up to 157% in adult studies AND inhibits aromatase (the enzyme that closes growth plates). Combine with 5–10 min outdoor stretching — circadian clock + spinal decompression in one.", tip:"Backyard, bus stop walk, porch breakfast. Overcast still works.",
       pumps:[
-        { p:"Melatonin timing", n:"157%", d:"Tonight's melatonin set by this morning's light" },
+        { p:"Melatonin timing*", n:"up to 157%", d:"Tonight's melatonin set by this morning's light — raised GH 157% in adults" },
         { p:"Aromatase inhibition", n:"—", d:"Melatonin blocks estrogen — delays growth plate closure" },
         { p:"Vitamin D synthesis", n:"IGF-1 enabler", d:"Deficiency blunts the entire GH — IGF-1 axis" },
       ]},
@@ -76,16 +76,16 @@ const dayData: DayPeriod[] = [
         { p:"Norepinephrine", n:"200–300%", d:"Cold stress triggers norepinephrine" },
       ]},
 
-    { id:"bkf", t:"Eggs + citrus", sub:"2–3 pasture-raised, orange slices", gh:"4,400% GH", headline:"choline — acetylcholine — primes every GH pulse today", tier:0, cite:"Ziegenfuss, JISSN 2008; Kawamura, Nutrition 2012", why:"Eggs are the richest whole-food choline source. Choline — acetylcholine — stimulates GHRH neurons, priming the pituitary for every GH pulse all day. This restarts the 24-hour cycle — last night's casein bridged overnight, now choline reignites the axis. Eggs also deliver glutamine (400%), ornithine (300%), lysine + arginine (700%), and tyrosine (221%).", tip:"Scrambled or over easy. Skip cereal — always. Serve with orange slices (vitamin C boosts iron 2–3×). No cheese at this meal — calcium competes with egg iron.",
+    { id:"bkf", t:"Eggs + citrus", sub:"2–3 pasture-raised, orange slices", gh:"GH axis primer", headline:"choline — acetylcholine — primes every GH pulse today", tier:0, cite:"Ziegenfuss, JISSN 2008; Kawamura, Nutrition 2012", why:"Eggs are the richest whole-food choline source. Choline converts to acetylcholine, which stimulates GHRH neurons, priming the pituitary for every GH pulse all day. This restarts the 24-hour cycle — last night's casein bridged overnight, now choline reignites the axis. Eggs also deliver glutamine, ornithine, lysine + arginine, and tyrosine — all GH-supporting aminos.", tip:"Scrambled or over easy. Skip cereal — always. Serve with orange slices (vitamin C boosts iron 2–3×). No cheese at this meal — calcium competes with egg iron.",
       pumps:[
-        { p:"A-GPC (choline)", n:"4,400%", d:"Two eggs ≈ 300mg choline — primes every GH pulse" },
-        { p:"A-GPC at rest", n:"290%", d:"Choline pathway works even without exercise" },
-        { p:"Glutamine", n:"400%", d:"2g quadruples GH in 30 min" },
-        { p:"Ornithine", n:"300%", d:"Cycles with arginine to amplify GH" },
-        { p:"Lysine + Arginine", n:"700%", d:"Eggs deliver both synergistic aminos" },
-        { p:"L-DOPA (tyrosine)", n:"221%", d:"Tyrosine — dopamine — stimulates GHRH" },
-        { p:"Retinol (vitamin A)", n:"40–60%", d:"Required for GH receptor gene expression" },
-        { p:"Glycine", n:"300%", d:"Growth plate collagen building block" },
+        { p:"Choline → acetylcholine", n:"axis primer", d:"Two eggs ≈ 300mg choline — primes pituitary for GH pulses all day" },
+        { p:"Choline pathway*", n:"up to 4,400%", d:"A-GPC (choline metabolite) raised GH up to 4,400% in adult studies" },
+        { p:"Glutamine*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — eggs deliver meaningful amounts" },
+        { p:"Ornithine", n:"GH amplifier", d:"Cycles with arginine to amplify GH" },
+        { p:"Lysine + Arginine*", n:"up to 700%", d:"Combined amino acids raised GH up to 700% in adult supplement studies" },
+        { p:"L-DOPA (tyrosine)*", n:"up to 221%", d:"Tyrosine — dopamine — stimulates GHRH in adult studies" },
+        { p:"Retinol (vitamin A)", n:"40–60%", d:"Deficiency reduces GH receptor binding 40–60%" },
+        { p:"Glycine", n:"collagen builder", d:"Growth plate collagen building block" },
         { p:"Taurine", n:"potentiator", d:"Supports bile for fat-soluble vitamin absorption" },
         { p:"B12", n:"cell division", d:"Required for chondrocyte division at growth plates" },
       ],
@@ -99,10 +99,10 @@ const dayData: DayPeriod[] = [
       pumps:[
         { p:"IGF-1 stimulation", n:"10–20%", d:"240 mL/day — measurable IGF-1 shift (P=0.005)" },
         { p:"Height per serving", n:"+0.39cm", d:"Per additional 8 oz/day across childhood" },
-        { p:"α-Lactalbumin — melatonin", n:"157%", d:"Highest tryptophan — serotonin — melatonin — GH" },
-        { p:"Casein overnight", n:"451%", d:"Slow-releases aminos 6–7 hrs" },
-        { p:"Lysine + Arginine", n:"700%", d:"Milk delivers both synergistic aminos" },
-        { p:"GABA (yogurt/kefir)", n:"400%", d:"Lactobacillus produces GABA" },
+        { p:"α-Lactalbumin — melatonin*", n:"up to 157%", d:"Highest tryptophan — serotonin — melatonin raised GH 157% in adult studies" },
+        { p:"Casein overnight*", n:"up to 451%", d:"Slow-releases aminos 6–7 hrs — Zajac: GH 451% above baseline at 24h in adults" },
+        { p:"Lysine + Arginine*", n:"up to 700%", d:"Milk delivers both — combined aminos raised GH up to 700% in adult supplement studies" },
+        { p:"GABA (yogurt/kefir)*", n:"up to 400%", d:"Lactobacillus produces GABA — raised GH 400% in adult studies" },
         { p:"Calcium + phosphorus", n:"bone mineral", d:"Via casein micelles — direct bone mineralization" },
       ],
       foods:[
@@ -132,11 +132,11 @@ const dayData: DayPeriod[] = [
         { p:"Microbiome integrity", n:"GABA protected", d:"No sweeteners — gut bacteria keep producing GABA" },
       ]},
 
-    { id:"joy", t:"Laughter and play", sub:"Start the day light", gh:"87% GH", headline:"from anticipation of fun alone — cortisol down 39%", tier:0, cite:"Berk, FASEB J 2006; Berk, Am J Med Sci 1989", why:"Merely anticipating a funny experience raised GH 87%, β-endorphins 27%, and reduced cortisol 39%. Chronic stress suppresses GH. Joy is not a bonus — it's a growth lever.", tip:"Morning dance party. Jokes at breakfast. Roughhousing before they leave.",
+    { id:"joy", t:"Laughter and play", sub:"Start the day light", gh:"87% GH*", headline:"from anticipation of fun alone — cortisol down 39% in adult study", tier:0, cite:"Berk, FASEB J 2006; Berk, Am J Med Sci 1989", why:"In adult studies, merely anticipating a funny experience raised GH 87%, β-endorphins 27%, and reduced cortisol 39%. Chronic stress suppresses GH. Joy is not a bonus — it's a growth lever.", tip:"Morning dance party. Jokes at breakfast. Roughhousing before they leave.",
       pumps:[
-        { p:"Anticipation of fun", n:"87%", d:"Just anticipating humor raises GH 87%" },
-        { p:"Cortisol reduction", n:"↓39%", d:"Less cortisol = less GH suppression" },
-        { p:"β-endorphins", n:"+27%", d:"Endorphins support hormonal environment" },
+        { p:"Anticipation of fun*", n:"up to 87%", d:"Anticipating humor raised GH 87% in adult study" },
+        { p:"Cortisol reduction*", n:"↓39%", d:"Less cortisol = less GH suppression (adult study)" },
+        { p:"β-endorphins*", n:"+27%", d:"Endorphins support hormonal environment (adult study)" },
       ]},
 
     { id:"bp", t:"Light backpack", sub:"Under 10–15% body weight", gh:"—", headline:"heavy loads compress developing spine", tier:3, cite:"Brackley, Spine 2004; Negrini, Spine 2002", why:"Chronic heavy loads affect intervertebral disc height during the years when the spine should be lengthening. Combined with daily gravitational compression, an overweight backpack amplifies the problem.", tip:"Weigh it. Remove what they don't need. A rolling backpack eliminates the issue." },
@@ -145,14 +145,14 @@ const dayData: DayPeriod[] = [
   ]},
 
   { period:"Afternoon", time:"12:00 – 5:00pm", items:[
-    { id:"lunch", t:"Animal protein + peanuts + broccoli", sub:"Beef liver + eggs + lentils + citrus", gh:"700% GH", headline:"lysine + arginine together = 7–8× GH", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012", why:"This meal activates 10+ GH pathways and primes the afternoon sprint. Beef liver is the highest choline density + retinol + B12 + zinc. Peanuts deliver niacin (suppresses FFAs that brake GH — 350% greater peak on repeat sprint). WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver mixed into ground beef (burgers, meatballs, bolognese) — kids won't taste it. Peanuts prime the sprint. NO DAIRY at this meal.",
+    { id:"lunch", t:"Animal protein + peanuts + broccoli", sub:"Beef liver + eggs + lentils + citrus", gh:"GH multi-lever", headline:"lysine + arginine + glutamine + niacin — stacks multiple GH pathways", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012", why:"This meal activates 10+ GH pathways and primes the afternoon sprint. Beef liver has the highest choline density plus retinol, B12, and zinc. Peanuts deliver niacin, which suppresses free fatty acids that brake GH. WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver mixed into ground beef (burgers, meatballs, bolognese) — kids won't taste it. Peanuts prime the sprint. NO DAIRY at this meal.",
       pumps:[
-        { p:"Lysine + Arginine", n:"700%", d:"Beef + seeds together = 7–8× GH" },
-        { p:"Glutamine (beef)", n:"400%", d:"One serving > 2g — 4-fold GH" },
-        { p:"Niacin (peanuts)", n:"350%", d:"Suppresses FFAs — primes afternoon sprint" },
-        { p:"Ornithine", n:"300%", d:"Cycles with arginine to amplify GH" },
-        { p:"L-DOPA (tyrosine)", n:"221%", d:"Protein — dopamine — stimulates GHRH" },
-        { p:"Arginine (pumpkin seeds)", n:"200%", d:"Highest plant arginine (~7g/cup). Copenhagen: +0.33cm/yr" },
+        { p:"Lysine + Arginine*", n:"up to 700%", d:"Combined aminos raised GH up to 700% in adult supplement studies" },
+        { p:"Glutamine (beef)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — beef delivers meaningful amounts" },
+        { p:"Niacin (peanuts)*", n:"up to 350%", d:"Niacin suppressed FFAs → amplified sprint GH in adult study" },
+        { p:"Ornithine", n:"GH amplifier", d:"Cycles with arginine to amplify GH" },
+        { p:"L-DOPA (tyrosine)*", n:"up to 221%", d:"Tyrosine — dopamine — stimulates GHRH in adult studies" },
+        { p:"Arginine (pumpkin seeds)", n:"+0.33cm/yr", d:"Highest plant arginine. Copenhagen study: +0.33cm/yr in children" },
         { p:"Zinc (seeds)", n:"+0.37cm", d:"WHO meta-analysis: zinc alone" },
         { p:"Iron absorption (citrus)", n:"2–3×", d:"Citrus boosts iron uptake" },
         { p:"Magnesium (seeds)", n:"SWS amplifier", d:"Deepens slow-wave sleep tonight" },
@@ -166,12 +166,12 @@ const dayData: DayPeriod[] = [
         { f:"Beef liver 1×/wk (or blend 2–3×/wk)", d:"Highest choline + niacin + iron + retinol + B12 + zinc. VITAMIN C, NOT MILK." },
         { f:"Cooked oysters 1×/wk", d:"28.2mg zinc per 3 oz (full week's RDA). All 3 growth axis levels." },
         { f:"Wild salmon 2×/wk", d:"Omega-3s — IGF-1 + vitamin D + niacin." },
-        { f:"Beef (any cut) — daily", d:"Glutamine (400%) + ornithine (300%) + tyrosine (221%)." },
-        { f:"Turkey breast", d:"Highest niacin + arginine per gram. Sprint primer." },
+        { f:"Beef (any cut) — daily", d:"Rich in glutamine, ornithine, and tyrosine — all GH-supporting aminos." },
+        { f:"Turkey breast", d:"Highest niacin + arginine per gram — primes sprint GH response." },
         { f:"Chicken (skin-on thighs)", d:"Collagen/glycine from skin + taurine." },
-        { f:"Eggs (2–3 daily)", d:"Choline (4,400%) + complete aminos." },
+        { f:"Eggs (2–3 daily)", d:"Choline → GH axis primer + complete aminos." },
         { f:"Pumpkin seeds", d:"Arginine + magnesium + zinc + tryptophan." },
-        { f:"Peanuts / PB", d:"Niacin (350%) + arginine (200%) + inositol." },
+        { f:"Peanuts / PB", d:"Niacin + arginine + inositol — all GH-supporting nutrients." },
         { f:"Lentils + citrus", d:"Iron + lysine + inositol. Vitamin C boosts iron 2–3×." },
         { f:"Broccoli / cauliflower", d:"DIM + I3C — aromatase inhibition — plates stay open." },
       ]},
@@ -186,24 +186,24 @@ const dayData: DayPeriod[] = [
 
     { id:"nap", t:"No naps after 2–3pm", sub:"Steals tonight's deep sleep", gh:"60–80% GH", headline:"of tonight's GH at risk — late naps steal adenosine", tier:2, cite:"Milner, J Sleep Res 2009; Brandenberger, Lancet 2000", why:"Naps after 3pm steal adenosine sleep pressure needed for deep slow-wave sleep. The first SWS cycle — the one most disrupted by late naps — contains the single largest GH pulse of the day.", tip:"If they truly need a nap, before 2pm and under 30 minutes." },
 
-    { id:"pre", t:"Eggs + peanuts before sprints", sub:"30–60 min before", gh:"4,400% GH", headline:"choline + niacin prime the sprint GH response", tier:1, cite:"Stokes, J Appl Physiol 2008; Ziegenfuss, JISSN 2008", why:"Choline primes the hypothalamic-pituitary axis (4,400%). Niacin blocks FFAs — a molecular brake on GH. Stokes (2008): niacin amplified second sprint GH to ~23.3 μg/L vs ~5.2 controls (~350% greater peak, ~422% greater AUC).", tip:"Over easy eggs. Unroasted peanuts or natural PB. No dairy — eggs have iron. Save milk for post-sprint.",
+    { id:"pre", t:"Eggs + peanuts before sprints", sub:"30–60 min before", gh:"sprint primer", headline:"choline + niacin prime the sprint GH response", tier:1, cite:"Stokes, J Appl Physiol 2008; Ziegenfuss, JISSN 2008", why:"Choline primes the hypothalamic-pituitary axis for the upcoming sprint. Niacin blocks free fatty acids — a molecular brake on GH. Stokes (2008): niacin amplified second sprint GH to ~23.3 μg/L vs ~5.2 controls (~350% greater peak, ~422% greater AUC) in adult athletes.", tip:"Over easy eggs. Unroasted peanuts or natural PB. No dairy — eggs have iron. Save milk for post-sprint.",
       pumps:[
-        { p:"Choline priming", n:"4,400%", d:"Eggs prime the pituitary for sprint response" },
-        { p:"Niacin (peanuts)", n:"350%", d:"Suppresses FFAs — greater peak on repeat sprint" },
-        { p:"Arginine", n:"200%", d:"Peanuts deliver arginine" },
-        { p:"Glutamine (eggs)", n:"400%", d:"Eggs deliver glutamine — quadruples GH" },
+        { p:"Choline priming*", n:"up to 4,400%", d:"A-GPC (choline metabolite) raised GH up to 4,400% with exercise in adults" },
+        { p:"Niacin (peanuts)*", n:"up to 350%", d:"Niacin suppressed FFAs → 350% greater sprint GH peak in adult study" },
+        { p:"Arginine", n:"GH support", d:"Peanuts deliver arginine — direct GH secretagogue" },
+        { p:"Glutamine (eggs)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult supplement study" },
         { p:"Inositol (peanuts)", n:"ISS pathway", d:"Part of lysine-inositol-B12 growth combo" },
         { p:"Fiber (peanuts)", n:"protected GH", d:"Slows glucose — protects GH" },
         { p:"Magnesium (peanuts)", n:"SWS amplifier", d:"Deepens slow-wave sleep tonight" },
       ]},
 
-    { id:"spr", t:"6 × 30-sec all-out sprints", sub:"3×/week — 2–4 min full rest between", gh:"530% GH", headline:"per sprint — nothing in nutrition comes close", tier:0, cite:"Stokes, J Sports Sci 2002; Nevill, J Appl Physiol 1996", why:"A single 30-second sprint produces a 530% GH spike. Even 6 seconds = 217%. The trigger is lactate — only at true maximum effort. With pre-sprint choline + niacin, every sprint is maximized.", tip:"Tag, races, hill sprints — as long as it's genuinely all-out. Hill sprints produce higher lactate. Alternate days with jumping.",
+    { id:"spr", t:"6 × 30-sec all-out sprints", sub:"3×/week — 2–4 min full rest between", gh:"530% GH*", headline:"per sprint in adult studies — nothing in nutrition comes close", tier:0, cite:"Stokes, J Sports Sci 2002; Nevill, J Appl Physiol 1996", why:"In adult studies, a single 30-second sprint produced a 530% GH spike. Even 6 seconds = 217%. The trigger is lactate — only at true maximum effort. With pre-sprint choline + niacin, every sprint is maximized.", tip:"Tag, races, hill sprints — as long as it's genuinely all-out. Hill sprints produce higher lactate. Alternate days with jumping.",
       pumps:[
-        { p:"Sprint GH", n:"530%", d:"Per 30-second all-out sprint" },
-        { p:"With choline", n:"4,400%", d:"Pre-sprint eggs prime the response" },
-        { p:"With niacin", n:"350%", d:"Peanuts amplify repeat sprint GH" },
+        { p:"Sprint GH*", n:"up to 530%", d:"Per 30-second all-out sprint in adult studies" },
+        { p:"With choline*", n:"up to 4,400%", d:"A-GPC (choline pathway) raised GH up to 4,400% with exercise in adults" },
+        { p:"With niacin*", n:"up to 350%", d:"Niacin amplified repeat sprint GH ~350% in adult study" },
         { p:"Mechanical loading", n:"growth plates", d:"Direct growth plate stimulation" },
-        { p:"6-sec sprint", n:"217%", d:"Even a 6-second sprint raises GH 217%" },
+        { p:"6-sec sprint*", n:"up to 217%", d:"Even a 6-second sprint raised GH 217% in adult study" },
         { p:"Healthy body composition", n:"sustained GH", d:"Sprint training maintains lean body comp" },
       ]},
 
@@ -222,31 +222,31 @@ const dayData: DayPeriod[] = [
         { p:"Spinal decompression", n:"reverses 1%", d:"Dead hang reverses daily compression" },
       ]},
 
-    { id:"pm", t:"Post-sprint milk", sub:"8–12 oz A2 + 1 tbsp raw honey", gh:"451% GH", headline:"GH to IGF-1 conversion — still 451% above baseline at 24h", tier:0, sig:true, cite:"Zajac, J Human Kinetics 2018; Cappon, J Appl Physiol 1994", why:"Without milk after sprints, the GH spike is 'orphaned' — present but not converted to IGF-1 (the actual growth signal). Whey provides immediate aminos. Honey's gentle insulin activates the STAT5 pathway, converting GH to IGF-1. Casein slow-releases for hours, bridging to the Sleep Drink.", tip:"Cold milk, raw honey, immediately after stretching. This is a DAIRY window. Non-sprint days: same drink after school.",
+    { id:"pm", t:"Post-sprint milk", sub:"8–12 oz A2 + 1 tbsp raw honey", gh:"451% GH*", headline:"GH to IGF-1 conversion — still 451% above baseline at 24h in adult study", tier:0, sig:true, cite:"Zajac, J Human Kinetics 2018; Cappon, J Appl Physiol 1994", why:"Without milk after sprints, the GH spike is 'orphaned' — present but not converted to IGF-1 (the actual growth signal). Whey provides immediate aminos. Honey's gentle insulin activates the STAT5 pathway, converting GH to IGF-1. Casein slow-releases for hours, bridging to the Sleep Drink.", tip:"Cold milk, raw honey, immediately after stretching. This is a DAIRY window. Non-sprint days: same drink after school.",
       pumps:[
-        { p:"GH to IGF-1", n:"451%", d:"Still 451% above baseline at 24 hours" },
-        { p:"IGF-1", n:"+14%", d:"14% higher than controls at 24h" },
+        { p:"GH to IGF-1*", n:"up to 451%", d:"Zajac: still 451% above baseline at 24h in adult athletes" },
+        { p:"IGF-1*", n:"+14%", d:"14% higher than controls at 24h in adult study" },
         { p:"Casein", n:"6–7 hrs", d:"Bridges to Sleep Drink at bedtime" },
-        { p:"α-Lactalbumin", n:"157%", d:"Tryptophan — melatonin tonight" },
-        { p:"Lysine + Arginine", n:"700%", d:"Milk delivers both" },
+        { p:"α-Lactalbumin*", n:"up to 157%", d:"Tryptophan — melatonin — raised GH 157% in adults" },
+        { p:"Lysine + Arginine*", n:"up to 700%", d:"Milk delivers both — raised GH up to 700% in adult supplement studies" },
       ]},
   ]},
 
   { period:"Late Afternoon", time:"3:00 – 6:00pm", items:[
-    { id:"rest", t:"Rest and play", sub:"Unstructured time with friends", gh:"87% GH", headline:"anticipation of fun raises GH 87% — cortisol down 39%", tier:1, cite:"Berk, FASEB J 2006; Veldhuis, JCEM 1995", why:"Unstructured play is growth time. Anticipation of fun raises GH 87%, reduces cortisol 39%. Chronic stress from overscheduling is one of the strongest GH suppressors.", tip:"No homework pressure right after school. Play first, eat, then homework. No competitive sports in the evening." },
+    { id:"rest", t:"Rest and play", sub:"Unstructured time with friends", gh:"87% GH*", headline:"anticipation of fun raised GH 87% in adult study — cortisol down 39%", tier:1, cite:"Berk, FASEB J 2006; Veldhuis, JCEM 1995", why:"Unstructured play is growth time. In adult studies, anticipation of fun raised GH 87% and reduced cortisol 39%. Chronic stress from overscheduling is one of the strongest GH suppressors.", tip:"No homework pressure right after school. Play first, eat, then homework. No competitive sports in the evening." },
   ]},
 
   { period:"Evening", time:"6:00 – 9:00pm", note:"Do these in order. By the end, they're drowsy.", items:[
     { id:"nox", t:"No exercise after 6pm", sub:"Core temp must drop for deep sleep", gh:"60–80% GH", headline:"of tonight's GH at risk — late exercise delays sleep onset", tier:2, cite:"Stutz, Sports Med 2019; Brandenberger, Lancet 2000", why:"Core body temp must drop 1–1.5°C to initiate deep sleep. Vigorous exercise within 2 hours of bed raises it, delaying sleep onset and compressing the SWS window.", tip:"Save all sports for afternoon. No competitive evening games." },
 
-    { id:"din", t:"Dinner — done by 6pm", sub:"Animal protein + cruciferous + fermented + broth + citrus", gh:"400% GH", headline:"stacks glutamine + GABA + glycine + aromatase block", tier:0, cite:"Welbourne, Am J Clin Nutr 1995; Kasai, Metabolism 1980", why:"This dinner hits every remaining GH pathway. Beef: glutamine (400%), ornithine (300%), tyrosine (221%). Bone broth: glycine (300% + sleep onset + growth plate collagen). Sauerkraut: GABA (400%). Broccoli: aromatase inhibition — plates stay open. NO DAIRY at dinner — save milk for the Sleep Drink.", tip:"Any meat + cruciferous + fermented side + bone broth + citrus. Vary proteins. NO DAIRY here.",
+    { id:"din", t:"Dinner — done by 6pm", sub:"Animal protein + cruciferous + fermented + broth + citrus", gh:"GH multi-lever", headline:"stacks glutamine + GABA + glycine + aromatase block", tier:0, cite:"Welbourne, Am J Clin Nutr 1995; Kasai, Metabolism 1980", why:"This dinner hits every remaining GH pathway. Beef delivers glutamine, ornithine, and tyrosine. Bone broth delivers glycine (promotes sleep onset + growth plate collagen). Fermented foods provide GABA via Lactobacillus. Broccoli provides DIM for aromatase inhibition — plates stay open. NO DAIRY at dinner — save milk for the Sleep Drink.", tip:"Any meat + cruciferous + fermented side + bone broth + citrus. Vary proteins. NO DAIRY here.",
       pumps:[
-        { p:"Glutamine (beef)", n:"400%", d:"One serving > 2g — 4-fold GH" },
-        { p:"GABA (fermented)", n:"400%", d:"Sauerkraut/kimchi — Lactobacillus — GABA" },
-        { p:"Glycine (broth)", n:"300%", d:"Raises GH AND lowers core temp — sleep" },
-        { p:"Ornithine", n:"300%", d:"Cycles with arginine to amplify GH" },
-        { p:"Aromatase block", n:"growth plates", d:"DIM from broccoli — plates stay open" },
-        { p:"L-DOPA (tyrosine)", n:"221%", d:"Protein — dopamine — stimulates GHRH" },
+        { p:"Glutamine (beef)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — beef delivers meaningful amounts" },
+        { p:"GABA (fermented)*", n:"up to 400%", d:"GABA raised GH 400% in adult studies — fermented foods are a natural GABA source" },
+        { p:"Glycine (broth)*", n:"up to 300%", d:"Glycine raised GH 300% in adult studies — also lowers core temp for sleep" },
+        { p:"Ornithine", n:"GH amplifier", d:"Cycles with arginine to amplify GH" },
+        { p:"Aromatase block", n:"growth plates", d:"DIM from broccoli — delays growth plate closure" },
+        { p:"L-DOPA (tyrosine)*", n:"up to 221%", d:"Tyrosine — dopamine — stimulates GHRH in adult studies" },
         { p:"Taurine (meat)", n:"potentiator", d:"Supports bile for fat-soluble vitamin absorption" },
         { p:"Iron (beef + lentils)", n:"growth enabler", d:"Required for oxygen to growing tissues" },
         { p:"Iron absorption (citrus)", n:"2–3×", d:"Orange slices or lemon water boosts iron uptake" },
@@ -258,21 +258,21 @@ const dayData: DayPeriod[] = [
       ],
       foods:[
         { f:"ANIMAL PROTEIN — rotate from ranking:", d:"All deliver arginine, glutamine, ornithine, glycine, lysine, choline, tyrosine, taurine, niacin." },
-        { f:"Beef (any cut) — most nights", d:"Glutamine (400%) + ornithine (300%) + tyrosine (221%)." },
+        { f:"Beef (any cut) — most nights", d:"Rich in glutamine, ornithine, and tyrosine — all GH-supporting aminos." },
         { f:"Skin-on chicken thighs", d:"Collagen/glycine from skin + taurine." },
-        { f:"Turkey", d:"Niacin (350%) + arginine (200%)." },
+        { f:"Turkey", d:"Highest niacin + arginine per gram — primes GH response." },
         { f:"Wild salmon 2×/wk", d:"Omega-3s — IGF-1 + vitamin D." },
         { f:"Beef liver 1×/wk (blend 2–3×/wk)", d:"Highest pump density. Vitamin C, NOT milk." },
         { f:"Cooked oysters 1×/wk", d:"Zinc (week's RDA) + iron + B12." },
-        { f:"Bone broth", d:"Glycine (300%) + growth plate collagen." },
-        { f:"Sauerkraut / kimchi", d:"GABA (400%) + glutamine." },
+        { f:"Bone broth", d:"Richest food source of glycine — GH secretagogue + growth plate collagen." },
+        { f:"Sauerkraut / kimchi", d:"Fermented foods produce GABA via Lactobacillus — suppresses somatostatin." },
         { f:"Broccoli / cauliflower", d:"Aromatase inhibition — plates stay open." },
         { f:"Lentils + citrus", d:"Iron + lysine + inositol. Vitamin C 2–3×." },
       ]},
 
-    { id:"gly", t:"Gelatin dessert", sub:"Bovine gelatin jello or bone broth", gh:"300% GH", headline:"glycine — GH + lowers core temp + growth plate collagen", tier:1, cite:"Kawai, Neuropsychopharmacology 2015; Kasai, Metabolism 1980", why:"Glycine: (1) lowers core temp via NMDA receptors — triggers sleep onset, (2) directly increases GH 300%, (3) most abundant amino in collagen — the structural protein of growth plates.", tip:"Gelatin in jello with allulose or monk fruit. Gelatin powder has no taste — mix into anything.",
+    { id:"gly", t:"Gelatin dessert", sub:"Bovine gelatin jello or bone broth", gh:"glycine lever", headline:"glycine — GH secretagogue + lowers core temp + growth plate collagen", tier:1, cite:"Kawai, Neuropsychopharmacology 2015; Kasai, Metabolism 1980", why:"Glycine: (1) lowers core temp via NMDA receptors — triggers sleep onset, (2) a direct GH secretagogue (raised GH up to 300% in adult studies), (3) most abundant amino acid in collagen — the structural protein of growth plates.", tip:"Gelatin in jello with allulose or monk fruit. Gelatin powder has no taste — mix into anything.",
       pumps:[
-        { p:"Glycine — GH", n:"300%", d:"Direct growth hormone secretagogue" },
+        { p:"Glycine — GH*", n:"up to 300%", d:"Glycine raised GH up to 300% in adult studies" },
         { p:"Sleep onset", n:"core temp ↓", d:"Lowers body temp — initiates deep sleep" },
         { p:"Growth plate collagen", n:"structural", d:"Glycine + hydroxyproline + proline" },
       ]},
@@ -280,19 +280,19 @@ const dayData: DayPeriod[] = [
     { id:"nse", t:"GH-safe snacks only", sub:"No refined sugar — ever", gh:"300–500% GH", headline:"overnight GH protected — each spike blocks up to 80%", tier:1, cite:"Lanzi, Metabolism 1999; Van Cauter, JCEM 1992", why:"60–80% of GH is released overnight. One scoop of regular ice cream suppresses up to 80% via insulin. Use monk fruit, allulose, honey, or maple syrup.", tip:"These replace all store-bought snacks. Every one hits a GH pump.",
       pumps:[
         { p:"Overnight GH protected", n:"300–500%", d:"No refined sugar = no insulin suppression" },
-        { p:"Glycine (gummies)", n:"300%", d:"Gelatin = pure glycine — GH + sleep + growth plates" },
-        { p:"Melatonin (gummies)", n:"157%", d:"Tart cherry = highest food melatonin" },
-        { p:"Casein (ice cream)", n:"451%", d:"A2 cream base — counts toward daily dairy" },
-        { p:"Arginine (peanuts)", n:"200%", d:"Unroasted peanuts + niacin + magnesium" },
-        { p:"Melatonin (pistachios)", n:"157%", d:"Highest melatonin per gram — best evening nut" },
+        { p:"Glycine (gummies)*", n:"up to 300%", d:"Gelatin delivers glycine — GH secretagogue + sleep + growth plates" },
+        { p:"Melatonin (gummies)", n:"sleep + GH", d:"Tart cherry = highest food melatonin source" },
+        { p:"Casein (ice cream)", n:"slow-release", d:"A2 cream base — slow amino delivery overnight. Counts toward daily dairy" },
+        { p:"Arginine (peanuts)", n:"GH support", d:"Unroasted peanuts + niacin + magnesium" },
+        { p:"Melatonin (pistachios)", n:"sleep + GH", d:"Highest melatonin per gram — best evening nut" },
       ],
       foods:[
-        { f:"Homemade gummies (gelatin + tart cherry + allulose)", d:"Glycine (300%) + melatonin (157%). Set in fridge." },
-        { f:"Homemade ice cream (A2 cream + egg yolks + monk fruit)", d:"Casein (451%) + choline. Counts toward 24 oz dairy." },
-        { f:"Unroasted peanuts / natural PB", d:"Niacin (350%) + arginine (200%) + magnesium." },
-        { f:"Pistachios (evening)", d:"Highest melatonin per gram. Best nut before bed." },
+        { f:"Homemade gummies (gelatin + tart cherry + allulose)", d:"Glycine (GH secretagogue) + melatonin (sleep + aromatase inhibition). Set in fridge." },
+        { f:"Homemade ice cream (A2 cream + egg yolks + monk fruit)", d:"Casein (slow-release aminos overnight) + choline. Counts toward daily dairy." },
+        { f:"Unroasted peanuts / natural PB", d:"Niacin + arginine + magnesium — all GH-supporting nutrients." },
+        { f:"Pistachios (evening)", d:"Highest melatonin per gram of any nut. Best evening snack." },
         { f:"Pumpkin seeds", d:"Arginine + magnesium + zinc + tryptophan." },
-        { f:"Dark chocolate 85%+", d:"Magnesium (SWS amplifier). Small piece." },
+        { f:"Raw cacao nibs (occasional, early in day only)", d:"Magnesium source. Contains caffeine — never after lunch." },
       ]},
 
     { id:"nlf", t:"Finish food 2–3 hrs before bed", sub:"Protects overnight fasting window", gh:"300–500% GH", headline:"overnight fast = when 60–80% of GH is produced", tier:2, cite:"Crispim, J Clin Sleep Med 2011; Hartman, JCEM 1992", why:"The overnight fast is when GH peaks. Eating close to bed keeps insulin elevated and disrupts sleep architecture. Exception: Sleep Drink (~55 calories) is too small to suppress.", tip:"Dinner done by 6pm for an 8:30 bedtime.",
@@ -302,9 +302,9 @@ const dayData: DayPeriod[] = [
         { p:"Ghrelin builds", n:"secretagogue", d:"Meal gaps let ghrelin trigger GH" },
       ]},
 
-    { id:"nsc", t:"No screens after dinner", sub:"Or Night Shift + blue light glasses", gh:"157% GH", headline:"melatonin at risk — blue light suppresses 90+ min", tier:1, cite:"Gooley, JCEM 2011; Figueiro, Neuro Endocrinol Lett 2011", why:"Blue light suppresses melatonin for 90+ minutes. Melatonin = 157% GH + aromatase inhibition. Every minute of screen time after dinner steals from tonight's GH surge.", tip:"TV better than tablets — distance matters. If unavoidable: Night Shift + blue light glasses.",
+    { id:"nsc", t:"No screens after dinner", sub:"Or Night Shift + blue light glasses", gh:"157% GH*", headline:"melatonin at risk — blue light suppresses 90+ min", tier:1, cite:"Gooley, JCEM 2011; Figueiro, Neuro Endocrinol Lett 2011", why:"Blue light suppresses melatonin for 90+ minutes. Melatonin raised GH up to 157% in adult studies + provides aromatase inhibition. Every minute of screen time after dinner steals from tonight's GH surge.", tip:"TV better than tablets — distance matters. If unavoidable: Night Shift + blue light glasses.",
       pumps:[
-        { p:"Melatonin — GH", n:"157%", d:"Blue light suppresses melatonin which drives 157% GH" },
+        { p:"Melatonin — GH*", n:"up to 157%", d:"Blue light suppresses melatonin — raised GH 157% in adult studies" },
         { p:"Aromatase inhibition", n:"plates stay open", d:"Melatonin blocks estrogen — delays closure" },
         { p:"SWS depth", n:"60–80%", d:"Melatonin deepens slow-wave sleep" },
       ]},
@@ -318,29 +318,29 @@ const dayData: DayPeriod[] = [
         { p:"Sensory ritual", n:"anticipatory", d:"Brain associates bath with sleep after 1–2 weeks" },
       ]},
 
-    { id:"mag", t:"Magnesium lotion", sub:"Feet and shoulders", gh:"400% GH", headline:"GABA receptor activation — deepens slow-wave sleep", tier:1, cite:"Held, Pharmacopsychiatry 2002; Abbasi, J Res Med Sci 2012", why:"Magnesium activates GABA-A receptors — suppresses somatostatin — removes the brake on GH. Transdermal bypasses digestion. The consistent touch ritual triggers parasympathetic response after 1–2 weeks.", tip:"Rub on feet and shoulders while they read.",
+    { id:"mag", t:"Magnesium lotion", sub:"Feet and shoulders", gh:"SWS amplifier", headline:"GABA receptor activation — deepens slow-wave sleep", tier:1, cite:"Held, Pharmacopsychiatry 2002; Abbasi, J Res Med Sci 2012", why:"Magnesium activates GABA-A receptors — suppresses somatostatin — removes the brake on GH. Transdermal application bypasses digestion. The consistent touch ritual triggers a parasympathetic response after 1–2 weeks.", tip:"Rub on feet and shoulders while they read.",
       pumps:[
-        { p:"GABA receptor activation", n:"400%", d:"Suppresses somatostatin — removes GH brake" },
+        { p:"GABA receptor activation*", n:"up to 400%", d:"GABA raised GH 400% in adult studies — magnesium activates GABA receptors" },
         { p:"SWS depth", n:"amplifier", d:"Deepens slow-wave sleep" },
         { p:"Sensory ritual", n:"conditioned", d:"Touch cue triggers parasympathetic nightly" },
-        { p:"Melatonin support", n:"157%", d:"Magnesium supports melatonin synthesis" },
+        { p:"Melatonin support*", n:"up to 157%", d:"Magnesium supports melatonin synthesis — melatonin raised GH 157% in adults" },
         { p:"Parasympathetic activation", n:"sleep onset", d:"Touch ritual triggers parasympathetic response" },
         { p:"Cortisol reduction", n:"calming", d:"Consistent touch ritual lowers cortisol" },
       ]},
 
-    { id:"drink", t:"Sleep Drink", sub:"4 oz A2 milk + 1 oz tart cherry — 30 min before bed", gh:"451% GH", headline:"the 24-hour cycle completes — GH 451% at 24h, IGF-1 +14%", tier:0, sig:true, cite:"Zajac, J Human Kinetics 2018; Howatson, Eur J Nutr 2012; Forsling, J Pineal Res 1999", why:"The signature bioKids ritual. Casein slow-releases aminos 6–7 hours feeding GH pulses all night. Tart cherry = highest food melatonin (157% GH + aromatase inhibition). α-Lactalbumin = highest tryptophan — serotonin — melatonin. GH remains 451% above baseline at 24 hours, IGF-1 14% higher. ~55 calories — too small to spike insulin. This is the 24-hour cycle: post-sprint milk then Sleep Drink then casein overnight then morning eggs restart. Some GH lever is always on.", tip:"Mix, serve 20–40 min before bed. This is a DAIRY window. Dim lights after.",
+    { id:"drink", t:"Sleep Drink", sub:"4 oz A2 milk + 1 oz tart cherry — 30 min before bed", gh:"451% GH*", headline:"the 24-hour cycle completes — GH 451% at 24h in adult study, IGF-1 +14%", tier:0, sig:true, cite:"Zajac, J Human Kinetics 2018; Howatson, Eur J Nutr 2012; Forsling, J Pineal Res 1999", why:"The signature bioKids ritual. Casein slow-releases aminos 6–7 hours feeding GH pulses all night. Tart cherry = highest food melatonin (melatonin raised GH 157% in adult studies + aromatase inhibition). α-Lactalbumin = highest tryptophan — serotonin — melatonin. In the Zajac study (adults), GH remained 451% above baseline at 24 hours, IGF-1 14% higher. ~55 calories — too small to spike insulin. This is the 24-hour cycle: post-sprint milk then Sleep Drink then casein overnight then morning eggs restart. Some GH lever is always on.", tip:"Mix, serve 20–40 min before bed. This is a DAIRY window. Dim lights after.",
       pumps:[
-        { p:"GH at 24h", n:"451%", d:"Still 451% above baseline at 24 hours" },
-        { p:"IGF-1", n:"+14%", d:"14% higher than controls" },
-        { p:"Melatonin (cherry)", n:"157%", d:"Highest food melatonin + aromatase block" },
+        { p:"GH at 24h*", n:"up to 451%", d:"Zajac: still 451% above baseline at 24h in adult athletes" },
+        { p:"IGF-1*", n:"+14%", d:"14% higher than controls in adult study" },
+        { p:"Melatonin (cherry)*", n:"up to 157%", d:"Highest food melatonin — raised GH 157% in adults + aromatase block" },
         { p:"Casein overnight", n:"6–7 hrs", d:"Slow-release aminos all night" },
         { p:"24-hour cycle", n:"always on", d:"Post-sprint — Sleep Drink — overnight — eggs restart" },
         { p:"Cortisol ↓ (cherry)", n:"↓ stress", d:"Tart cherry reduces cortisol" },
       ]},
 
-    { id:"rtn", t:"Same routine every night", sub:"Bath — lotion — drink — books — bed", gh:"157% GH", headline:"brain auto-releases melatonin when routine starts", tier:0, cite:"Mindell, Sleep 2015; Mindell, Sleep 2009", why:"After 1–2 weeks, the brain starts releasing melatonin as soon as it recognizes the familiar sequence — before lights are off. The routine itself becomes a GH lever.", tip:"Same order, always. They stop fighting bedtime.",
+    { id:"rtn", t:"Same routine every night", sub:"Bath — lotion — drink — books — bed", gh:"157% GH*", headline:"brain auto-releases melatonin when routine starts", tier:0, cite:"Mindell, Sleep 2015; Mindell, Sleep 2009", why:"After 1–2 weeks, the brain starts releasing melatonin as soon as it recognizes the familiar sequence — before lights are off. Melatonin raised GH up to 157% in adult studies. The routine itself becomes a GH lever.", tip:"Same order, always. They stop fighting bedtime.",
       pumps:[
-        { p:"Anticipatory melatonin", n:"157%", d:"Brain auto-releases melatonin when routine starts" },
+        { p:"Anticipatory melatonin*", n:"up to 157%", d:"Melatonin raised GH 157% in adult studies — routine auto-triggers it" },
         { p:"Sensory ritual", n:"conditioned", d:"After 1–2 weeks the sequence itself triggers sleep" },
         { p:"Cortisol reduction", n:"predictability", d:"Predictable routines lower cortisol in children" },
       ]},
@@ -461,7 +461,8 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
         {item.tip && <p style={{ fontSize:12.5, color:"#78716c", fontStyle:"italic", marginBottom:14, lineHeight:1.55 }}>{item.tip}</p>}
 
         {item.pumps && <div style={{ marginBottom:14 }}>
-          <div style={{ fontSize:8.5, fontWeight:700, color:"#059669", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8 }}>Growth hormone pathways</div>
+          <div style={{ fontSize:8.5, fontWeight:700, color:"#059669", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:4 }}>Growth hormone pathways</div>
+          {item.pumps.some(p => p.p.includes('*')) && <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8.5, color:"#a8a29e", marginBottom:8, lineHeight:1.4 }}>* Percentages from adult studies using isolated amino acids or supplements. Whole foods deliver these pathways at lower but meaningful doses.</div>}
           {item.pumps.map((pump, i) => (
             <div key={i} style={{ display:"flex", alignItems:"baseline", gap:8, padding:"4px 0", borderTop: i > 0 ? "1px solid #f5f5f0" : "none" }}>
               <span style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", fontSize:13, color:"#059669", minWidth:56, textAlign:"right", flexShrink:0 }}>{pump.n}</span>
@@ -750,6 +751,8 @@ export default function Dashboard() {
         <div style={{ margin:"52px 0 40px", textAlign:"center" }}>
           <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#a8a29e", lineHeight:1.7 }}>
             Every number on this page comes from a peer-reviewed study.<br/>
+            Items marked with * are from adult studies using isolated amino acids or supplements.<br/>
+            Whole foods deliver these same pathways at lower but meaningful doses.<br/>
             We read the research so you can focus on your child.
           </p>
         </div>
