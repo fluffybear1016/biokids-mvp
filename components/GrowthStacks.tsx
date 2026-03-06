@@ -104,7 +104,7 @@ const stacks = [
   {
     id: 'height-preservation',
     name: 'Height Preservation & Strength',
-    subtitle: 'Ages 19-25: Real gains after plates may have closed, but maybe still can eke out more gains. CONTINUE ALL ITEMS FROM PUBERTY DELAY STACK.',
+    subtitle: 'Ages 19-25. CONTINUE ALL ITEMS FROM PUBERTY DELAY STACK.',
     steps: [
       // ── Sleep & Recovery ──
       { time: 'Sleep', action: '10+ hours on back, thin pillow', why: 'Disc rehydration — spinal height peaks each morning' },
