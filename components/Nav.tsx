@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Child, getGrowthStage, stageInfo, formatAge } from '@/lib/supabase';
 import { createClient } from '@/lib/supabase';
+import { getChildren, getActiveChild, setActiveChildId, ChildProfile } from '@/lib/children';
 
 type NavProps = {
   children?: Child[];
@@ -18,10 +19,21 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
   const [childName, setChildName] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [allChildren, setAllChildren] = useState<ChildProfile[]>([]);
+  const [activeChildLocalId, setActiveChildLocalId] = useState('');
 
   useEffect(() => {
-    const name = localStorage.getItem('childName');
-    if (name) setChildName(name);
+    // Load multi-child data
+    const kids = getChildren();
+    setAllChildren(kids);
+    const active = getActiveChild();
+    if (active) {
+      setChildName(active.name);
+      setActiveChildLocalId(active.id);
+    } else {
+      const name = localStorage.getItem('childName');
+      if (name) setChildName(name);
+    }
 
     const supabase = createClient();
     if (supabase) {
@@ -29,14 +41,13 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
         if (session?.user) {
           setIsLoggedIn(true);
 
-          // If no childName in localStorage, read from auth user metadata
-          if (!name) {
+          // If no childName, read from auth user metadata
+          if (!active && !localStorage.getItem('childName')) {
             const metaName = session.user.user_metadata?.child_name;
             if (metaName) {
               setChildName(metaName);
               localStorage.setItem('childName', metaName);
             } else {
-              // Last resort: fetch from children table
               fetch(`/api/auth/user-state?userId=${session.user.id}`)
                 .then(res => res.json())
                 .then(data => {
@@ -68,7 +79,16 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
     setShowMenu(false);
     router.push('/');
   };
-  
+
+  const handleSwitchChild = (child: ChildProfile) => {
+    setActiveChildId(child.id);
+    setChildName(child.name);
+    setActiveChildLocalId(child.id);
+    setShowMenu(false);
+    // Reload the page to pick up new child data
+    window.location.reload();
+  };
+
   const tabs = [
     { href: '/science', label: 'Science' },
     { href: '/protocol', label: 'Stacks' },
@@ -107,7 +127,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
             </Link>
           ))}
         </div>
-        
+
         {/* Child Selector */}
         {currentChild && (
           <div className="relative order-2 md:order-3">
@@ -160,7 +180,39 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
                   </svg>
                 </button>
                 {showMenu && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-stone-200 py-1 z-50">
+                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-stone-200 py-1 z-50">
+                    {/* Multi-child switcher */}
+                    {allChildren.length > 1 && (
+                      <>
+                        <div style={{ padding: '6px 16px 4px', fontSize: 10, fontWeight: 600, color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: "'Courier New', Courier, monospace" }}>
+                          Switch child
+                        </div>
+                        {allChildren.map((child) => (
+                          <button
+                            key={child.id}
+                            onClick={() => handleSwitchChild(child)}
+                            className="w-full text-left px-4 py-2 text-sm hover:bg-stone-50"
+                            style={{
+                              fontFamily: "'Courier New', Courier, monospace",
+                              color: child.id === activeChildLocalId ? '#065f46' : '#57534e',
+                              fontWeight: child.id === activeChildLocalId ? 600 : 400,
+                              background: child.id === activeChildLocalId ? '#f0fdf4' : 'transparent',
+                              border: 'none',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 8,
+                            }}
+                          >
+                            {child.id === activeChildLocalId && (
+                              <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} />
+                            )}
+                            {child.name || 'Unnamed'}
+                          </button>
+                        ))}
+                        <div className="border-t border-stone-100 my-1" />
+                      </>
+                    )}
                     <Link
                       href="/settings"
                       onClick={() => setShowMenu(false)}

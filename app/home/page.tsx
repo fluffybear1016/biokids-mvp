@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Nav from '@/components/Nav';
 import { Child } from '@/lib/supabase';
 import { useChildName } from '@/lib/useChildName';
+import { getActiveChild } from '@/lib/children';
 
 const mockChild: Child = {
   id: '1',
@@ -557,8 +558,11 @@ export default function Dashboard() {
 
   const [openId, setOpenId] = useState<string | null>(null);
 
-  // Persist checkmarks in localStorage, keyed by today's date (auto-resets daily)
-  const todayKey = `biokids_done_${new Date().toISOString().slice(0, 10)}`;
+  // Per-child checklist: include active child ID in the localStorage key
+  const activeChild = typeof window !== 'undefined' ? getActiveChild() : null;
+  const childIdSuffix = activeChild?.id ? `_${activeChild.id}` : '';
+  // Persist checkmarks in localStorage, keyed by today's date + child (auto-resets daily)
+  const todayKey = `biokids_done_${new Date().toISOString().slice(0, 10)}${childIdSuffix}`;
   const [done, setDone] = useState<Record<string, boolean>>(() => {
     if (typeof window === 'undefined') return {};
     try {

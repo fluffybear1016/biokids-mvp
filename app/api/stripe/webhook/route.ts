@@ -63,9 +63,9 @@ export async function POST(request: Request) {
         case 'customer.subscription.updated': {
           const subscription = event.data.object as Stripe.Subscription;
           const status = subscription.status === 'active' ? 'active' :
+                         subscription.status === 'trialing' ? 'trial' :
                          subscription.status === 'past_due' ? 'past_due' : 'cancelled';
 
-          // Match by metadata user_id stored during checkout
           if (subscription.metadata?.user_id) {
             await supabase
               .from('profiles')

@@ -5,38 +5,45 @@ import { useRouter } from 'next/navigation';
 import Nav from '@/components/Nav';
 import HeightPotentialCalculator from '@/components/HeightPotentialCalculator';
 import { createClient } from '@/lib/supabase';
+import {
+  ChildProfile,
+  createEmptyChild,
+  getChildren,
+  saveChildren,
+  getActiveChildId,
+  setActiveChildId,
+  addChild,
+  updateChild,
+  removeChild,
+} from '@/lib/children';
 
 type SectionId = 'child' | 'habits' | 'goal' | 'height';
 
-function parseHeight(formatted: string): { ft: string; inches: string } {
-  // Parse "5'6\"" → { ft: "5", inches: "6" }
-  const match = formatted.match(/(\d+)'(\d+)"/);
-  if (match) return { ft: match[1], inches: match[2] };
-  return { ft: '', inches: '' };
-}
+const C = { green: '#065f46', bg: '#fafaf9', fill: '#f0fdf4' };
+const mono = "'Courier New', Courier, monospace";
 
 export default function Settings() {
   const router = useRouter();
   const [openSection, setOpenSection] = useState<SectionId | null>('child');
   const [saved, setSaved] = useState<SectionId | null>(null);
 
-  // Child Info
+  // Multi-child state
+  const [children, setChildrenState] = useState<ChildProfile[]>([]);
+  const [activeId, setActiveId] = useState<string>('');
+  const [addingNew, setAddingNew] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+
+  // Active child form fields
   const [name, setName] = useState('');
   const [birthMonth, setBirthMonth] = useState('');
   const [birthYear, setBirthYear] = useState('');
-
-  // Habits
   const [sleepHours, setSleepHours] = useState('');
   const [bedtime, setBedtime] = useState('');
   const [dairy, setDairy] = useState('');
   const [exercise, setExercise] = useState('');
   const [screenTime, setScreenTime] = useState('');
   const [processedFoods, setProcessedFoods] = useState('');
-
-  // Goal
   const [goal, setGoal] = useState<'concerned' | 'foundation' | 'elite' | ''>('');
-
-  // Height Potential
   const [childGender, setChildGender] = useState<'boy' | 'girl' | ''>('');
   const [motherHeightFt, setMotherHeightFt] = useState('');
   const [motherHeightIn, setMotherHeightIn] = useState('');
@@ -50,35 +57,84 @@ export default function Settings() {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  // Load from localStorage
+  // Load children on mount
   useEffect(() => {
-    setName(localStorage.getItem('childName') || '');
-    setBirthMonth(localStorage.getItem('childBirthMonth') || '');
-    setBirthYear(localStorage.getItem('childBirthYear') || '');
-
-    setSleepHours(localStorage.getItem('sleepHours') || '');
-    setBedtime(localStorage.getItem('bedtime') || '');
-    setDairy(localStorage.getItem('dairy') || '');
-    setExercise(localStorage.getItem('exercise') || '');
-    setScreenTime(localStorage.getItem('screenTime') || '');
-    setProcessedFoods(localStorage.getItem('processedFoods') || '');
-
-    try {
-      const raw = localStorage.getItem('biokids_goal');
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        setGoal(parsed.goal || '');
-      }
-    } catch {}
-
-    setChildGender((localStorage.getItem('childGender') || '') as 'boy' | 'girl' | '');
-    const mh = parseHeight(localStorage.getItem('motherHeight') || '');
-    setMotherHeightFt(mh.ft);
-    setMotherHeightIn(mh.inches);
-    const fh = parseHeight(localStorage.getItem('fatherHeight') || '');
-    setFatherHeightFt(fh.ft);
-    setFatherHeightIn(fh.inches);
+    const kids = getChildren();
+    setChildrenState(kids);
+    const aid = getActiveChildId();
+    if (aid && kids.find(c => c.id === aid)) {
+      setActiveId(aid);
+      loadChildIntoForm(kids.find(c => c.id === aid)!);
+    } else if (kids.length > 0) {
+      setActiveId(kids[0].id);
+      setActiveChildId(kids[0].id);
+      loadChildIntoForm(kids[0]);
+    }
   }, []);
+
+  const loadChildIntoForm = (child: ChildProfile) => {
+    setName(child.name);
+    setBirthMonth(child.birthMonth);
+    setBirthYear(child.birthYear);
+    setSleepHours(child.sleepHours);
+    setBedtime(child.bedtime);
+    setDairy(child.dairy);
+    setExercise(child.exercise);
+    setScreenTime(child.screenTime);
+    setProcessedFoods(child.processedFoods);
+    setGoal(child.goal);
+    setChildGender(child.gender);
+    setMotherHeightFt(child.motherHeightFt);
+    setMotherHeightIn(child.motherHeightIn);
+    setFatherHeightFt(child.fatherHeightFt);
+    setFatherHeightIn(child.fatherHeightIn);
+  };
+
+  const collectFormData = (): Partial<ChildProfile> => ({
+    name,
+    birthMonth,
+    birthYear,
+    gender: childGender,
+    sleepHours,
+    bedtime,
+    dairy,
+    exercise,
+    screenTime,
+    processedFoods,
+    goal,
+    motherHeightFt,
+    motherHeightIn,
+    fatherHeightFt,
+    fatherHeightIn,
+  });
+
+  const switchChild = (id: string) => {
+    setActiveId(id);
+    setActiveChildId(id);
+    const child = children.find(c => c.id === id);
+    if (child) loadChildIntoForm(child);
+    setAddingNew(false);
+    setConfirmDelete(null);
+  };
+
+  const handleAddChild = () => {
+    const newChild = createEmptyChild();
+    const updated = addChild(newChild);
+    setChildrenState(updated);
+    switchChild(newChild.id);
+    setAddingNew(true);
+    setOpenSection('child');
+  };
+
+  const handleDeleteChild = (id: string) => {
+    if (children.length <= 1) return; // Must keep at least one
+    const updated = removeChild(id);
+    setChildrenState(updated);
+    if (updated.length > 0) {
+      switchChild(updated[0].id);
+    }
+    setConfirmDelete(null);
+  };
 
   const showSaved = (section: SectionId) => {
     setSaved(section);
@@ -86,9 +142,13 @@ export default function Settings() {
   };
 
   const saveChildInfo = () => {
-    localStorage.setItem('childName', name);
-    localStorage.setItem('childBirthMonth', birthMonth);
-    localStorage.setItem('childBirthYear', birthYear);
+    const child = children.find(c => c.id === activeId);
+    if (!child) return;
+
+    const updated: ChildProfile = { ...child, name, birthMonth, birthYear };
+    const newChildren = updateChild(updated);
+    setChildrenState(newChildren);
+    setAddingNew(false);
 
     // Sync to Supabase auth metadata
     const supabase = createClient();
@@ -100,42 +160,50 @@ export default function Settings() {
   };
 
   const saveHabits = () => {
-    localStorage.setItem('sleepHours', sleepHours);
-    localStorage.setItem('bedtime', bedtime);
-    localStorage.setItem('dairy', dairy);
-    localStorage.setItem('exercise', exercise);
-    localStorage.setItem('screenTime', screenTime);
-    localStorage.setItem('processedFoods', processedFoods);
+    const child = children.find(c => c.id === activeId);
+    if (!child) return;
+
+    const updated: ChildProfile = { ...child, sleepHours, bedtime, dairy, exercise, screenTime, processedFoods };
+    const newChildren = updateChild(updated);
+    setChildrenState(newChildren);
     showSaved('habits');
   };
 
   const saveGoal = () => {
-    if (goal) {
-      localStorage.setItem('biokids_goal', JSON.stringify({
-        goal,
-        date: new Date().toISOString(),
-      }));
-    }
+    const child = children.find(c => c.id === activeId);
+    if (!child || !goal) return;
+
+    const updated: ChildProfile = { ...child, goal };
+    const newChildren = updateChild(updated);
+    setChildrenState(newChildren);
     showSaved('goal');
   };
 
   const saveHeight = () => {
-    if (childGender) localStorage.setItem('childGender', childGender);
-    if (motherHeightFt && motherHeightIn) {
-      localStorage.setItem('motherHeight', `${motherHeightFt}'${motherHeightIn}"`);
-    }
-    if (fatherHeightFt && fatherHeightIn) {
-      localStorage.setItem('fatherHeight', `${fatherHeightFt}'${fatherHeightIn}"`);
-    }
-    // Calculate and save genetic target
+    const child = children.find(c => c.id === activeId);
+    if (!child) return;
+
+    let geneticTarget = '';
     if (childGender && motherHeightFt && motherHeightIn && fatherHeightFt && fatherHeightIn) {
       const motherCm = ((parseInt(motherHeightFt) * 12) + parseInt(motherHeightIn)) * 2.54;
       const fatherCm = ((parseInt(fatherHeightFt) * 12) + parseInt(fatherHeightIn)) * 2.54;
       const target = childGender === 'boy'
         ? (fatherCm + (motherCm + 13)) / 2
         : ((fatherCm - 13) + motherCm) / 2;
-      localStorage.setItem('geneticTarget', target.toString());
+      geneticTarget = target.toString();
     }
+
+    const updated: ChildProfile = {
+      ...child,
+      gender: childGender,
+      motherHeightFt,
+      motherHeightIn,
+      fatherHeightFt,
+      fatherHeightIn,
+      geneticTarget,
+    };
+    const newChildren = updateChild(updated);
+    setChildrenState(newChildren);
     showSaved('height');
   };
 
@@ -151,7 +219,6 @@ export default function Settings() {
     { value: 'elite' as const, label: 'Maximum Potential', desc: 'D1 / Pro sports · Leave nothing on the table' },
   ];
 
-  // Height potential helpers
   const toInches = (ft: string, inches: string) => (parseInt(ft) * 12) + parseInt(inches);
   const toCm = (totalInches: number) => totalInches * 2.54;
 
@@ -164,7 +231,7 @@ export default function Settings() {
   })() : null;
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fafaf9', fontFamily: "'Courier New', Courier, monospace" }}>
+    <div style={{ minHeight: '100vh', background: C.bg, fontFamily: mono }}>
       <Nav />
       <main style={{ maxWidth: '540px', margin: '0 auto', padding: '0 20px', paddingTop: '24px', paddingBottom: '40px' }}>
         <button
@@ -173,15 +240,86 @@ export default function Settings() {
         >
           ← Back
         </button>
-        <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontWeight: 800, fontSize: '24px', color: '#1c1917', marginBottom: '8px' }}>Edit Profile</h1>
-        <div style={{ width: 32, height: 3, background: '#065f46', borderRadius: 2, marginBottom: 24 }} />
+        <h1 style={{ fontFamily: mono, fontWeight: 800, fontSize: '24px', color: '#1c1917', marginBottom: '8px' }}>Edit Profile</h1>
+        <div style={{ width: 32, height: 3, background: C.green, borderRadius: 2, marginBottom: 24 }} />
+
+        {/* ═══ Child Selector Tabs ═══ */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
+          {children.map((child) => (
+            <button
+              key={child.id}
+              onClick={() => switchChild(child.id)}
+              style={{
+                fontFamily: mono,
+                fontSize: 13,
+                fontWeight: child.id === activeId ? 700 : 500,
+                padding: '8px 16px',
+                borderRadius: 20,
+                border: child.id === activeId ? `1.5px solid ${C.green}` : '1px solid #d6d3d1',
+                background: child.id === activeId ? C.fill : '#fff',
+                color: child.id === activeId ? C.green : '#78716c',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+              }}
+            >
+              {child.name || 'New child'}
+            </button>
+          ))}
+          <button
+            onClick={handleAddChild}
+            style={{
+              fontFamily: mono,
+              fontSize: 13,
+              fontWeight: 600,
+              padding: '8px 14px',
+              borderRadius: 20,
+              border: `1px dashed ${C.green}`,
+              background: 'transparent',
+              color: C.green,
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+            }}
+          >
+            + Add Child
+          </button>
+        </div>
+
+        {/* Delete child option (if more than 1) */}
+        {children.length > 1 && (
+          <div style={{ marginBottom: 16 }}>
+            {confirmDelete === activeId ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#dc2626' }}>
+                <span>Remove {name || 'this child'}?</span>
+                <button
+                  onClick={() => handleDeleteChild(activeId)}
+                  style={{ fontFamily: mono, fontSize: 12, fontWeight: 600, padding: '4px 12px', borderRadius: 6, border: '1px solid #dc2626', background: '#fef2f2', color: '#dc2626', cursor: 'pointer' }}
+                >
+                  Yes, remove
+                </button>
+                <button
+                  onClick={() => setConfirmDelete(null)}
+                  style={{ fontFamily: mono, fontSize: 12, padding: '4px 12px', borderRadius: 6, border: '1px solid #d6d3d1', background: '#fff', color: '#78716c', cursor: 'pointer' }}
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setConfirmDelete(activeId)}
+                style={{ fontFamily: mono, fontSize: 11, color: '#a8a29e', background: 'none', border: 'none', cursor: 'pointer', padding: 0, textDecoration: 'underline' }}
+              >
+                Remove this child
+              </button>
+            )}
+          </div>
+        )}
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
           {/* Child Info */}
-          <div style={{ background: openSection === 'child' ? '#f0fdf4' : '#fff', borderRadius: '14px', border: openSection === 'child' ? '1px solid #065f46' : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
-            <button onClick={() => toggle('child')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Child Info</span></span>
+          <div style={{ background: openSection === 'child' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'child' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
+            <button onClick={() => toggle('child')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Child Info</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('child')}</span>
             </button>
             {openSection === 'child' && (
@@ -193,39 +331,39 @@ export default function Settings() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="E.g., Emma or E"
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: mono, boxSizing: 'border-box' }}
                   />
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div>
                     <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#57534e', marginBottom: '4px' }}>Birth Month</label>
-                    <select value={birthMonth} onChange={(e) => setBirthMonth(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
+                    <select value={birthMonth} onChange={(e) => setBirthMonth(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: mono, boxSizing: 'border-box' }}>
                       <option value="">Month</option>
                       {months.map((m, i) => <option key={m} value={i + 1}>{m}</option>)}
                     </select>
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#57534e', marginBottom: '4px' }}>Birth Year</label>
-                    <select value={birthYear} onChange={(e) => setBirthYear(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
+                    <select value={birthYear} onChange={(e) => setBirthYear(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: mono, boxSizing: 'border-box' }}>
                       <option value="">Year</option>
                       {years.map((y) => <option key={y} value={y}>{y}</option>)}
                     </select>
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <button onClick={saveChildInfo} style={{ padding: '8px 20px', background: '#065f46', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+                  <button onClick={saveChildInfo} style={{ padding: '8px 20px', background: C.green, color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: mono }}>
                     Save
                   </button>
-                  {saved === 'child' && <span style={{ fontSize: '14px', color: '#065f46', fontWeight: 500 }}>Saved!</span>}
+                  {saved === 'child' && <span style={{ fontSize: '14px', color: C.green, fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
           </div>
 
           {/* Daily Habits */}
-          <div style={{ background: openSection === 'habits' ? '#f0fdf4' : '#fff', borderRadius: '14px', border: openSection === 'habits' ? '1px solid #065f46' : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
-            <button onClick={() => toggle('habits')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Daily Habits</span></span>
+          <div style={{ background: openSection === 'habits' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'habits' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
+            <button onClick={() => toggle('habits')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Daily Habits</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('habits')}</span>
             </button>
             {openSection === 'habits' && (
@@ -237,19 +375,19 @@ export default function Settings() {
                 <ChoiceGroup label="Screen time before bed" options={['None', 'Some', 'A lot']} value={screenTime} onChange={setScreenTime} cols={3} />
                 <ChoiceGroup label="Processed / packaged foods" options={['Rarely', 'Sometimes', 'Often']} value={processedFoods} onChange={setProcessedFoods} cols={3} />
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <button onClick={saveHabits} style={{ padding: '8px 20px', background: '#065f46', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+                  <button onClick={saveHabits} style={{ padding: '8px 20px', background: C.green, color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: mono }}>
                     Save
                   </button>
-                  {saved === 'habits' && <span style={{ fontSize: '14px', color: '#065f46', fontWeight: 500 }}>Saved!</span>}
+                  {saved === 'habits' && <span style={{ fontSize: '14px', color: C.green, fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
           </div>
 
           {/* Growth Goal */}
-          <div style={{ background: openSection === 'goal' ? '#f0fdf4' : '#fff', borderRadius: '14px', border: openSection === 'goal' ? '1px solid #065f46' : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
-            <button onClick={() => toggle('goal')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Growth Goal</span></span>
+          <div style={{ background: openSection === 'goal' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'goal' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
+            <button onClick={() => toggle('goal')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Growth Goal</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('goal')}</span>
             </button>
             {openSection === 'goal' && (
@@ -266,34 +404,34 @@ export default function Settings() {
                       gap: '12px',
                       padding: '16px',
                       borderRadius: '8px',
-                      border: goal === opt.value ? '1px solid #065f46' : '1px solid #e7e5e4',
+                      border: goal === opt.value ? `1px solid ${C.green}` : '1px solid #e7e5e4',
                       textAlign: 'left',
-                      background: goal === opt.value ? '#f0fdf4' : '#fff',
+                      background: goal === opt.value ? C.fill : '#fff',
                       cursor: 'pointer',
-                      fontFamily: "'Courier New', Courier, monospace",
+                      fontFamily: mono,
                       transition: 'all 0.2s'
                     }}
                   >
                     <div>
-                      <p style={{ fontSize: '14px', fontWeight: 600, color: goal === opt.value ? '#065f46' : '#1c1917', margin: 0 }}>{opt.label}</p>
+                      <p style={{ fontSize: '14px', fontWeight: 600, color: goal === opt.value ? C.green : '#1c1917', margin: 0 }}>{opt.label}</p>
                       <p style={{ fontSize: '12px', color: '#a8a29e', margin: '4px 0 0 0' }}>{opt.desc}</p>
                     </div>
                   </button>
                 ))}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', paddingTop: '8px' }}>
-                  <button onClick={saveGoal} style={{ padding: '8px 20px', background: '#065f46', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+                  <button onClick={saveGoal} style={{ padding: '8px 20px', background: C.green, color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: mono }}>
                     Save
                   </button>
-                  {saved === 'goal' && <span style={{ fontSize: '14px', color: '#065f46', fontWeight: 500 }}>Saved!</span>}
+                  {saved === 'goal' && <span style={{ fontSize: '14px', color: C.green, fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
           </div>
 
           {/* Height Potential */}
-          <div style={{ background: openSection === 'height' ? '#f0fdf4' : '#fff', borderRadius: '14px', border: openSection === 'height' ? '1px solid #065f46' : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
-            <button onClick={() => toggle('height')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Height Potential</span></span>
+          <div style={{ background: openSection === 'height' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'height' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
+            <button onClick={() => toggle('height')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Height Potential</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('height')}</span>
             </button>
             {openSection === 'height' && (
@@ -309,13 +447,13 @@ export default function Settings() {
                         style={{
                           padding: '12px 16px',
                           borderRadius: '8px',
-                          border: childGender === opt.value ? '1px solid #065f46' : '1px solid #e7e5e4',
+                          border: childGender === opt.value ? `1px solid ${C.green}` : '1px solid #e7e5e4',
                           fontSize: '14px',
                           fontWeight: 500,
-                          color: childGender === opt.value ? '#065f46' : '#57534e',
-                          background: childGender === opt.value ? '#f0fdf4' : '#fff',
+                          color: childGender === opt.value ? C.green : '#57534e',
+                          background: childGender === opt.value ? C.fill : '#fff',
                           cursor: 'pointer',
-                          fontFamily: "'Courier New', Courier, monospace",
+                          fontFamily: mono,
                           transition: 'all 0.2s'
                         }}
                       >
@@ -327,11 +465,11 @@ export default function Settings() {
                 <div>
                   <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#57534e', marginBottom: '4px' }}>Mother&apos;s height</label>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                    <select value={motherHeightFt} onChange={(e) => setMotherHeightFt(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
+                    <select value={motherHeightFt} onChange={(e) => setMotherHeightFt(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: mono, boxSizing: 'border-box' }}>
                       <option value="">Ft</option>
                       {[4, 5, 6].map((ft) => <option key={ft} value={ft}>{ft}&apos;</option>)}
                     </select>
-                    <select value={motherHeightIn} onChange={(e) => setMotherHeightIn(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
+                    <select value={motherHeightIn} onChange={(e) => setMotherHeightIn(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: mono, boxSizing: 'border-box' }}>
                       <option value="">In</option>
                       {Array.from({ length: 12 }, (_, i) => <option key={i} value={i}>{i}&quot;</option>)}
                     </select>
@@ -340,11 +478,11 @@ export default function Settings() {
                 <div>
                   <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#57534e', marginBottom: '4px' }}>Father&apos;s height</label>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                    <select value={fatherHeightFt} onChange={(e) => setFatherHeightFt(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
+                    <select value={fatherHeightFt} onChange={(e) => setFatherHeightFt(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: mono, boxSizing: 'border-box' }}>
                       <option value="">Ft</option>
                       {[5, 6, 7].map((ft) => <option key={ft} value={ft}>{ft}&apos;</option>)}
                     </select>
-                    <select value={fatherHeightIn} onChange={(e) => setFatherHeightIn(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: "'Courier New', Courier, monospace", boxSizing: 'border-box' }}>
+                    <select value={fatherHeightIn} onChange={(e) => setFatherHeightIn(e.target.value)} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '14px', fontFamily: mono, boxSizing: 'border-box' }}>
                       <option value="">In</option>
                       {Array.from({ length: 12 }, (_, i) => <option key={i} value={i}>{i}&quot;</option>)}
                     </select>
@@ -358,10 +496,10 @@ export default function Settings() {
                   />
                 )}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <button onClick={saveHeight} style={{ padding: '8px 20px', background: '#065f46', color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
+                  <button onClick={saveHeight} style={{ padding: '8px 20px', background: C.green, color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: mono }}>
                     Save
                   </button>
-                  {saved === 'height' && <span style={{ fontSize: '14px', color: '#065f46', fontWeight: 500 }}>Saved!</span>}
+                  {saved === 'height' && <span style={{ fontSize: '14px', color: C.green, fontWeight: 500 }}>Saved!</span>}
                 </div>
               </div>
             )}
