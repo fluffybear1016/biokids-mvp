@@ -66,15 +66,15 @@ const citeUrls: Record<string, string> = {
   "Okada, JCEM 1970": "https://pubmed.ncbi.nlm.nih.gov/5412546/",
   "Sramek, Eur J Appl Physiol 2000": "https://pubmed.ncbi.nlm.nih.gov/10751106/",
   "Ziegenfuss, JISSN 2008": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3313098/",
-  "Kawamura, Nutrition 2012": "https://pubmed.ncbi.nlm.nih.gov/22305649/",
+  "Zeisel, Nutr Rev 2009": "https://pubmed.ncbi.nlm.nih.gov/19906248/",
   "Hoppe, Eur J Clin Nutr 2008": "https://pubmed.ncbi.nlm.nih.gov/19174829/",
   "Kang, Nutrients 2019": "https://pubmed.ncbi.nlm.nih.gov/30839054/",
   "Balmer, J Lipid Res 2002": "https://pubmed.ncbi.nlm.nih.gov/12401878/",
   "Soliman, Indian J Endocrinol Metab 2014": "https://pubmed.ncbi.nlm.nih.gov/25538884/",
   "Hallberg, Am J Clin Nutr 1989": "https://pubmed.ncbi.nlm.nih.gov/2911999/",
-  "Lanzi, Metabolism 1999": "https://pubmed.ncbi.nlm.nih.gov/10487038/",
+  "Lanzi, Metabolism 1999": "https://pubmed.ncbi.nlm.nih.gov/10484056/",
   "Hartman, JCEM 1992": "https://pubmed.ncbi.nlm.nih.gov/1548337/",
-  "Berk, FASEB J 2006": "https://pubmed.ncbi.nlm.nih.gov/16574974/",
+  "Berk, FASEB J 2006": "https://faseb.onlinelibrary.wiley.com/doi/abs/10.1096/fasebj.20.4.A382-b",
   "Berk, Am J Med Sci 1989": "https://pubmed.ncbi.nlm.nih.gov/2556917/",
   "Brackley, Spine 2004": "https://pubmed.ncbi.nlm.nih.gov/15454714/",
   "Negrini, Spine 2002": "https://pubmed.ncbi.nlm.nih.gov/11805666/",
@@ -87,7 +87,7 @@ const citeUrls: Record<string, string> = {
   "Stokes, J Appl Physiol 2008": "https://pubmed.ncbi.nlm.nih.gov/18187617/",
   "Stokes, J Sports Sci 2002": "https://pubmed.ncbi.nlm.nih.gov/12137178/",
   "Nevill, J Appl Physiol 1996": "https://pubmed.ncbi.nlm.nih.gov/8925817/",
-  "Cappon, J Appl Physiol 1994": "https://pubmed.ncbi.nlm.nih.gov/8175546/",
+  "Cappon, J Appl Physiol 1994": "https://pubmed.ncbi.nlm.nih.gov/7928875/",
   "Zribi, J Pediatr Endocrinol Metab": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9135997/",
   "PMC9135997": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9135997/",
   "Stutz, Sports Med 2019": "https://pubmed.ncbi.nlm.nih.gov/30374942/",
@@ -95,7 +95,7 @@ const citeUrls: Record<string, string> = {
   "Kasai, Metabolism 1980": "https://pubmed.ncbi.nlm.nih.gov/622050/",
   "Kawai, Neuropsychopharmacology 2015": "https://pubmed.ncbi.nlm.nih.gov/25533534/",
   "Van Cauter, JCEM 1992": "https://pubmed.ncbi.nlm.nih.gov/1592892/",
-  "Crispim, J Clin Sleep Med 2011": "https://pubmed.ncbi.nlm.nih.gov/21512286/",
+  "Crispim, J Clin Sleep Med 2011": "https://pubmed.ncbi.nlm.nih.gov/22171206/",
   "Gooley, JCEM 2011": "https://pubmed.ncbi.nlm.nih.gov/21193540/",
   "Figueiro, Neuro Endocrinol Lett 2011": "https://pubmed.ncbi.nlm.nih.gov/21552190/",
   "Krauchi, Nature 1999": "https://pubmed.ncbi.nlm.nih.gov/10485703/",
@@ -106,8 +106,8 @@ const citeUrls: Record<string, string> = {
   "Mindell, Sleep 2015": "https://pubmed.ncbi.nlm.nih.gov/25325483/",
   "Mindell, Sleep 2009": "https://pubmed.ncbi.nlm.nih.gov/19480226/",
   "Takahashi, J Clin Invest 1968": "https://pubmed.ncbi.nlm.nih.gov/5675428/",
-  "Zajac, J Human Kinetics 2018": "https://doi.org/10.1515/hukin-2017-0183",
-  "Veldhuis, JCEM 1995": "https://pubmed.ncbi.nlm.nih.gov/7775619/",
+  "Zajac, Biol Sport 2018": "https://pubmed.ncbi.nlm.nih.gov/30765926/",
+  "Quabbe, JCEM 1983": "https://pubmed.ncbi.nlm.nih.gov/6345570/",
 };
 
 const dayData: DayPeriod[] = [
@@ -143,7 +143,7 @@ const dayData: DayPeriod[] = [
         { f:"Full-fat kefir", d:"Milk proteins + fermentation-derived GABA." },
       ]},
 
-    { id:"bkf", t:"Eggs", sub:"2–3 pasture-raised", gh:"GH axis primer", headline:"choline — acetylcholine — primes every GH pulse today", tier:0, cite:"Ziegenfuss, JISSN 2008; Kawamura, Nutrition 2012", why:"Eggs are the richest whole-food choline source. Choline converts to acetylcholine, which stimulates GHRH neurons, priming the pituitary for every GH pulse all day. This restarts the 24-hour cycle — last night's casein bridged overnight, now choline reignites the axis. Eggs also deliver glutamine, ornithine, lysine + arginine, and tyrosine — all GH-supporting aminos.", tip:"Scrambled or over easy. Skip cereal — always. No cheese at this meal — calcium competes with egg iron. Pair with a vitamin C source to boost iron absorption.",
+    { id:"bkf", t:"Eggs", sub:"2–3 pasture-raised", gh:"GH axis primer", headline:"choline — acetylcholine — primes every GH pulse today", tier:0, cite:"Ziegenfuss, JISSN 2008; Zeisel, Nutr Rev 2009", why:"Eggs are the richest whole-food choline source. Choline converts to acetylcholine, which stimulates GHRH neurons, priming the pituitary for every GH pulse all day. This restarts the 24-hour cycle — last night's casein bridged overnight, now choline reignites the axis. Eggs also deliver glutamine, ornithine, lysine + arginine, and tyrosine — all GH-supporting aminos.", tip:"Scrambled or over easy. Skip cereal — always. No cheese at this meal — calcium competes with egg iron. Pair with a vitamin C source to boost iron absorption.",
       pumps:[
         { p:"Choline → acetylcholine", n:"axis primer", d:"Two eggs ≈ 300mg choline — primes pituitary for GH pulses all day" },
         { p:"Choline pathway*", n:"up to 4,400%", d:"A-GPC (choline metabolite) raised GH up to 4,400% in adult studies" },
@@ -201,11 +201,11 @@ const dayData: DayPeriod[] = [
   ]},
 
   { period:"Afternoon", time:"12:00 – 5:00pm", items:[
-    { id:"lunch", t:"Animal protein + peanuts + broccoli", sub:"Beef liver + eggs + lentils + citrus", gh:"GH multi-lever", headline:"lysine + arginine + glutamine + niacin — stacks multiple GH pathways", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012", why:"This meal activates 10+ GH pathways and primes the afternoon sprint. Beef liver has the highest choline density plus retinol, B12, and zinc. Peanuts deliver niacin, which suppresses free fatty acids that brake GH. WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver mixed into ground beef (burgers, meatballs, bolognese) — kids won't taste it. Peanuts prime the sprint. NO DAIRY at this meal.",
+    { id:"lunch", t:"Animal protein + peanuts + broccoli", sub:"Beef liver + eggs + lentils + citrus", gh:"GH multi-lever", headline:"lysine + arginine + glutamine + niacin — stacks multiple GH pathways", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012; Quabbe, JCEM 1983", why:"This meal activates 10+ GH pathways and primes the afternoon sprint. Beef liver has the highest choline density plus retinol, B12, and zinc. Peanuts deliver niacin, which suppresses free fatty acids that brake GH. WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver mixed into ground beef (burgers, meatballs, bolognese) — kids won't taste it. Peanuts prime the sprint. NO DAIRY at this meal.",
       pumps:[
         { p:"Lysine + Arginine*", n:"up to 700%", d:"Combined aminos raised GH up to 700% in adult supplement studies" },
         { p:"Glutamine (beef)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — beef delivers meaningful amounts" },
-        { p:"Niacin (peanuts)*", n:"up to 350%", d:"Niacin suppressed FFAs → amplified sprint GH in adult study" },
+        { p:"Niacin (peanuts)*", n:"up to 350%", d:"Niacin suppresses FFAs → Stokes: 350% sprint GH amplification; Quabbe: >1,000% GH at rest in adults" },
         { p:"Ornithine", n:"GH amplifier", d:"Cycles with arginine to amplify GH" },
         { p:"L-DOPA (tyrosine)*", n:"up to 221%", d:"Tyrosine — dopamine — stimulates GHRH in adult studies" },
         { p:"Arginine (pumpkin seeds)", n:"+0.33cm/yr", d:"Highest plant arginine. Copenhagen study: +0.33cm/yr in children" },
@@ -242,10 +242,10 @@ const dayData: DayPeriod[] = [
 
     { id:"nap", t:"No naps after 2–3pm", sub:"Steals tonight's deep sleep", gh:"60–80% GH", headline:"of tonight's GH at risk — late naps steal adenosine", tier:2, cite:"Milner, J Sleep Res 2009; Brandenberger, Lancet 2000", why:"Naps after 3pm steal adenosine sleep pressure needed for deep slow-wave sleep. The first SWS cycle — the one most disrupted by late naps — contains the single largest GH pulse of the day.", tip:"If they truly need a nap, before 2pm and under 30 minutes." },
 
-    { id:"pre", t:"Eggs + peanuts before sprints", sub:"30–60 min before", gh:"sprint primer", headline:"choline + niacin prime the sprint GH response", tier:1, cite:"Stokes, J Appl Physiol 2008; Ziegenfuss, JISSN 2008", why:"Choline primes the hypothalamic-pituitary axis for the upcoming sprint. Niacin blocks free fatty acids — a molecular brake on GH. Stokes (2008): niacin amplified second sprint GH to ~23.3 μg/L vs ~5.2 controls (~350% greater peak, ~422% greater AUC) in adult athletes.", tip:"Over easy eggs. Unroasted peanuts or natural PB. No dairy — eggs have iron. Save milk for post-sprint.",
+    { id:"pre", t:"Eggs + peanuts before sprints", sub:"30–60 min before", gh:"sprint primer", headline:"choline + niacin prime the sprint GH response", tier:1, cite:"Stokes, J Appl Physiol 2008; Ziegenfuss, JISSN 2008; Quabbe, JCEM 1983", why:"Choline primes the hypothalamic-pituitary axis for the upcoming sprint. Niacin blocks free fatty acids — a molecular brake on GH. Stokes (2008): niacin amplified second sprint GH to ~23.3 μg/L vs ~5.2 controls (~350% greater peak, ~422% greater AUC) in adult athletes.", tip:"Over easy eggs. Unroasted peanuts or natural PB. No dairy — eggs have iron. Save milk for post-sprint.",
       pumps:[
         { p:"Choline priming*", n:"up to 4,400%", d:"A-GPC (choline metabolite) raised GH up to 4,400% with exercise in adults" },
-        { p:"Niacin (peanuts)*", n:"up to 350%", d:"Niacin suppressed FFAs → 350% greater sprint GH peak in adult study" },
+        { p:"Niacin (peanuts)*", n:"up to 350%", d:"Stokes: niacin + sprint → 350% greater GH peak; Quabbe: niacin alone → >1,000% GH in adults" },
         { p:"Arginine", n:"GH support", d:"Peanuts deliver arginine — direct GH secretagogue" },
         { p:"Glutamine (eggs)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult supplement study" },
         { p:"Inositol (peanuts)", n:"ISS pathway", d:"Part of lysine-inositol-B12 growth combo" },
@@ -257,7 +257,7 @@ const dayData: DayPeriod[] = [
       pumps:[
         { p:"Sprint GH*", n:"up to 530%", d:"Per 30-second all-out sprint in adult studies" },
         { p:"With choline*", n:"up to 4,400%", d:"A-GPC (choline pathway) raised GH up to 4,400% with exercise in adults" },
-        { p:"With niacin*", n:"up to 350%", d:"Niacin amplified repeat sprint GH ~350% in adult study" },
+        { p:"With niacin*", n:"up to 350%", d:"Stokes: niacin + sprint → 350% GH amplification; Quabbe: niacin alone → >1,000% GH in adults" },
         { p:"Mechanical loading", n:"growth plates", d:"Direct growth plate stimulation" },
         { p:"6-sec sprint*", n:"up to 217%", d:"Even a 6-second sprint raised GH 217% in adult study" },
         { p:"Healthy body composition", n:"sustained GH", d:"Sprint training maintains lean body comp" },
@@ -278,7 +278,7 @@ const dayData: DayPeriod[] = [
         { p:"Spinal decompression", n:"reverses 1%", d:"Dead hang reverses daily compression" },
       ]},
 
-    { id:"pm", t:"Post-sprint milk", sub:"8–12 oz A2 + 1 tbsp raw honey", gh:"451% GH*", headline:"GH to IGF-1 conversion — still 451% above baseline at 24h in adult study", tier:0, sig:true, cite:"Zajac, J Human Kinetics 2018; Cappon, J Appl Physiol 1994", why:"Without milk after sprints, the GH spike is 'orphaned' — present but not converted to IGF-1 (the actual growth signal). Whey provides immediate aminos. Honey's gentle insulin activates the STAT5 pathway, converting GH to IGF-1. Casein slow-releases for hours, bridging to the Sleep Drink.", tip:"Cold milk, raw honey, immediately after stretching. This is a DAIRY window. Non-sprint days: same drink after school.",
+    { id:"pm", t:"Post-sprint milk", sub:"8–12 oz A2 + 1 tbsp raw honey", gh:"451% GH*", headline:"GH to IGF-1 conversion — still 451% above baseline at 24h in adult study", tier:0, sig:true, cite:"Zajac, Biol Sport 2018; Cappon, J Appl Physiol 1994", why:"Without milk after sprints, the GH spike is 'orphaned' — present but not converted to IGF-1 (the actual growth signal). Whey provides immediate aminos. Honey's gentle insulin activates the STAT5 pathway, converting GH to IGF-1. Casein slow-releases for hours, bridging to the Sleep Drink.", tip:"Cold milk, raw honey, immediately after stretching. This is a DAIRY window. Non-sprint days: same drink after school.",
       pumps:[
         { p:"GH to IGF-1*", n:"up to 451%", d:"Zajac: still 451% above baseline at 24h in adult athletes" },
         { p:"IGF-1*", n:"+14%", d:"14% higher than controls at 24h in adult study" },
@@ -289,7 +289,7 @@ const dayData: DayPeriod[] = [
   ]},
 
   { period:"Late Afternoon", time:"3:00 – 6:00pm", items:[
-    { id:"rest", t:"Rest and play", sub:"Unstructured time with friends", gh:"87% GH*", headline:"anticipation of fun raised GH 87% in adult study — cortisol down 39%", tier:1, cite:"Berk, FASEB J 2006; Veldhuis, JCEM 1995", why:"Unstructured play is growth time. In adult studies, anticipation of fun raised GH 87% and reduced cortisol 39%. Chronic stress from overscheduling is one of the strongest GH suppressors.", tip:"No homework pressure right after school. Play first, eat, then homework. No competitive sports in the evening." },
+    { id:"rest", t:"Rest and play", sub:"Unstructured time with friends", gh:"87% GH*", headline:"anticipation of fun raised GH 87% in adult study — cortisol down 39%", tier:1, cite:"Berk, FASEB J 2006; Berk, Am J Med Sci 1989", why:"Unstructured play is growth time. In adult studies, anticipation of fun raised GH 87% and reduced cortisol 39%. Chronic stress from overscheduling is one of the strongest GH suppressors.", tip:"No homework pressure right after school. Play first, eat, then homework. No competitive sports in the evening." },
   ]},
 
   { period:"Evening", time:"6:00 – 9:00pm", note:"Do these in order. By the end, they're drowsy.", items:[
@@ -383,7 +383,7 @@ const dayData: DayPeriod[] = [
         { p:"Cortisol reduction", n:"calming", d:"Consistent touch ritual lowers cortisol" },
       ]},
 
-    { id:"drink", t:"Sleep Drink", sub:"4 oz A2 milk + 1 oz tart cherry — 30 min before bed", gh:"451% GH*", headline:"the 24-hour cycle completes — GH 451% at 24h in adult study, IGF-1 +14%", tier:0, sig:true, cite:"Zajac, J Human Kinetics 2018; Howatson, Eur J Nutr 2012; Forsling, J Pineal Res 1999", why:"The signature bioKids ritual. Casein slow-releases aminos 6–7 hours feeding GH pulses all night. Tart cherry = highest food melatonin (melatonin raised GH 157% in adult studies + aromatase inhibition). α-Lactalbumin = highest tryptophan — serotonin — melatonin. In the Zajac study (adults), GH remained 451% above baseline at 24 hours, IGF-1 14% higher. ~55 calories — too small to spike insulin. This is the 24-hour cycle: post-sprint milk then Sleep Drink then casein overnight then morning eggs restart. Some GH lever is always on.", tip:"Mix, serve 20–40 min before bed. This is a DAIRY window. Dim lights after.",
+    { id:"drink", t:"Sleep Drink", sub:"4 oz A2 milk + 1 oz tart cherry — 30 min before bed", gh:"451% GH*", headline:"the 24-hour cycle completes — GH 451% at 24h in adult study, IGF-1 +14%", tier:0, sig:true, cite:"Zajac, Biol Sport 2018; Howatson, Eur J Nutr 2012; Forsling, J Pineal Res 1999", why:"The signature bioKids ritual. Casein slow-releases aminos 6–7 hours feeding GH pulses all night. Tart cherry = highest food melatonin (melatonin raised GH 157% in adult studies + aromatase inhibition). α-Lactalbumin = highest tryptophan — serotonin — melatonin. In the Zajac study (adults), GH remained 451% above baseline at 24 hours, IGF-1 14% higher. ~55 calories — too small to spike insulin. This is the 24-hour cycle: post-sprint milk then Sleep Drink then casein overnight then morning eggs restart. Some GH lever is always on.", tip:"Mix, serve 20–40 min before bed. This is a DAIRY window. Dim lights after.",
       pumps:[
         { p:"GH at 24h*", n:"up to 451%", d:"Zajac: still 451% above baseline at 24h in adult athletes" },
         { p:"IGF-1*", n:"+14%", d:"14% higher than controls in adult study" },
