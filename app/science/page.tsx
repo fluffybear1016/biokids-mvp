@@ -267,7 +267,7 @@ export default function Dashboard() {
 
         {/* ── Stage + Active Phase (compact) ── */}
         <div style={{
-          background: col.card, border: `1px solid ${col.border}`, borderRadius: 18,
+          background: col.card, border: `1px solid ${col.border}`, borderTop: `2px solid ${col.green}`, borderRadius: 18,
           padding: '18px 20px', marginBottom: 16,
         }}>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -329,6 +329,7 @@ export default function Dashboard() {
           <h2 style={{ fontFamily: F, fontSize: 18, fontWeight: 800, color: col.title, marginBottom: 6 }}>
             Research
           </h2>
+          <div style={{ width: 32, height: 3, background: col.green, borderRadius: 2, marginBottom: 12 }} />
           <p style={{ fontFamily: F, fontSize: 13, color: col.light, marginBottom: 20 }}>
             {articles.length} peer-reviewed deep dives. Every claim cited.
           </p>

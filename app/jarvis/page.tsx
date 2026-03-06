@@ -192,6 +192,15 @@ function Jarvis() {
 
         {/* Header */}
         <header style={{ textAlign: 'center', marginBottom: 24 }}>
+          <div style={{ width: 40, height: 40, borderRadius: 12, background: C.green, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2a4 4 0 0 1 4 4v1a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V6a4 4 0 0 1 4-4z" />
+              <path d="M9 8v1a3 3 0 0 0 6 0V8" />
+              <path d="M12 12v3" />
+              <path d="M8 21h8" />
+              <path d="M12 15v6" />
+            </svg>
+          </div>
           <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Jarvis</h1>
           <p style={{ fontSize: 13, color: C.light, margin: 0, fontFamily: F }}>Your GH optimization AI assistant</p>
         </header>
@@ -208,7 +217,7 @@ function Jarvis() {
                   maxWidth: '85%', borderRadius: 14, padding: '14px 18px',
                   ...(message.role === 'user'
                     ? { background: C.green, color: '#fff' }
-                    : { background: C.card, border: `1px solid ${C.border}` }
+                    : { background: '#f0fdf4', borderLeft: `3px solid ${C.green}`, borderTop: `1px solid #e7e5e4`, borderRight: `1px solid #e7e5e4`, borderBottom: `1px solid #e7e5e4` }
                   ),
                 }}
               >
@@ -220,11 +229,11 @@ function Jarvis() {
           ))}
           {isLoading && messages[messages.length - 1]?.role === 'user' && (
             <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-              <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: '14px 18px' }}>
+              <div style={{ background: '#f0fdf4', borderLeft: `3px solid ${C.green}`, borderTop: '1px solid #e7e5e4', borderRight: '1px solid #e7e5e4', borderBottom: '1px solid #e7e5e4', borderRadius: 14, padding: '14px 18px' }}>
                 <div style={{ display: 'flex', gap: 4 }}>
-                  <span style={{ width: 6, height: 6, background: C.light, borderRadius: '50%', animation: 'bounce 1s infinite', animationDelay: '0ms' }} />
-                  <span style={{ width: 6, height: 6, background: C.light, borderRadius: '50%', animation: 'bounce 1s infinite', animationDelay: '150ms' }} />
-                  <span style={{ width: 6, height: 6, background: C.light, borderRadius: '50%', animation: 'bounce 1s infinite', animationDelay: '300ms' }} />
+                  <span style={{ width: 6, height: 6, background: C.green, opacity: 0.5, borderRadius: '50%', animation: 'bounce 1s infinite', animationDelay: '0ms' }} />
+                  <span style={{ width: 6, height: 6, background: C.green, opacity: 0.5, borderRadius: '50%', animation: 'bounce 1s infinite', animationDelay: '150ms' }} />
+                  <span style={{ width: 6, height: 6, background: C.green, opacity: 0.5, borderRadius: '50%', animation: 'bounce 1s infinite', animationDelay: '300ms' }} />
                 </div>
               </div>
             </div>
@@ -240,9 +249,9 @@ function Jarvis() {
                 key={q}
                 onClick={() => handleSuggestionClick(q)}
                 style={{
-                  padding: '6px 14px', background: C.card, borderRadius: 20, fontSize: 11,
-                  color: C.body, border: `1px solid ${C.border}`, cursor: 'pointer', fontFamily: F,
-                  fontWeight: 500, transition: 'all 0.15s',
+                  padding: '6px 14px', background: '#f0fdf4', borderRadius: 20, fontSize: 11,
+                  color: C.green, border: `1px solid #bbf7d0`, cursor: 'pointer', fontFamily: F,
+                  fontWeight: 600, transition: 'all 0.15s',
                 }}
               >
                 {q}
@@ -281,7 +290,7 @@ function Jarvis() {
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', fontSize: 11, color: C.light, marginTop: 14, fontFamily: F }}>
+        <p style={{ textAlign: 'center', fontSize: 11, color: C.green, opacity: 0.6, marginTop: 14, fontFamily: F }}>
           Jarvis provides educational information based on peer-reviewed research. Always consult a pediatrician for medical advice.
         </p>
 

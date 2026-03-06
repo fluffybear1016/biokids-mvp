@@ -173,14 +173,15 @@ export default function Settings() {
         >
           ← Back
         </button>
-        <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontWeight: 800, fontSize: '24px', color: '#1c1917', marginBottom: '24px' }}>Edit Profile</h1>
+        <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontWeight: 800, fontSize: '24px', color: '#1c1917', marginBottom: '8px' }}>Edit Profile</h1>
+        <div style={{ width: 32, height: 3, background: '#065f46', borderRadius: 2, marginBottom: 24 }} />
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
           {/* Child Info */}
           <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
             <button onClick={() => toggle('child')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
-              <span style={{ fontWeight: 600, color: '#1c1917' }}>Child Info</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Child Info</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('child')}</span>
             </button>
             {openSection === 'child' && (
@@ -224,7 +225,7 @@ export default function Settings() {
           {/* Daily Habits */}
           <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
             <button onClick={() => toggle('habits')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
-              <span style={{ fontWeight: 600, color: '#1c1917' }}>Daily Habits</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Daily Habits</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('habits')}</span>
             </button>
             {openSection === 'habits' && (
@@ -248,7 +249,7 @@ export default function Settings() {
           {/* Growth Goal */}
           <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
             <button onClick={() => toggle('goal')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
-              <span style={{ fontWeight: 600, color: '#1c1917' }}>Growth Goal</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Growth Goal</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('goal')}</span>
             </button>
             {openSection === 'goal' && (
@@ -292,7 +293,7 @@ export default function Settings() {
           {/* Height Potential */}
           <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', overflow: 'hidden' }}>
             <button onClick={() => toggle('height')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Courier New', Courier, monospace" }}>
-              <span style={{ fontWeight: 600, color: '#1c1917' }}>Height Potential</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: '#065f46', flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Height Potential</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('height')}</span>
             </button>
             {openSection === 'height' && (
