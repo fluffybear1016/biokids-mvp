@@ -568,6 +568,23 @@ export default function Dashboard() {
   // Per-child checklist: include active child ID in the localStorage key
   const activeChild = typeof window !== 'undefined' ? getActiveChild() : null;
   const childIdSuffix = activeChild?.id ? `_${activeChild.id}` : '';
+
+  // Height potential data from saved child profile
+  const heightData = (() => {
+    if (!activeChild?.geneticTarget) return null;
+    const targetCm = parseFloat(activeChild.geneticTarget);
+    if (isNaN(targetCm)) return null;
+    const cmToFtIn = (cm: number) => {
+      const totalIn = Math.round(cm / 2.54);
+      return `${Math.floor(totalIn / 12)}'${totalIn % 12}"`;
+    };
+    const rangeLow = cmToFtIn(targetCm - 2 * 2.54);
+    const rangeHigh = cmToFtIn(targetCm + 2 * 2.54);
+    const bioLow = rangeHigh;
+    const bioHigh = cmToFtIn(targetCm + 8 * 2.54);
+    const midpoint = cmToFtIn(targetCm);
+    return { rangeLow, rangeHigh, bioLow, bioHigh, midpoint, targetCm };
+  })();
   // Persist checkmarks in localStorage, keyed by today's date + child (auto-resets daily)
   const todayKey = `biokids_done_${new Date().toISOString().slice(0, 10)}${childIdSuffix}`;
   const [done, setDone] = useState<Record<string, boolean>>(() => {
@@ -780,6 +797,67 @@ export default function Dashboard() {
                 {childName === 'Your child' ? ' Your child' : ` ${childName}`} got the full protocol today.
                 That&apos;s a parent who cares deeply. Tomorrow it starts again — and it gets easier.
               </p>
+            </div>
+          </div>
+        )}
+
+        {/* Height Potential — motivational card */}
+        {heightData && (
+          <div
+            onClick={() => { window.location.href = '/settings'; }}
+            style={{
+              cursor:"pointer", marginTop:32,
+              background:"linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #ecfdf5 100%)",
+              borderRadius:20, border:"2px solid #86efac",
+              padding:"24px 20px 20px", position:"relative",
+              boxShadow:"0 4px 24px rgba(6,95,70,0.08)",
+              overflow:"hidden",
+            }}
+          >
+            {/* Subtle background decoration */}
+            <div style={{ position:"absolute", top:-20, right:-20, width:120, height:120, borderRadius:"50%", background:"rgba(6,95,70,0.03)" }} />
+            <div style={{ position:"absolute", bottom:-30, left:-10, width:90, height:90, borderRadius:"50%", background:"rgba(6,95,70,0.04)" }} />
+
+            <div style={{ position:"relative" }}>
+              {/* Label */}
+              <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:14 }}>
+                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.1em" }}>
+                  {childName === 'Your child' ? "Your child's" : `${childName}'s`} height potential
+                </span>
+              </div>
+
+              {/* Two-zone horizontal bar */}
+              <div style={{ display:"flex", gap:2, marginBottom:16, borderRadius:12, overflow:"hidden", height:56 }}>
+                {/* Genetic Target zone */}
+                <div style={{ flex:4, background:"#f5f5f0", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 8px" }}>
+                  <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#a8a29e", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>Genetic</span>
+                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, fontWeight:800, color:"#78716c", lineHeight:1.2 }}>{heightData.rangeLow}–{heightData.rangeHigh}</span>
+                </div>
+                {/* Arrow */}
+                <div style={{ display:"flex", alignItems:"center", justifyContent:"center", width:24, background:"linear-gradient(90deg, #f5f5f0, #065f46)" }}>
+                  <span style={{ color:"#fff", fontSize:14, fontWeight:800 }}>›</span>
+                </div>
+                {/* bioKids Zone */}
+                <div style={{ flex:6, background:"linear-gradient(135deg, #065f46 0%, #059669 50%, #34d399 100%)", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 8px" }}>
+                  <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"rgba(255,255,255,0.8)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>bioKids Zone</span>
+                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:18, fontWeight:800, color:"#fff", lineHeight:1.2 }}>{heightData.bioLow}–{heightData.bioHigh}</span>
+                </div>
+              </div>
+
+              {/* Bottom line */}
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#065f46", lineHeight:1.5 }}>
+                  Up to <strong>+8&quot;</strong> above genetic midpoint with optimized environment
+                </span>
+                <span style={{
+                  flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center",
+                  width:24, height:24, borderRadius:12, background:"rgba(6,95,70,0.1)",
+                }}>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <path d="M3.5 2L7 5L3.5 8" stroke="#065f46" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         )}
