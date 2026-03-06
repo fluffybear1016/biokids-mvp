@@ -127,26 +127,7 @@ const dayData: DayPeriod[] = [
       ]},
 
 
-    { id:"bkf", t:"Eggs + citrus", sub:"2–3 pasture-raised, orange slices", gh:"GH axis primer", headline:"choline — acetylcholine — primes every GH pulse today", tier:0, cite:"Ziegenfuss, JISSN 2008; Kawamura, Nutrition 2012", why:"Eggs are the richest whole-food choline source. Choline converts to acetylcholine, which stimulates GHRH neurons, priming the pituitary for every GH pulse all day. This restarts the 24-hour cycle — last night's casein bridged overnight, now choline reignites the axis. Eggs also deliver glutamine, ornithine, lysine + arginine, and tyrosine — all GH-supporting aminos.", tip:"Scrambled or over easy. Skip cereal — always. Serve with orange slices (vitamin C boosts iron 2–3×). No cheese at this meal — calcium competes with egg iron.",
-      pumps:[
-        { p:"Choline → acetylcholine", n:"axis primer", d:"Two eggs ≈ 300mg choline — primes pituitary for GH pulses all day" },
-        { p:"Choline pathway*", n:"up to 4,400%", d:"A-GPC (choline metabolite) raised GH up to 4,400% in adult studies" },
-        { p:"Glutamine*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — eggs deliver meaningful amounts" },
-        { p:"Ornithine", n:"GH amplifier", d:"Cycles with arginine to amplify GH" },
-        { p:"Lysine + Arginine*", n:"up to 700%", d:"Combined amino acids raised GH up to 700% in adult supplement studies" },
-        { p:"L-DOPA (tyrosine)*", n:"up to 221%", d:"Tyrosine — dopamine — stimulates GHRH in adult studies" },
-        { p:"Retinol (vitamin A)", n:"40–60%", d:"Deficiency reduces GH receptor binding 40–60%" },
-        { p:"Glycine", n:"collagen builder", d:"Growth plate collagen building block" },
-        { p:"Taurine", n:"potentiator", d:"Supports bile for fat-soluble vitamin absorption" },
-        { p:"B12", n:"cell division", d:"Required for chondrocyte division at growth plates" },
-      ],
-      foods:[
-        { f:"Pasture-raised eggs, 2–3 daily", d:"Richest whole-food choline source." },
-        { f:"Orange slices or bell peppers", d:"Vitamin C boosts iron absorption 2–3×." },
-        { f:"Beef liver 1×/wk or blend 2–3×/wk", d:"Highest choline density. VITAMIN C, NOT MILK." },
-      ]},
-
-    { id:"d1", t:"Morning dairy", sub:"8 oz A2 milk or sheep yogurt", gh:"+0.39 cm/yr", headline:"per 8 oz/day across childhood — IGF-1 shift P=0.005", tier:0, cite:"Hoppe, Eur J Clin Nutr 2008; Kang, Nutrients 2019", why:"Milk proteins directly stimulate hepatic IGF-1 production. Six key proteins: casein (slow-release 6–7 hrs), α-lactalbumin (highest tryptophan — serotonin — melatonin), lactoferrin, lysozyme, sIgA, albumin. IRON-DAIRY RULE: serve milk between meals or post-sprint, not alongside iron meals.", tip:"Breakfast dairy FIRST (within 1 hour of waking), then eggs. Add pumpkin seeds to sheep yogurt for arginine + zinc + magnesium in one handful.",
+    { id:"d1", t:"Morning dairy", sub:"8 oz A2 milk or sheep yogurt", gh:"+0.39 cm/yr", headline:"per 8 oz/day across childhood — IGF-1 shift P=0.005", tier:0, cite:"Hoppe, Eur J Clin Nutr 2008; Kang, Nutrients 2019", why:"Milk proteins directly stimulate hepatic IGF-1 production. Six key proteins: casein (slow-release 6–7 hrs), α-lactalbumin (highest tryptophan — serotonin — melatonin), lactoferrin, lysozyme, sIgA, albumin. IRON-DAIRY RULE: serve milk between meals or post-sprint, not alongside iron meals.", tip:"Dairy FIRST (within 1 hour of waking), then eggs. Add pumpkin seeds to sheep yogurt for arginine + zinc + magnesium in one handful.",
       pumps:[
         { p:"IGF-1 stimulation", n:"10–20%", d:"240 mL/day — measurable IGF-1 shift (P=0.005)" },
         { p:"Height per serving", n:"+0.39cm", d:"Per additional 8 oz/day across childhood" },
@@ -162,6 +143,24 @@ const dayData: DayPeriod[] = [
         { f:"Full-fat kefir", d:"Milk proteins + fermentation-derived GABA." },
       ]},
 
+    { id:"bkf", t:"Eggs", sub:"2–3 pasture-raised", gh:"GH axis primer", headline:"choline — acetylcholine — primes every GH pulse today", tier:0, cite:"Ziegenfuss, JISSN 2008; Kawamura, Nutrition 2012", why:"Eggs are the richest whole-food choline source. Choline converts to acetylcholine, which stimulates GHRH neurons, priming the pituitary for every GH pulse all day. This restarts the 24-hour cycle — last night's casein bridged overnight, now choline reignites the axis. Eggs also deliver glutamine, ornithine, lysine + arginine, and tyrosine — all GH-supporting aminos.", tip:"Scrambled or over easy. Skip cereal — always. No cheese at this meal — calcium competes with egg iron. Pair with a vitamin C source to boost iron absorption.",
+      pumps:[
+        { p:"Choline → acetylcholine", n:"axis primer", d:"Two eggs ≈ 300mg choline — primes pituitary for GH pulses all day" },
+        { p:"Choline pathway*", n:"up to 4,400%", d:"A-GPC (choline metabolite) raised GH up to 4,400% in adult studies" },
+        { p:"Glutamine*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — eggs deliver meaningful amounts" },
+        { p:"Ornithine", n:"GH amplifier", d:"Cycles with arginine to amplify GH" },
+        { p:"Lysine + Arginine*", n:"up to 700%", d:"Combined amino acids raised GH up to 700% in adult supplement studies" },
+        { p:"L-DOPA (tyrosine)*", n:"up to 221%", d:"Tyrosine — dopamine — stimulates GHRH in adult studies" },
+        { p:"Retinol (vitamin A)", n:"40–60%", d:"Deficiency reduces GH receptor binding 40–60%" },
+        { p:"Glycine", n:"collagen builder", d:"Growth plate collagen building block" },
+        { p:"Taurine", n:"potentiator", d:"Supports bile for fat-soluble vitamin absorption" },
+        { p:"B12", n:"cell division", d:"Required for chondrocyte division at growth plates" },
+      ],
+      foods:[
+        { f:"Pasture-raised eggs, 2–3 daily", d:"Richest whole-food choline source." },
+        { f:"Beef liver 1×/wk or blend 2–3×/wk", d:"Highest choline density. VITAMIN C, NOT MILK." },
+      ]},
+
     { id:"clo", t:"Cod liver oil", sub:"½ tsp — NOT on beef liver days", gh:"40–60% GH", headline:"of GH receptor function lost without retinol", tier:0, cite:"Balmer, J Lipid Res 2002; Soliman, Indian J Endocrinol Metab 2014", why:"CLO delivers three growth levers in one spoon. Retinol is required for GH receptor gene expression — deficiency cuts binding 40–60%. Vitamin D deficiency blunts GH — IGF-1 — growth plate pathway. Omega-3s are anti-inflammatory at the growth plate.", tip:"In a smoothie — they won't taste it. Skip on beef liver days — both deliver high-dose vitamins A and D.",
       pumps:[
         { p:"Retinol — GH receptors", n:"40–60%", d:"Deficiency reduces GH receptor binding" },
@@ -169,10 +168,17 @@ const dayData: DayPeriod[] = [
         { p:"Omega-3s", n:"anti-inflammatory", d:"Reduces inflammation at growth plate" },
       ]},
 
-    { id:"cit", t:"Vitamin C with iron meals", sub:"Orange slices or lemon water", gh:"2–3× iron", headline:"iron absorption — iron delivers oxygen to growing tissues", tier:0, cite:"Hallberg, Am J Clin Nutr 1989; Chinese ISS RCT", why:"Vitamin C boosts iron absorption 2–3× — critical for oxygen delivery to growth plate chondrocytes. Citrus also delivers inositol (part of the lysine-inositol-B12 growth combo from the Chinese ISS RCT).", tip:"Orange slices or lemon water with beef, liver, lentils. Never serve milk alongside iron meals.",
+    { id:"cit", t:"Vitamin C with iron meals", sub:"Serve with any iron-rich meal", gh:"2–3× iron", headline:"iron absorption — iron delivers oxygen to growing tissues", tier:0, cite:"Hallberg, Am J Clin Nutr 1989; Chinese ISS RCT", why:"Vitamin C boosts iron absorption 2–3× — critical for oxygen delivery to growth plate chondrocytes. Citrus also delivers inositol (part of the lysine-inositol-B12 growth combo from the Chinese ISS RCT). Pair with beef, liver, lentils, eggs. Never serve milk alongside iron meals.", tip:"Any of the top 5 sources below alongside iron meals. Never dairy with iron.",
       pumps:[
         { p:"Iron absorption", n:"2–3×", d:"Vitamin C dramatically increases iron uptake" },
         { p:"Inositol", n:"ISS RCT", d:"Part of lysine-inositol-B12 growth combo" },
+      ],
+      foods:[
+        { f:"1. Red bell peppers", d:"190mg per cup — 3× more than oranges." },
+        { f:"2. Strawberries", d:"98mg per cup — kids love them." },
+        { f:"3. Oranges / orange slices", d:"96mg per large orange." },
+        { f:"4. Kiwi", d:"137mg per 2 kiwis — highest density per bite." },
+        { f:"5. Broccoli", d:"81mg per cup — also delivers DIM for aromatase inhibition." },
       ]},
 
     { id:"ns", t:"No sugar until lunch", sub:"No artificial sweeteners ever", gh:"300–500% GH", headline:"fasting GH — one cereal bowl suppresses up to 80%", tier:1, cite:"Lanzi, Metabolism 1999; Hartman, JCEM 1992", why:"60–80% of daily GH is produced during fasting. One bowl of cereal spikes insulin, suppressing GH for 2–3 hours. Ghrelin (hunger hormone) directly triggers GH — snacking keeps it suppressed. Artificial sweeteners disrupt gut bacteria responsible for GABA production (400% GH).", tip:"Eggs, dairy, meat for breakfast. Never artificial sweeteners.",
@@ -226,7 +232,7 @@ const dayData: DayPeriod[] = [
         { f:"Broccoli / cauliflower", d:"DIM + I3C — aromatase inhibition — plates stay open." },
       ]},
 
-    { id:"water", t:"Water only", sub:"No juice, no soda, no sweeteners", gh:"300% GH", headline:"protected — each sugar spike suppresses up to 80%", tier:2, cite:"Lanzi, Metabolism 1999; Kojima, Nature 1999", why:"Every juice box triggers an insulin spike that shuts down GH for 2–3 hours. Allow 3–4 hour gaps — ghrelin directly triggers GH. Artificial sweeteners disrupt GABA-producing gut bacteria.", tip:"Water or milk between meals. Nothing else.",
+    { id:"water", t:"Water only", sub:"No juice boxes, no soda, no sweeteners", gh:"300% GH", headline:"protected — each sugar spike suppresses up to 80%", tier:2, cite:"Lanzi, Metabolism 1999; Kojima, Nature 1999", why:"Every juice box triggers an insulin spike that shuts down GH for 2–3 hours. Allow 3–4 hour gaps — ghrelin directly triggers GH. Artificial sweeteners disrupt GABA-producing gut bacteria.", tip:"For a soda replacement: sparkling water with ice + a small splash of real juice (pomegranate, orange, tart cherry). Gives the fizzy flavor pop without the sugar load. Otherwise water or milk between meals.",
       pumps:[
         { p:"Insulin avoided", n:"up to 80%", d:"Each sugar spike blocks GH 2–3 hours" },
         { p:"Ghrelin builds", n:"secretagogue", d:"Meal gaps let ghrelin trigger GH" },
@@ -342,7 +348,6 @@ const dayData: DayPeriod[] = [
         { f:"Unroasted peanuts / natural PB", d:"Niacin + arginine + magnesium — all GH-supporting nutrients." },
         { f:"Pistachios (evening)", d:"Highest melatonin per gram of any nut. Best evening snack." },
         { f:"Pumpkin seeds", d:"Arginine + magnesium + zinc + tryptophan." },
-        { f:"Raw cacao nibs (occasional, early in day only)", d:"Magnesium source. Contains caffeine — never after lunch." },
       ]},
 
     { id:"nlf", t:"Finish food 2–3 hrs before bed", sub:"Protects overnight fasting window", gh:"300–500% GH", headline:"overnight fast = when 60–80% of GH is produced", tier:2, cite:"Crispim, J Clin Sleep Med 2011; Hartman, JCEM 1992", why:"The overnight fast is when GH peaks. Eating close to bed keeps insulin elevated and disrupts sleep architecture. Exception: Sleep Drink (~55 calories) is too small to suppress.", tip:"Dinner done by 6pm for an 8:30 bedtime.",
