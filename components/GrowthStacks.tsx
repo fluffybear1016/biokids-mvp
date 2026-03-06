@@ -18,7 +18,7 @@ const stacks = [
       { time: 'Within 30 min', action: 'Outdoor stretching in morning sunlight (5-10 min)', why: 'Sets circadian clock → melatonin timing 14-16 hrs later → deeper SWS → larger GH pulses' },
       { time: 'Start the day', action: 'Laughter and joy', why: 'Anticipation of fun raises GH 87% (Berk et al. 2006)' },
       { time: 'Breakfast', action: '8-12 oz whole A2 or raw milk, OR sheep\'s milk yogurt', why: 'Sheep yogurt = GABA pump (fermented) + A2 casein (50-80% more than cow) in one food' },
-      { time: 'Breakfast', action: 'Pumpkin seeds on yogurt', why: 'Arginine pump + zinc (IGF-1 receptor loading) + magnesium in one handful' },
+      { time: 'Breakfast', action: 'Pumpkin seeds + berries on yogurt', why: 'Arginine pump + zinc (IGF-1 receptor loading) + magnesium in one handful. Berries add flavonoid-based aromatase modulation + polyphenol antioxidants' },
       { time: 'Breakfast', action: '2-3 pasture-raised eggs', why: 'Choline → acetylcholine → primes GH axis' },
       { time: 'Breakfast', action: 'Cod liver oil (non-liver days only)', why: 'Retinol + vitamin D + omega-3. Skip on beef liver days to avoid excess retinol' },
       { time: 'Breakfast', action: 'No oats or conventional grains', why: 'Glyphosate residues disrupt gut + hormones' },
@@ -64,18 +64,16 @@ const stacks = [
     id: 'puberty-delay',
     name: 'Puberty Delay Stack',
     subtitle: 'Each month of delay = another month of growth plate activity',
+    intro: 'Reviews and clinical commentaries on aromatase inhibitors and growth plate closure explicitly describe aromatase inhibitors\' role as delaying or decelerating fusion when plates are still open — and can help to eke out extra growth time. We only use natural ways at bioKids, never pharmacological interventions.',
     steps: [
       // ── Tier 1: Cruciferous (ranked by glucosinolate density) ──
       { time: 'Daily #1', action: 'Broccoli sprouts (3-5 day old)', why: 'Tier 1 crucifer: 10-100x more sulforaphane than mature broccoli. The single most potent DIM/I3C source' },
       { time: 'Daily', action: 'Mature broccoli (steamed 3-4 min)', why: 'Tier 2 crucifer: high glucoraphanin + myrosinase intact. Brief steam maximizes sulforaphane yield' },
-      { time: 'Daily', action: 'Brussels sprouts, kale, cabbage, cauliflower (rotate)', why: 'Tier 3 crucifers: strong DIM/I3C + fiber. Rotate for broad glucosinolate coverage' },
-      { time: 'Daily', action: 'Kale, cabbage, or parsley sprouts (rotate with broccoli)', why: 'Sprouted crucifers amplify sulforaphane. Parsley sprouts add apigenin (potent aromatase inhibitor)' },
+      { time: 'Daily', action: 'Brussels sprouts, cabbage, cauliflower (rotate)', why: 'Tier 3 crucifers: strong DIM/I3C + fiber. Rotate for broad glucosinolate coverage' },
 
       // ── Tier 2: Aromatase inhibitors ──
       { time: 'Daily', action: 'White button mushrooms (raw or lightly cooked)', why: 'Highest aromatase inhibition of any food — blocks adipose tissue → estrogen conversion directly' },
-      { time: 'Daily', action: 'Berries (blueberries, strawberries, raspberries)', why: 'Flavonoid-based aromatase modulation + polyphenol antioxidants' },
       { time: 'Daily', action: 'Pomegranate (arils or juice)', why: 'Ellagic acid + urolithins — potent anti-estrogenic polyphenols' },
-      { time: 'Daily', action: 'Green tea (1-2 cups or matcha)', why: 'EGCG catechins inhibit aromatase + modulate estrogen receptor signaling' },
 
       // ── Tier 3: Phytoestrogen competitors + citrus ──
       { time: 'Daily', action: 'Beans, lentils, peas', why: 'Weak phytoestrogens compete for receptors → delays HPG axis activation' },
@@ -89,7 +87,7 @@ const stacks = [
       { time: 'Always', action: 'Zero sugar + zero artificial sweeteners', why: 'Insulin spikes + gut microbiome shifts → early puberty onset' },
 
       // ── Environmental estrogen avoidance ──
-      { time: 'Always', action: 'Keep body fat low through activity (not restriction)', why: 'Adipose tissue = aromatase factory → estrogen → early plate closure. Activity > calorie cuts' },
+      { time: 'Always', action: 'Encourage active play and movement every day', why: 'Regular activity naturally supports healthy body composition. Adipose tissue converts testosterone to estrogen via aromatase — staying active helps keep this in check without any need for food restriction' },
       { time: 'Always', action: 'Zero plastics for food/drink (glass, steel, silicone only)', why: 'BPA/BPS/phthalates are xenoestrogens — even "BPA-free" plastics leach estrogenic compounds' },
       { time: 'Always', action: 'No non-stick cookware (PFAS), no pesticides on food', why: 'PFAS = "forever chemicals" with estrogenic activity. Organic produce eliminates organophosphates' },
       { time: 'Always', action: 'Zero ultra-processed foods', why: 'Additives, seed oils, and packaging chemicals compound xenoestrogen load' },
@@ -98,12 +96,12 @@ const stacks = [
       // ── Light/circadian ──
       { time: 'Evening', action: 'Full darkness after sunset', why: 'Melatonin directly inhibits aromatase enzyme — light at night = more estrogen' },
     ],
-    note: 'Estrogen — not GH — closes growth plates (Shim 2024). SMOOTHIE ROTATION: Week A add crucifers (extra kale, cabbage sprouts, watercress). Week B add flavonoid herbs (parsley, chamomile, celery). Week C add polyphenol fruits (tart cherry, acai, cacao nibs). FOOD POWER RANKING: Broccoli sprouts > white button mushrooms > pomegranate > green tea > mature broccoli > berries > Brussels sprouts/kale > beans/lentils > citrus peel. Every item here either blocks aromatase, competes at estrogen receptors, or removes environmental estrogens.',
+    note: 'Estrogen — not GH — closes growth plates (Shim 2024). FOOD POWER RANKING: Broccoli sprouts > white button mushrooms > pomegranate > mature broccoli > Brussels sprouts > beans/lentils > citrus peel. Every item here either blocks aromatase, competes at estrogen receptors, or removes environmental estrogens.',
   },
   {
     id: 'height-preservation',
     name: 'Height Preservation',
-    subtitle: 'Ages 19-25: Real gains after plates close',
+    subtitle: 'Ages 19-25: Real gains after plates may have closed, but maybe still can eke out more gains. CONTINUE ALL ITEMS FROM PUBERTY DELAY STACK.',
     steps: [
       { time: 'Sleep', action: '10+ hours on back, thin pillow', why: 'Disc rehydration — spinal height peaks each morning' },
       { time: 'Morning', action: '60-sec dead hang + spinal stretches', why: 'Decompression after overnight rehydration' },
@@ -159,6 +157,13 @@ export default function GrowthStacks() {
           </h3>
           <p style={{ fontSize: 12, color: C.green, margin: 0, fontFamily: F }}>{currentStack.subtitle}</p>
         </div>
+
+        {/* Intro (if present) */}
+        {currentStack.intro && (
+          <div style={{ marginBottom: 14, padding: '12px 14px', background: C.bg, borderRadius: 10, border: `1px solid ${C.border}` }}>
+            <p style={{ fontSize: 13, color: C.body, margin: 0, fontFamily: F, lineHeight: 1.65 }}>{currentStack.intro}</p>
+          </div>
+        )}
 
         {/* Steps */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
