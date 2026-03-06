@@ -72,7 +72,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
   const tabs = [
     { href: '/science', label: 'Science' },
     { href: '/protocol', label: 'Stacks' },
-    { href: '/jarvis', label: 'Austin' },
+    { href: '/jarvis', label: 'Au' },
   ];
 
   const isActive = (href: string) => pathname === href;

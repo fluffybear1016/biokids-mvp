@@ -54,7 +54,7 @@ function Austin() {
     {
       id: '1',
       role: 'assistant',
-      content: `Hi! I'm Austin, your GH optimization assistant. I can answer questions about growth hormone, sleep timing, nutrition, exercise — anything related to helping your child reach their growth potential.\n\nWhat would you like to know?`,
+      content: `Hi — I'm Au. Gold on the periodic table. Element 79.\n\nAsk me anything about growth hormone, sleep, nutrition, movement — I'll give you the science and the protocol.`,
       timestamp: new Date(),
     },
   ]);
@@ -201,8 +201,8 @@ function Austin() {
               <path d="M12 15v6" />
             </svg>
           </div>
-          <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Austin</h1>
-          <p style={{ fontSize: 13, color: C.light, margin: 0, fontFamily: F }}>Your GH optimization AI assistant</p>
+          <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Au</h1>
+          <p style={{ fontSize: 13, color: C.green, opacity: 0.7, margin: 0, fontFamily: F }}>Element 79 · The gold standard for growth</p>
         </header>
 
         {/* Messages */}
@@ -291,7 +291,7 @@ function Austin() {
         </form>
 
         <p style={{ textAlign: 'center', fontSize: 11, color: C.green, opacity: 0.6, marginTop: 14, fontFamily: F }}>
-          Austin provides educational information based on peer-reviewed research. Always consult a pediatrician for medical advice.
+          Au provides educational information based on peer-reviewed research. Always consult a pediatrician for medical advice.
         </p>
 
       </main>
