@@ -54,7 +54,7 @@ function Austin() {
     {
       id: '1',
       role: 'assistant',
-      content: `Hi — I'm Au. Gold on the periodic table. Element 79.\n\nAsk me anything about growth hormone, sleep, nutrition, movement — I'll give you the science and the protocol.`,
+      content: `I'm Au. Named for gold — because your child's growth deserves nothing less.\n\nSleep, nutrition, movement — ask me anything. I'll give you the science and the exact protocol.`,
       timestamp: new Date(),
     },
   ]);
@@ -202,7 +202,7 @@ function Austin() {
             </svg>
           </div>
           <h1 style={{ fontFamily: F, fontSize: 22, fontWeight: 800, color: C.title, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Au</h1>
-          <p style={{ fontSize: 13, color: C.green, opacity: 0.7, margin: 0, fontFamily: F }}>Element 79 · The gold standard for growth</p>
+          <p style={{ fontSize: 13, color: C.green, opacity: 0.7, margin: 0, fontFamily: F }}>The gold standard for growth</p>
         </header>
 
         {/* Messages */}
