@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx next build:*)",
+      "Bash(npx vercel:*)",
+      "Bash(npm install:*)",
+      "Bash(gh api:*)",
+      "Bash(curl -s -X POST https://www.biokids.me/api/jarvis -H \"Content-Type: application/json\" -d '{\"\"\"\"messages\"\"\"\":[{\"\"\"\"role\"\"\"\":\"\"\"\"user\"\"\"\",\"\"\"\"content\"\"\"\":\"\"\"\"hello\"\"\"\"}],\"\"\"\"childName\"\"\"\":\"\"\"\"Emma\"\"\"\",\"\"\"\"childAge\"\"\"\":8}')",
+      "Bash(curl:*)"
+    ]
+  }
+}
