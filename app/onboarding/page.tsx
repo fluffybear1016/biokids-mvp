@@ -79,7 +79,7 @@ function OnboardingContent() {
     }
   }, [searchParams]);
 
-  // Fetch authenticated user info for Stripe
+  // Fetch authenticated user info for Stripe + auto-advance OAuth users past step 1
   useEffect(() => {
     const supabase = createClient();
     if (supabase) {
@@ -87,6 +87,11 @@ function OnboardingContent() {
         if (session?.user) {
           setUserEmail(session.user.email || '');
           setUserId(session.user.id);
+          // If user is already authenticated (e.g. via Google OAuth) and still on step 1,
+          // skip account creation and go straight to Stripe payment
+          if (step === 1) {
+            setStep(2);
+          }
           return;
         }
         setUserEmail(localStorage.getItem('biokids_auth_email') || '');
@@ -323,7 +328,7 @@ function OnboardingContent() {
                   if (!supabase) return;
                   await supabase.auth.signInWithOAuth({
                     provider: 'google',
-                    options: { redirectTo: `${window.location.origin}/auth/callback?next=/onboarding?step=2` },
+                    options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent('/onboarding?step=2')}` },
                   });
                 }}
                 style={{
