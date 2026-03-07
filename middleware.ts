@@ -9,6 +9,7 @@ const PROTECTED_PREFIXES = [
   '/learn',
   '/stage',
   '/settings',
+  '/science',
 ];
 
 function isProtectedRoute(pathname: string): boolean {
@@ -73,10 +74,10 @@ export async function middleware(request: NextRequest) {
     .eq('id', user.id)
     .single();
 
-  // If the query fails (RLS issue, no row, etc.), let authenticated users through
-  // rather than blocking paying customers
+  // If the query fails (RLS issue, no row, etc.), redirect to onboarding
+  // rather than letting unauthenticated users through
   if (profileError) {
-    return response;
+    return NextResponse.redirect(new URL('/onboarding', request.url));
   }
 
   const status = profile?.subscription_status;

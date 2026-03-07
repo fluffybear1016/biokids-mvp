@@ -565,6 +565,61 @@ export default function Dashboard() {
 
   const [openId, setOpenId] = useState<string | null>(null);
 
+  // ── Child setup banner (shown once after payment until completed) ──
+  const [showSetup, setShowSetup] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return !localStorage.getItem('biokids_child_setup_done');
+  });
+  const [setupName, setSetupName] = useState('');
+  const [setupBirthMonth, setSetupBirthMonth] = useState('');
+  const [setupBirthYear, setSetupBirthYear] = useState('');
+  const [setupGender, setSetupGender] = useState<'boy' | 'girl' | ''>('');
+  const [setupSaving, setSetupSaving] = useState(false);
+
+  const setupMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const setupYears = Array.from({ length: 26 }, (_, i) => new Date().getFullYear() - i);
+
+  const handleSetupSave = async () => {
+    if (!setupName.trim()) return;
+    setSetupSaving(true);
+    try {
+      // Save to localStorage for immediate use
+      localStorage.setItem('childName', setupName.trim());
+      if (setupGender) localStorage.setItem('childGender', setupGender);
+      if (setupBirthMonth) localStorage.setItem('childBirthMonth', setupBirthMonth);
+      if (setupBirthYear) localStorage.setItem('childBirthYear', setupBirthYear);
+
+      // Save to Supabase via API
+      const supabase = (await import('@/lib/supabase')).createClient();
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          await supabase.auth.updateUser({ data: { child_name: setupName.trim() } });
+          const birthDate = setupBirthYear && setupBirthMonth
+            ? `${setupBirthYear}-${setupBirthMonth.padStart(2, '0')}-01`
+            : null;
+          await fetch('/api/auth/save-child', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userId: session.user.id,
+              name: setupName.trim(),
+              birthDate,
+              gender: setupGender || null,
+            }),
+          });
+        }
+      }
+
+      localStorage.setItem('biokids_child_setup_done', '1');
+      setShowSetup(false);
+      // Reload to update Nav and child name everywhere
+      window.location.reload();
+    } catch {
+      setSetupSaving(false);
+    }
+  };
+
   // Per-child checklist: include active child ID in the localStorage key
   const activeChild = typeof window !== 'undefined' ? getActiveChild() : null;
   const childIdSuffix = activeChild?.id ? `_${activeChild.id}` : '';
@@ -776,6 +831,139 @@ export default function Dashboard() {
               }}
             >
               Let&apos;s begin
+            </button>
+          </div>
+        )}
+
+        {/* Child setup banner — post-payment, collects child info */}
+        {showSetup && (
+          <div style={{
+            background:"#fff", borderRadius:20, border:"2px solid #065f46",
+            padding:"28px 24px", marginTop:24,
+            boxShadow:"0 4px 24px rgba(6,95,70,0.08)",
+            animation:"celebrateFadeIn 0.6s ease",
+          }}>
+            <p style={{
+              fontFamily:"'Courier New', Courier, monospace",
+              fontSize:9, fontWeight:700, color:"#065f46",
+              textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8,
+            }}>
+              Quick setup
+            </p>
+            <p style={{
+              fontSize:18, fontWeight:800, color:"#1c1917", margin:"0 0 6px",
+              letterSpacing:"-0.02em",
+            }}>
+              Personalize the protocol
+            </p>
+            <p style={{
+              fontFamily:"'Courier New', Courier, monospace",
+              fontSize:12, color:"#78716c", lineHeight:1.6, margin:"0 0 20px",
+            }}>
+              Tell us about your child so we can tailor everything to them. This saves to your profile in the top-right corner.
+            </p>
+
+            <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+              <div>
+                <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, fontWeight:600, color:"#57534e", display:"block", marginBottom:4 }}>
+                  Child&apos;s name or initial
+                </label>
+                <input
+                  type="text"
+                  value={setupName}
+                  onChange={(e) => setSetupName(e.target.value)}
+                  placeholder="E.g., Emma or E"
+                  style={{
+                    fontFamily:"'Courier New', Courier, monospace", fontSize:14, width:"100%",
+                    padding:"0.75rem 1rem", borderRadius:10,
+                    border:"1px solid #d6d3d1", outline:"none",
+                    color:"#1c1917", background:"#fafaf9",
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, fontWeight:600, color:"#57534e", display:"block", marginBottom:4 }}>
+                  Gender
+                </label>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+                  {[{ value: 'boy' as const, label: 'Boy' }, { value: 'girl' as const, label: 'Girl' }].map((opt) => (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => setSetupGender(opt.value)}
+                      style={{
+                        fontFamily:"'Courier New', Courier, monospace", fontSize:13, fontWeight:600,
+                        padding:"0.65rem 1rem", borderRadius:10, cursor:"pointer",
+                        border: setupGender === opt.value ? "2px solid #065f46" : "1px solid #d6d3d1",
+                        background: setupGender === opt.value ? "#ecfdf5" : "#fff",
+                        color: setupGender === opt.value ? "#065f46" : "#57534e",
+                        transition:"all 0.2s ease", textAlign:"center",
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+                <div>
+                  <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, fontWeight:600, color:"#57534e", display:"block", marginBottom:4 }}>
+                    Birth month
+                  </label>
+                  <select
+                    value={setupBirthMonth}
+                    onChange={(e) => setSetupBirthMonth(e.target.value)}
+                    style={{
+                      fontFamily:"'Courier New', Courier, monospace", fontSize:13, width:"100%",
+                      padding:"0.65rem 0.75rem", borderRadius:10,
+                      border:"1px solid #d6d3d1", outline:"none",
+                      color:"#1c1917", background:"#fafaf9",
+                    }}
+                  >
+                    <option value="">Month</option>
+                    {setupMonths.map((m, i) => (
+                      <option key={m} value={String(i + 1)}>{m}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, fontWeight:600, color:"#57534e", display:"block", marginBottom:4 }}>
+                    Birth year
+                  </label>
+                  <select
+                    value={setupBirthYear}
+                    onChange={(e) => setSetupBirthYear(e.target.value)}
+                    style={{
+                      fontFamily:"'Courier New', Courier, monospace", fontSize:13, width:"100%",
+                      padding:"0.65rem 0.75rem", borderRadius:10,
+                      border:"1px solid #d6d3d1", outline:"none",
+                      color:"#1c1917", background:"#fafaf9",
+                    }}
+                  >
+                    <option value="">Year</option>
+                    {setupYears.map((y) => (
+                      <option key={y} value={y}>{y}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={handleSetupSave}
+              disabled={!setupName.trim() || setupSaving}
+              style={{
+                fontFamily:"'Courier New', Courier, monospace", fontSize:14, fontWeight:700,
+                width:"100%", padding:"0.875rem", borderRadius:12,
+                border:"none", cursor: (!setupName.trim() || setupSaving) ? "not-allowed" : "pointer",
+                background: (!setupName.trim() || setupSaving) ? "#d6d3d1" : "#065f46",
+                color: (!setupName.trim() || setupSaving) ? "#a8a29e" : "#fff",
+                transition:"all 0.2s ease", marginTop:20,
+              }}
+            >
+              {setupSaving ? 'Saving...' : 'Save & start'}
             </button>
           </div>
         )}

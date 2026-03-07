@@ -103,6 +103,33 @@ function OnboardingContent() {
     }
   }, []);
 
+  // Poll subscription status on Step 2 — auto-redirect to /home once payment completes
+  useEffect(() => {
+    if (step !== 2) return;
+    let cancelled = false;
+
+    const checkSubscription = async () => {
+      try {
+        const supabase = createClient();
+        if (!supabase) return;
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.user) return;
+
+        const res = await fetch(`/api/auth/user-state?userId=${session.user.id}`);
+        const data = await res.json();
+        const status = data?.profile?.subscription_status;
+        if ((status === 'active' || status === 'trial') && !cancelled) {
+          router.push('/home');
+        }
+      } catch {}
+    };
+
+    // Check immediately, then every 3 seconds
+    checkSubscription();
+    const interval = setInterval(checkSubscription, 3000);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, [step, router]);
+
   // Generate year options
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 26 }, (_, i) => currentYear - i);
@@ -438,19 +465,6 @@ function OnboardingContent() {
               client-reference-id={userId || undefined}
             />
 
-            <button
-              type="button"
-              onClick={() => setStep(3)}
-              style={{
-                ...btnStyle(),
-                background: '#065f46',
-              }}
-            >
-              Continue to setup
-            </button>
-            <p style={{ fontFamily: mono, fontSize: 10, color: '#a8a29e', textAlign: 'center', marginTop: 8, lineHeight: 1.5 }}>
-              Complete payment above, then tap continue.
-            </p>
           </div>
         )}
 

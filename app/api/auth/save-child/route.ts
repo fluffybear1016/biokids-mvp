@@ -15,29 +15,29 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Server not configured' }, { status: 503 });
     }
 
-    const { userId, name, birthDate } = await request.json();
+    const { userId, name, birthDate, gender } = await request.json();
 
     if (!userId || !name) {
       return NextResponse.json({ error: 'Missing userId or name' }, { status: 400 });
     }
 
+    const childData: Record<string, unknown> = {
+      user_id: userId,
+      name,
+      birth_date: birthDate || null,
+    };
+    if (gender) childData.gender = gender === 'boy' ? 'male' : gender === 'girl' ? 'female' : gender;
+
     // Upsert child record (one child per user for MVP)
     const { error } = await supabase
       .from('children')
-      .upsert(
-        {
-          user_id: userId,
-          name,
-          birth_date: birthDate || null,
-        },
-        { onConflict: 'user_id' }
-      );
+      .upsert(childData, { onConflict: 'user_id' });
 
     if (error) {
       // If upsert fails (e.g. no unique constraint on user_id), try insert
       await supabase
         .from('children')
-        .insert({ user_id: userId, name, birth_date: birthDate || null });
+        .insert(childData);
     }
 
     return NextResponse.json({ success: true });

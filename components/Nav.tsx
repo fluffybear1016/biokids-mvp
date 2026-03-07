@@ -73,8 +73,21 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
     if (supabase) {
       await supabase.auth.signOut();
     }
-    localStorage.removeItem('biokids_auth_email');
-    localStorage.removeItem('biokids_auth_user_id');
+    // Clear all bioKids localStorage keys
+    const keysToRemove = [
+      'biokids_auth_email', 'biokids_auth_user_id',
+      'biokids_onboarding_complete', 'biokids_welcomed',
+      'biokids_child_setup_done', 'biokids_from_landing',
+      'biokids_goal', 'biokids_children', 'biokids_active_child_id',
+      'childName', 'childBirthMonth', 'childBirthYear', 'childGender',
+      'childBMI', 'geneticTarget', 'motherHeight', 'fatherHeight',
+      'sleepHours', 'bedtime', 'dairy', 'exercise', 'screenTime', 'processedFoods',
+    ];
+    keysToRemove.forEach(key => localStorage.removeItem(key));
+    // Also clear any daily checklist keys
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith('biokids_done_')) localStorage.removeItem(key);
+    });
     setIsLoggedIn(false);
     setShowMenu(false);
     router.push('/');
