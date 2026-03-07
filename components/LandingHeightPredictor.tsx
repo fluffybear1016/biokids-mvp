@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const mono = "'Courier New', Courier, monospace";
 const serif = "Georgia, 'Times New Roman', serif";
 
 export default function LandingHeightPredictor() {
+  const router = useRouter();
   const [gender, setGender] = useState<'boy' | 'girl' | ''>('');
   const [momFt, setMomFt] = useState('');
   const [momIn, setMomIn] = useState('');
@@ -197,14 +199,31 @@ export default function LandingHeightPredictor() {
                 <p style={{ fontFamily: mono, fontSize: 12, color: '#065f46', marginBottom: 14, lineHeight: 1.6 }}>
                   The bioKids protocol shows you how to reach the upper end — every day.
                 </p>
-                <Link href="/onboarding" style={{
-                  background: '#065f46', color: '#fff', padding: '12px 32px',
-                  borderRadius: 12, fontSize: 14, fontWeight: 700,
-                  textDecoration: 'none', display: 'inline-block',
-                  fontFamily: mono,
-                }}>
+                <button
+                  onClick={() => {
+                    // Save height data so onboarding can skip the height step
+                    if (result) {
+                      localStorage.setItem('childGender', gender);
+                      localStorage.setItem('motherHeight', `${momFt}'${momIn}"`);
+                      localStorage.setItem('fatherHeight', `${dadFt}'${dadIn}"`);
+                      localStorage.setItem('motherHeightFt', momFt);
+                      localStorage.setItem('motherHeightIn', momIn);
+                      localStorage.setItem('fatherHeightFt', dadFt);
+                      localStorage.setItem('fatherHeightIn', dadIn);
+                      localStorage.setItem('geneticTarget', result.targetCm.toString());
+                      localStorage.setItem('biokids_from_landing', 'true');
+                    }
+                    router.push('/onboarding');
+                  }}
+                  style={{
+                    background: '#065f46', color: '#fff', padding: '12px 32px',
+                    borderRadius: 12, fontSize: 14, fontWeight: 700,
+                    border: 'none', cursor: 'pointer',
+                    fontFamily: mono,
+                  }}
+                >
                   Start Free Trial
-                </Link>
+                </button>
                 <p style={{ fontFamily: mono, fontSize: 11, color: '#a8a29e', marginTop: 8 }}>
                   7 days free · then $30/mo · cancel anytime
                 </p>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bioKids GTM Command Center</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; }
+.header { background: linear-gradient(135deg, #1a472a, #0d2818); padding: 24px 32px; border-bottom: 1px solid #2a5a3a; }
+.header h1 { font-size: 28px; color: #4ade80; margin-bottom: 4px; }
+.header p { color: #86efac; font-size: 14px; }
+.container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+.card { background: #141414; border: 1px solid #2a2a2a; border-radius: 12px; padding: 20px; }
+.card h2 { font-size: 16px; color: #9ca3af; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
+.card h3 { font-size: 14px; color: #6b7280; margin: 12px 0 8px; font-weight: 500; }
+.stat { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+.stat-label { font-size: 14px; color: #9ca3af; }
+.stat-value { font-size: 24px; font-weight: 700; color: #4ade80; }
+.stat-value.pending { color: #fbbf24; }
+.stat-value.inactive { color: #6b7280; }
+.progress-bar { width: 100%; height: 8px; background: #1f1f1f; border-radius: 4px; margin: 8px 0; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+.progress-fill.green { background: linear-gradient(90deg, #22c55e, #4ade80); }
+.progress-fill.yellow { background: linear-gradient(90deg, #eab308, #fbbf24); }
+.checklist { list-style: none; }
+.checklist li { padding: 10px 12px; border-bottom: 1px solid #1f1f1f; font-size: 14px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.checklist li:hover { background: #1a1a1a; }
+.checklist li:last-child { border-bottom: none; }
+.check { width: 20px; height: 20px; border: 2px solid #3a3a3a; border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.check.done { background: #22c55e; border-color: #22c55e; }
+.check.done::after { content: '✓'; color: #000; font-size: 14px; font-weight: 700; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-left: 8px; }
+.tag.human { background: #7c3aed22; color: #a78bfa; border: 1px solid #7c3aed44; }
+.tag.agent { background: #22c55e22; color: #4ade80; border: 1px solid #22c55e44; }
+.tag.setup { background: #eab30822; color: #fbbf24; border: 1px solid #eab30844; }
+.full-width { grid-column: 1 / -1; }
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #2a2a2a; }
+.timeline-item { position: relative; margin-bottom: 16px; }
+.timeline-item::before { content: ''; position: absolute; left: -20px; top: 6px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #3a3a3a; background: #0a0a0a; }
+.timeline-item.active::before { border-color: #4ade80; background: #22c55e; box-shadow: 0 0 8px #22c55e44; }
+.timeline-item.done::before { border-color: #22c55e; background: #22c55e; }
+.timeline-item .day { font-size: 12px; color: #4ade80; font-weight: 600; margin-bottom: 2px; }
+.timeline-item .task { font-size: 14px; color: #d1d5db; }
+.voice-cmd { background: #1a1a2e; border: 1px solid #2a2a4e; border-radius: 8px; padding: 12px 16px; margin: 8px 0; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; color: #818cf8; cursor: pointer; position: relative; }
+.voice-cmd::before { content: '🎤'; margin-right: 8px; }
+.voice-cmd:hover { background: #1e1e3a; }
+.voice-cmd .copy-hint { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 11px; color: #4b5563; font-family: -apple-system, sans-serif; }
+.section-title { font-size: 20px; color: #e5e7eb; margin: 32px 0 16px; font-weight: 600; }
+.budget-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1f1f1f; font-size: 14px; }
+.budget-row:last-child { border-bottom: none; font-weight: 700; color: #4ade80; }
+.campaign-table { width: 100%; border-collapse: collapse; }
+.campaign-table th { text-align: left; padding: 8px; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #2a2a2a; }
+.campaign-table td { padding: 8px; font-size: 14px; border-bottom: 1px solid #1a1a1a; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+.status-dot.warming { background: #fbbf24; }
+.status-dot.ready { background: #22c55e; }
+.status-dot.queued { background: #6b7280; }
+.tab-bar { display: flex; gap: 4px; margin-bottom: 20px; }
+.tab { padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; background: #1a1a1a; color: #9ca3af; border: 1px solid #2a2a2a; }
+.tab.active { background: #1a472a; color: #4ade80; border-color: #2a5a3a; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>bioKids GTM Command Center</h1>
+<p>Gregory Rigano — 0 → 1,000 Subscribers in 90 Days | Budget: $738-888</p>
+</div>
+
+<div class="container">
+
+<!-- Tab Navigation -->
+<div class="tab-bar">
+<div class="tab active" onclick="switchTab('today')">Today</div>
+<div class="tab" onclick="switchTab('campaigns')">Campaigns</div>
+<div class="tab" onclick="switchTab('facebook')">Facebook</div>
+<div class="tab" onclick="switchTab('timeline')">90-Day Timeline</div>
+<div class="tab" onclick="switchTab('voice')">Voice Commands</div>
+</div>
+
+<!-- TODAY TAB -->
+<div class="tab-content active" id="tab-today">
+<div class="grid">
+<div class="card">
+<h2>Subscriber Goal</h2>
+<div class="stat">
+<span class="stat-label">Current subscribers</span>
+<span class="stat-value" id="sub-count">0</span>
+</div>
+<div class="progress-bar"><div class="progress-fill green" style="width: 0%" id="sub-progress"></div></div>
+<div class="stat">
+<span class="stat-label">Target</span>
+<span class="stat-value inactive">1,000</span>
+</div>
+</div>
+
+<div class="card">
+<h2>Budget Tracker</h2>
+<div class="budget-row"><span>Tooling (90 days)</span><span>$588</span></div>
+<div class="budget-row"><span>FB Ads (30-day test)</span><span>$150-300</span></div>
+<div class="budget-row"><span>Total Budget</span><span>$738-888</span></div>
+</div>
+
+<div class="card full-width">
+<h2>Today's Checklist</h2>
+<ul class="checklist" id="daily-checklist">
+<li onclick="toggleCheck(this)"><div class="check"></div>Check Slack for overnight notifications<span class="tag agent">Agent</span></li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Review + respond to interested email replies<span class="tag human">Human</span></li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Run: "Pull today's numbers"<span class="tag agent">Agent</span></li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Run: "Generate today's content"<span class="tag agent">Agent</span></li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Facebook groups: comment on 3-5 posts<span class="tag human">Human</span></li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Review + post generated content<span class="tag human">Human</span></li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Run: "Anything new since this morning?"<span class="tag agent">Agent</span></li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- CAMPAIGNS TAB -->
+<div class="tab-content" id="tab-campaigns">
+<div class="card full-width">
+<h2>Cold Email Campaigns</h2>
+<table class="campaign-table">
+<thead>
+<tr><th>Campaign</th><th>Priority</th><th>Leads</th><th>Status</th><th>Launch</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="status-dot queued"></span>Crunchy Mom Creators</td><td>#1</td><td>200</td><td>Scraping</td><td>Day 14</td></tr>
+<tr><td><span class="status-dot queued"></span>Podcasts</td><td>#2</td><td>1,000</td><td>Scraping</td><td>Day 21</td></tr>
+<tr><td><span class="status-dot queued"></span>Newsletters</td><td>#3</td><td>400</td><td>Queued</td><td>Day 28</td></tr>
+<tr><td><span class="status-dot queued"></span>Pediatricians</td><td>#4</td><td>1,000</td><td>Queued</td><td>Day 35</td></tr>
+<tr><td><span class="status-dot queued"></span>AAU / Sports</td><td>#5</td><td>600</td><td>Queued</td><td>Day 42</td></tr>
+<tr><td><span class="status-dot queued"></span>Creators (Paid)</td><td>#6</td><td>300</td><td>Queued</td><td>Day 49</td></tr>
+<tr><td><span class="status-dot queued"></span>LinkedIn Warm Leads</td><td>Ongoing</td><td>500+</td><td>As scraped</td><td>Day 7+</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="grid">
+<div class="card">
+<h2>Email Infrastructure</h2>
+<div class="stat"><span class="stat-label">Mailboxes</span><span class="stat-value inactive">0 / 9</span></div>
+<div class="stat"><span class="stat-label">Warmup status</span><span class="stat-value pending">Not started</span></div>
+<div class="stat"><span class="stat-label">Daily send capacity</span><span class="stat-value inactive">0 / 360</span></div>
+</div>
+<div class="card">
+<h2>90-Day Email Projection</h2>
+<div class="stat"><span class="stat-label">Total leads to contact</span><span class="stat-value inactive">3,500</span></div>
+<div class="stat"><span class="stat-label">Expected replies</span><span class="stat-value inactive">~194</span></div>
+<div class="stat"><span class="stat-label">Expected conversions</span><span class="stat-value inactive">~102</span></div>
+<div class="stat"><span class="stat-label">Projected sign-ups</span><span class="stat-value">471-1,575</span></div>
+</div>
+</div>
+</div>
+
+<!-- FACEBOOK TAB -->
+<div class="tab-content" id="tab-facebook">
+<div class="grid">
+<div class="card">
+<h2>Track 1: Crunchy Moms</h2>
+<h3>Tier 1 Groups (join immediately)</h3>
+<ul class="checklist">
+<li onclick="toggleCheck(this)"><div class="check"></div>Earthly Mamas — 356K</li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Crunchy Moms — 288K</li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Crunchy Moms Non-Toxic — 10K</li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Healthy Holistic Moms — 845</li>
+</ul>
+<h3>Total Track 1 Reach</h3>
+<div class="stat"><span class="stat-label">Members</span><span class="stat-value">644K</span></div>
+</div>
+
+<div class="card">
+<h2>Track 2: Sports Parents</h2>
+<h3>Tier 1 Groups (join immediately)</h3>
+<ul class="checklist">
+<li onclick="toggleCheck(this)"><div class="check"></div>Travel Baseball Families — 95K</li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Youth Basketball Dev — 83K</li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Florida Travel Baseball — 31K</li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Brooklyn USA Basketball — 22K</li>
+<li onclick="toggleCheck(this)"><div class="check"></div>Let the Children Fly — 20K</li>
+</ul>
+<h3>Total Track 2 Reach</h3>
+<div class="stat"><span class="stat-label">Members</span><span class="stat-value">287K</span></div>
+</div>
+
+<div class="card full-width">
+<h2>This Week's Facebook Plan</h2>
+<ul class="checklist">
+<li onclick="toggleCheck(this)"><div class="check"></div><strong>Mon:</strong> Comment on 5+ posts (Earthly Mamas + Travel Baseball)<span class="tag human">Human</span></li>
+<li onclick="toggleCheck(this)"><div class="check"></div><strong>Tue:</strong> Comment on 5+ posts (Crunchy Moms + Youth Basketball)<span class="tag human">Human</span></li>
+<li onclick="toggleCheck(this)"><div class="check"></div><strong>Wed:</strong> Value post in 1 Track 1 group (no links)<span class="tag human">Human</span></li>
+<li onclick="toggleCheck(this)"><div class="check"></div><strong>Thu:</strong> Comment on 5+ posts, follow up on Wed reactions<span class="tag human">Human</span></li>
+<li onclick="toggleCheck(this)"><div class="check"></div><strong>Fri:</strong> Value post in 1 Track 2 group (no links)<span class="tag human">Human</span></li>
+<li onclick="toggleCheck(this)"><div class="check"></div><strong>Sat-Sun:</strong> Light engagement — like a few posts<span class="tag human">Human</span></li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- TIMELINE TAB -->
+<div class="tab-content" id="tab-timeline">
+<div class="card full-width">
+<h2>90-Day Execution Timeline</h2>
+<div class="timeline">
+<div class="timeline-item active">
+<div class="day">DAY 1-3 — Foundation</div>
+<div class="task">Buy domains, set up mailboxes, sign up for tools, create agent workspace, switch Facebook to Gregory Rigano, join 5 Facebook groups, start lurking</div>
+</div>
+<div class="timeline-item">
+<div class="day">DAY 2-13 — Warmup + Scrape</div>
+<div class="task">Mailboxes warming up (14 days). Meanwhile: scrape all lead lists, build content library, engage in Facebook groups, post X threads, publish Medium articles</div>
+</div>
+<div class="timeline-item">
+<div class="day">DAY 7 — First Origin Story</div>
+<div class="task">Post Track 1 origin story in Earthly Mamas (356K). Deploy reply handler to Railway.</div>
+</div>
+<div class="timeline-item">
+<div class="day">DAY 14 — LAUNCH</div>
+<div class="task">Mailboxes warm → Campaign 6 (Crunchy Creators) goes live. Generate + upload 30 FB ad creatives ($5/day test). Post origin stories in Crunchy Moms + Travel Baseball.</div>
+</div>
+<div class="timeline-item">
+<div class="day">DAY 21 — Scale</div>
+<div class="task">Launch Campaign 1 (Podcasts). Review first cold email results. Check ad performance — pause losers.</div>
+</div>
+<div class="timeline-item">
+<div class="day">DAY 28-35 — Expand</div>
+<div class="task">Launch Campaigns 4 (Newsletters) and 2 (Pediatricians). First podcast appearances happening.</div>
+</div>
+<div class="timeline-item">
+<div class="day">DAY 30 — Deploy</div>
+<div class="task">Deploy proven agents to Railway for 24/7 operation. Weekly lead scraper, reply handler, ad optimizer all running automatically.</div>
+</div>
+<div class="timeline-item">
+<div class="day">DAY 42-49 — Full Coverage</div>
+<div class="task">Launch Campaigns 3 (AAU/Sports) and 5 (Paid Creators). All 7 campaigns active.</div>
+</div>
+<div class="timeline-item">
+<div class="day">DAY 44 — Ad Decision</div>
+<div class="task">30-day ad test complete. Scale winners or kill campaign. Either way, max $300 spent.</div>
+</div>
+<div class="timeline-item">
+<div class="day">DAY 45 — Midpoint Check</div>
+<div class="task">How many subscribers? If >500, stay the course. If <500, adjust strategy.</div>
+</div>
+<div class="timeline-item">
+<div class="day">DAY 60-90 — Compound</div>
+<div class="task">Machine runs on autopilot. Greg's daily: 15 min Facebook, 10 min replies, 5 min content review. Podcast appearances as booked. TikTok 1x/week.</div>
+</div>
+<div class="timeline-item">
+<div class="day">DAY 90 — GOAL: 1,000 SUBSCRIBERS</div>
+<div class="task">Conservative: 810 | Realistic: 1,300 | Aggressive: 2,500+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- VOICE COMMANDS TAB -->
+<div class="tab-content" id="tab-voice">
+<div class="card full-width">
+<h2>Morning Commands (15 min)</h2>
+<div class="voice-cmd" onclick="copyCmd(this)">"Pull today's numbers from Instantly, GA4, and Facebook Ads. How many new subscribers? Send summary to Slack."<span class="copy-hint">click to copy</span></div>
+<div class="voice-cmd" onclick="copyCmd(this)">"Check Instantly for new replies. Classify each as interested, question, not interested, or out of office. Send interested and question replies to Slack. Auto-archive not interested."<span class="copy-hint">click to copy</span></div>
+<div class="voice-cmd" onclick="copyCmd(this)">"Take the bioKids article at biokids.me/learn/growth-blockers-to-avoid and create a Twitter thread for @RiganoESQ, a Medium draft, 3 TikTok scripts, a Quora answer, and 5 Instagram carousel texts. Save to content/"<span class="copy-hint">click to copy</span></div>
+</div>
+
+<div class="card full-width">
+<h2>Weekly Commands (Monday morning)</h2>
+<div class="voice-cmd" onclick="copyCmd(this)">"Weekly report. Pull 7-day metrics from Instantly, GA4, Facebook Ads. Compare to last week. Top performing campaign, worst performing. Total new subscribers. Send to Slack and save to data/weekly-reports/"<span class="copy-hint">click to copy</span></div>
+<div class="voice-cmd" onclick="copyCmd(this)">"Scrape new leads for crunchy creators. Search Raphonic and Instagram for natural parenting, crunchy mom, holistic health creators. Enrich through Apollo. Validate through Million Verifier. Deduplicate against leads/crunchy-creators.csv. Load new leads into Instantly campaign biokids-crunchy-creators."<span class="copy-hint">click to copy</span></div>
+<div class="voice-cmd" onclick="copyCmd(this)">"Use PhantomBuster to scrape everyone who engaged with my latest LinkedIn post. Extract profile URLs. Enrich through Apollo. Validate through Million Verifier. Load into Instantly Campaign 7 linkedin-warm."<span class="copy-hint">click to copy</span></div>
+</div>
+
+<div class="card full-width">
+<h2>Ad Commands (Day 14-44)</h2>
+<div class="voice-cmd" onclick="copyCmd(this)">"Generate 30 Facebook ad variations for bioKids targeting crunchy moms. 5 angles, 6 variations each. Output as React components, export as 1080x1080 PNGs to creative/ folder."<span class="copy-hint">click to copy</span></div>
+<div class="voice-cmd" onclick="copyCmd(this)">"Upload all ad creatives from creative/ to Facebook Ads. Create campaign bioKids Creative Test. 5 ad sets by angle. Budget $2/day each. Target women 28-55, interests organic food, natural parenting. Set to PAUSED."<span class="copy-hint">click to copy</span></div>
+<div class="voice-cmd" onclick="copyCmd(this)">"Pull Facebook ad performance for last 7 days. Pause any ad with $15+ spend and zero clicks. Identify top 3 performers by CTR. Send Slack summary."<span class="copy-hint">click to copy</span></div>
+</div>
+
+<div class="card full-width">
+<h2>Campaign Launch Commands</h2>
+<div class="voice-cmd" onclick="copyCmd(this)">"Load leads/crunchy-creators.csv into Instantly campaign biokids-crunchy-creators. Use 3-email sequence from campaigns/crunchy-creators.md. Send rate 40/day across all 9 mailboxes. Launch."<span class="copy-hint">click to copy</span></div>
+<div class="voice-cmd" onclick="copyCmd(this)">"Load leads/podcasts.csv into Instantly campaign biokids-podcasts. Use sequence from campaigns/podcasts.md. Launch."<span class="copy-hint">click to copy</span></div>
+<div class="voice-cmd" onclick="copyCmd(this)">"Load leads/newsletters.csv into Instantly campaign biokids-newsletters. Use sequence from campaigns/newsletters.md. Launch."<span class="copy-hint">click to copy</span></div>
+<div class="voice-cmd" onclick="copyCmd(this)">"Load leads/pediatricians.csv into Instantly campaign biokids-pediatricians. Use sequence from campaigns/pediatricians.md. Launch."<span class="copy-hint">click to copy</span></div>
+<div class="voice-cmd" onclick="copyCmd(this)">"Load leads/aau-sports.csv into Instantly campaign biokids-aau-sports. Use sequence from campaigns/aau-sports.md. Launch."<span class="copy-hint">click to copy</span></div>
+</div>
+</div>
+
+</div>
+
+<script>
+function switchTab(tabId) {
+document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+document.getElementById('tab-' + tabId).classList.add('active');
+event.target.classList.add('active');
+}
+
+function toggleCheck(li) {
+const check = li.querySelector('.check');
+check.classList.toggle('done');
+li.style.opacity = check.classList.contains('done') ? '0.5' : '1';
+li.style.textDecoration = check.classList.contains('done') ? 'line-through' : 'none';
+saveState();
+}
+
+function copyCmd(el) {
+const text = el.textContent.replace('click to copy', '').trim();
+navigator.clipboard.writeText(text).then(() => {
+const hint = el.querySelector('.copy-hint');
+hint.textContent = 'copied!';
+hint.style.color = '#4ade80';
+setTimeout(() => { hint.textContent = 'click to copy'; hint.style.color = '#4b5563'; }, 1500);
+});
+}
+
+function saveState() {
+const checks = [];
+document.querySelectorAll('.check').forEach((c, i) => checks.push(c.classList.contains('done')));
+localStorage.setItem('biokids-gtm-checks', JSON.stringify(checks));
+}
+
+function loadState() {
+const saved = localStorage.getItem('biokids-gtm-checks');
+if (saved) {
+const checks = JSON.parse(saved);
+document.querySelectorAll('.check').forEach((c, i) => {
+if (checks[i]) {
+c.classList.add('done');
+c.parentElement.style.opacity = '0.5';
+c.parentElement.style.textDecoration = 'line-through';
+}
+});
+}
+}
+
+loadState();
+</script>
+
+</body>
+</html>

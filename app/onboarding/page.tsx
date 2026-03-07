@@ -17,7 +17,21 @@ function OnboardingContent() {
   const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
 
-  // Step 1: Child Info
+  // Check if height data already exists from landing page calculator
+  const [hasHeightData, setHasHeightData] = useState(false);
+
+  // Account Creation (Step 1)
+  const [signupEmail, setSignupEmail] = useState('');
+  const [signupPassword, setSignupPassword] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [signupLoading, setSignupLoading] = useState(false);
+  const [signupError, setSignupError] = useState('');
+
+  // Auth info for Stripe
+  const [userEmail, setUserEmail] = useState('');
+  const [userId, setUserId] = useState('');
+
+  // Child Info (Step 3)
   const [name, setName] = useState('');
   const [birthMonth, setBirthMonth] = useState('');
   const [birthYear, setBirthYear] = useState('');
@@ -25,11 +39,7 @@ function OnboardingContent() {
   const [heightIn, setHeightIn] = useState('');
   const [weight, setWeight] = useState('');
 
-  // Step 2: Questions
-  const [userEmail, setUserEmail] = useState('');
-  const [userId, setUserId] = useState('');
-
-  // Auth info for Stripe
+  // Daily Habits (Step 4)
   const [sleepHours, setSleepHours] = useState('');
   const [bedtime, setBedtime] = useState('');
   const [dairy, setDairy] = useState('');
@@ -37,18 +47,24 @@ function OnboardingContent() {
   const [screenTime, setScreenTime] = useState('');
   const [processedFoods, setProcessedFoods] = useState('');
 
-  // Step 4: Height Potential
+  // Height Potential (Step 6 — skipped if from landing page)
   const [childGender, setChildGender] = useState<'boy' | 'girl' | ''>('');
   const [motherHeightFt, setMotherHeightFt] = useState('');
   const [motherHeightIn, setMotherHeightIn] = useState('');
   const [fatherHeightFt, setFatherHeightFt] = useState('');
   const [fatherHeightIn, setFatherHeightIn] = useState('');
-  // Step 5: Account Creation
-  const [signupEmail, setSignupEmail] = useState('');
-  const [signupPassword, setSignupPassword] = useState('');
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
-  const [signupLoading, setSignupLoading] = useState(false);
-  const [signupError, setSignupError] = useState('');
+
+  // Total steps depends on whether height data already exists
+  const totalSteps = hasHeightData ? 5 : 6;
+
+  // Check for existing height data from landing page
+  useEffect(() => {
+    const fromLanding = localStorage.getItem('biokids_from_landing');
+    const geneticTarget = localStorage.getItem('geneticTarget');
+    if (fromLanding && geneticTarget) {
+      setHasHeightData(true);
+    }
+  }, []);
 
   // Read ?step= URL param to allow resuming onboarding
   useEffect(() => {
@@ -57,7 +73,6 @@ function OnboardingContent() {
       const parsed = parseInt(stepParam, 10);
       if (parsed >= 1 && parsed <= 6) {
         setStep(parsed);
-        // Restore child name from localStorage for display in later steps
         const savedName = localStorage.getItem('childName');
         if (savedName) setName(savedName);
       }
@@ -74,7 +89,6 @@ function OnboardingContent() {
           setUserId(session.user.id);
           return;
         }
-        // Fallback to localStorage if session not available (e.g. email confirmation pending)
         setUserEmail(localStorage.getItem('biokids_auth_email') || '');
         setUserId(localStorage.getItem('biokids_auth_user_id') || '');
       });
@@ -84,10 +98,9 @@ function OnboardingContent() {
     }
   }, []);
 
-  // Generate year options (current year down to 25 years ago)
+  // Generate year options
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 26 }, (_, i) => currentYear - i);
-
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -101,73 +114,7 @@ function OnboardingContent() {
     return weightKg / (heightM * heightM);
   };
 
-  const handleStep1Submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Store BMI for personalization (not shown to user)
-    const bmi = calculateBMI();
-    if (bmi) {
-      localStorage.setItem('childBMI', bmi.toString());
-    }
-    localStorage.setItem('childName', name);
-    localStorage.setItem('childBirthMonth', birthMonth);
-    localStorage.setItem('childBirthYear', birthYear);
-
-    // Save child name to Supabase auth metadata so it persists across devices
-    const supabase = createClient();
-    if (supabase) {
-      supabase.auth.updateUser({ data: { child_name: name } }).catch(() => {});
-    }
-
-    // Also save to children table
-    if (userId) {
-      const birthDate = birthYear && birthMonth
-        ? `${birthYear}-${birthMonth.padStart(2, '0')}-01`
-        : null;
-      fetch('/api/auth/save-child', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, name, birthDate }),
-      }).catch(() => {}); // fire-and-forget
-    }
-
-    setStep(2);
-  };
-
-  const toInches = (ft: string, inches: string) => (parseInt(ft) * 12) + parseInt(inches);
-  const toCm = (totalInches: number) => totalInches * 2.54;
-
-  const canCalculateHeight = childGender && motherHeightFt && motherHeightIn && fatherHeightFt && fatherHeightIn;
-
-  const geneticTargetCm = canCalculateHeight ? (() => {
-    const motherCm = toCm(toInches(motherHeightFt, motherHeightIn));
-    const fatherCm = toCm(toInches(fatherHeightFt, fatherHeightIn));
-    if (childGender === 'boy') return (fatherCm + (motherCm + 13)) / 2;
-    return ((fatherCm - 13) + motherCm) / 2;
-  })() : null;
-
-  const handleStep2Submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    localStorage.setItem('sleepHours', sleepHours);
-    localStorage.setItem('bedtime', bedtime);
-    localStorage.setItem('dairy', dairy);
-    localStorage.setItem('exercise', exercise);
-    localStorage.setItem('screenTime', screenTime);
-    localStorage.setItem('processedFoods', processedFoods);
-    setStep(3);
-  };
-
-  const handleStep4Submit = () => {
-    if (geneticTargetCm) {
-      localStorage.setItem('childGender', childGender);
-      localStorage.setItem('motherHeight', `${motherHeightFt}'${motherHeightIn}"`);
-      localStorage.setItem('fatherHeight', `${fatherHeightFt}'${fatherHeightIn}"`);
-      localStorage.setItem('geneticTarget', geneticTargetCm.toString());
-    }
-    // Mark onboarding as complete (user is about to see account creation)
-    localStorage.setItem('biokids_onboarding_complete', 'true');
-    setStep(5);
-  };
-
+  // Step 1: Account Creation
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setSignupLoading(true);
@@ -207,20 +154,7 @@ function OnboardingContent() {
         localStorage.setItem('biokids_auth_email', signupEmail);
         localStorage.setItem('biokids_auth_user_id', data.user.id);
 
-        // Save child name to Supabase auth metadata
-        supabase.auth.updateUser({ data: { child_name: name } }).catch(() => {});
-
-        // Save child to children table
-        const birthDate = birthYear && birthMonth
-          ? `${birthYear}-${birthMonth.padStart(2, '0')}-01`
-          : null;
-        fetch('/api/auth/save-child', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: data.user.id, name, birthDate }),
-        }).catch(() => {});
-
-        setStep(6);
+        setStep(2); // → Stripe Payment
       }
     } catch (err) {
       console.error('Signup error:', err);
@@ -230,7 +164,82 @@ function OnboardingContent() {
     }
   };
 
-  // Shared input style
+  // Step 3: Child Info
+  const handleChildInfoSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const bmi = calculateBMI();
+    if (bmi) {
+      localStorage.setItem('childBMI', bmi.toString());
+    }
+    localStorage.setItem('childName', name);
+    localStorage.setItem('childBirthMonth', birthMonth);
+    localStorage.setItem('childBirthYear', birthYear);
+
+    // Save child name to Supabase auth metadata
+    const supabase = createClient();
+    if (supabase) {
+      supabase.auth.updateUser({ data: { child_name: name } }).catch(() => {});
+    }
+
+    // Save to children table
+    if (userId) {
+      const birthDate = birthYear && birthMonth
+        ? `${birthYear}-${birthMonth.padStart(2, '0')}-01`
+        : null;
+      fetch('/api/auth/save-child', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, name, birthDate }),
+      }).catch(() => {});
+    }
+
+    setStep(4); // → Daily Habits
+  };
+
+  // Step 4: Daily Habits
+  const handleHabitsSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    localStorage.setItem('sleepHours', sleepHours);
+    localStorage.setItem('bedtime', bedtime);
+    localStorage.setItem('dairy', dairy);
+    localStorage.setItem('exercise', exercise);
+    localStorage.setItem('screenTime', screenTime);
+    localStorage.setItem('processedFoods', processedFoods);
+    setStep(5); // → Goals
+  };
+
+  // Height calculation helpers
+  const toInches = (ft: string, inches: string) => (parseInt(ft) * 12) + parseInt(inches);
+  const toCm = (totalInches: number) => totalInches * 2.54;
+
+  const canCalculateHeight = childGender && motherHeightFt && motherHeightIn && fatherHeightFt && fatherHeightIn;
+
+  const geneticTargetCm = canCalculateHeight ? (() => {
+    const motherCm = toCm(toInches(motherHeightFt, motherHeightIn));
+    const fatherCm = toCm(toInches(fatherHeightFt, fatherHeightIn));
+    if (childGender === 'boy') return (fatherCm + (motherCm + 13)) / 2;
+    return ((fatherCm - 13) + motherCm) / 2;
+  })() : null;
+
+  // Step 6: Height Potential (only if not from landing page)
+  const handleHeightSubmit = () => {
+    if (geneticTargetCm) {
+      localStorage.setItem('childGender', childGender);
+      localStorage.setItem('motherHeight', `${motherHeightFt}'${motherHeightIn}"`);
+      localStorage.setItem('fatherHeight', `${fatherHeightFt}'${fatherHeightIn}"`);
+      localStorage.setItem('geneticTarget', geneticTargetCm.toString());
+    }
+    localStorage.setItem('biokids_onboarding_complete', 'true');
+    router.push('/home');
+  };
+
+  // Complete onboarding (when height data already exists from landing page)
+  const completeOnboarding = () => {
+    localStorage.setItem('biokids_onboarding_complete', 'true');
+    router.push('/home');
+  };
+
+  // Shared styles
   const inputStyle: React.CSSProperties = {
     fontFamily: mono, fontSize: 14, width: '100%',
     padding: '0.75rem 1rem', borderRadius: 10,
@@ -273,10 +282,10 @@ function OnboardingContent() {
       `}</style>
       <div style={{ width: '100%', maxWidth: 440 }}>
 
-        {/* Progress Bar — micro-interactions */}
+        {/* Progress Bar */}
         <div style={{ marginBottom: 32 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', gap: 6, marginBottom: 8 }}>
-            {[1, 2, 3, 4, 5, 6].map((s) => (
+            {Array.from({ length: totalSteps }, (_, i) => i + 1).map((s) => (
               <div
                 key={s}
                 style={{
@@ -289,12 +298,127 @@ function OnboardingContent() {
               />
             ))}
           </div>
-          <p style={{ textAlign: 'center', fontSize: 11, color: '#a8a29e', fontFamily: mono }}>Step {step} of 6</p>
+          <p style={{ textAlign: 'center', fontSize: 11, color: '#a8a29e', fontFamily: mono }}>Step {step} of {totalSteps}</p>
         </div>
 
-        {/* Step 1: Child Info */}
+        {/* ========== Step 1: Create Account ========== */}
         {step === 1 && (
-          <form onSubmit={handleStep1Submit} style={{
+          <div style={{
+            background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
+            padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
+          }}>
+            <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6, textAlign: 'center' }}>
+              Create your account
+            </h2>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', marginBottom: 24, textAlign: 'center', lineHeight: 1.6 }}>
+              Quick signup, then start your free trial.
+            </p>
+
+            {signupError && (
+              <div style={{ background: '#fef2f2', color: '#dc2626', padding: '0.75rem 1rem', borderRadius: 12, fontSize: 13, fontFamily: mono, marginBottom: 20 }}>
+                {signupError}
+              </div>
+            )}
+
+            <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div>
+                <label style={labelStyle}>Email</label>
+                <input
+                  type="email"
+                  value={signupEmail}
+                  onChange={(e) => setSignupEmail(e.target.value)}
+                  style={inputStyle}
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>Password</label>
+                <input
+                  type="password"
+                  value={signupPassword}
+                  onChange={(e) => setSignupPassword(e.target.value)}
+                  style={inputStyle}
+                  placeholder="At least 8 characters"
+                  required
+                  minLength={8}
+                />
+              </div>
+              <label style={{ display: 'flex', alignItems: 'flex-start', gap: 8, cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  style={{ marginTop: 3, width: 16, height: 16, accentColor: '#065f46' }}
+                  required
+                />
+                <span style={{ fontFamily: mono, fontSize: 12, color: '#78716c', lineHeight: 1.5 }}>
+                  I agree to the{' '}
+                  <Link href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Terms</Link>
+                  {' '}and{' '}
+                  <Link href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Privacy Policy</Link>
+                </span>
+              </label>
+              <button
+                type="submit"
+                style={btnStyle(signupLoading || !agreedToTerms)}
+                disabled={signupLoading || !agreedToTerms}
+              >
+                {signupLoading ? 'Creating account...' : 'Create Account'}
+              </button>
+            </form>
+
+            <p style={{ textAlign: 'center', fontFamily: mono, fontSize: 12, color: '#a8a29e', marginTop: 20 }}>
+              Already have an account?{' '}
+              <Link href="/login" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Log in</Link>
+            </p>
+          </div>
+        )}
+
+        {/* ========== Step 2: Stripe Payment ========== */}
+        {step === 2 && (
+          <div style={{
+            background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
+            padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
+          }}>
+            <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6, textAlign: 'center' }}>
+              Start your free trial
+            </h2>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', textAlign: 'center', marginBottom: 20, lineHeight: 1.6 }}>
+              7-day free trial. Cancel anytime.
+            </p>
+            <Script
+              async
+              src="https://js.stripe.com/v3/pricing-table.js"
+              strategy="lazyOnload"
+            />
+            {/* @ts-expect-error Stripe pricing table is a custom element */}
+            <stripe-pricing-table
+              pricing-table-id="prctbl_1T21I73eI33ypy3JzXLrhay1"
+              publishable-key="pk_live_51Sw3RG3eI33ypy3JUaKVJ6RY9Xw5ear1j1eQQOp81v6YSc63XuihA4vSoANrCMLemY13GxAi0fT3x7JgFglHmGTn00W88YoFKE"
+              customer-email={userEmail || undefined}
+              client-reference-id={userId || undefined}
+            />
+
+            <button
+              type="button"
+              onClick={() => setStep(3)}
+              style={{
+                ...btnStyle(),
+                background: '#065f46',
+              }}
+            >
+              Continue to setup
+            </button>
+            <p style={{ fontFamily: mono, fontSize: 10, color: '#a8a29e', textAlign: 'center', marginTop: 8, lineHeight: 1.5 }}>
+              Complete payment above, then tap continue.
+            </p>
+          </div>
+        )}
+
+        {/* ========== Step 3: Child Info ========== */}
+        {step === 3 && (
+          <form onSubmit={handleChildInfoSubmit} style={{
             background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
             padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
           }}>
@@ -376,22 +500,22 @@ function OnboardingContent() {
           </form>
         )}
 
-        {/* Step 2: Understanding their day */}
-        {step === 2 && (
-          <form onSubmit={handleStep2Submit} style={{
+        {/* ========== Step 4: Daily Habits ========== */}
+        {step === 4 && (
+          <form onSubmit={handleHabitsSubmit} style={{
             background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
             padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
           }}>
             <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>
-              Help us understand {name}&apos;s day
+              Help us understand {name || 'your child'}&apos;s day
             </h2>
             <p style={{ fontFamily: mono, fontSize: 12, color: '#a8a29e', marginBottom: 24 }}>
-              You know {name} best. This helps us tailor the protocol.
+              You know {name || 'your child'} best. This helps us tailor the protocol.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               <div>
-                <label style={labelStyle}>How many hours of sleep does {name} get?</label>
+                <label style={labelStyle}>How many hours of sleep does {name || 'your child'} get?</label>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                   {['8 or less', '9-10', '11-12', '12+'].map((option) => (
                     <button key={option} type="button" onClick={() => setSleepHours(option)} style={chipStyle(sleepHours === option)}>
@@ -413,7 +537,7 @@ function OnboardingContent() {
               </div>
 
               <div>
-                <label style={labelStyle}>Does {name} have dairy daily?</label>
+                <label style={labelStyle}>Does {name || 'your child'} have dairy daily?</label>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
                   {['Yes', 'Sometimes', 'No'].map((option) => (
                     <button key={option} type="button" onClick={() => setDairy(option)} style={chipStyle(dairy === option)}>
@@ -424,7 +548,7 @@ function OnboardingContent() {
               </div>
 
               <div>
-                <label style={labelStyle}>How often does {name} run or play hard?</label>
+                <label style={labelStyle}>How often does {name || 'your child'} run or play hard?</label>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
                   {['Daily', 'Few times/wk', 'Rarely'].map((option) => (
                     <button key={option} type="button" onClick={() => setExercise(option)} style={chipStyle(exercise === option)}>
@@ -446,7 +570,7 @@ function OnboardingContent() {
               </div>
 
               <div>
-                <label style={labelStyle}>How often does {name} eat processed foods?</label>
+                <label style={labelStyle}>How often does {name || 'your child'} eat processed foods?</label>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
                   {['Rarely', 'Sometimes', 'Often'].map((option) => (
                     <button key={option} type="button" onClick={() => setProcessedFoods(option)} style={chipStyle(processedFoods === option)}>
@@ -467,8 +591,8 @@ function OnboardingContent() {
           </form>
         )}
 
-        {/* Step 3: Goal Selection */}
-        {step === 3 && (
+        {/* ========== Step 5: Goal Selection ========== */}
+        {step === 5 && (
           <div style={{ animation: 'fadeSlideIn 0.4s ease' }}>
             <GoalSelection
               childName={name || 'Your child'}
@@ -477,14 +601,19 @@ function OnboardingContent() {
                   goal,
                   date: new Date().toISOString(),
                 }));
-                setStep(4);
+                if (hasHeightData) {
+                  // Height data already saved from landing page — go straight to home
+                  completeOnboarding();
+                } else {
+                  setStep(6); // → Height Potential
+                }
               }}
             />
           </div>
         )}
 
-        {/* Step 4: Height Potential — the emotional peak */}
-        {step === 4 && (
+        {/* ========== Step 6: Height Potential (only if not from landing page) ========== */}
+        {step === 6 && !hasHeightData && (
           <div style={{
             background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
             padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
@@ -493,14 +622,13 @@ function OnboardingContent() {
               This is what&apos;s possible
             </p>
             <h2 style={{ fontFamily: mono, fontSize: 22, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>
-              {name}&apos;s growth potential
+              {name || 'Your child'}&apos;s growth potential
             </h2>
             <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', marginBottom: 24, lineHeight: 1.6 }}>
-              Enter parent heights and we&apos;ll show you where {name} could land.
+              Enter parent heights and we&apos;ll show you where {name || 'your child'} could land.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {/* Gender */}
               <div>
                 <label style={labelStyle}>Child&apos;s gender</label>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -517,7 +645,6 @@ function OnboardingContent() {
                 </div>
               </div>
 
-              {/* Mother's Height */}
               <div>
                 <label style={labelStyle}>Mother&apos;s height</label>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -536,7 +663,6 @@ function OnboardingContent() {
                 </div>
               </div>
 
-              {/* Father's Height */}
               <div>
                 <label style={labelStyle}>Father&apos;s height</label>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -556,7 +682,6 @@ function OnboardingContent() {
               </div>
             </div>
 
-            {/* Height Visualization */}
             {geneticTargetCm && (
               <HeightPotentialCalculator
                 geneticTargetCm={geneticTargetCm}
@@ -567,113 +692,12 @@ function OnboardingContent() {
 
             <button
               type="button"
-              onClick={handleStep4Submit}
+              onClick={handleHeightSubmit}
               disabled={!canCalculateHeight}
               style={btnStyle(!canCalculateHeight)}
             >
-              Continue
+              See my protocol
             </button>
-          </div>
-        )}
-
-        {/* Step 5: Create Account */}
-        {step === 5 && (
-          <div style={{
-            background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
-            padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
-          }}>
-            <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6, textAlign: 'center' }}>
-              Create your account
-            </h2>
-            <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', marginBottom: 24, textAlign: 'center', lineHeight: 1.6 }}>
-              One last step before we build {name || 'your child'}&apos;s protocol.
-            </p>
-
-            {signupError && (
-              <div style={{ background: '#fef2f2', color: '#dc2626', padding: '0.75rem 1rem', borderRadius: 12, fontSize: 13, fontFamily: mono, marginBottom: 20 }}>
-                {signupError}
-              </div>
-            )}
-
-            <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <div>
-                <label style={labelStyle}>Email</label>
-                <input
-                  type="email"
-                  value={signupEmail}
-                  onChange={(e) => setSignupEmail(e.target.value)}
-                  style={inputStyle}
-                  placeholder="you@example.com"
-                  required
-                />
-              </div>
-              <div>
-                <label style={labelStyle}>Password</label>
-                <input
-                  type="password"
-                  value={signupPassword}
-                  onChange={(e) => setSignupPassword(e.target.value)}
-                  style={inputStyle}
-                  placeholder="At least 8 characters"
-                  required
-                  minLength={8}
-                />
-              </div>
-              <label style={{ display: 'flex', alignItems: 'flex-start', gap: 8, cursor: 'pointer' }}>
-                <input
-                  type="checkbox"
-                  checked={agreedToTerms}
-                  onChange={(e) => setAgreedToTerms(e.target.checked)}
-                  style={{ marginTop: 3, width: 16, height: 16, accentColor: '#065f46' }}
-                  required
-                />
-                <span style={{ fontFamily: mono, fontSize: 12, color: '#78716c', lineHeight: 1.5 }}>
-                  I agree to the{' '}
-                  <Link href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Terms</Link>
-                  {' '}and{' '}
-                  <Link href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Privacy Policy</Link>
-                </span>
-              </label>
-              <button
-                type="submit"
-                style={btnStyle(signupLoading || !agreedToTerms)}
-                disabled={signupLoading || !agreedToTerms}
-              >
-                {signupLoading ? 'Creating account...' : 'Create Account'}
-              </button>
-            </form>
-
-            <p style={{ textAlign: 'center', fontFamily: mono, fontSize: 12, color: '#a8a29e', marginTop: 20 }}>
-              Already have an account?{' '}
-              <Link href="/login" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Log in</Link>
-            </p>
-          </div>
-        )}
-
-        {/* Step 6: Stripe Pricing Table */}
-        {step === 6 && (
-          <div style={{
-            background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
-            padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
-          }}>
-            <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6, textAlign: 'center' }}>
-              Start {name || 'your child'}&apos;s protocol
-            </h2>
-            <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', textAlign: 'center', marginBottom: 20, lineHeight: 1.6 }}>
-              7-day free trial. Cancel anytime.
-            </p>
-            <Script
-              async
-              src="https://js.stripe.com/v3/pricing-table.js"
-              strategy="lazyOnload"
-            />
-            {/* @ts-expect-error Stripe pricing table is a custom element */}
-            <stripe-pricing-table
-              pricing-table-id="prctbl_1T21I73eI33ypy3JzXLrhay1"
-              publishable-key="pk_live_51Sw3RG3eI33ypy3JUaKVJ6RY9Xw5ear1j1eQQOp81v6YSc63XuihA4vSoANrCMLemY13GxAi0fT3x7JgFglHmGTn00W88YoFKE"
-              customer-email={userEmail || undefined}
-              client-reference-id={userId || undefined}
-            />
           </div>
         )}
 

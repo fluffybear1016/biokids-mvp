@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       mode: 'subscription',
       allow_promotion_codes: true,
       success_url: `${baseUrl}/onboarding?step=3&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/onboarding?step=2`,
+      cancel_url: `${baseUrl}/onboarding?step=1`,
       metadata: {
         user_id: userId,
         birth_date: birthDate || '',
