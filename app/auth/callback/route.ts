@@ -26,8 +26,21 @@ export async function GET(request: Request) {
       }
     );
 
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    if (!error && data.user) {
+      // Create profile for OAuth users (first-time sign-in)
+      try {
+        await fetch(`${origin}/api/auth/create-profile`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: data.user.id,
+            email: data.user.email,
+          }),
+        });
+      } catch {
+        // Profile may already exist — that's fine
+      }
       return NextResponse.redirect(`${origin}${next}`);
     }
   }
