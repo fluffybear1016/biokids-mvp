@@ -5,10 +5,14 @@ import { NextResponse } from 'next/server';
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
-  const next = searchParams.get('next') ?? '/home';
 
   if (code) {
     const cookieStore = await cookies();
+
+    // Read redirect destination from cookie (set before OAuth redirect)
+    const postAuthRedirect = cookieStore.get('post_auth_redirect')?.value;
+    const next = searchParams.get('next') ?? postAuthRedirect ?? '/home';
+
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -41,7 +45,11 @@ export async function GET(request: Request) {
       } catch {
         // Profile may already exist — that's fine
       }
-      return NextResponse.redirect(`${origin}${next}`);
+
+      // Clear the redirect cookie after use
+      const response = NextResponse.redirect(`${origin}${next}`);
+      response.cookies.set('post_auth_redirect', '', { path: '/', maxAge: 0 });
+      return response;
     }
   }
 

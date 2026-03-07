@@ -326,9 +326,11 @@ function OnboardingContent() {
                 onClick={async () => {
                   const supabase = createClient();
                   if (!supabase) return;
+                  // Store redirect destination in cookie (Supabase rejects query params in redirectTo)
+                  document.cookie = 'post_auth_redirect=/onboarding?step=2; path=/; max-age=600; SameSite=Lax';
                   await supabase.auth.signInWithOAuth({
                     provider: 'google',
-                    options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent('/onboarding?step=2')}` },
+                    options: { redirectTo: `${window.location.origin}/auth/callback` },
                   });
                 }}
                 style={{

@@ -134,9 +134,11 @@ function LoginForm() {
           onClick={async () => {
             const supabase = createClient();
             if (!supabase) return;
+            // Store redirect destination in cookie (Supabase rejects query params in redirectTo)
+            document.cookie = 'post_auth_redirect=/home; path=/; max-age=600; SameSite=Lax';
             await supabase.auth.signInWithOAuth({
               provider: 'google',
-              options: { redirectTo: `${window.location.origin}/auth/callback?next=/home` },
+              options: { redirectTo: `${window.location.origin}/auth/callback` },
             });
           }}
           style={{
