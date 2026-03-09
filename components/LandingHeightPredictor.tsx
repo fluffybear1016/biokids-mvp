@@ -57,7 +57,7 @@ export default function LandingHeightPredictor() {
   };
 
   return (
-    <section style={{ padding: '3rem 1rem', backgroundColor: '#fafaf9' }} className="sm:py-16">
+    <section style={{ padding: '1rem 1rem 3rem', backgroundColor: '#fafaf9' }} className="sm:pb-16 sm:pt-4">
       <div style={{ maxWidth: '32rem', margin: '0 auto' }}>
         <div style={{
           background: '#fff', borderRadius: 20,
