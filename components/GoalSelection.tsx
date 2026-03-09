@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface GoalSelectionProps {
   childName: string;
@@ -37,12 +37,15 @@ const goals = [
 
 export default function GoalSelection({ childName, onSelect }: GoalSelectionProps) {
   const [selected, setSelected] = useState<GoalType | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleContinue = () => {
+  // Auto-advance after selection with brief visual feedback
+  useEffect(() => {
     if (selected) {
-      onSelect(selected);
+      timerRef.current = setTimeout(() => onSelect(selected), 500);
+      return () => { if (timerRef.current) clearTimeout(timerRef.current); };
     }
-  };
+  }, [selected, onSelect]);
 
   return (
     <div style={{ maxWidth: 440, margin: '0 auto' }}>
@@ -55,7 +58,7 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
           What feels right for your family?
         </h2>
         <p style={{ fontFamily: mono, fontSize: 12, color: '#a8a29e' }}>
-          There&apos;s no wrong answer. You can always adjust later.
+          Tap one. You can always adjust later.
         </p>
       </div>
 
@@ -75,42 +78,24 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
               <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: '#1c1917' }}>{goal.title}</span>
               {selected === goal.id && (
-                <span style={{ fontFamily: mono, fontSize: 11, color: '#065f46', fontWeight: 700 }}>Selected</span>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <circle cx="9" cy="9" r="9" fill="#065f46"/>
+                  <path d="M5.5 9L8 11.5L12.5 6.5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               )}
             </div>
             <p style={{ fontFamily: mono, fontSize: 12, color: '#065f46', fontWeight: 600, marginBottom: 4 }}>{goal.subtitle}</p>
-            <p style={{ fontFamily: mono, fontSize: 11, color: '#78716c', lineHeight: 1.5, marginBottom: 6 }}>{goal.description}</p>
-            <p style={{ fontFamily: mono, fontSize: 10, color: '#a8a29e' }}>{goal.target}</p>
+            <p style={{ fontFamily: mono, fontSize: 11, color: '#78716c', lineHeight: 1.5, marginBottom: 0 }}>{goal.description}</p>
           </button>
         ))}
       </div>
 
       {/* Reassurance */}
-      <div style={{ background: '#ecfdf5', borderRadius: 12, padding: '0.75rem 1rem', marginBottom: 20 }}>
+      <div style={{ background: '#ecfdf5', borderRadius: 12, padding: '0.75rem 1rem' }}>
         <p style={{ fontFamily: mono, fontSize: 11.5, color: '#065f46', textAlign: 'center', lineHeight: 1.55 }}>
           Every path supports your child&apos;s growth. Start where you are.
         </p>
       </div>
-
-      {/* Continue Button */}
-      <button
-        onClick={handleContinue}
-        disabled={!selected}
-        style={{
-          fontFamily: mono, fontSize: 15, fontWeight: 700,
-          width: '100%', padding: '0.875rem', borderRadius: 12,
-          border: 'none', cursor: selected ? 'pointer' : 'not-allowed',
-          background: selected ? '#065f46' : '#d6d3d1',
-          color: selected ? '#fff' : '#a8a29e',
-          transition: 'all 0.2s ease',
-        }}
-      >
-        Continue
-      </button>
-
-      <p style={{ textAlign: 'center', fontFamily: mono, fontSize: 10, color: '#a8a29e', marginTop: 12 }}>
-        You can change this anytime in settings
-      </p>
     </div>
   );
 }

@@ -103,7 +103,7 @@ function OnboardingContent() {
     }
   }, []);
 
-  // Poll subscription status on Step 2 — auto-redirect to /home once payment completes
+  // Poll subscription status on Step 2 — auto-advance to child setup once payment completes
   useEffect(() => {
     if (step !== 2) return;
     let cancelled = false;
@@ -119,7 +119,7 @@ function OnboardingContent() {
         const data = await res.json();
         const status = data?.profile?.subscription_status;
         if ((status === 'active' || status === 'trial') && !cancelled) {
-          router.push('/home');
+          setStep(3); // advance to child info setup
         }
       } catch {}
     };
@@ -196,24 +196,18 @@ function OnboardingContent() {
     }
   };
 
-  // Step 3: Child Info
-  const handleChildInfoSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // Step 3: Child Info — save and advance
+  const saveChildInfo = () => {
     const bmi = calculateBMI();
-    if (bmi) {
-      localStorage.setItem('childBMI', bmi.toString());
-    }
+    if (bmi) localStorage.setItem('childBMI', bmi.toString());
     localStorage.setItem('childName', name);
     localStorage.setItem('childBirthMonth', birthMonth);
     localStorage.setItem('childBirthYear', birthYear);
 
-    // Save child name to Supabase auth metadata
     const supabase = createClient();
     if (supabase) {
       supabase.auth.updateUser({ data: { child_name: name } }).catch(() => {});
     }
-
-    // Save to children table
     if (userId) {
       const birthDate = birthYear && birthMonth
         ? `${birthYear}-${birthMonth.padStart(2, '0')}-01`
@@ -224,21 +218,35 @@ function OnboardingContent() {
         body: JSON.stringify({ userId, name, birthDate }),
       }).catch(() => {});
     }
-
-    setStep(4); // → Daily Habits
+    setStep(4);
   };
 
-  // Step 4: Daily Habits
-  const handleHabitsSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // Auto-advance Step 3 when all fields filled
+  useEffect(() => {
+    if (step === 3 && name && birthMonth && birthYear && heightFt && heightIn && weight) {
+      const t = setTimeout(saveChildInfo, 600);
+      return () => clearTimeout(t);
+    }
+  }, [step, name, birthMonth, birthYear, heightFt, heightIn, weight]);
+
+  // Step 4: Daily Habits — save and advance
+  const saveHabits = () => {
     localStorage.setItem('sleepHours', sleepHours);
     localStorage.setItem('bedtime', bedtime);
     localStorage.setItem('dairy', dairy);
     localStorage.setItem('exercise', exercise);
     localStorage.setItem('screenTime', screenTime);
     localStorage.setItem('processedFoods', processedFoods);
-    setStep(5); // → Goals
+    setStep(5);
   };
+
+  // Auto-advance Step 4 when all selections made
+  useEffect(() => {
+    if (step === 4 && sleepHours && bedtime && dairy && exercise && screenTime && processedFoods) {
+      const t = setTimeout(saveHabits, 600);
+      return () => clearTimeout(t);
+    }
+  }, [step, sleepHours, bedtime, dairy, exercise, screenTime, processedFoods]);
 
   // Height calculation helpers
   const toInches = (ft: string, inches: string) => (parseInt(ft) * 12) + parseInt(inches);
@@ -253,7 +261,7 @@ function OnboardingContent() {
     return ((fatherCm - 13) + motherCm) / 2;
   })() : null;
 
-  // Step 6: Height Potential (only if not from landing page)
+  // Step 6: Height Potential — save and go to home
   const handleHeightSubmit = () => {
     if (geneticTargetCm) {
       localStorage.setItem('childGender', childGender);
@@ -264,6 +272,14 @@ function OnboardingContent() {
     localStorage.setItem('biokids_onboarding_complete', 'true');
     router.push('/home');
   };
+
+  // Auto-advance Step 6 when all height fields filled
+  useEffect(() => {
+    if (step === 6 && canCalculateHeight && geneticTargetCm) {
+      const t = setTimeout(handleHeightSubmit, 1200); // slightly longer to show result
+      return () => clearTimeout(t);
+    }
+  }, [step, canCalculateHeight, geneticTargetCm]);
 
   // Complete onboarding (when height data already exists from landing page)
   const completeOnboarding = () => {
@@ -470,7 +486,7 @@ function OnboardingContent() {
 
         {/* ========== Step 3: Child Info ========== */}
         {step === 3 && (
-          <form onSubmit={handleChildInfoSubmit} style={{
+          <div style={{
             background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
             padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
           }}>
@@ -546,15 +562,12 @@ function OnboardingContent() {
               </div>
             </div>
 
-            <button type="submit" style={btnStyle()}>
-              Continue
-            </button>
-          </form>
+          </div>
         )}
 
         {/* ========== Step 4: Daily Habits ========== */}
         {step === 4 && (
-          <form onSubmit={handleHabitsSubmit} style={{
+          <div style={{
             background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
             padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
           }}>
@@ -633,14 +646,7 @@ function OnboardingContent() {
               </div>
             </div>
 
-            <button
-              type="submit"
-              disabled={!sleepHours || !bedtime || !dairy || !exercise || !screenTime || !processedFoods}
-              style={btnStyle(!sleepHours || !bedtime || !dairy || !exercise || !screenTime || !processedFoods)}
-            >
-              Continue
-            </button>
-          </form>
+          </div>
         )}
 
         {/* ========== Step 5: Goal Selection ========== */}

@@ -6,7 +6,7 @@ const PROTECTED_PREFIXES = [
   '/windows',
   '/jarvis',
   '/protocol',
-  '/learn',
+  // '/learn' is intentionally NOT protected — all articles are free (SEO + marketing fuel)
   '/stage',
   '/settings',
   '/science',
