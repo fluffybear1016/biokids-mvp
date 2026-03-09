@@ -44,7 +44,15 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Growth Trajectory Graph */}
+        </div>
+      </section>
+
+      {/* Height Predictor — interactive conversion tool (moved above trajectory) */}
+      <LandingHeightPredictor />
+
+      {/* Growth Trajectory Graph */}
+      <section style={{ padding: '0 1rem 3rem', backgroundColor: '#fafaf9' }} className="sm:pb-16">
+        <div className="max-w-6xl mx-auto">
           <div style={{ maxWidth: '48rem', margin: '0 auto', background: '#fff', borderRadius: '14px', border: '1px solid #e7e5e4', padding: '1rem 1.125rem' }} className="sm:p-8">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
               <h3 style={{ fontWeight: 600, color: '#1c1917', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem' }} className="sm:text-base">Growth Trajectory</h3>
@@ -117,9 +125,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Height Predictor — interactive conversion tool */}
-      <LandingHeightPredictor />
 
       {/* The Gap Section */}
       <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#065f46' }} className="sm:py-20">

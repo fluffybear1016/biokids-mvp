@@ -881,6 +881,15 @@ export default function Dashboard() {
           </div>
         )}
 
+        {/* Brain statement + Height Potential — featured at top */}
+        {heightData && (
+          <div style={{ marginTop:24, padding:"16px 20px", background:"linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)", borderRadius:14, border:"1.5px solid #86efac", textAlign:"center", marginBottom:8 }}>
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, color:"#065f46", lineHeight:1.65, margin:0, fontWeight:600, fontStyle:"italic" }}>
+              Growth hormone doesn&apos;t just drive height — every growth hormone pulse simultaneously helps optimize brain development.
+            </p>
+          </div>
+        )}
+
         {/* Height Potential — tape measure + typography */}
         {heightData && (() => {
           const rangeHighTotal = parseInt(heightData.rangeHigh.split("'")[0]) * 12 + parseInt(heightData.rangeHigh.split("'")[1]);

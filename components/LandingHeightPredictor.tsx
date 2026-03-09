@@ -229,18 +229,33 @@ export default function LandingHeightPredictor() {
                 </p>
               </div>
 
-              {/* References */}
-              <div style={{ marginTop: 20, padding: '12px 14px', background: '#f5f5f0', borderRadius: 10 }}>
-                <p style={{ fontFamily: mono, fontSize: 9, color: '#78716c', lineHeight: 1.6, margin: 0 }}>
-                  Standard band based on{' '}
-                  <a href="https://pubmed.ncbi.nlm.nih.gov/9773847/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', textDecoration: 'underline', textUnderlineOffset: 2 }}>
-                    Luo, Albertsson-Wikland &amp; Karlberg 1998
-                  </a>{' '}
-                  and AAFP pediatric guidelines. Maximal expression (+3-4 SD) documented in{' '}
-                  <a href="https://pubmed.ncbi.nlm.nih.gov/39201851/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', textDecoration: 'underline', textUnderlineOffset: 2 }}>
-                    Zeevi et al. 2024
-                  </a>{' '}
-                  study of healthy families.
+              {/* References — prominent */}
+              <div style={{ marginTop: 20, padding: '16px 16px', background: '#ecfdf5', borderRadius: 12, border: '1.5px solid #86efac' }}>
+                <p style={{ fontFamily: mono, fontSize: 10, fontWeight: 700, color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>
+                  Peer-Reviewed Sources
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                    <span style={{ fontFamily: serif, fontSize: 14, fontWeight: 800, color: '#065f46', lineHeight: 1 }}>1</span>
+                    <p style={{ fontFamily: mono, fontSize: 11, color: '#065f46', lineHeight: 1.55, margin: 0 }}>
+                      <a href="https://pubmed.ncbi.nlm.nih.gov/9773847/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 2 }}>
+                        Luo, Albertsson-Wikland &amp; Karlberg 1998
+                      </a>{' '}
+                      — Pediatric Research. Standard genetic height band calculation (mid-parental ±2&quot;).
+                    </p>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                    <span style={{ fontFamily: serif, fontSize: 14, fontWeight: 800, color: '#065f46', lineHeight: 1 }}>2</span>
+                    <p style={{ fontFamily: mono, fontSize: 11, color: '#065f46', lineHeight: 1.55, margin: 0 }}>
+                      <a href="https://pubmed.ncbi.nlm.nih.gov/39201851/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 2 }}>
+                        Zeevi et al. 2024
+                      </a>{' '}
+                      — Children (MDPI). Maximal expression (+3–4 SD above midpoint) documented in healthy families with optimized environment.
+                    </p>
+                  </div>
+                </div>
+                <p style={{ fontFamily: mono, fontSize: 9, color: '#059669', marginTop: 10, lineHeight: 1.5, fontStyle: 'italic' }}>
+                  * The earlier you start optimizing sleep, nutrition, and movement, the greater the window for growth. Growth plates close after puberty — every year counts.
                 </p>
               </div>
             </div>
