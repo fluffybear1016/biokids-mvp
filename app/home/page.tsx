@@ -139,7 +139,7 @@ const dayData: DayPeriod[] = [
         { p:"Fermentation → GABA → GH*", n:"up to 400%", d:"Yogurt is fermented by Lactobacillus — produces GABA — GABA raised GH 400% in adult studies AND suppresses somatostatin (the GH brake)" },
         { p:"Fermentation — bioavailability", n:"enhanced", d:"Pre-digests casein + increases calcium and B vitamin absorption + produces bioactive peptides" },
         { p:"α-Lactalbumin — melatonin*", n:"up to 157%", d:"Highest tryptophan — serotonin — melatonin raised GH 157% in adult studies" },
-        { p:"Casein overnight*", n:"up to 451%", d:"Slow-releases aminos 6–7 hrs — Zajac: GH 451% above baseline at 24h in adults" },
+        { p:"Casein after exercise*", n:"up to 451%", d:"Studies show casein after exercise produces sustained GH pumps — still 451% above baseline 24 hours later (Zajac). Slow-releases aminos 6–7 hrs." },
         { p:"Lysine + Arginine*", n:"up to 700%", d:"Milk delivers both — combined aminos raised GH up to 700% in adult supplement studies" },
         { p:"Calcium + phosphorus", n:"bone mineral", d:"Via casein micelles — direct bone mineralization" },
       ],
@@ -211,38 +211,43 @@ const dayData: DayPeriod[] = [
   ]},
 
   { period:"Afternoon", time:"12:00 – 5:00pm", items:[
-    { id:"lunch", t:"Beef liver, oysters, sauerkraut + pumpkin seeds", sub:"Rotate: liver 1×/wk, oysters 1×/wk, salmon 2×/wk — with fermented side + lentils + cruciferous", gh:"+700% Growth Hormone multi-lever*", headline:"lysine + arginine + glutamine + niacin + GABA — stacks multiple GH pathways", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012; Quabbe, JCEM 1983", why:"This meal activates 10+ GH pathways and primes the afternoon sprint. Beef liver has the highest choline density of any food plus retinol, B12, and zinc — blend into ground beef and kids won't taste it. Oysters deliver a full week's zinc RDA in a single 3-oz serving. Sauerkraut and kimchi are fermented by Lactobacillus — the same bacteria that produce GABA. GABA raised GH up to 400% in adult studies and suppresses somatostatin (the hormone that puts the brakes on GH release). Every fermented food — yogurt, kefir, sauerkraut, kimchi — feeds this GABA pathway. Pumpkin seeds are the highest plant source of arginine. Peanuts deliver niacin, which suppresses free fatty acids that brake GH. WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver mixed into ground beef (burgers, meatballs, bolognese) — kids won't taste it. Oysters: pan-seared or in stew, 1×/wk. Sauerkraut or kimchi as a side — even 2 tbsp counts. Peanuts prime the sprint. NO DAIRY at this meal.",
+    { id:"lunch", t:"Beef liver, oysters, wild salmon, sauerkraut, lentils, broccoli + pumpkin seeds", sub:"The biggest pump meal of the day — liver 1×/wk, oysters 1×/wk, salmon 2×/wk, turkey, beef — with fermented side + lentils + cruciferous + seeds", gh:"+700% Growth Hormone multi-lever*", headline:"lysine + arginine + glutamine + niacin + GABA + DIM — stacks 15+ GH pathways in one meal", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012; Quabbe, JCEM 1983", why:"This meal activates 15+ GH pathways and primes the afternoon sprint. BEEF LIVER (1×/wk): highest choline density of any food plus retinol, B12, niacin, iron, and zinc — blend into ground beef and kids won't taste it. COOKED OYSTERS (1×/wk): 28.2mg zinc per 3 oz — a full week's RDA in one serving — activates all 3 levels of the growth axis. WILD SALMON (2×/wk): omega-3s directly support IGF-1 production + vitamin D enables the entire GH-IGF-1-growth plate pathway + niacin suppresses FFA brake on GH. TURKEY: highest niacin + arginine per gram of any common meat — directly primes the sprint GH response. BEEF (daily): richest source of glutamine (400% GH*), ornithine (GH amplifier), and tyrosine (dopamine → 221% GH*). SAUERKRAUT/KIMCHI: fermented by Lactobacillus — produces GABA — raised GH up to 400% in adult studies and suppresses somatostatin (the hormone that brakes GH release). LENTILS: deliver lysine + inositol + iron — the lysine-inositol-B12 combo was the growth intervention in the Chinese ISS RCT. BROCCOLI: DIM + I3C inhibit aromatase — the enzyme that converts testosterone to estrogen and closes growth plates. PUMPKIN SEEDS: highest plant arginine + magnesium + zinc + tryptophan. PEANUTS: niacin suppresses free fatty acids that brake GH — Quabbe showed niacin alone raised GH >1,000% at rest in adults. WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver blended into burgers, meatballs, or bolognese — kids won't taste it. Oysters: pan-seared or in stew, 1×/wk. Salmon: any preparation, 2×/wk. Sauerkraut or kimchi as a side — even 2 tbsp counts. Handful of pumpkin seeds on top of anything. Lentils in soup, stew, or as a side with citrus. Broccoli at every lunch. NO DAIRY at this meal.",
       pumps:[
-        { p:"Lysine + Arginine*", n:"up to 700%", d:"Combined aminos raised GH up to 700% in adult supplement studies" },
-        { p:"Glutamine (beef)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — beef delivers meaningful amounts" },
+        { p:"Lysine + Arginine*", n:"up to 700%", d:"Combined aminos raised GH up to 700% in adult supplement studies — beef, turkey, lentils, pumpkin seeds all deliver both" },
+        { p:"Glutamine (beef)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — beef is the richest dietary source" },
         { p:"GABA (sauerkraut/kimchi)*", n:"up to 400%", d:"Lactobacillus fermentation produces GABA — raised GH 400% in adult studies — suppresses somatostatin" },
-        { p:"Niacin (peanuts)*", n:"up to 350%", d:"Niacin suppresses FFAs → Stokes: 350% sprint GH amplification; Quabbe: >1,000% GH at rest in adults" },
-        { p:"Ornithine", n:"GH amplifier", d:"Cycles with arginine to amplify GH" },
-        { p:"L-DOPA (tyrosine)*", n:"up to 221%", d:"Tyrosine — dopamine — stimulates GHRH in adult studies" },
+        { p:"Niacin (turkey/peanuts)*", n:"up to 350%", d:"Stokes: niacin + sprint → 350% GH peak; Quabbe: niacin alone → >1,000% GH at rest in adults. Turkey = highest niacin per gram" },
+        { p:"Zinc (oysters)", n:"full week's RDA", d:"28.2mg per 3 oz — activates all 3 growth axis levels. Also in pumpkin seeds (+0.37cm WHO)" },
+        { p:"Omega-3s (salmon)", n:"IGF-1 + vit D", d:"Directly supports IGF-1 production + vitamin D enables GH-IGF-1-growth plate axis" },
+        { p:"Choline (liver)*", n:"up to 4,400%", d:"Highest choline density of any food — A-GPC pathway raised GH 4,400% with exercise in adults" },
+        { p:"Retinol (liver)", n:"40–60%", d:"GH receptor gene expression — deficiency cuts binding 40–60%" },
+        { p:"DIM (broccoli)", n:"plates stay open", d:"Aromatase inhibition — blocks estrogen conversion — delays growth plate closure" },
+        { p:"Lysine-Inositol-B12 (lentils)", n:"ISS RCT", d:"The growth combo from the Chinese ISS trial — lentils deliver lysine + inositol, beef delivers B12" },
+        { p:"Ornithine (beef)", n:"GH amplifier", d:"Cycles with arginine to amplify GH — beef is the primary dietary source" },
+        { p:"L-DOPA (tyrosine)*", n:"up to 221%", d:"Tyrosine → dopamine → stimulates GHRH — beef and turkey are top sources" },
         { p:"Arginine (pumpkin seeds)", n:"+0.33cm/yr", d:"Highest plant arginine. Copenhagen study: +0.33cm/yr in children" },
-        { p:"Zinc (seeds)", n:"+0.37cm", d:"WHO meta-analysis: zinc alone" },
-        { p:"Iron absorption (citrus)", n:"2–3×", d:"Citrus boosts iron uptake" },
-        { p:"Magnesium (seeds)", n:"SWS amplifier", d:"Deepens slow-wave sleep tonight" },
-        { p:"Taurine (meat)", n:"potentiator", d:"Supports bile for fat-soluble vitamin absorption" },
-        { p:"Iron (beef + lentils)", n:"growth enabler", d:"Required for oxygen to growing tissues" },
-        { p:"B12 (beef)", n:"cell division", d:"Chondrocyte division at growth plates" },
-        { p:"Fiber (lentils + seeds)", n:"protected GH", d:"Slows glucose — protects GH" },
-        { p:"Inositol (lentils + peanuts)", n:"ISS RCT", d:"Part of lysine-inositol-B12 growth combo" },
-        { p:"Microbiome GABA (fermented)", n:"continuous", d:"Sauerkraut/kimchi feed Lactobacillus that produce GABA 24/7" },
+        { p:"Iron (liver + beef + lentils)", n:"growth enabler", d:"Oxygen delivery to growing tissues — vitamin C boosts absorption 2–3×" },
+        { p:"Collagen/glycine (chicken skin)", n:"growth plates", d:"Skin-on thighs deliver glycine + taurine for growth plate collagen" },
+        { p:"Magnesium (seeds)", n:"SWS amplifier", d:"Deepens slow-wave sleep tonight — tonight's GH pulses" },
+        { p:"Taurine (meat)", n:"potentiator", d:"Supports bile for fat-soluble vitamin absorption from liver + salmon" },
+        { p:"B12 (beef + liver)", n:"cell division", d:"Required for chondrocyte division at growth plates" },
+        { p:"Fiber (lentils + seeds)", n:"protected GH", d:"Slows glucose — protects GH from insulin suppression" },
+        { p:"Inositol (lentils + peanuts)", n:"ISS RCT", d:"Part of lysine-inositol-B12 growth combo from Chinese ISS trial" },
+        { p:"Microbiome GABA (fermented)", n:"continuous", d:"Sauerkraut/kimchi feed Lactobacillus that produce GABA 24/7 — every serving compounds" },
       ],
       foods:[
-        { f:"Beef liver 1×/wk (or blend 2–3×/wk)", d:"Highest choline + niacin + iron + retinol + B12 + zinc. VITAMIN C, NOT MILK." },
-        { f:"Cooked oysters 1×/wk", d:"28.2mg zinc per 3 oz (full week's RDA). All 3 growth axis levels." },
-        { f:"Sauerkraut / kimchi (fermented side)", d:"Lactobacillus produces GABA — raised GH 400% in adult studies. Suppresses somatostatin. Even 2 tbsp counts." },
-        { f:"Wild salmon 2×/wk", d:"Omega-3s — IGF-1 + vitamin D + niacin." },
-        { f:"Beef (any cut) — daily", d:"Rich in glutamine, ornithine, and tyrosine — all GH-supporting aminos." },
-        { f:"Turkey breast", d:"Highest niacin + arginine per gram — primes sprint GH response." },
-        { f:"Chicken (skin-on thighs)", d:"Collagen/glycine from skin + taurine." },
-        { f:"Eggs (2–3 daily)", d:"Choline → GH axis primer + complete aminos." },
-        { f:"Pumpkin seeds", d:"Arginine + magnesium + zinc + tryptophan." },
-        { f:"Peanuts / PB", d:"Niacin + arginine + inositol — all GH-supporting nutrients." },
-        { f:"Lentils + citrus", d:"Iron + lysine + inositol. Vitamin C boosts iron 2–3×." },
-        { f:"Broccoli / cauliflower", d:"DIM + I3C — aromatase inhibition — plates stay open." },
+        { f:"Beef liver 1×/wk (or blend 2–3×/wk)", d:"Highest choline + niacin + iron + retinol + B12 + zinc of ANY food. Blend into ground beef — kids won't taste it. VITAMIN C alongside, NOT MILK. On sprint days: move to pre-sprint (2 hrs before) for maximum choline loading." },
+        { f:"Cooked oysters 1×/wk", d:"28.2mg zinc per 3 oz — full week's RDA in one serving. Activates all 3 growth axis levels. Pan-seared or in stew." },
+        { f:"Wild salmon 2×/wk", d:"Omega-3s directly support IGF-1 + vitamin D enables growth plate axis + niacin suppresses GH brake." },
+        { f:"Turkey breast", d:"Highest niacin + arginine per gram of any common meat — directly primes sprint GH response." },
+        { f:"Beef (any cut) — daily", d:"Richest source of glutamine (400% GH*) + ornithine (GH amplifier) + tyrosine (dopamine → 221% GH*)." },
+        { f:"Sauerkraut / kimchi (fermented side)", d:"Lactobacillus produces GABA — raised GH 400%* — suppresses somatostatin. Even 2 tbsp counts." },
+        { f:"Lentils + citrus", d:"Lysine + inositol + iron — the growth combo from the Chinese ISS RCT. Vitamin C boosts iron 2–3×." },
+        { f:"Broccoli / cauliflower", d:"DIM + I3C — aromatase inhibition — blocks estrogen conversion — keeps growth plates open longer." },
+        { f:"Pumpkin seeds", d:"Highest plant arginine (+0.33cm/yr) + magnesium + zinc (+0.37cm) + tryptophan." },
+        { f:"Chicken (skin-on thighs)", d:"Collagen/glycine from skin for growth plate building + taurine." },
+        { f:"Eggs (2–3 daily)", d:"Choline → GH axis primer + complete aminos. Over easy to preserve yolk nutrients." },
+        { f:"Peanuts / PB", d:"Niacin (>1,000% GH at rest*) + arginine + inositol — prime the afternoon sprint." },
       ]},
 
     { id:"water", t:"Water only", sub:"No juice boxes, no soda, no sweeteners", gh:"300% Growth Hormone", headline:"protected — each sugar spike suppresses up to 80%", tier:2, cite:"Lanzi, Metabolism 1999; Kojima, Nature 1999", why:"Every juice box triggers an insulin spike that shuts down GH for 2–3 hours. Allow 3–4 hour gaps — ghrelin directly triggers GH. Artificial sweeteners disrupt GABA-producing gut bacteria.", tip:"For a soda replacement: sparkling water with ice + a small splash of real juice (pomegranate, orange, tart cherry). Gives the fizzy flavor pop without the sugar load. Otherwise water or milk between meals.",
@@ -255,12 +260,15 @@ const dayData: DayPeriod[] = [
 
     { id:"nap", t:"No naps after 2–3pm", sub:"Steals tonight's deep sleep", gh:"60–80% Growth Hormone", headline:"of tonight's GH at risk — late naps steal adenosine", tier:2, cite:"Milner, J Sleep Res 2009; Brandenberger, Lancet 2000", why:"Naps after 3pm steal adenosine sleep pressure needed for deep slow-wave sleep. The first SWS cycle — the one most disrupted by late naps — contains the single largest GH pulse of the day.", tip:"If they truly need a nap, before 2pm and under 30 minutes." },
 
-    { id:"pre", t:"Eggs + peanuts before sprints", sub:"30–60 min before", gh:"+4,400% sprint primer*", headline:"choline + niacin prime the sprint GH response", tier:1, cite:"Stokes, J Appl Physiol 2008; Ziegenfuss, JISSN 2008; Quabbe, JCEM 1983", why:"Choline primes the hypothalamic-pituitary axis for the upcoming sprint. Niacin blocks free fatty acids — a molecular brake on GH. Stokes (2008): niacin amplified second sprint GH to ~23.3 μg/L vs ~5.2 controls (~350% greater peak, ~422% greater AUC) in adult athletes.", tip:"Over easy eggs. Unroasted peanuts or natural PB. No dairy — eggs have iron. Save milk for post-sprint.",
+    { id:"pre", t:"Beef liver + eggs + peanuts before sprints", sub:"Beef liver 1.5–2 hrs before · Eggs + peanuts 30–60 min before", gh:"+4,400% sprint primer*", headline:"choline + niacin prime the sprint GH response", tier:1, cite:"Stokes, J Appl Physiol 2008; Ziegenfuss, JISSN 2008; Quabbe, JCEM 1983", why:"Beef liver is the highest choline food on earth — loading choline 2 hours before sprints gives the A-GPC pathway time to peak. Then eggs + peanuts 30–60 min before add a second choline wave plus niacin. Niacin blocks free fatty acids — a molecular brake on GH. Stokes (2008): niacin amplified second sprint GH to ~23.3 μg/L vs ~5.2 controls (~350% greater peak, ~422% greater AUC) in adult athletes. On sprint days, move beef liver from lunch to pre-sprint for maximum choline loading.", tip:"Beef liver (or blended into ground beef) ~2 hrs before. Over easy eggs + unroasted peanuts 30–60 min before. No dairy with liver — iron. Save milk for post-sprint.",
       pumps:[
-        { p:"Choline priming*", n:"up to 4,400%", d:"A-GPC (choline metabolite) raised GH up to 4,400% with exercise in adults" },
+        { p:"Beef liver choline*", n:"up to 4,400%", d:"Highest choline food on earth — 2 hrs before sprint loads the A-GPC pathway for peak GH amplification" },
+        { p:"Egg choline (2nd wave)*", n:"up to 4,400%", d:"A-GPC (choline metabolite) raised GH up to 4,400% with exercise in adults" },
         { p:"Niacin (peanuts)*", n:"up to 350%", d:"Stokes: niacin + sprint → 350% greater GH peak; Quabbe: niacin alone → >1,000% GH in adults" },
+        { p:"Liver niacin*", n:"up to 350%", d:"Beef liver also high in niacin — double-primes the sprint with peanuts" },
         { p:"Arginine", n:"GH support", d:"Peanuts deliver arginine — direct GH secretagogue" },
         { p:"Glutamine (eggs)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult supplement study" },
+        { p:"Retinol (liver)", n:"GH receptor", d:"Preformed vitamin A — essential for GH receptor expression" },
         { p:"Inositol (peanuts)", n:"ISS pathway", d:"Part of lysine-inositol-B12 growth combo" },
         { p:"Fiber (peanuts)", n:"protected GH", d:"Slows glucose — protects GH" },
         { p:"Magnesium (peanuts)", n:"SWS amplifier", d:"Deepens slow-wave sleep tonight" },
@@ -392,7 +400,7 @@ const dayData: DayPeriod[] = [
         { p:"Cortisol reduction", n:"calming", d:"Consistent touch ritual lowers cortisol" },
       ]},
 
-    { id:"drink", t:"Sleep Drink — A2 milk + tart cherry", sub:"4 oz A2 milk + 1 oz tart cherry juice — 30 min before bed", gh:"451% Growth Hormone*", headline:"the 24-hour cycle completes — GH 451% at 24h in adult study, IGF-1 +14%", tier:0, sig:true, cite:"Zajac, Biol Sport 2018; Howatson, Eur J Nutr 2012; Forsling, J Pineal Res 1999", why:"The signature bioKids ritual. Casein slow-releases aminos 6–7 hours feeding GH pulses all night. Tart cherry = highest food melatonin (melatonin raised GH 157% in adult studies + aromatase inhibition). α-Lactalbumin = highest tryptophan — serotonin — melatonin. In the Zajac study (adults), GH remained 451% above baseline at 24 hours, IGF-1 14% higher. ~55 calories — too small to spike insulin. This is the 24-hour cycle: post-sprint milk then Sleep Drink then casein overnight then morning eggs restart. Some GH lever is always on.", tip:"Mix, serve 20–40 min before bed. This is a DAIRY window. Dim lights after.",
+    { id:"drink", t:"Sleep Drink — A2 milk + tart cherry (unsweetened)", sub:"4 oz A2 milk + 1 oz tart cherry juice — 60 min before bed — no added sugar", gh:"451% Growth Hormone*", headline:"the 24-hour cycle completes — GH 451% at 24h in adult study, IGF-1 +14%", tier:0, sig:true, cite:"Zajac, Biol Sport 2018; Howatson, Eur J Nutr 2012; Forsling, J Pineal Res 1999", why:"The signature bioKids ritual. Everything unsweetened, no added sugar — sugar close to bed fragments sleep and blunts GH pulses after midnight. Casein slow-releases aminos 6–7 hours feeding GH pulses all night. Tart cherry = highest food melatonin (melatonin raised GH 157% in adult studies + aromatase inhibition). α-Lactalbumin = highest tryptophan — serotonin — melatonin. In the Zajac study (adults), GH remained 451% above baseline at 24 hours, IGF-1 14% higher. ~55 calories — too small to spike insulin. Use 100% tart cherry juice ONLY — no blends, no added sugar. This is the 24-hour cycle: post-sprint milk then Sleep Drink then casein overnight then morning eggs restart. Some GH lever is always on.", tip:"Mix, serve 60 min before bed. Unsweetened — no honey, no sugar. 100% tart cherry juice only. This is a DAIRY window. Dim lights after.",
       pumps:[
         { p:"GH at 24h*", n:"up to 451%", d:"Zajac: still 451% above baseline at 24h in adult athletes" },
         { p:"IGF-1*", n:"+14%", d:"14% higher than controls in adult study" },
@@ -492,19 +500,19 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
             {/* Subtitle in mono */}
             <div style={{
               fontFamily:"'Courier New', Courier, monospace",
-              fontSize:11, color:"#57534e", marginTop:3, lineHeight:1.3,
+              fontSize:11, color:"#44403c", marginTop:3, lineHeight:1.3,
             }}>{item.sub}</div>
 
             {/* Headline — the ONE thing */}
             {!isUtil && <div style={{
               fontFamily:"'Courier New', Courier, monospace",
-              fontSize:11.5, color:"#57534e", marginTop:6, lineHeight:1.5,
+              fontSize:11.5, color:"#44403c", marginTop:6, lineHeight:1.5,
             }}>{greenNum(item.headline)}</div>}
 
             {/* Citation */}
             <div style={{
               fontFamily:"'Courier New', Courier, monospace",
-              fontSize:9, color:"#57534e", opacity:0.55, marginTop:4, lineHeight:1.3,
+              fontSize:9, color:"#44403c", opacity:0.55, marginTop:4, lineHeight:1.3,
             }}>{item.cite.split('; ').map((c, i, arr) => {
               const trimmed = c.trim();
               const url = citeUrls[trimmed];
@@ -540,12 +548,12 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
 
         {item.pumps && <div style={{ marginBottom:14 }}>
           <div style={{ fontSize:8.5, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:4 }}>Growth hormone pathways</div>
-          {item.pumps.some(p => p.p.includes('*')) && <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8.5, color:"#a8a29e", marginBottom:8, lineHeight:1.4 }}>* Percentages from adult studies using isolated amino acids or supplements. Whole foods deliver these pathways at lower but meaningful doses.</div>}
+          {item.pumps.some(p => p.p.includes('*')) && <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8.5, color:"#44403c", marginBottom:8, lineHeight:1.4 }}>* Percentages from adult studies using isolated amino acids or supplements. Whole foods deliver these pathways at lower but meaningful doses.</div>}
           {item.pumps.map((pump, i) => (
             <div key={i} style={{ display:"flex", alignItems:"baseline", gap:8, padding:"4px 0", borderTop: i > 0 ? "1px solid #f5f5f0" : "none" }}>
               <span style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", fontSize:13, color:"#065f46", minWidth:56, textAlign:"right", flexShrink:0 }}>{pump.n}</span>
               <span style={{ fontSize:11.5, fontWeight:600, color:"#1c1917" }}>{pump.p}</span>
-              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#a8a29e", flex:1 }}>— {pump.d}</span>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#44403c", flex:1 }}>— {pump.d}</span>
             </div>
           ))}
         </div>}
@@ -555,7 +563,7 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
           {item.foods.map((food, i) => (
             <div key={i} style={{ display:"flex", gap:8, padding:"5px 0", borderTop: i > 0 ? "1px solid #f5f5f0" : "none" }}>
               <div style={{ fontSize:12.5, fontWeight:600, color:"#1c1917", flex:1, lineHeight:1.4 }}>{food.f}</div>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#a8a29e", maxWidth:200, textAlign:"right", lineHeight:1.4 }}>{food.d}</div>
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#44403c", maxWidth:200, textAlign:"right", lineHeight:1.4 }}>{food.d}</div>
             </div>
           ))}
         </div>}
@@ -702,10 +710,10 @@ export default function Dashboard() {
             {/* Bonus progress (secondary — smaller) */}
             {(doneCount - coreDoneCount > 0 || allCoreDone) && (
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline" }}>
-                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#c8c3bc" }}>
+                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#78716c" }}>
                   {allDone ? "Everything done" : "Bonus"}
                 </span>
-                <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:11, color:"#a8a29e", fontWeight:700 }}>
+                <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:11, color:"#44403c", fontWeight:700 }}>
                   {doneCount - coreDoneCount}/{total - coreTotal}
                 </span>
               </div>
@@ -820,7 +828,7 @@ export default function Dashboard() {
                 }}>
                   <p style={{
                     fontFamily:"'Courier New', Courier, monospace",
-                    fontSize:11.5, color:"#57534e", lineHeight:1.6, margin:0,
+                    fontSize:11.5, color:"#44403c", lineHeight:1.6, margin:0,
                   }}>
                     There are {total - coreTotal - (doneCount - coreDoneCount)} bonus items left — these are the amplifiers.
                     Each one you check off stacks on top of today&apos;s foundation.
@@ -955,11 +963,11 @@ export default function Dashboard() {
 
                   {/* Bottom — genetic range */}
                   <div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#a8a29e", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:3 }}>Genetic range</div>
-                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, fontWeight:700, color:"#a8a29e" }}>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#44403c", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:3 }}>Genetic range</div>
+                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, fontWeight:700, color:"#44403c" }}>
                       {heightData.rangeLow} — {heightData.rangeHigh}
                     </div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#c8c3bc", marginTop:2 }}>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c", marginTop:2 }}>
                       standard mid-parental prediction
                     </div>
                   </div>
@@ -970,7 +978,7 @@ export default function Dashboard() {
               <div style={{ display:"flex", justifyContent:"flex-end", marginTop:16 }}>
                 <span style={{
                   display:"flex", alignItems:"center", gap:4,
-                  fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#c8c3bc",
+                  fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c",
                 }}>
                   Edit heights
                   <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -985,13 +993,23 @@ export default function Dashboard() {
         {/* Breath before the day begins */}
         <div style={{ height:1, background:"#e7e5e4", margin:"36px 0 40px" }} />
 
+        {/* Daily targets — bold header before all sections */}
+        <div style={{ marginBottom:32, padding:"20px 24px", background:"#f0fdf4", border:"2px solid #065f46", borderRadius:16 }}>
+          <div style={{ fontSize:18, fontWeight:900, color:"#065f46", letterSpacing:"-0.02em", marginBottom:14, textAlign:"center" }}>The bioKids GH Optimization Loop</div>
+          <div style={{ fontSize:15, fontWeight:800, color:"#065f46", lineHeight:1.6, letterSpacing:"-0.01em" }}>
+            <div style={{ marginBottom:8 }}>Target 20–24 oz A2 milk/day OR equivalent — 5 oz sheep yogurt = 8 oz A2 milk</div>
+            <div style={{ marginBottom:8 }}>Target 1.2–1.5 g protein per kg of body weight daily</div>
+            <div>Maintain a calorie surplus in clean, whole foods — nothing processed</div>
+          </div>
+        </div>
+
         {/* Day sections */}
         {dayData.map((p, pi) => (
           <div key={p.period} ref={el => { periodRefs.current[p.period] = el; }} style={{ marginBottom: pi < dayData.length - 1 ? 44 : 0 }}>
             <div style={{ marginBottom:16 }}>
               <div style={{ display:"flex", alignItems:"baseline", gap:10 }}>
                 <span style={{ fontSize:22, fontWeight:800, color:"#1c1917", letterSpacing:"-0.02em" }}>{p.period}</span>
-                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#c8c3bc" }}>{p.time}</span>
+                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c" }}>{p.time}</span>
                 {activePeriod === p.period && (
                   <span style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#f0fdf4", border:"1px solid #065f46", padding:"2px 8px", borderRadius:10 }}>
                     <span style={{ width:5, height:5, background:"#065f46", borderRadius:"50%", display:"inline-block" }} />
@@ -1019,7 +1037,7 @@ export default function Dashboard() {
 
         {/* Footer */}
         <div style={{ margin:"52px 0 40px", textAlign:"center" }}>
-          <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#a8a29e", lineHeight:1.7 }}>
+          <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#44403c", lineHeight:1.7 }}>
             Every number on this page comes from a peer-reviewed study.<br/>
             Items marked with * are from adult studies using isolated amino acids or supplements.<br/>
             Whole foods deliver these same pathways at lower but meaningful doses.<br/>

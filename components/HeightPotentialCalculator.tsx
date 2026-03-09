@@ -44,7 +44,7 @@ export default function HeightPotentialCalculator({
           {bioLow} — {bioHigh}
         </p>
         <p style={{ fontFamily: mono, fontSize: 12, color: '#065f46', marginTop: 8, lineHeight: 1.55 }}>
-          Up to +8&quot; above the genetic midpoint when sleep, nutrition, and movement are dialed in.
+          Up to +8&quot; above the genetic midpoint when sleep, nutrition, and movement are dialed in.*
         </p>
       </div>
 
@@ -92,6 +92,11 @@ export default function HeightPotentialCalculator({
           </p>
         </div>
       </div>
+
+      {/* Early-start footnote */}
+      <p style={{ fontFamily: mono, fontSize: 10, color: '#065f46', lineHeight: 1.55, marginBottom: 20, fontStyle: 'italic' }}>
+        * The earlier you start optimizing sleep, nutrition, and movement, the greater the window for growth. Growth plates close after puberty — every year counts.
+      </p>
 
       {/* Percentile Table */}
       <div style={{ marginBottom: 20 }}>

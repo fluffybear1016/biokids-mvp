@@ -279,25 +279,11 @@ Calcium is directly needed for melatonin synthesis. Uses the serotonin \u2192 me
 
 Warm if tolerated \u2014 warmth adds a calming sensory component. Plain, unsweetened only.
 
-Can add \u00BD-1 teaspoon raw honey for blood sugar stabilization and taste.
-
 Casein curds digest 3-7 hours releasing tryptophan. Amplifies overnight GH 20-50%. Dutch, Dinka, Serbians all do this.`,
       timing: "60-90 min before lights out. Warm. Plain. Never chocolate or sweetened.",
       citations: [
         { text: "Markus CR et al. Am J Clin Nutr. 2005", url: "https://pubmed.ncbi.nlm.nih.gov/15883457" },
         { text: "Dela Pe\u00F1a IJ et al. Pharm Biol. 2015", url: "https://pubmed.ncbi.nlm.nih.gov/25902764" }
-      ]
-    },
-    {
-      title: "Honey before bed \u2014 \u00BD-1 tsp raw honey",
-      what: "Stabilizes overnight blood sugar and improves sleep quality.",
-      why: `A small amount of raw honey (\u00BD-1 teaspoon) can stabilize overnight blood sugar and improve sleep quality. Studies in cough and respiratory contexts show honey before bed improves sleep continuity.
-
-This prevents the blood sugar dip that can cause middle-of-night waking. Use sparingly \u2014 this is not a large dose. Can be added to warm milk.`,
-      timing: "Add to bedtime milk or take separately",
-      citations: [
-        { text: "Cohen HA et al. Pediatrics. 2012", url: "https://pubmed.ncbi.nlm.nih.gov/22869830" },
-        { text: "Samarghandian S et al. Pharmacogn Res. 2017", url: "https://pubmed.ncbi.nlm.nih.gov/28630940" }
       ]
     },
     {
@@ -314,8 +300,6 @@ Use 100% tart cherry juice ONLY \u2014 no blends, no added sugar. Always dilute 
 Use ONLY if sleep onset or early-morning waking is a problem \u2014 not for children who already sleep well.
 
 Milk first (serotonin precursor groundwork), tart cherry later (melatonin timing cue).
-
-The risk of combining: Too much sugar too close to bed can fragment sleep later in the night and blunt growth hormone pulses after midnight. Dose and spacing matter more than the foods themselves.
 
 Watch for: night waking, vivid dreams, bedwetting, or morning grogginess. If any appear, reduce or stop tart cherry first, then reassess milk. If child already sleeps well \u2014 don\u2019t add tart cherry at all.
 
@@ -922,8 +906,7 @@ Zero tolerance.`,
                   'Devices charge outside bedroom'
                 ] },
                 { time: '60-90 min before lights out', items: [
-                  `Bedtime milk (${currentMilk.amount}, warm, plain, unsweetened)`,
-                  'Can add \u00BD-1 tsp raw honey for blood sugar stabilization'
+                  `Bedtime milk (${currentMilk.amount}, warm, plain, unsweetened — no added sugar)`
                 ] },
                 { time: '30-45 min before lights out (only if sleep onset is a problem)', items: [
                   `Tart cherry juice (${currentCherry.dose} diluted ${currentCherry.dilution})`,
