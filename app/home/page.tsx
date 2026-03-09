@@ -109,6 +109,8 @@ const citeUrls: Record<string, string> = {
   "Takahashi, J Clin Invest 1968": "https://pubmed.ncbi.nlm.nih.gov/5675428/",
   "Zajac, Biol Sport 2018": "https://pubmed.ncbi.nlm.nih.gov/30765926/",
   "Quabbe, JCEM 1983": "https://pubmed.ncbi.nlm.nih.gov/6345570/",
+  "Milan, Front Nutr 2020": "https://pubmed.ncbi.nlm.nih.gov/33240914/",
+  "Zhang, Front Nutr 2024": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11622695/",
 };
 
 const dayData: DayPeriod[] = [
@@ -128,41 +130,48 @@ const dayData: DayPeriod[] = [
       ]},
 
 
-    { id:"d1", t:"Morning dairy + pumpkin seeds", sub:"8 oz A2 milk or sheep yogurt + handful of pumpkin seeds", gh:"+0.39 cm/8 oz serving", headline:"per 8 oz/day across childhood — IGF-1 shift P=0.005", tier:0, cite:"Hoppe, Eur J Clin Nutr 2008; Kang, Nutrients 2019", why:"Milk proteins directly stimulate hepatic IGF-1 production. Six key proteins: casein (slow-release 6–7 hrs), α-lactalbumin (highest tryptophan — serotonin — melatonin), lactoferrin, lysozyme, sIgA, albumin. IRON-DAIRY RULE: serve milk between meals or post-sprint, not alongside iron meals.", tip:"Dairy FIRST (within 1 hour of waking), then eggs. Add pumpkin seeds to sheep yogurt for arginine + zinc + magnesium in one handful.",
+    { id:"d1", t:"Sheep yogurt, pumpkin seeds + A2 milk", sub:"Target 20–24 oz A2 milk/day OR equivalent — 5 oz sheep yogurt = 8 oz A2 milk", gh:"+0.39 cm/8 oz serving", headline:"per 8 oz/day across childhood — IGF-1 shift P=0.005", tier:0, cite:"Hoppe, Eur J Clin Nutr 2008; Kang, Nutrients 2019; Milan, Front Nutr 2020; Zhang, Front Nutr 2024", why:"Sheep milk may be the single most nutrient-dense milk available. It delivers 65% more protein than cow milk (5.5g vs 3.3g per 100mL), 36% more calcium (181mg/dL vs 133mg/dL), 62% more BCAAs (10.5 vs 6.5 mg/mL), and is naturally 100% A2 casein — no A1 at all. In a randomized controlled trial (Milan et al., 2020), an equal volume of sheep milk produced significantly higher peak circulating BCAAs than cow milk (641 vs 564 μmol/L, P<0.001) — including leucine, the amino acid that triggers muscle protein synthesis. In a 2024 rat growth study (Zhang et al., Front Nutr), sheep milk powder was associated with distinct metabolic profiles linked to hormone regulation pathways. Sheep yogurt is fermented by Lactobacillus — the same bacteria that produce GABA, which raised GH 400% in adult studies. Fermentation also increases bioavailability of calcium and B vitamins, pre-digests casein for easier absorption, and produces additional bioactive peptides. 5 oz sheep yogurt delivers the same protein as 8 oz A2 cow milk. IRON-DAIRY RULE: serve milk between meals or post-sprint, not alongside iron meals.", tip:"Dairy FIRST (within 1 hour of waking), then eggs. Top sheep yogurt with a handful of pumpkin seeds for arginine + zinc + magnesium in one bite. Daily target: ~20–24 oz A2 milk equivalent across all dairy windows (morning + post-sprint + Sleep Drink). Sheep yogurt at 5 oz = 8 oz A2 milk, so a morning bowl gets you nearly halfway.",
       pumps:[
         { p:"IGF-1 stimulation", n:"10–20%", d:"240 mL/day — measurable IGF-1 shift (P=0.005)" },
         { p:"Height per serving", n:"+0.39cm", d:"Per additional 8 oz/day across childhood" },
+        { p:"Sheep milk density", n:"65% more protein", d:"5.5g vs 3.3g per 100mL — 36% more calcium — 100% A2 casein naturally" },
+        { p:"Sheep milk BCAAs (RCT)", n:"62% more", d:"10.5 vs 6.5 mg/mL — peak leucine significantly higher (P<0.001) — triggers muscle protein synthesis" },
+        { p:"Fermentation → GABA → GH*", n:"up to 400%", d:"Yogurt is fermented by Lactobacillus — produces GABA — GABA raised GH 400% in adult studies AND suppresses somatostatin (the GH brake)" },
+        { p:"Fermentation — bioavailability", n:"enhanced", d:"Pre-digests casein + increases calcium and B vitamin absorption + produces bioactive peptides" },
         { p:"α-Lactalbumin — melatonin*", n:"up to 157%", d:"Highest tryptophan — serotonin — melatonin raised GH 157% in adult studies" },
         { p:"Casein overnight*", n:"up to 451%", d:"Slow-releases aminos 6–7 hrs — Zajac: GH 451% above baseline at 24h in adults" },
         { p:"Lysine + Arginine*", n:"up to 700%", d:"Milk delivers both — combined aminos raised GH up to 700% in adult supplement studies" },
-        { p:"GABA (yogurt/kefir)*", n:"up to 400%", d:"Lactobacillus produces GABA — raised GH 400% in adult studies" },
         { p:"Calcium + phosphorus", n:"bone mineral", d:"Via casein micelles — direct bone mineralization" },
       ],
       foods:[
-        { f:"A2 whole milk, 8 oz", d:"Casein + whey + tryptophan + calcium." },
-        { f:"Sheep's milk yogurt, 5 oz", d:"50–80% more casein per volume." },
+        { f:"Sheep's milk yogurt, 5 oz (= 8 oz A2 milk)", d:"65% more protein, 62% more BCAAs, 36% more calcium, 100% A2 casein. Fermented by Lactobacillus — produces GABA (raised GH 400%* in adults) + suppresses somatostatin + enhances mineral absorption." },
+        { f:"A2 whole milk, 8 oz", d:"Casein + whey + tryptophan + calcium. Base unit for daily 20–24 oz target." },
         { f:"Full-fat kefir", d:"Milk proteins + fermentation-derived GABA." },
+        { f:"Pumpkin seeds, handful on top", d:"Arginine + magnesium + zinc + tryptophan — stir into yogurt." },
       ]},
 
-    { id:"bkf", t:"Eggs", sub:"2–3 pasture-raised", gh:"+4,400% Growth Hormone axis primer*", headline:"choline — acetylcholine — primes every GH pulse today", tier:0, cite:"Ziegenfuss, JISSN 2008; Zeisel, Nutr Rev 2009", why:"Eggs are the richest whole-food choline source. Choline converts to acetylcholine, which stimulates GHRH neurons, priming the pituitary for every GH pulse all day. This restarts the 24-hour cycle — last night's casein bridged overnight, now choline reignites the axis. Eggs also deliver glutamine, ornithine, lysine + arginine, and tyrosine — all GH-supporting aminos.", tip:"Scrambled or over easy. Skip cereal — always. No cheese at this meal — calcium competes with egg iron. Pair with a vitamin C source to boost iron absorption.",
+    { id:"bkf", t:"Pasture-raised eggs — over easy with olive oil + red bell pepper", sub:"2–3 daily — runny yolk preserves choline, lutein + fat-soluble vitamins", gh:"+4,400% Growth Hormone axis primer*", headline:"choline — acetylcholine — primes every GH pulse today", tier:0, cite:"Ziegenfuss, JISSN 2008; Zeisel, Nutr Rev 2009", why:"Eggs are the richest whole-food choline source. Choline converts to acetylcholine, which stimulates GHRH neurons, priming the pituitary for every GH pulse all day. This restarts the 24-hour cycle — last night's casein bridged overnight, now choline reignites the axis. Over easy or sunny side up preserves ~10–15% more heat-sensitive nutrients (choline, lutein, B vitamins) than scrambling or hard-boiling — the runny yolk is key. Cooking in olive oil adds healthy fats that boost absorption of fat-soluble vitamins A, D, E, K from the yolk. Pairing with red bell pepper (190mg vitamin C per cup) boosts egg iron absorption 2–3× and adds vitamin C. Eggs also deliver glutamine, ornithine, lysine + arginine, and tyrosine — all GH-supporting aminos.", tip:"Over easy or sunny side up in olive oil — never hard-boiled for this meal. Slice red bell pepper alongside (190mg vitamin C per cup — 3× an orange). Skip cereal — always. No cheese at this meal — calcium competes with egg iron. On beef liver days (1×/wk), blend liver into meatballs or bolognese for the highest choline density of any food.",
       pumps:[
         { p:"Choline → acetylcholine", n:"axis primer", d:"Two eggs ≈ 300mg choline — primes pituitary for GH pulses all day" },
         { p:"Choline pathway*", n:"up to 4,400%", d:"A-GPC (choline metabolite) raised GH up to 4,400% in adult studies" },
+        { p:"Runny yolk advantage", n:"10–15% more", d:"Over easy preserves choline, lutein, B vitamins better than scrambled/hard-boiled" },
         { p:"Glutamine*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — eggs deliver meaningful amounts" },
         { p:"Ornithine", n:"GH amplifier", d:"Cycles with arginine to amplify GH" },
         { p:"Lysine + Arginine*", n:"up to 700%", d:"Combined amino acids raised GH up to 700% in adult supplement studies" },
         { p:"L-DOPA (tyrosine)*", n:"up to 221%", d:"Tyrosine — dopamine — stimulates GHRH in adult studies" },
         { p:"Retinol (vitamin A)", n:"40–60%", d:"Deficiency reduces GH receptor binding 40–60%" },
+        { p:"Olive oil + fat-soluble vitamins", n:"absorption boost", d:"Fat from olive oil enhances absorption of vitamins A, D, E, K in the yolk" },
         { p:"Glycine", n:"collagen builder", d:"Growth plate collagen building block" },
         { p:"Taurine", n:"potentiator", d:"Supports bile for fat-soluble vitamin absorption" },
         { p:"B12", n:"cell division", d:"Required for chondrocyte division at growth plates" },
       ],
       foods:[
-        { f:"Pasture-raised eggs, 2–3 daily", d:"Richest whole-food choline source." },
-        { f:"Beef liver 1×/wk or blend 2–3×/wk", d:"Highest choline density. VITAMIN C, NOT MILK." },
+        { f:"Pasture-raised eggs, 2–3 over easy in olive oil", d:"Runny yolk = maximum choline + lutein. Olive oil boosts fat-soluble vitamin absorption." },
+        { f:"Red bell pepper slices alongside", d:"190mg vitamin C per cup — boosts egg iron absorption 2–3×. No cooking needed." },
+        { f:"Beef liver 1×/wk or blend 2–3×/wk", d:"Highest choline density of any food. Pair with VITAMIN C, NOT MILK." },
       ]},
 
-    { id:"clo", t:"Cod liver oil", sub:"½ tsp — NOT on beef liver days", gh:"40–60% Growth Hormone", headline:"of GH receptor function lost without retinol", tier:0, cite:"Balmer, J Lipid Res 2002; Soliman, Indian J Endocrinol Metab 2014", why:"CLO delivers three growth levers in one spoon. Retinol is required for GH receptor gene expression — deficiency cuts binding 40–60%. Vitamin D deficiency blunts GH — IGF-1 — growth plate pathway. Omega-3s are anti-inflammatory at the growth plate.", tip:"In a smoothie — they won't taste it. Skip on beef liver days — both deliver high-dose vitamins A and D.",
+    { id:"clo", t:"Cod liver oil — ½ tsp daily", sub:"Retinol + vitamin D + omega-3s in one spoon — NOT on beef liver days", gh:"40–60% Growth Hormone", headline:"of GH receptor function lost without retinol", tier:0, cite:"Balmer, J Lipid Res 2002; Soliman, Indian J Endocrinol Metab 2014", why:"CLO delivers three growth levers in one spoon. Retinol is required for GH receptor gene expression — deficiency cuts binding 40–60%. Vitamin D deficiency blunts GH — IGF-1 — growth plate pathway. Omega-3s are anti-inflammatory at the growth plate.", tip:"Hide in a smoothie with berries — they won't taste it. Skip on beef liver days — both deliver high-dose vitamins A and D.",
       pumps:[
         { p:"Retinol — GH receptors", n:"40–60%", d:"Deficiency reduces GH receptor binding" },
         { p:"Vitamin D — IGF-1", n:"axis enabler", d:"Deficiency blunts IGF-1 production" },
@@ -202,10 +211,11 @@ const dayData: DayPeriod[] = [
   ]},
 
   { period:"Afternoon", time:"12:00 – 5:00pm", items:[
-    { id:"lunch", t:"Animal + plant protein, vegetables, pumpkin seeds", sub:"Meat + lentils + cruciferous + fermented + pumpkin seeds", gh:"+700% Growth Hormone multi-lever*", headline:"lysine + arginine + glutamine + niacin — stacks multiple GH pathways", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012; Quabbe, JCEM 1983", why:"This meal activates 10+ GH pathways and primes the afternoon sprint. Beef liver has the highest choline density plus retinol, B12, and zinc. Peanuts deliver niacin, which suppresses free fatty acids that brake GH. WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver mixed into ground beef (burgers, meatballs, bolognese) — kids won't taste it. Peanuts prime the sprint. NO DAIRY at this meal.",
+    { id:"lunch", t:"Beef liver, oysters, sauerkraut + pumpkin seeds", sub:"Rotate: liver 1×/wk, oysters 1×/wk, salmon 2×/wk — with fermented side + lentils + cruciferous", gh:"+700% Growth Hormone multi-lever*", headline:"lysine + arginine + glutamine + niacin + GABA — stacks multiple GH pathways", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012; Quabbe, JCEM 1983", why:"This meal activates 10+ GH pathways and primes the afternoon sprint. Beef liver has the highest choline density of any food plus retinol, B12, and zinc — blend into ground beef and kids won't taste it. Oysters deliver a full week's zinc RDA in a single 3-oz serving. Sauerkraut and kimchi are fermented by Lactobacillus — the same bacteria that produce GABA. GABA raised GH up to 400% in adult studies and suppresses somatostatin (the hormone that puts the brakes on GH release). Every fermented food — yogurt, kefir, sauerkraut, kimchi — feeds this GABA pathway. Pumpkin seeds are the highest plant source of arginine. Peanuts deliver niacin, which suppresses free fatty acids that brake GH. WARNING: No CLO on beef liver days — both deliver high-dose vitamins A and D.", tip:"Beef liver mixed into ground beef (burgers, meatballs, bolognese) — kids won't taste it. Oysters: pan-seared or in stew, 1×/wk. Sauerkraut or kimchi as a side — even 2 tbsp counts. Peanuts prime the sprint. NO DAIRY at this meal.",
       pumps:[
         { p:"Lysine + Arginine*", n:"up to 700%", d:"Combined aminos raised GH up to 700% in adult supplement studies" },
         { p:"Glutamine (beef)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — beef delivers meaningful amounts" },
+        { p:"GABA (sauerkraut/kimchi)*", n:"up to 400%", d:"Lactobacillus fermentation produces GABA — raised GH 400% in adult studies — suppresses somatostatin" },
         { p:"Niacin (peanuts)*", n:"up to 350%", d:"Niacin suppresses FFAs → Stokes: 350% sprint GH amplification; Quabbe: >1,000% GH at rest in adults" },
         { p:"Ornithine", n:"GH amplifier", d:"Cycles with arginine to amplify GH" },
         { p:"L-DOPA (tyrosine)*", n:"up to 221%", d:"Tyrosine — dopamine — stimulates GHRH in adult studies" },
@@ -218,10 +228,12 @@ const dayData: DayPeriod[] = [
         { p:"B12 (beef)", n:"cell division", d:"Chondrocyte division at growth plates" },
         { p:"Fiber (lentils + seeds)", n:"protected GH", d:"Slows glucose — protects GH" },
         { p:"Inositol (lentils + peanuts)", n:"ISS RCT", d:"Part of lysine-inositol-B12 growth combo" },
+        { p:"Microbiome GABA (fermented)", n:"continuous", d:"Sauerkraut/kimchi feed Lactobacillus that produce GABA 24/7" },
       ],
       foods:[
         { f:"Beef liver 1×/wk (or blend 2–3×/wk)", d:"Highest choline + niacin + iron + retinol + B12 + zinc. VITAMIN C, NOT MILK." },
         { f:"Cooked oysters 1×/wk", d:"28.2mg zinc per 3 oz (full week's RDA). All 3 growth axis levels." },
+        { f:"Sauerkraut / kimchi (fermented side)", d:"Lactobacillus produces GABA — raised GH 400% in adult studies. Suppresses somatostatin. Even 2 tbsp counts." },
         { f:"Wild salmon 2×/wk", d:"Omega-3s — IGF-1 + vitamin D + niacin." },
         { f:"Beef (any cut) — daily", d:"Rich in glutamine, ornithine, and tyrosine — all GH-supporting aminos." },
         { f:"Turkey breast", d:"Highest niacin + arginine per gram — primes sprint GH response." },
@@ -254,7 +266,7 @@ const dayData: DayPeriod[] = [
         { p:"Magnesium (peanuts)", n:"SWS amplifier", d:"Deepens slow-wave sleep tonight" },
       ]},
 
-    { id:"spr", t:"6 × 30-sec all-out sprints", sub:"3×/week — 2–4 min full rest between", gh:"530% Growth Hormone*", headline:"per sprint in adult studies — nothing in nutrition comes close", tier:0, cite:"Stokes, J Sports Sci 2002; Nevill, J Appl Physiol 1996", why:"In adult studies, a single 30-second sprint produced a 530% GH spike. Even 6 seconds = 217%. The trigger is lactate — only at true maximum effort. With pre-sprint choline + niacin, every sprint is maximized.", tip:"Tag, races, hill sprints — as long as it's genuinely all-out. Hill sprints produce higher lactate. Alternate days with jumping.",
+    { id:"spr", t:"6 × 30-sec all-out sprints", sub:"MON / WED / FRI — alternate days with jumping (never both same day)", gh:"530% Growth Hormone*", headline:"per sprint in adult studies — nothing in nutrition comes close", tier:0, cite:"Stokes, J Sports Sci 2002; Nevill, J Appl Physiol 1996", why:"In adult studies, a single 30-second sprint produced a 530% GH spike. Even 6 seconds = 217%. The trigger is lactate — only at true maximum effort. With pre-sprint choline + niacin, every sprint is maximized. ROTATION: Sprint days and jump days alternate — never do both on the same day. Example: Mon/Wed/Fri sprints, Tue/Thu/Sat jumps. Recovery between sessions is when growth happens.", tip:"Tag, races, hill sprints — as long as it's genuinely all-out. Hill sprints produce higher lactate. 2–4 min FULL rest between sprints. Sprint days: Mon / Wed / Fri. Jump days: Tue / Thu / Sat. Sunday: rest.",
       pumps:[
         { p:"Sprint GH*", n:"up to 530%", d:"Per 30-second all-out sprint in adult studies" },
         { p:"With choline*", n:"up to 4,400%", d:"A-GPC (choline pathway) raised GH up to 4,400% with exercise in adults" },
@@ -264,7 +276,7 @@ const dayData: DayPeriod[] = [
         { p:"Healthy body composition", n:"sustained GH", d:"Sprint training maintains lean body comp" },
       ]},
 
-    { id:"jump", t:"Jumping protocol", sub:"50–100 jumps, 3×/week (alternate with sprints)", gh:"+4.3 cm", headline:"in 24 weeks — IGF-1 up, bone density +1.08", tier:0, feat:true, cite:"Zribi, J Pediatr Endocrinol Metab; PMC9135997", why:"24-week study of short-stature children: +4.32 cm vs 0.93–1.84 cm in controls. IGF-1 increased. Femoral neck BMD +1.08 (Cohen's d ≈ 0.87). Zero injuries. Preschool study (ages 3–6): height gain exceeded national averages.", tip:"Jump rope (50–100), drop jumps from 20–40cm platforms, single-leg hops. HR target: 128–155 bpm. Always followed by stretching.",
+    { id:"jump", t:"Jumping protocol", sub:"TUE / THU / SAT — alternate days with sprints (never both same day)", gh:"+4.3 cm", headline:"in 24 weeks — IGF-1 up, bone density +1.08", tier:0, feat:true, cite:"Zribi, J Pediatr Endocrinol Metab; PMC9135997", why:"24-week study of short-stature children: +4.32 cm vs 0.93–1.84 cm in controls. IGF-1 increased. Femoral neck BMD +1.08 (Cohen's d ≈ 0.87). Zero injuries. Preschool study (ages 3–6): height gain exceeded national averages. ROTATION: Jump days and sprint days alternate — never do both on the same day. Example: Tue/Thu/Sat jumps, Mon/Wed/Fri sprints. Recovery between sessions is when growth happens.", tip:"50–100 jumps: jump rope, drop jumps from 20–40cm platforms, single-leg hops. HR target: 128–155 bpm. Jump days: Tue / Thu / Sat. Sprint days: Mon / Wed / Fri. Sunday: rest. Always followed by stretching.",
       pumps:[
         { p:"Height gain", n:"+4.3cm", d:"In 24 weeks vs ~1cm controls" },
         { p:"IGF-1 increase", n:"significant", d:"Growth plate signaling upregulated" },
@@ -279,7 +291,7 @@ const dayData: DayPeriod[] = [
         { p:"Spinal decompression", n:"reverses 1%", d:"Dead hang reverses daily compression" },
       ]},
 
-    { id:"pm", t:"Post-sprint milk", sub:"8–12 oz A2 + 1 tbsp raw honey", gh:"451% Growth Hormone*", headline:"GH to IGF-1 conversion — still 451% above baseline at 24h in adult study", tier:0, sig:true, cite:"Zajac, Biol Sport 2018; Cappon, J Appl Physiol 1994", why:"Without milk after sprints, the GH spike is 'orphaned' — present but not converted to IGF-1 (the actual growth signal). Whey provides immediate aminos. Honey's gentle insulin activates the STAT5 pathway, converting GH to IGF-1. Casein slow-releases for hours, bridging to the Sleep Drink.", tip:"Cold milk, raw honey, immediately after stretching. This is a DAIRY window. Non-sprint days: same drink after school.",
+    { id:"pm", t:"A2 milk + raw honey after sprints", sub:"8–12 oz cold A2 milk + 1 tbsp raw honey — immediately after stretching", gh:"451% Growth Hormone*", headline:"GH to IGF-1 conversion — still 451% above baseline at 24h in adult study", tier:0, sig:true, cite:"Zajac, Biol Sport 2018; Cappon, J Appl Physiol 1994", why:"Without milk after sprints, the GH spike is 'orphaned' — present but not converted to IGF-1 (the actual growth signal). Whey provides immediate aminos. Raw honey's gentle insulin activates the STAT5 pathway, converting GH to IGF-1. Casein slow-releases for hours, bridging to the Sleep Drink. Counts toward the daily 20–24 oz A2 milk target.", tip:"Cold milk, raw honey, immediately after stretching. This is a DAIRY window. Non-sprint days: same drink after school.",
       pumps:[
         { p:"GH to IGF-1*", n:"up to 451%", d:"Zajac: still 451% above baseline at 24h in adult athletes" },
         { p:"IGF-1*", n:"+14%", d:"14% higher than controls at 24h in adult study" },
@@ -296,10 +308,9 @@ const dayData: DayPeriod[] = [
   { period:"Evening", time:"6:00 – 9:00pm", note:"Do these in order. By the end, they're drowsy.", items:[
     { id:"nox", t:"No exercise after 6pm", sub:"Core temp must drop for deep sleep", gh:"60–80% Growth Hormone", headline:"of tonight's GH at risk — late exercise delays sleep onset", tier:2, cite:"Stutz, Sports Med 2019; Brandenberger, Lancet 2000", why:"Core body temp must drop 1–1.5°C to initiate deep sleep. Vigorous exercise within 2 hours of bed raises it, delaying sleep onset and compressing the SWS window.", tip:"Save all sports for afternoon. No competitive evening games." },
 
-    { id:"din", t:"Dinner — done by 6pm", sub:"Animal + plant protein + cruciferous + fermented + broth", gh:"+400% Growth Hormone multi-lever*", headline:"stacks glutamine + GABA + glycine + aromatase block", tier:0, cite:"Welbourne, Am J Clin Nutr 1995; Kasai, Metabolism 1980", why:"This dinner hits every remaining GH pathway. Beef delivers glutamine, ornithine, and tyrosine. Lentils add plant protein, lysine, and inositol. Bone broth delivers glycine (promotes sleep onset + growth plate collagen). Fermented foods provide GABA via Lactobacillus. Broccoli provides DIM for aromatase inhibition — plates stay open. NO DAIRY at dinner — save milk for the Sleep Drink.", tip:"Any meat + lentils + cruciferous + fermented side + bone broth. Vary proteins. NO DAIRY here.",
+    { id:"din", t:"Dinner — done by 6pm, always include glycine (bone broth, etc.)", sub:"Glycine — GH secretagogue + sleep onset + growth plate collagen — with rotated protein + lentils + broccoli — NO DAIRY", gh:"+400% Growth Hormone multi-lever*", headline:"stacks glutamine + glycine + aromatase block", tier:0, cite:"Welbourne, Am J Clin Nutr 1995; Kasai, Metabolism 1980", why:"This dinner hits every remaining GH pathway. Bone broth is the richest food source of glycine — a direct GH secretagogue that also lowers core temperature for sleep onset and is the primary building block of growth plate collagen. Beef delivers glutamine, ornithine, and tyrosine. Lentils add plant protein, lysine, and inositol. Broccoli provides DIM for aromatase inhibition — plates stay open. NO DAIRY at dinner — save milk for the Sleep Drink.", tip:"Mug of bone broth as a starter or soup base. Any meat + lentils + cruciferous. Vary proteins. NO DAIRY here.",
       pumps:[
         { p:"Glutamine (beef)*", n:"up to 400%", d:"Glutamine raised GH 4-fold in adult studies — beef delivers meaningful amounts" },
-        { p:"GABA (fermented)*", n:"up to 400%", d:"GABA raised GH 400% in adult studies — fermented foods are a natural GABA source" },
         { p:"Glycine (broth)*", n:"up to 300%", d:"Glycine raised GH 300% in adult studies — also lowers core temp for sleep" },
         { p:"Ornithine", n:"GH amplifier", d:"Cycles with arginine to amplify GH" },
         { p:"Aromatase block", n:"growth plates", d:"DIM from broccoli — delays growth plate closure" },
@@ -309,7 +320,6 @@ const dayData: DayPeriod[] = [
         { p:"B12 (beef)", n:"cell division", d:"Chondrocyte division at growth plates" },
         { p:"Fiber (lentils + broccoli)", n:"protected GH", d:"Slows insulin — protects GH" },
         { p:"Inositol (lentils)", n:"ISS pathway", d:"Part of lysine-inositol-B12 growth axis" },
-        { p:"Microbiome GABA (fermented)", n:"continuous", d:"Sauerkraut/kimchi feed bacteria that produce GABA 24/7" },
         { p:"Plant protein (lentils)", n:"puberty delay", d:"Associated with later puberty — longer growth window" },
       ],
       foods:[
@@ -321,19 +331,18 @@ const dayData: DayPeriod[] = [
         { f:"Beef liver 1×/wk (blend 2–3×/wk)", d:"Highest pump density. Vitamin C, NOT milk." },
         { f:"Cooked oysters 1×/wk", d:"Zinc (week's RDA) + iron + B12." },
         { f:"Bone broth", d:"Richest food source of glycine — GH secretagogue + growth plate collagen." },
-        { f:"Sauerkraut / kimchi", d:"Fermented foods produce GABA via Lactobacillus — suppresses somatostatin." },
         { f:"Broccoli / cauliflower", d:"Aromatase inhibition — plates stay open." },
         { f:"Lentils", d:"Iron + lysine + inositol + plant protein — associated with later puberty." },
       ]},
 
-    { id:"gly", t:"Gelatin dessert", sub:"Bovine gelatin jello or bone broth", gh:"+300% glycine lever*", headline:"glycine — GH secretagogue + lowers core temp + growth plate collagen", tier:1, cite:"Kawai, Neuropsychopharmacology 2015; Kasai, Metabolism 1980", why:"Glycine: (1) lowers core temp via NMDA receptors — triggers sleep onset, (2) a direct GH secretagogue (raised GH up to 300% in adult studies), (3) most abundant amino acid in collagen — the structural protein of growth plates.", tip:"Gelatin in jello with allulose or monk fruit. Gelatin powder has no taste — mix into anything.",
+    { id:"gly", t:"Bovine gelatin jello with tart cherry", sub:"Glycine dessert — gelatin + tart cherry juice + allulose or monk fruit", gh:"+300% glycine lever*", headline:"glycine — GH secretagogue + lowers core temp + growth plate collagen", tier:1, cite:"Kawai, Neuropsychopharmacology 2015; Kasai, Metabolism 1980", why:"Bovine gelatin is pure collagen — the richest source of glycine available. Glycine: (1) lowers core temp via NMDA receptors — triggers sleep onset, (2) a direct GH secretagogue (raised GH up to 300% in adult studies), (3) most abundant amino acid in collagen — the structural protein of growth plates. Adding tart cherry juice delivers melatonin (the highest food source) plus aromatase inhibition. Use allulose or monk fruit to sweeten — no insulin spike.", tip:"Dissolve bovine gelatin in warm tart cherry juice, add allulose or monk fruit, set in fridge. Kids think it's regular jello. Gelatin powder has no taste — mix into anything.",
       pumps:[
         { p:"Glycine — GH*", n:"up to 300%", d:"Glycine raised GH up to 300% in adult studies" },
         { p:"Sleep onset", n:"core temp ↓", d:"Lowers body temp — initiates deep sleep" },
         { p:"Growth plate collagen", n:"structural", d:"Glycine + hydroxyproline + proline" },
       ]},
 
-    { id:"nse", t:"Growth Hormone-safe snacks only", sub:"No refined sugar — ever", gh:"300–500% Growth Hormone", headline:"overnight GH protected — each spike blocks up to 80%", tier:1, cite:"Lanzi, Metabolism 1999; Van Cauter, JCEM 1992", why:"60–80% of GH is released overnight. One scoop of regular ice cream suppresses up to 80% via insulin. Use monk fruit, allulose, honey, or maple syrup.", tip:"These replace all store-bought snacks. Every one hits a GH pump.",
+    { id:"nse", t:"Homemade gummies, pistachio + pumpkin seeds", sub:"GH-safe snacks only — no refined sugar ever — monk fruit, allulose, or raw honey", gh:"300–500% Growth Hormone", headline:"overnight GH protected — each spike blocks up to 80%", tier:1, cite:"Lanzi, Metabolism 1999; Van Cauter, JCEM 1992", why:"60–80% of GH is released overnight. One scoop of regular ice cream suppresses up to 80% via insulin. Homemade gummies (gelatin + tart cherry + allulose) deliver glycine + melatonin. Pistachios have the highest melatonin per gram of any nut — the perfect evening snack. Pumpkin seeds deliver arginine + zinc + magnesium + tryptophan. Homemade ice cream (A2 cream + egg yolks + monk fruit) counts toward daily dairy.", tip:"These replace all store-bought snacks. Every one hits a GH pump. Pistachios are the go-to evening snack — highest melatonin of any nut.",
       pumps:[
         { p:"Overnight GH protected", n:"300–500%", d:"No refined sugar = no insulin suppression" },
         { p:"Glycine (gummies)*", n:"up to 300%", d:"Gelatin delivers glycine — GH secretagogue + sleep + growth plates" },
@@ -383,7 +392,7 @@ const dayData: DayPeriod[] = [
         { p:"Cortisol reduction", n:"calming", d:"Consistent touch ritual lowers cortisol" },
       ]},
 
-    { id:"drink", t:"Sleep Drink", sub:"4 oz A2 milk + 1 oz tart cherry — 30 min before bed", gh:"451% Growth Hormone*", headline:"the 24-hour cycle completes — GH 451% at 24h in adult study, IGF-1 +14%", tier:0, sig:true, cite:"Zajac, Biol Sport 2018; Howatson, Eur J Nutr 2012; Forsling, J Pineal Res 1999", why:"The signature bioKids ritual. Casein slow-releases aminos 6–7 hours feeding GH pulses all night. Tart cherry = highest food melatonin (melatonin raised GH 157% in adult studies + aromatase inhibition). α-Lactalbumin = highest tryptophan — serotonin — melatonin. In the Zajac study (adults), GH remained 451% above baseline at 24 hours, IGF-1 14% higher. ~55 calories — too small to spike insulin. This is the 24-hour cycle: post-sprint milk then Sleep Drink then casein overnight then morning eggs restart. Some GH lever is always on.", tip:"Mix, serve 20–40 min before bed. This is a DAIRY window. Dim lights after.",
+    { id:"drink", t:"Sleep Drink — A2 milk + tart cherry", sub:"4 oz A2 milk + 1 oz tart cherry juice — 30 min before bed", gh:"451% Growth Hormone*", headline:"the 24-hour cycle completes — GH 451% at 24h in adult study, IGF-1 +14%", tier:0, sig:true, cite:"Zajac, Biol Sport 2018; Howatson, Eur J Nutr 2012; Forsling, J Pineal Res 1999", why:"The signature bioKids ritual. Casein slow-releases aminos 6–7 hours feeding GH pulses all night. Tart cherry = highest food melatonin (melatonin raised GH 157% in adult studies + aromatase inhibition). α-Lactalbumin = highest tryptophan — serotonin — melatonin. In the Zajac study (adults), GH remained 451% above baseline at 24 hours, IGF-1 14% higher. ~55 calories — too small to spike insulin. This is the 24-hour cycle: post-sprint milk then Sleep Drink then casein overnight then morning eggs restart. Some GH lever is always on.", tip:"Mix, serve 20–40 min before bed. This is a DAIRY window. Dim lights after.",
       pumps:[
         { p:"GH at 24h*", n:"up to 451%", d:"Zajac: still 451% above baseline at 24h in adult athletes" },
         { p:"IGF-1*", n:"+14%", d:"14% higher than controls in adult study" },
@@ -564,61 +573,6 @@ export default function Dashboard() {
   const child = { ...mockChild, name: childName };
 
   const [openId, setOpenId] = useState<string | null>(null);
-
-  // ── Child setup banner (shown once after payment until completed) ──
-  const [showSetup, setShowSetup] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return !localStorage.getItem('biokids_child_setup_done');
-  });
-  const [setupName, setSetupName] = useState('');
-  const [setupBirthMonth, setSetupBirthMonth] = useState('');
-  const [setupBirthYear, setSetupBirthYear] = useState('');
-  const [setupGender, setSetupGender] = useState<'boy' | 'girl' | ''>('');
-  const [setupSaving, setSetupSaving] = useState(false);
-
-  const setupMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const setupYears = Array.from({ length: 26 }, (_, i) => new Date().getFullYear() - i);
-
-  const handleSetupSave = async () => {
-    if (!setupName.trim()) return;
-    setSetupSaving(true);
-    try {
-      // Save to localStorage for immediate use
-      localStorage.setItem('childName', setupName.trim());
-      if (setupGender) localStorage.setItem('childGender', setupGender);
-      if (setupBirthMonth) localStorage.setItem('childBirthMonth', setupBirthMonth);
-      if (setupBirthYear) localStorage.setItem('childBirthYear', setupBirthYear);
-
-      // Save to Supabase via API
-      const supabase = (await import('@/lib/supabase')).createClient();
-      if (supabase) {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
-          await supabase.auth.updateUser({ data: { child_name: setupName.trim() } });
-          const birthDate = setupBirthYear && setupBirthMonth
-            ? `${setupBirthYear}-${setupBirthMonth.padStart(2, '0')}-01`
-            : null;
-          await fetch('/api/auth/save-child', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              userId: session.user.id,
-              name: setupName.trim(),
-              birthDate,
-              gender: setupGender || null,
-            }),
-          });
-        }
-      }
-
-      localStorage.setItem('biokids_child_setup_done', '1');
-      setShowSetup(false);
-      // Reload to update Nav and child name everywhere
-      window.location.reload();
-    } catch {
-      setSetupSaving(false);
-    }
-  };
 
   // Per-child checklist: include active child ID in the localStorage key
   const activeChild = typeof window !== 'undefined' ? getActiveChild() : null;
@@ -831,139 +785,6 @@ export default function Dashboard() {
               }}
             >
               Let&apos;s begin
-            </button>
-          </div>
-        )}
-
-        {/* Child setup banner — post-payment, collects child info */}
-        {showSetup && (
-          <div style={{
-            background:"#fff", borderRadius:20, border:"2px solid #065f46",
-            padding:"28px 24px", marginTop:24,
-            boxShadow:"0 4px 24px rgba(6,95,70,0.08)",
-            animation:"celebrateFadeIn 0.6s ease",
-          }}>
-            <p style={{
-              fontFamily:"'Courier New', Courier, monospace",
-              fontSize:9, fontWeight:700, color:"#065f46",
-              textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8,
-            }}>
-              Quick setup
-            </p>
-            <p style={{
-              fontSize:18, fontWeight:800, color:"#1c1917", margin:"0 0 6px",
-              letterSpacing:"-0.02em",
-            }}>
-              Personalize the protocol
-            </p>
-            <p style={{
-              fontFamily:"'Courier New', Courier, monospace",
-              fontSize:12, color:"#78716c", lineHeight:1.6, margin:"0 0 20px",
-            }}>
-              Tell us about your child so we can tailor everything to them. This saves to your profile in the top-right corner.
-            </p>
-
-            <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-              <div>
-                <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, fontWeight:600, color:"#57534e", display:"block", marginBottom:4 }}>
-                  Child&apos;s name or initial
-                </label>
-                <input
-                  type="text"
-                  value={setupName}
-                  onChange={(e) => setSetupName(e.target.value)}
-                  placeholder="E.g., Emma or E"
-                  style={{
-                    fontFamily:"'Courier New', Courier, monospace", fontSize:14, width:"100%",
-                    padding:"0.75rem 1rem", borderRadius:10,
-                    border:"1px solid #d6d3d1", outline:"none",
-                    color:"#1c1917", background:"#fafaf9",
-                  }}
-                />
-              </div>
-
-              <div>
-                <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, fontWeight:600, color:"#57534e", display:"block", marginBottom:4 }}>
-                  Gender
-                </label>
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
-                  {[{ value: 'boy' as const, label: 'Boy' }, { value: 'girl' as const, label: 'Girl' }].map((opt) => (
-                    <button
-                      key={opt.value}
-                      type="button"
-                      onClick={() => setSetupGender(opt.value)}
-                      style={{
-                        fontFamily:"'Courier New', Courier, monospace", fontSize:13, fontWeight:600,
-                        padding:"0.65rem 1rem", borderRadius:10, cursor:"pointer",
-                        border: setupGender === opt.value ? "2px solid #065f46" : "1px solid #d6d3d1",
-                        background: setupGender === opt.value ? "#ecfdf5" : "#fff",
-                        color: setupGender === opt.value ? "#065f46" : "#57534e",
-                        transition:"all 0.2s ease", textAlign:"center",
-                      }}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
-                <div>
-                  <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, fontWeight:600, color:"#57534e", display:"block", marginBottom:4 }}>
-                    Birth month
-                  </label>
-                  <select
-                    value={setupBirthMonth}
-                    onChange={(e) => setSetupBirthMonth(e.target.value)}
-                    style={{
-                      fontFamily:"'Courier New', Courier, monospace", fontSize:13, width:"100%",
-                      padding:"0.65rem 0.75rem", borderRadius:10,
-                      border:"1px solid #d6d3d1", outline:"none",
-                      color:"#1c1917", background:"#fafaf9",
-                    }}
-                  >
-                    <option value="">Month</option>
-                    {setupMonths.map((m, i) => (
-                      <option key={m} value={String(i + 1)}>{m}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, fontWeight:600, color:"#57534e", display:"block", marginBottom:4 }}>
-                    Birth year
-                  </label>
-                  <select
-                    value={setupBirthYear}
-                    onChange={(e) => setSetupBirthYear(e.target.value)}
-                    style={{
-                      fontFamily:"'Courier New', Courier, monospace", fontSize:13, width:"100%",
-                      padding:"0.65rem 0.75rem", borderRadius:10,
-                      border:"1px solid #d6d3d1", outline:"none",
-                      color:"#1c1917", background:"#fafaf9",
-                    }}
-                  >
-                    <option value="">Year</option>
-                    {setupYears.map((y) => (
-                      <option key={y} value={y}>{y}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <button
-              onClick={handleSetupSave}
-              disabled={!setupName.trim() || setupSaving}
-              style={{
-                fontFamily:"'Courier New', Courier, monospace", fontSize:14, fontWeight:700,
-                width:"100%", padding:"0.875rem", borderRadius:12,
-                border:"none", cursor: (!setupName.trim() || setupSaving) ? "not-allowed" : "pointer",
-                background: (!setupName.trim() || setupSaving) ? "#d6d3d1" : "#065f46",
-                color: (!setupName.trim() || setupSaving) ? "#a8a29e" : "#fff",
-                transition:"all 0.2s ease", marginTop:20,
-              }}
-            >
-              {setupSaving ? 'Saving...' : 'Save & start'}
             </button>
           </div>
         )}
