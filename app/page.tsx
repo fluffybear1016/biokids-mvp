@@ -21,9 +21,9 @@ export default function Home() {
       </nav>
 
       {/* Hero */}
-      <section className="pt-24 sm:pt-32 pb-4 sm:pb-6 px-4 sm:px-6">
+      <section className="pt-24 sm:pt-32 pb-0 sm:pb-0 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-16">
+          <div className="max-w-3xl mx-auto text-center mb-4 sm:mb-6">
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(5, 150, 105, 0.1)', padding: '0.75rem 1rem', borderRadius: '9999px', fontSize: '0.875rem', fontWeight: 600, color: '#065f46', marginBottom: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mb-6">
               For High-Agency Parents
             </span>
