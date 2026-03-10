@@ -755,19 +755,11 @@ export default function Dashboard() {
             onClick={() => setIntroOpen(o => !o)}
             style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:16, fontWeight:600, color:"#1c1917", lineHeight:1.55, maxWidth:460, marginBottom: introOpen ? 16 : 0, cursor:"pointer" }}
           >
-            <span style={{ color:"#065f46" }}>bioKids</span> is a state of the art system that optimizes your child&apos;s natural growth — all day, all night, organically.
+            <span style={{ color:"#065f46" }}>bioKids</span> arranges your child&apos;s day so every meal, every sprint, every night of sleep makes them taller.
             <span style={{ color:"#065f46", fontSize:9, transition:"transform 0.2s ease", transform: introOpen ? "rotate(180deg)" : "none", display:"inline-block", marginLeft:6 }}>▼</span>
           </p>
 
           {introOpen && <>
-            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:14, color:"#1c1917", lineHeight:1.75, maxWidth:440, marginBottom:14 }}>
-              It&apos;s built on one simple idea: when you arrange a child&apos;s day with care, height doesn&apos;t need to be forced or hacked — it&apos;s invited, again and again.
-            </p>
-
-            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:14, color:"#1c1917", lineHeight:1.75, maxWidth:440, marginBottom:14 }}>
-              We shaped this first for our own families, and now offer it as a gift to parents and to the kids they love.
-            </p>
-
             <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:14, color:"#1c1917", lineHeight:1.75, maxWidth:440, margin:0, fontStyle:"italic" }}>
               Height isn&apos;t the only benefit — every growth signal simultaneously supports brain development.
             </p>
