@@ -516,8 +516,41 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
 
       {/* Expanded view */}
       {isOpen && <div onClick={e => e.stopPropagation()} style={{ padding:"0 20px 18px", borderTop:"1px solid #f5f5f0" }}>
-        {item.why && <div style={{ background:"#f0fdf4", borderRadius:12, padding:"12px 14px", margin:"14px 0 12px" }}>
-          <p style={{ fontSize:13, color:"#065f46", lineHeight:1.65, margin:0 }}>{item.why}</p>
+        {item.why && <div style={{ background:"#f0fdf4", borderRadius:12, padding:"16px 18px", margin:"14px 0 12px" }}>
+          {(() => {
+            const sections = item.why.split('\n\n');
+            const hasHeaders = sections.some(s => /^(WHY |THE |SKIP |DAILY |BERRY )/.test(s.trim()));
+            if (!hasHeaders || sections.length <= 2) {
+              return <p style={{ fontSize:13, color:"#065f46", lineHeight:1.65, margin:0 }}>{item.why}</p>;
+            }
+            const blocks: { header?: string; body: string }[] = [];
+            let currentHeader: string | undefined;
+            for (const section of sections) {
+              const trimmed = section.trim();
+              if (!trimmed) continue;
+              const isHeader = /^(WHY |THE |SKIP |DAILY |BERRY )/.test(trimmed) && trimmed.length < 60;
+              if (isHeader) {
+                currentHeader = trimmed.replace(/[?:]$/, '');
+              } else {
+                blocks.push({ header: currentHeader, body: trimmed });
+                currentHeader = undefined;
+              }
+            }
+            return blocks.map((block, i) => (
+              <div key={i} style={{ marginBottom: i < blocks.length - 1 ? 16 : 0, paddingTop: i > 0 && block.header ? 2 : 0, borderTop: i > 0 && block.header ? "1px solid #d1fae5" : "none" }}>
+                {block.header && (
+                  <div style={{ fontSize:10.5, fontWeight:700, color:"#047857", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:6, marginTop: i > 0 ? 10 : 0 }}>
+                    {block.header}
+                  </div>
+                )}
+                <p style={{ fontSize:13, color:"#065f46", lineHeight:1.7, margin:0 }}>
+                  {/^[A-Z][A-Z\s/()×–0-9]+:/.test(block.body) ? (
+                    <><span style={{ fontWeight:600, fontSize:12 }}>{block.body.match(/^([A-Z][A-Z\s/()×–0-9]+:)/)?.[1]}</span>{block.body.replace(/^[A-Z][A-Z\s/()×–0-9]+:/, '')}</>
+                  ) : block.body}
+                </p>
+              </div>
+            ));
+          })()}
         </div>}
 
         {item.tip && <p style={{ fontSize:12.5, color:"#44403c", fontStyle:"italic", marginBottom:14, lineHeight:1.55 }}>{item.tip}</p>}
