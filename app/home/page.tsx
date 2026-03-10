@@ -1169,15 +1169,30 @@ export default function Dashboard() {
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#065f46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
                   Share
                 </button>
-                <span style={{
-                  display:"flex", alignItems:"center", gap:4,
-                  fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#44403c",
-                }}>
-                  Edit heights
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                    <path d="M3.5 2L7 5L3.5 8" stroke="#c8c3bc" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </span>
+                <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); window.location.href = '/growth-log'; }}
+                    style={{
+                      fontFamily:"'Courier New', Courier, monospace",
+                      fontSize:9, fontWeight:600, color:"#065f46",
+                      background:"#f0fdf4", border:"1px solid #86efac", borderRadius:8,
+                      padding:"4px 10px", cursor:"pointer",
+                      display:"inline-flex", alignItems:"center", gap:4,
+                    }}
+                  >
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#065f46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><polyline points="7 16 11 10 15 14 21 6"/></svg>
+                    Growth Log
+                  </button>
+                  <span style={{
+                    display:"flex", alignItems:"center", gap:4,
+                    fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#44403c",
+                  }}>
+                    Edit
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                      <path d="M3.5 2L7 5L3.5 8" stroke="#c8c3bc" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                </div>
               </div>
             </div>
           );
@@ -1273,8 +1288,10 @@ export default function Dashboard() {
                 { item:"Broccoli", note:"DIM — delays growth plate closure by blocking aromatase. Every lunch and dinner." },
                 { item:"Chicken breast", note:"High ornithine + niacin + arginine. Versatile dinner rotation protein." },
                 { item:"Chickpeas / black beans / kidney beans", note:"Plant protein delays puberty. Lysine + arginine + magnesium + fiber. Rotate with lentils." },
-                { item:"Sauerkraut or kimchi", note:"Even 2 tbsp counts. Fermentation produces GABA — reduces somatostatin via gut-brain axis." },
+                { item:"Sauerkraut, kimchi, or natto", note:"Even 2 tbsp counts. GABA via gut-brain axis. Natto adds vitamin K2 for growth plates." },
+                { item:"Kefir (full-fat, grass-fed)", note:"Fermented dairy. GABA-producing bacteria + all 6 milk growth proteins. Counts toward daily dairy." },
                 { item:"Collard greens", note:"Lower oxalate than spinach. Magnesium + vitamin K + calcium. Primary leafy green." },
+                { item:"Spirulina + chlorella", note:"Together boost HGH. Reduce IL-6, TNF-alpha → SOCS reduction. Morning smoothie." },
                 { item:"Pineapple", note:"Bromelain aids amino acid extraction from meats. Serotonin support. Manganese for bone." },
                 { item:"Chia seeds", note:"Omega-3s. Bowl topping or blended into smoothie." },
                 { item:"Hemp hearts", note:"Complete protein — all essential aminos. Bowl topping." },
@@ -1285,6 +1302,7 @@ export default function Dashboard() {
               ].map((r, i) => (
                 <div key={i} style={{ display:"flex", gap:12, marginBottom:10, alignItems:"baseline" }}>
                   <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#78716c", minWidth:20, textAlign:"right" }}>{i+18}</span>
+
                   <div>
                     <div style={{ fontSize:14, fontWeight:700, color:"#1c1917" }}>{r.item}</div>
                     <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", marginTop:2 }}>{r.note}</div>
@@ -1299,7 +1317,7 @@ export default function Dashboard() {
               {[
                 { item:"Pistachios", note:"Highest melatonin per gram of any nut. Best evening snack." },
                 { item:"Walnuts", note:"Melatonin support + omega-3s. Evening snack." },
-                { item:"Sardines (with bones)", note:"Calcium + vitamin D + omega-3. Bone density." },
+                { item:"Sardines / mackerel (with bones)", note:"Calcium + vitamin D + omega-3. Bone density. Wild-caught only." },
                 { item:"Tuna", note:"High niacin per 100g. Good ornithine + omega-3. 1–2×/wk." },
                 { item:"Oranges / kiwi", note:"Vitamin C alongside iron meals. Kiwi = highest density per bite." },
                 { item:"Watermelon", note:"Citrulline → arginine. Better oral bioavailability than arginine itself." },
@@ -1313,7 +1331,7 @@ export default function Dashboard() {
                 { item:"Bovine colostrum", note:"IGF-1 + immune modulators + gut health. Morning or post-sprint." },
               ].map((r, i) => (
                 <div key={i} style={{ display:"flex", gap:12, marginBottom:10, alignItems:"baseline" }}>
-                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#d6d3d1", minWidth:20, textAlign:"right" }}>{i+32}</span>
+                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#d6d3d1", minWidth:20, textAlign:"right" }}>{i+34}</span>
                   <div>
                     <div style={{ fontSize:14, fontWeight:700, color:"#1c1917" }}>{r.item}</div>
                     <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", marginTop:2 }}>{r.note}</div>
