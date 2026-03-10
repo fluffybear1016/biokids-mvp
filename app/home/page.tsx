@@ -525,19 +525,19 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
             {/* Subtitle in mono */}
             <div style={{
               fontFamily:"'Courier New', Courier, monospace",
-              fontSize:11, color:"#292524", marginTop:3, lineHeight:1.3,
+              fontSize:11, color:"#1c1917", marginTop:3, lineHeight:1.3,
             }}>{item.sub}</div>
 
             {/* Headline — the ONE thing */}
             {!isUtil && <div style={{
               fontFamily:"'Courier New', Courier, monospace",
-              fontSize:11.5, color:"#292524", marginTop:6, lineHeight:1.5,
+              fontSize:11.5, color:"#1c1917", marginTop:6, lineHeight:1.5,
             }}>{greenNum(item.headline)}</div>}
 
             {/* Citation */}
             <div style={{
               fontFamily:"'Courier New', Courier, monospace",
-              fontSize:9, color:"#292524", opacity:0.75, marginTop:4, lineHeight:1.3,
+              fontSize:9, color:"#1c1917", opacity:0.9, marginTop:4, lineHeight:1.3,
             }}>{item.cite.split('; ').map((c, i, arr) => {
               const trimmed = c.trim();
               const url = citeUrls[trimmed];
@@ -569,16 +569,16 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
           <p style={{ fontSize:13, color:"#065f46", lineHeight:1.65, margin:0 }}>{item.why}</p>
         </div>}
 
-        {item.tip && <p style={{ fontSize:12.5, color:"#57534e", fontStyle:"italic", marginBottom:14, lineHeight:1.55 }}>{item.tip}</p>}
+        {item.tip && <p style={{ fontSize:12.5, color:"#44403c", fontStyle:"italic", marginBottom:14, lineHeight:1.55 }}>{item.tip}</p>}
 
         {item.pumps && <div style={{ marginBottom:14 }}>
           <div style={{ fontSize:8.5, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:4 }}>Growth hormone pathways</div>
-          {item.pumps.some(p => p.p.includes('*')) && <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8.5, color:"#292524", marginBottom:8, lineHeight:1.4 }}>* Percentages from adult studies using isolated amino acids or supplements. Whole foods deliver these pathways at lower but meaningful doses.</div>}
+          {item.pumps.some(p => p.p.includes('*')) && <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8.5, color:"#1c1917", marginBottom:8, lineHeight:1.4 }}>* Percentages from adult studies using isolated amino acids or supplements. Whole foods deliver these pathways at lower but meaningful doses.</div>}
           {item.pumps.map((pump, i) => (
             <div key={i} style={{ display:"flex", alignItems:"baseline", gap:8, padding:"4px 0", borderTop: i > 0 ? "1px solid #f5f5f0" : "none" }}>
               <span style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", fontSize:13, color:"#065f46", minWidth:56, textAlign:"right", flexShrink:0 }}>{pump.n}</span>
               <span style={{ fontSize:11.5, fontWeight:600, color:"#1c1917" }}>{pump.p}</span>
-              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#292524", flex:1 }}>— {pump.d}</span>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#1c1917", flex:1 }}>— {pump.d}</span>
             </div>
           ))}
         </div>}
@@ -588,7 +588,7 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
           {item.foods.map((food, i) => (
             <div key={i} style={{ display:"flex", gap:8, padding:"5px 0", borderTop: i > 0 ? "1px solid #f5f5f0" : "none" }}>
               <div style={{ fontSize:12.5, fontWeight:600, color:"#1c1917", flex:1, lineHeight:1.4 }}>{food.f}</div>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#292524", maxWidth:200, textAlign:"right", lineHeight:1.4 }}>{food.d}</div>
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#1c1917", maxWidth:200, textAlign:"right", lineHeight:1.4 }}>{food.d}</div>
             </div>
           ))}
         </div>}
@@ -735,10 +735,10 @@ export default function Dashboard() {
             {/* Bonus progress (secondary — smaller) */}
             {(doneCount - coreDoneCount > 0 || allCoreDone) && (
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline" }}>
-                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#57534e" }}>
+                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#44403c" }}>
                   {allDone ? "Everything done" : "Bonus"}
                 </span>
-                <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:11, color:"#292524", fontWeight:700 }}>
+                <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:11, color:"#1c1917", fontWeight:700 }}>
                   {doneCount - coreDoneCount}/{total - coreTotal}
                 </span>
               </div>
@@ -760,15 +760,15 @@ export default function Dashboard() {
           </p>
 
           {introOpen && <>
-            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:14, color:"#292524", lineHeight:1.75, maxWidth:440, marginBottom:14 }}>
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:14, color:"#1c1917", lineHeight:1.75, maxWidth:440, marginBottom:14 }}>
               It&apos;s built on one simple idea: when you arrange a child&apos;s day with care, growth hormone doesn&apos;t need to be forced or hacked — it&apos;s invited, again and again.
             </p>
 
-            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:14, color:"#292524", lineHeight:1.75, maxWidth:440, marginBottom:14 }}>
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:14, color:"#1c1917", lineHeight:1.75, maxWidth:440, marginBottom:14 }}>
               We shaped this first for our own families, and now offer it as a gift to parents and to the kids they love.
             </p>
 
-            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:14, color:"#292524", lineHeight:1.75, maxWidth:440, margin:0, fontStyle:"italic" }}>
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:14, color:"#1c1917", lineHeight:1.75, maxWidth:440, margin:0, fontStyle:"italic" }}>
               Growth hormone doesn&apos;t just drive height — every GH pulse simultaneously helps optimize brain development.
             </p>
           </>}
@@ -853,7 +853,7 @@ export default function Dashboard() {
                 }}>
                   <p style={{
                     fontFamily:"'Courier New', Courier, monospace",
-                    fontSize:11.5, color:"#292524", lineHeight:1.6, margin:0,
+                    fontSize:11.5, color:"#1c1917", lineHeight:1.6, margin:0,
                   }}>
                     There are {total - coreTotal - (doneCount - coreDoneCount)} bonus items left — these are the amplifiers.
                     Each one you check off stacks on top of today&apos;s foundation.
@@ -997,11 +997,11 @@ export default function Dashboard() {
 
                   {/* Bottom — genetic range */}
                   <div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#292524", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:3 }}>Genetic range</div>
-                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, fontWeight:700, color:"#292524" }}>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#1c1917", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:3 }}>Genetic range</div>
+                    <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, fontWeight:700, color:"#1c1917" }}>
                       {heightData.rangeLow} — {heightData.rangeHigh}
                     </div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e", marginTop:2 }}>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#44403c", marginTop:2 }}>
                       standard mid-parental prediction
                     </div>
                   </div>
@@ -1012,7 +1012,7 @@ export default function Dashboard() {
               <div style={{ display:"flex", justifyContent:"flex-end", marginTop:16 }}>
                 <span style={{
                   display:"flex", alignItems:"center", gap:4,
-                  fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e",
+                  fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#44403c",
                 }}>
                   Edit heights
                   <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -1045,7 +1045,7 @@ export default function Dashboard() {
             <div style={{ marginBottom:16 }}>
               <div style={{ display:"flex", alignItems:"baseline", gap:10 }}>
                 <span style={{ fontSize:22, fontWeight:800, color:"#1c1917", letterSpacing:"-0.02em" }}>{p.period}</span>
-                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#57534e" }}>{p.time}</span>
+                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#44403c" }}>{p.time}</span>
                 {activePeriod === p.period && (
                   <span style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#f0fdf4", border:"1px solid #065f46", padding:"2px 8px", borderRadius:10 }}>
                     <span style={{ width:5, height:5, background:"#065f46", borderRadius:"50%", display:"inline-block" }} />
@@ -1073,7 +1073,7 @@ export default function Dashboard() {
 
         {/* Footer */}
         <div style={{ margin:"52px 0 40px", textAlign:"center" }}>
-          <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#292524", lineHeight:1.7 }}>
+          <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#1c1917", lineHeight:1.7 }}>
             Every number on this page comes from a peer-reviewed study.<br/>
             Items marked with * are from adult studies using isolated amino acids or supplements.<br/>
             Whole foods deliver these same pathways at lower but meaningful doses.<br/>
