@@ -136,9 +136,23 @@ export default function Settings() {
     setConfirmDelete(null);
   };
 
+  const sectionOrder: SectionId[] = ['child', 'habits', 'goal', 'height'];
+
   const showSaved = (section: SectionId) => {
     setSaved(section);
-    setTimeout(() => setSaved(null), 2000);
+    // Auto-advance to next section after a brief confirmation flash
+    const idx = sectionOrder.indexOf(section);
+    const next = idx < sectionOrder.length - 1 ? sectionOrder[idx + 1] : null;
+    setTimeout(() => {
+      setSaved(null);
+      if (next) {
+        setOpenSection(next);
+        // Scroll the next section into view
+        setTimeout(() => {
+          document.getElementById(`section-${next}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    }, 800);
   };
 
   const saveChildInfo = () => {
@@ -317,7 +331,7 @@ export default function Settings() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
           {/* Child Info */}
-          <div style={{ background: openSection === 'child' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'child' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
+          <div id="section-child" style={{ background: openSection === 'child' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'child' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('child')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Child Info</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('child')}</span>
@@ -350,18 +364,15 @@ export default function Settings() {
                     </select>
                   </div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <button onClick={saveChildInfo} style={{ padding: '8px 20px', background: C.green, color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: mono }}>
-                    Save
-                  </button>
-                  {saved === 'child' && <span style={{ fontSize: '14px', color: C.green, fontWeight: 500 }}>Saved!</span>}
-                </div>
+                <button onClick={saveChildInfo} style={{ width: '100%', padding: '12px 20px', background: saved === 'child' ? '#059669' : C.green, color: '#fff', fontSize: '15px', fontWeight: 700, borderRadius: '10px', border: 'none', cursor: 'pointer', fontFamily: mono, transition: 'all 0.3s ease', transform: saved === 'child' ? 'scale(1.02)' : 'scale(1)' }}>
+                  {saved === 'child' ? '\u2713  Saved! Moving on...' : 'Save & Continue'}
+                </button>
               </div>
             )}
           </div>
 
           {/* Daily Habits */}
-          <div style={{ background: openSection === 'habits' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'habits' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
+          <div id="section-habits" style={{ background: openSection === 'habits' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'habits' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('habits')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Daily Habits</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('habits')}</span>
@@ -374,18 +385,15 @@ export default function Settings() {
                 <ChoiceGroup label="Running / hard play" options={['Daily', 'Few times a week', 'Rarely']} value={exercise} onChange={setExercise} cols={3} />
                 <ChoiceGroup label="Screen time before bed" options={['None', 'Some', 'A lot']} value={screenTime} onChange={setScreenTime} cols={3} />
                 <ChoiceGroup label="Processed / packaged foods" options={['Rarely', 'Sometimes', 'Often']} value={processedFoods} onChange={setProcessedFoods} cols={3} />
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <button onClick={saveHabits} style={{ padding: '8px 20px', background: C.green, color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: mono }}>
-                    Save
-                  </button>
-                  {saved === 'habits' && <span style={{ fontSize: '14px', color: C.green, fontWeight: 500 }}>Saved!</span>}
-                </div>
+                <button onClick={saveHabits} style={{ width: '100%', padding: '12px 20px', background: saved === 'habits' ? '#059669' : C.green, color: '#fff', fontSize: '15px', fontWeight: 700, borderRadius: '10px', border: 'none', cursor: 'pointer', fontFamily: mono, transition: 'all 0.3s ease', transform: saved === 'habits' ? 'scale(1.02)' : 'scale(1)' }}>
+                  {saved === 'habits' ? '\u2713  Saved! Moving on...' : 'Save & Continue'}
+                </button>
               </div>
             )}
           </div>
 
           {/* Growth Goal */}
-          <div style={{ background: openSection === 'goal' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'goal' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
+          <div id="section-goal" style={{ background: openSection === 'goal' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'goal' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('goal')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Growth Goal</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('goal')}</span>
@@ -418,18 +426,17 @@ export default function Settings() {
                     </div>
                   </button>
                 ))}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', paddingTop: '8px' }}>
-                  <button onClick={saveGoal} style={{ padding: '8px 20px', background: C.green, color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: mono }}>
-                    Save
-                  </button>
-                  {saved === 'goal' && <span style={{ fontSize: '14px', color: C.green, fontWeight: 500 }}>Saved!</span>}
+                <div style={{ paddingTop: '8px' }}>
+                <button onClick={saveGoal} style={{ width: '100%', padding: '12px 20px', background: saved === 'goal' ? '#059669' : C.green, color: '#fff', fontSize: '15px', fontWeight: 700, borderRadius: '10px', border: 'none', cursor: 'pointer', fontFamily: mono, transition: 'all 0.3s ease', transform: saved === 'goal' ? 'scale(1.02)' : 'scale(1)' }}>
+                  {saved === 'goal' ? '\u2713  Saved! Moving on...' : 'Save & Continue'}
+                </button>
                 </div>
               </div>
             )}
           </div>
 
           {/* Height Potential */}
-          <div style={{ background: openSection === 'height' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'height' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
+          <div id="section-height" style={{ background: openSection === 'height' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'height' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('height')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Height Potential</span></span>
               <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('height')}</span>
@@ -495,12 +502,9 @@ export default function Settings() {
                     fatherHeight={`${fatherHeightFt}'${fatherHeightIn}"`}
                   />
                 )}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <button onClick={saveHeight} style={{ padding: '8px 20px', background: C.green, color: '#fff', fontSize: '14px', fontWeight: 500, borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: mono }}>
-                    Save
-                  </button>
-                  {saved === 'height' && <span style={{ fontSize: '14px', color: C.green, fontWeight: 500 }}>Saved!</span>}
-                </div>
+                <button onClick={saveHeight} style={{ width: '100%', padding: '12px 20px', background: saved === 'height' ? '#059669' : C.green, color: '#fff', fontSize: '15px', fontWeight: 700, borderRadius: '10px', border: 'none', cursor: 'pointer', fontFamily: mono, transition: 'all 0.3s ease', transform: saved === 'height' ? 'scale(1.02)' : 'scale(1)' }}>
+                  {saved === 'height' ? '\u2713  All saved!' : 'Save'}
+                </button>
               </div>
             )}
           </div>
