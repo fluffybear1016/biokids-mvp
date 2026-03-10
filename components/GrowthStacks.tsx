@@ -50,7 +50,7 @@ const stacks = [
       { time: 'After dinner', action: 'No food for 2-3 hrs before bed', why: 'Protects the overnight fast when 60-80% of daily GH is produced' },
       { time: 'After dinner', action: 'No screens (or Night Shift + blue blockers minimum)', why: 'Blue light suppresses melatonin for 90+ min, flattens GH curve' },
       { time: '60 min before bed', action: 'Warm bath with Epsom salts (10-20 min)', why: 'Core temp rise → accelerated drop → signals sleep onset. Epsom salts add transdermal magnesium' },
-      { time: 'After bath', action: 'Magnesium lotion on feet + shoulders', why: 'GABA receptor activation — suppresses somatostatin — removes the brake on GH. Touch ritual triggers parasympathetic response' },
+      { time: 'After bath', action: 'Magnesium lotion on feet + shoulders', why: 'GABA receptor activation — suppresses somatostatin — removes the brake on GH. Touch ritual triggers parasympathetic response. No glycinate supplements needed — lotion delivers magnesium transdermally' },
       { time: '60 min before bed', action: 'bioKids Sleep Drink: 1 oz tart cherry + 4 oz A2 milk', why: 'Casein (slow aminos) + melatonin (SWS + aromatase inhibition) + tryptophan → serotonin' },
       { time: 'Always', action: 'Zero caffeine + zero chocolate, ever', why: 'Both stimulants shrink deep slow-wave sleep where GH is released. Dark chocolate is not your friend — it\'s loaded with caffeine and most brands heavy metals' },
       { time: 'Room', action: '65-68°F, complete darkness, cover ALL LEDs', why: 'Cool temp + darkness = maximal SWS architecture' },

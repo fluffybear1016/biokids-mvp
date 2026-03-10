@@ -818,16 +818,16 @@ export default function Dashboard() {
             onClick={() => setIntroOpen(o => !o)}
             style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:16, fontWeight:600, color:"#1c1917", lineHeight:1.55, maxWidth:460, marginBottom: introOpen ? 16 : 0, cursor:"pointer" }}
           >
-            {childName === 'Your child' ? 'Your child' : childName}&apos;s daily growth protocol.
+            {childName === 'Your child' ? 'Your child' : childName}&apos;s daily height protocol.
             <span style={{ color:"#065f46", fontSize:9, transition:"transform 0.2s ease", transform: introOpen ? "rotate(180deg)" : "none", display:"inline-block", marginLeft:6 }}>▼</span>
           </p>
 
           {introOpen && <>
             <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, color:"#1c1917", lineHeight:1.75, maxWidth:440, margin:"0 0 8px" }}>
-              Meals, sprints, and sleep — arranged by science to maximize growth. Check them off as you go.
+              Meals, sprints, and sleep — arranged by science to maximize height. Check them off as you go.
             </p>
             <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:12, color:"#065f46", lineHeight:1.6, maxWidth:440, margin:"0 0 16px", fontStyle:"italic" }}>
-              Every growth signal simultaneously supports brain development.
+              Every height signal simultaneously supports brain development.
             </p>
 
             {/* Daily targets — three clean numbers */}
@@ -851,10 +851,10 @@ export default function Dashboard() {
           </>}
         </div>
 
-        {/* Quick links — Shopping List + Growth Log */}
+        {/* Quick links — Shopping List + Height Log */}
         <div style={{ display:"flex", gap:10, marginTop:20 }}>
           <button
-            onClick={() => document.getElementById('shopping-list')?.scrollIntoView({ behavior:'smooth' })}
+            onClick={() => { window.location.href = '/shopping-list'; }}
             style={{
               flex:1, display:"flex", alignItems:"center", justifyContent:"center", gap:8,
               fontFamily:"'Courier New', Courier, monospace", fontSize:12, fontWeight:700,
@@ -875,7 +875,7 @@ export default function Dashboard() {
             }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#065f46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Growth Log
+            Height Log
           </button>
         </div>
 
@@ -904,14 +904,14 @@ export default function Dashboard() {
               fontSize:13, color:"#065f46", lineHeight:1.65, margin:"0 0 6px",
               maxWidth:360, marginLeft:"auto", marginRight:"auto",
             }}>
-              Everything below is your child&apos;s daily growth protocol — 15+ science-backed levers, arranged into a simple checklist.
+              Everything below is your child&apos;s daily height protocol — 15+ science-backed levers, arranged into a simple checklist.
             </p>
             <p style={{
               fontFamily:"'Courier New', Courier, monospace",
               fontSize:11.5, color:"#059669", lineHeight:1.6, margin:"0 0 6px",
               maxWidth:340, marginLeft:"auto", marginRight:"auto",
             }}>
-              Works at any age before growth plates close — typically 14–16 for girls, 16–18 for boys. Starting at any age is powerful.
+              Works at any age before growth plates close — typically up to age 17 for girls, age 20 for boys. Starting at any age is powerful.
             </p>
             <p style={{
               fontFamily:"'Courier New', Courier, monospace",
@@ -951,7 +951,7 @@ export default function Dashboard() {
                     Day {streak}
                   </div>
                   <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#059669", textTransform:"uppercase", letterSpacing:"0.1em", fontWeight:700, marginTop:4 }}>
-                    growth streak
+                    height streak
                   </div>
                 </div>
               )}
@@ -992,7 +992,7 @@ export default function Dashboard() {
               <button
                 onClick={() => {
                   const streakText = streak > 1 ? `Day ${streak} streak. ` : '';
-                  const text = `${streakText}Did you know there are 15+ science-backed things that affect your kid's height that no doctor talks about? My ${childName === 'Your child' ? 'kid' : childName} is on it. biokids.me`;
+                  const text = `${streakText}Did you know there are 15+ science-backed things that affect how tall your kid grows that no doctor talks about? My ${childName === 'Your child' ? 'kid' : childName} is on it. biokids.me`;
                   if (navigator.share) {
                     navigator.share({ text }).catch(() => {});
                   } else {
@@ -1083,7 +1083,7 @@ export default function Dashboard() {
         {heightData && (
           <div style={{ marginTop:24, padding:"16px 20px", background:"linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)", borderRadius:14, border:"1.5px solid #86efac", textAlign:"center", marginBottom:8 }}>
             <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, color:"#065f46", lineHeight:1.65, margin:0, fontWeight:600, fontStyle:"italic" }}>
-              Height isn&apos;t the only benefit — every growth signal simultaneously supports brain development.
+              Height isn&apos;t the only benefit — every height signal simultaneously supports brain development.
             </p>
           </div>
         )}
@@ -1225,7 +1225,7 @@ export default function Dashboard() {
                     }}
                   >
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#065f46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><polyline points="7 16 11 10 15 14 21 6"/></svg>
-                    Growth Log
+                    Height Log
                   </button>
                   <span style={{
                     display:"flex", alignItems:"center", gap:4,
@@ -1282,112 +1282,6 @@ export default function Dashboard() {
           </div>
         ))}
 
-        {/* Shopping List */}
-        <div id="shopping-list" style={{ margin:"52px 0 0" }}>
-          <div style={{ height:1, background:"#e7e5e4", marginBottom:40 }} />
-          <div style={{ fontSize:20, fontWeight:900, color:"#1c1917", letterSpacing:"-0.02em", textAlign:"center" }}>
-            Shopping List
-            <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#44403c", marginTop:6, fontWeight:400 }}>Ranked by importance · buy the top items first</div>
-          </div>
-
-            {/* Tier 1 — Non-negotiable */}
-            <div style={{ marginTop:28, marginBottom:28 }}>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Tier 1 — Non-negotiable</div>
-              {[
-                { item:"A2 whole milk (organic, full-fat)", note:"Daily target: 20–24 oz. Bowl/smoothie + post-sprint + Sleep Drink. Each 8 oz/day = +0.39 cm." },
-                { item:"Sheep yogurt (plain, whole)", note:"35× more lactoferrin. 5 oz = 8 oz A2 milk. Growth Bowl base." },
-                { item:"Pasture-raised eggs", note:"2–3 daily. Richest whole-food choline source. Over easy in olive oil." },
-                { item:"Grass-fed beef (any cut)", note:"Richest glutamine + ornithine + tyrosine. Daily protein rotation." },
-                { item:"Beef liver (grass-fed)", note:"Most nutrient-dense food on earth. Mix 2 tbsp into meatballs — kids won't taste it." },
-                { item:"Turkey breast", note:"Highest niacin + arginine per gram of any common meat. Dinner rotation." },
-                { item:"Wild-caught salmon", note:"Omega-3s + vitamin D (271% RDA) + niacin. 2–3×/wk. Never farmed." },
-                { item:"Cooked oysters", note:"28.2mg zinc per 3 oz — full week's supply. GH receptor cofactor. 1×/wk." },
-                { item:"Natural peanut butter (no added oils/sugar)", note:"Highest niacin food. Arginine. Bowl/smoothie + pre-sprint snack." },
-                { item:"Pumpkin seeds (raw)", note:"Highest practical arginine (~7g/cup) + zinc + magnesium + tryptophan. Copenhagen: +0.33 cm/yr." },
-                { item:"Lemon-flavored cod liver oil", note:"½ tsp daily. Retinol + D + omega-3 in one spoon. Hidden in the smoothie." },
-                { item:"Bone broth", note:"Richest glycine source. Dinner starter. Lowers core temp for sleep + growth plate collagen." },
-                { item:"Bovine gelatin (unflavored)", note:"Pure collagen. Homemade jello with tart cherry. Glycine dessert." },
-                { item:"Lentils", note:"DAILY. Iron + lysine + inositol. Plant protein delays puberty = longer growth window. Pair with citrus." },
-                { item:"Tart cherry juice (100%, unsweetened)", note:"Highest food melatonin. Sleep Drink + gelatin jello. No blends, no added sugar." },
-                { item:"Raw honey", note:"Compliance driver. Post-sprint milk + Bowl drizzle. Gentle insulin for IGF-1 conversion." },
-                { item:"Olive oil (extra virgin)", note:"Cook eggs in it. Fat-soluble vitamin absorption from yolks." },
-              ].map((r, i) => (
-                <div key={i} style={{ display:"flex", gap:12, marginBottom:10, alignItems:"baseline" }}>
-                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#065f46", minWidth:20, textAlign:"right" }}>{i+1}</span>
-                  <div>
-                    <div style={{ fontSize:14, fontWeight:700, color:"#1c1917" }}>{r.item}</div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", marginTop:2 }}>{r.note}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Tier 2 — Important */}
-            <div style={{ marginBottom:28 }}>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#44403c", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Tier 2 — Important</div>
-              {[
-                { item:"Frozen berries (organic)", note:"Vitamin C + antioxidants. Bowl/smoothie. Masks CLO flavor. Raspberries support melatonin." },
-                { item:"Red bell peppers", note:"190mg vitamin C per cup — 3× more than oranges. Alongside eggs + iron meals." },
-                { item:"Broccoli", note:"DIM — delays growth plate closure by blocking aromatase. Every lunch and dinner." },
-                { item:"Broccoli sprouts (or powder)", note:"20–100× more sulforaphane than mature broccoli. Recovery smoothie after junk food. Activates Nrf2 detox." },
-                { item:"Chicken breast", note:"High ornithine + niacin + arginine. Versatile dinner rotation protein." },
-                { item:"Chickpeas / black beans / kidney beans", note:"Plant protein delays puberty. Lysine + arginine + magnesium + fiber. Rotate with lentils." },
-                { item:"Sauerkraut, kimchi, or natto", note:"Even 2 tbsp counts. GABA via gut-brain axis. Natto adds vitamin K2 for growth plates." },
-                { item:"Kefir (full-fat, grass-fed)", note:"Fermented dairy. GABA-producing bacteria + all 6 milk growth proteins. Counts toward daily dairy." },
-                { item:"Collard greens", note:"Lower oxalate than spinach. Magnesium + vitamin K + calcium. Primary leafy green." },
-                { item:"Spirulina + chlorella", note:"Together boost HGH. Reduce IL-6, TNF-alpha → SOCS reduction. Morning smoothie." },
-                { item:"Pineapple", note:"Bromelain aids amino acid extraction from meats. Serotonin support. Manganese for bone." },
-                { item:"Chia seeds", note:"Omega-3s. Bowl topping or blended into smoothie." },
-                { item:"Hemp hearts", note:"Complete protein — all essential aminos. Bowl topping." },
-                { item:"Bananas", note:"Smoothie version. Potassium + creaminess. Dopamine signaling." },
-                { item:"Allulose or monk fruit sweetener", note:"Zero insulin spike. Gelatin jello + homemade ice cream sweetener." },
-                { item:"Epsom salt", note:"Warm bath before bed. Transdermal magnesium for deeper SWS." },
-                { item:"Magnesium glycinate lotion", note:"Feet and shoulders at bedtime. Glycinate is best absorbed for sleep — activates GABA receptors." },
-              ].map((r, i) => (
-                <div key={i} style={{ display:"flex", gap:12, marginBottom:10, alignItems:"baseline" }}>
-                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#78716c", minWidth:20, textAlign:"right" }}>{i+18}</span>
-
-                  <div>
-                    <div style={{ fontSize:14, fontWeight:700, color:"#1c1917" }}>{r.item}</div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", marginTop:2 }}>{r.note}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Tier 3 — Nice to have */}
-            <div style={{ marginBottom:12 }}>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#a8a29e", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Tier 3 — Nice to have</div>
-              {[
-                { item:"Pistachios", note:"Highest melatonin per gram of any nut. Best evening snack." },
-                { item:"Walnuts", note:"Melatonin support + omega-3s. Evening snack." },
-                { item:"Sardines / mackerel (with bones)", note:"Calcium + vitamin D + omega-3. Bone density. Wild-caught only." },
-                { item:"Tuna", note:"High niacin per 100g. Good ornithine + omega-3. 1–2×/wk." },
-                { item:"Oranges / kiwi", note:"Vitamin C alongside iron meals. Kiwi = highest density per bite." },
-                { item:"Watermelon", note:"Citrulline → arginine. Better oral bioavailability than arginine itself." },
-                { item:"Beets", note:"Dopamine signaling — directly inhibits somatostatin release." },
-                { item:"Fresh ginger", note:"Increases ghrelin — natural GH secretagogue. In meals or as tea." },
-                { item:"Coconut oil", note:"Pre-sprint fuel. Short-term GH boost up to 4 hours. Stacks with sprint pulse." },
-                { item:"Turmeric + black pepper", note:"Anti-SOCS. Lowers IL-6, TNF-alpha. Pepper boosts absorption 2,000%." },
-                { item:"Shredded coconut (unsweetened)", note:"Bowl topping. Medium-chain fats." },
-                { item:"Quinoa / buckwheat", note:"Complete plant proteins. Low-GI carb base. mTOR support." },
-                { item:"Seaweed (nori, kelp)", note:"Iodine → thyroid → GH/IGF-1 axis. Moderate intake." },
-                { item:"Bovine colostrum", note:"IGF-1 + immune modulators + gut health. Morning or post-sprint." },
-              ].map((r, i) => (
-                <div key={i} style={{ display:"flex", gap:12, marginBottom:10, alignItems:"baseline" }}>
-                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#d6d3d1", minWidth:20, textAlign:"right" }}>{i+34}</span>
-                  <div>
-                    <div style={{ fontSize:14, fontWeight:700, color:"#1c1917" }}>{r.item}</div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", marginTop:2 }}>{r.note}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", textAlign:"center", marginTop:20, lineHeight:1.6, fontStyle:"italic" }}>
-              Start with Tier 1. Add Tier 2 when it feels easy. Tier 3 whenever you want.
-            </div>
-        </div>
 
         {/* Footer */}
         <div style={{ margin:"52px 0 40px", textAlign:"center" }}>
@@ -1395,7 +1289,7 @@ export default function Dashboard() {
             {allDone ? "Perfect. See you tomorrow." : allCoreDone ? "Core done. See you tomorrow." : "Every day counts."}
           </p>
           <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#78716c", lineHeight:1.6 }}>
-            Every number on this page comes from a peer-reviewed study. * from adult studies — whole foods deliver these pathways at lower but meaningful doses.
+            Every number on this page comes from an academic or scientific study. * from adult studies — whole foods deliver these pathways at lower but meaningful doses.
           </p>
         </div>
       </div>
