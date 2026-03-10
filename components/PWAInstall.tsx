@@ -22,14 +22,25 @@ export default function PWAInstall() {
   const [showInstallBanner, setShowInstallBanner] = useState(false);
   const [showNotifPrompt, setShowNotifPrompt] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+  const [isStandaloneMode, setIsStandaloneMode] = useState(false);
 
   useEffect(() => {
+    // Detect standalone mode (opened from home screen)
+    const standalone = window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as unknown as Record<string, boolean>).standalone === true;
+    setIsStandaloneMode(standalone);
+
+    console.log('[PWA] standalone:', standalone);
+    console.log('[PWA] Notification in window:', 'Notification' in window);
+    console.log('[PWA] Notification.permission:', 'Notification' in window ? Notification.permission : 'N/A');
+    console.log('[PWA] serviceWorker in navigator:', 'serviceWorker' in navigator);
+
     // Register service worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').then((reg) => {
-        console.log('SW registered:', reg.scope);
+        console.log('[PWA] SW registered:', reg.scope);
       }).catch((err) => {
-        console.log('SW registration failed:', err);
+        console.log('[PWA] SW registration failed:', err);
       });
     }
 
@@ -37,15 +48,22 @@ export default function PWAInstall() {
     const handler = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      // Show install banner after 30 seconds of use
       setTimeout(() => setShowInstallBanner(true), 30000);
     };
     window.addEventListener('beforeinstallprompt', handler);
 
-    // Check if push notifications are available but not yet granted
-    // Show prompt after 3 seconds so user can see it quickly
-    if ('Notification' in window && Notification.permission === 'default') {
-      setTimeout(() => setShowNotifPrompt(true), 3000);
+    // Show notification prompt after 2 seconds
+    // On iOS standalone, Notification API should be available on 16.4+
+    const hasNotificationAPI = 'Notification' in window;
+    const notYetGranted = hasNotificationAPI && Notification.permission === 'default';
+
+    console.log('[PWA] hasNotificationAPI:', hasNotificationAPI, 'notYetGranted:', notYetGranted);
+
+    // Show the prompt if notifications are available and not yet granted,
+    // OR if we're in standalone mode (so we can at least show a helpful message)
+    if (notYetGranted || standalone) {
+      console.log('[PWA] Will show notification prompt in 2 seconds');
+      setTimeout(() => setShowNotifPrompt(true), 2000);
     }
 
     return () => window.removeEventListener('beforeinstallprompt', handler);
@@ -60,39 +78,51 @@ export default function PWAInstall() {
 
   const handleEnableNotifications = async () => {
     try {
+      if (!('Notification' in window)) {
+        console.log('[PWA] Notification API not available');
+        alert('Push notifications require opening this app from your Home Screen. Make sure you added it via Share → Add to Home Screen.');
+        setShowNotifPrompt(false);
+        return;
+      }
+
+      console.log('[PWA] Requesting notification permission...');
       const permission = await Notification.requestPermission();
+      console.log('[PWA] Permission result:', permission);
+
       if (permission === 'granted') {
         // Subscribe to push
         const reg = await navigator.serviceWorker.ready;
+        console.log('[PWA] SW ready, VAPID key present:', !!VAPID_PUBLIC_KEY);
+
         if (VAPID_PUBLIC_KEY) {
           const subscription = await reg.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
           });
+          console.log('[PWA] Push subscription created');
 
           // Send subscription to your server
-          await fetch('/api/push-subscribe', {
+          const resp = await fetch('/api/push-subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(subscription),
           });
+          console.log('[PWA] Subscription saved, status:', resp.status);
+        } else {
+          console.log('[PWA] No VAPID key — subscription skipped');
         }
       }
     } catch (err) {
-      console.log('Notification setup failed:', err);
+      console.log('[PWA] Notification setup failed:', err);
+      alert('Notification setup failed: ' + (err as Error).message);
     }
     setShowNotifPrompt(false);
   };
 
-  // iOS standalone detection — hide install banner but keep notification prompt
-  const isStandalone = typeof window !== 'undefined' &&
-    (window.matchMedia('(display-mode: standalone)').matches ||
-     (window.navigator as unknown as Record<string, boolean>).standalone === true);
-
   return (
     <>
       {/* Install banner — only show when NOT in standalone mode */}
-      {!isStandalone && showInstallBanner && (
+      {!isStandaloneMode && showInstallBanner && (
         <div style={{
           position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 9999,
           background: '#065f46', padding: '16px 20px',
