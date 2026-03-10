@@ -835,6 +835,34 @@ export default function Dashboard() {
           </>}
         </div>
 
+        {/* Quick links — Shopping List + Growth Log */}
+        <div style={{ display:"flex", gap:10, marginTop:20 }}>
+          <button
+            onClick={() => document.getElementById('shopping-list')?.scrollIntoView({ behavior:'smooth' })}
+            style={{
+              flex:1, display:"flex", alignItems:"center", justifyContent:"center", gap:8,
+              fontFamily:"'Courier New', Courier, monospace", fontSize:12, fontWeight:700,
+              color:"#065f46", background:"#f0fdf4", border:"1.5px solid #d1fae5",
+              borderRadius:12, padding:"12px 16px", cursor:"pointer",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#065f46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Shopping List
+          </button>
+          <button
+            onClick={() => { window.location.href = '/growth-log'; }}
+            style={{
+              flex:1, display:"flex", alignItems:"center", justifyContent:"center", gap:8,
+              fontFamily:"'Courier New', Courier, monospace", fontSize:12, fontWeight:700,
+              color:"#065f46", background:"#f0fdf4", border:"1.5px solid #d1fae5",
+              borderRadius:12, padding:"12px 16px", cursor:"pointer",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#065f46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Growth Log
+          </button>
+        </div>
+
         {/* Progress spacer — reserves space when sticky bar is visible */}
         {doneCount > 0 && <div style={{ height:48 }} />}
 
@@ -1239,13 +1267,12 @@ export default function Dashboard() {
         ))}
 
         {/* Shopping List */}
-        <div style={{ margin:"52px 0 0" }}>
+        <div id="shopping-list" style={{ margin:"52px 0 0" }}>
           <div style={{ height:1, background:"#e7e5e4", marginBottom:40 }} />
-          <details>
-            <summary style={{ fontSize:20, fontWeight:900, color:"#1c1917", letterSpacing:"-0.02em", textAlign:"center", cursor:"pointer", listStyle:"none", WebkitAppearance:"none" as never }}>
-              <span>Shopping List</span>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#44403c", marginTop:6, fontWeight:400 }}>Ranked by importance · buy the top items first</div>
-            </summary>
+          <div style={{ fontSize:20, fontWeight:900, color:"#1c1917", letterSpacing:"-0.02em", textAlign:"center" }}>
+            Shopping List
+            <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#44403c", marginTop:6, fontWeight:400 }}>Ranked by importance · buy the top items first</div>
+          </div>
 
             {/* Tier 1 — Non-negotiable */}
             <div style={{ marginTop:28, marginBottom:28 }}>
@@ -1343,7 +1370,6 @@ export default function Dashboard() {
             <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", textAlign:"center", marginTop:20, lineHeight:1.6, fontStyle:"italic" }}>
               Start with Tier 1. Add Tier 2 when it feels easy. Tier 3 whenever you want.
             </div>
-          </details>
         </div>
 
         {/* Footer */}
