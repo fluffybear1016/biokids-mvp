@@ -14,7 +14,7 @@ export default function Home() {
           <div className="flex items-center gap-3 sm:gap-6">
             <Link href="/login" style={{ fontSize: '0.875rem', fontWeight: 500, color: '#1c1917', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>Log in</Link>
             <Link href="/onboarding" style={{ background: '#065f46', color: 'white', padding: '0.5rem 1rem', borderRadius: '10px', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>
-              Get Started
+              Start Free Trial
             </Link>
           </div>
         </div>
@@ -37,10 +37,10 @@ export default function Home() {
               Height isn&apos;t the only benefit — every growth signal simultaneously supports brain development.
             </p>
             <div className="flex flex-col items-center gap-3">
-              <Link href="/onboarding" style={{ background: '#065f46', color: 'white', padding: '0.75rem 2rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", display: 'inline-block' }} className="sm:text-lg">
-                Start Free Trial
-              </Link>
-              <p style={{ fontSize: '0.875rem', color: '#a8a29e', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-sm">7 days free · then $30/mo · cancel anytime</p>
+              <a href="#height-calculator" style={{ background: '#065f46', color: 'white', padding: '0.75rem 2rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", display: 'inline-block' }} className="sm:text-lg">
+                Free Height Calculator
+              </a>
+              <p style={{ fontSize: '0.875rem', color: '#a8a29e', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-sm">See how tall your child could be</p>
             </div>
           </div>
 
@@ -48,7 +48,9 @@ export default function Home() {
       </section>
 
       {/* Height Predictor — interactive conversion tool (moved above trajectory) */}
-      <LandingHeightPredictor />
+      <div id="height-calculator">
+        <LandingHeightPredictor />
+      </div>
 
       {/* Growth Trajectory Graph */}
       <section style={{ padding: '0 1rem 3rem', backgroundColor: '#fafaf9' }} className="sm:pb-16">
