@@ -133,7 +133,7 @@ export default function Home() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.5rem', color: '#ffffff', marginBottom: '1.5rem', fontWeight: 800 }} className="sm:text-4xl">Most parents don&apos;t know what they&apos;re leaving on the table.</h2>
           <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.85)', marginBottom: '1.5rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }} className="sm:text-xl">
-            Growth hormone optimization isn&apos;t taught in schools. It isn&apos;t in parenting books.
+            Height optimization isn&apos;t taught in schools. It isn&apos;t in parenting books.
             It&apos;s buried in peer-reviewed journals that no one reads.
           </p>
           <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.75)', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }} className="sm:text-base">
