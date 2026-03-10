@@ -630,6 +630,18 @@ export default function Dashboard() {
     try { localStorage.setItem(todayKey, JSON.stringify(done)); } catch {}
   }, [done, todayKey]);
 
+  // Compute items early — needed by streak tracking below
+  const allItems = dayData.flatMap(d => d.items);
+  const total = allItems.length;
+  const doneCount = Object.values(done).filter(Boolean).length;
+  const pct = Math.round((doneCount / total) * 100);
+  const coreItems = allItems.filter(i => i.sig || i.tier === 0);
+  const coreTotal = coreItems.length;
+  const coreDoneCount = coreItems.filter(i => done[i.id]).length;
+  const corePct = coreTotal > 0 ? Math.round((coreDoneCount / coreTotal) * 100) : 0;
+  const allCoreDone = coreDoneCount === coreTotal && coreTotal > 0;
+  const allDone = doneCount === total && total > 0;
+
   // Streak tracking — counts consecutive days with at least 1 core goal done
   const [streak, setStreak] = useState(0);
   useEffect(() => {
@@ -679,18 +691,6 @@ export default function Dashboard() {
       }
     } catch { setStreak(0); }
   }, [done, todayStr, childIdSuffix, coreItems]);
-  const allItems = dayData.flatMap(d => d.items);
-  const total = allItems.length;
-  const doneCount = Object.values(done).filter(Boolean).length;
-  const pct = Math.round((doneCount / total) * 100);
-
-  // Core items = green-bordered cards (tier 0 or sig)
-  const coreItems = allItems.filter(i => i.sig || i.tier === 0);
-  const coreTotal = coreItems.length;
-  const coreDoneCount = coreItems.filter(i => done[i.id]).length;
-  const corePct = coreTotal > 0 ? Math.round((coreDoneCount / coreTotal) * 100) : 0;
-  const allCoreDone = coreDoneCount === coreTotal && coreTotal > 0;
-  const allDone = doneCount === total && total > 0;
 
   // Celebration state — tracks if user has seen core celebration
   const [showCoreCelebration, setShowCoreCelebration] = useState(false);
