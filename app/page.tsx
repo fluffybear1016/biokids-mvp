@@ -189,6 +189,102 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ — trust builder */}
+      <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#fafaf9' }} className="sm:py-16">
+        <div className="max-w-3xl mx-auto">
+          <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.25rem', color: '#1c1917', fontWeight: 800, textAlign: 'center', marginBottom: '2rem' }} className="sm:text-2xl">
+            Questions parents ask
+          </h2>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+
+            <details style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+              <summary style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem', fontWeight: 700, color: '#1c1917', padding: '1rem 1.25rem', cursor: 'pointer', lineHeight: 1.5 }}>
+                Is this real? Can my child actually get taller from this?
+              </summary>
+              <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
+                <p style={{ marginBottom: '0.75rem' }}>Yes. Height is polygenic &mdash; controlled by thousands of gene variants, each contributing tiny amounts. But genes set a <em>range</em>, not a fixed number. The environment determines where in that range your child lands.</p>
+                <p style={{ marginBottom: '0.75rem' }}>A 24-week study of short-stature children found that a jumping protocol produced <span style={{ fontWeight: 700, color: '#065f46' }}>+4.32 cm</span> of height gain vs 0.93&ndash;1.84 cm in controls. IGF-1 increased. Bone density improved. Zero injuries.</p>
+                <p style={{ marginBottom: '0.75rem' }}>Every recommendation in this app is cited to a peer-reviewed study. We don&apos;t guess. We read 2,400+ hours of research and built a daily system from it.</p>
+                <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46' }}>Zribi et al., J Pediatr Endocrinol Metab &middot; Hoppe et al., Eur J Clin Nutr 2008 &middot; Stokes et al., J Sports Sci 2002</p>
+              </div>
+            </details>
+
+            <details style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+              <summary style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem', fontWeight: 700, color: '#1c1917', padding: '1rem 1.25rem', cursor: 'pointer', lineHeight: 1.5 }}>
+                What age does this work for?
+              </summary>
+              <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
+                <p style={{ marginBottom: '0.75rem' }}>Any age before growth plates close &mdash; typically 14&ndash;16 for girls and 16&ndash;18 for boys. Starting at any age is powerful. The earlier you start, the more years of compounding you get.</p>
+                <p>The levers work the same way at every age: nutrition fuels the growth axis, sprints trigger the response, sleep is when growth actually happens. Even starting at 12 or 14 gives your child years of optimization during their peak growth window.</p>
+              </div>
+            </details>
+
+            <details style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+              <summary style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem', fontWeight: 700, color: '#1c1917', padding: '1rem 1.25rem', cursor: 'pointer', lineHeight: 1.5 }}>
+                How does the height calculator work?
+              </summary>
+              <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
+                <p style={{ marginBottom: '0.75rem' }}>It starts with the standard mid-parental height prediction used by pediatric endocrinologists &mdash; your height plus your partner&apos;s height, adjusted for your child&apos;s sex, with a &plusmn;2&quot; genetic range.</p>
+                <p>Then it shows the <em>bioKids zone</em> &mdash; where your child could land with optimized nutrition, sprint protocols, and sleep architecture. This isn&apos;t a guarantee. It&apos;s the ceiling that the science supports when every lever is pulled consistently.</p>
+              </div>
+            </details>
+
+            <details style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+              <summary style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem', fontWeight: 700, color: '#1c1917', padding: '1rem 1.25rem', cursor: 'pointer', lineHeight: 1.5 }}>
+                Do I need supplements or prescriptions?
+              </summary>
+              <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
+                <p style={{ marginBottom: '0.75rem' }}>No. Everything in the protocol comes from whole foods, movement, and sleep. No supplements, no prescriptions, no injections. The daily targets are:</p>
+                <div style={{ background: '#f0fdf4', borderRadius: 10, padding: '0.75rem 1rem', marginBottom: '0.75rem' }}>
+                  <p style={{ fontSize: '0.8125rem', color: '#065f46', fontWeight: 600, marginBottom: '0.25rem' }}>20&ndash;24 oz A2 milk/day</p>
+                  <p style={{ fontSize: '0.6875rem', color: '#057a55' }}>or equivalent &mdash; 5 oz sheep yogurt = 8 oz A2 milk</p>
+                </div>
+                <div style={{ background: '#f0fdf4', borderRadius: 10, padding: '0.75rem 1rem', marginBottom: '0.75rem' }}>
+                  <p style={{ fontSize: '0.8125rem', color: '#065f46', fontWeight: 600, marginBottom: '0.25rem' }}>1.2&ndash;1.5 g protein per kg of body weight daily</p>
+                  <p style={{ fontSize: '0.6875rem', color: '#057a55' }}>from whole food sources &mdash; eggs, dairy, meat, lentils, seeds</p>
+                </div>
+                <div style={{ background: '#f0fdf4', borderRadius: 10, padding: '0.75rem 1rem' }}>
+                  <p style={{ fontSize: '0.8125rem', color: '#065f46', fontWeight: 600, marginBottom: '0.25rem' }}>Calorie surplus in clean, whole foods</p>
+                  <p style={{ fontSize: '0.6875rem', color: '#057a55' }}>nothing processed &mdash; the app shows exactly what to eat</p>
+                </div>
+              </div>
+            </details>
+
+            <details style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+              <summary style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem', fontWeight: 700, color: '#1c1917', padding: '1rem 1.25rem', cursor: 'pointer', lineHeight: 1.5 }}>
+                What about junk food, pizza, sleepovers?
+              </summary>
+              <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
+                <p style={{ marginBottom: '0.75rem' }}>Life happens. Even 60% consistency compounds beautifully over months. A pizza night or a late sleepover doesn&apos;t erase a week of good inputs.</p>
+                <p>The protocol is designed around real family life. The daily targets matter more than perfection on any single day. Miss something? Pick it up tomorrow. Your child&apos;s growth axis responds to patterns, not individual meals.</p>
+              </div>
+            </details>
+
+            <details style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+              <summary style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem', fontWeight: 700, color: '#1c1917', padding: '1rem 1.25rem', cursor: 'pointer', lineHeight: 1.5 }}>
+                Where do the citations come from?
+              </summary>
+              <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
+                <p style={{ marginBottom: '0.75rem' }}>Every recommendation links directly to its peer-reviewed source &mdash; journals like JAMA, Lancet, JCEM, Nature, and the Journal of Applied Physiology. Every number on every card cites the study it comes from.</p>
+                <p style={{ marginBottom: '0.75rem' }}>Some studies are from adults (marked with *). We note this transparently. Whole foods deliver these pathways at lower but meaningful doses. We never overstate what the research shows.</p>
+                <p>You can read the full science page at <a href="/science" style={{ color: '#065f46', textDecoration: 'underline' }}>biokids.me/science</a>.</p>
+              </div>
+            </details>
+
+            <details style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', overflow: 'hidden' }}>
+              <summary style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem', fontWeight: 700, color: '#1c1917', padding: '1rem 1.25rem', cursor: 'pointer', lineHeight: 1.5 }}>
+                Is this just about height?
+              </summary>
+              <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
+                <p>No. Every growth signal &mdash; sleep quality, nutrient density, sprint-triggered hormones &mdash; simultaneously supports brain development. The same pathways that drive height drive cognitive function, bone density, and long-term health. You&apos;re not choosing between height and health. They&apos;re the same system.</p>
+              </div>
+            </details>
+
+          </div>
+        </div>
+      </section>
+
       {/* Pricing — with anchoring */}
       <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#fafaf9' }} className="sm:py-20">
         <div className="max-w-2xl mx-auto">
