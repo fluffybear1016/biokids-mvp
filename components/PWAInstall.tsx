@@ -43,9 +43,9 @@ export default function PWAInstall() {
     window.addEventListener('beforeinstallprompt', handler);
 
     // Check if push notifications are available but not yet granted
+    // Show prompt after 3 seconds so user can see it quickly
     if ('Notification' in window && Notification.permission === 'default') {
-      // Show notification prompt after 60 seconds of engagement
-      setTimeout(() => setShowNotifPrompt(true), 60000);
+      setTimeout(() => setShowNotifPrompt(true), 3000);
     }
 
     return () => window.removeEventListener('beforeinstallprompt', handler);
@@ -84,17 +84,15 @@ export default function PWAInstall() {
     setShowNotifPrompt(false);
   };
 
-  // iOS standalone detection — show "already installed" or custom instructions
+  // iOS standalone detection — hide install banner but keep notification prompt
   const isStandalone = typeof window !== 'undefined' &&
     (window.matchMedia('(display-mode: standalone)').matches ||
      (window.navigator as unknown as Record<string, boolean>).standalone === true);
 
-  if (isStandalone) return null; // Already installed as PWA
-
   return (
     <>
-      {/* Install banner */}
-      {showInstallBanner && (
+      {/* Install banner — only show when NOT in standalone mode */}
+      {!isStandalone && showInstallBanner && (
         <div style={{
           position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 9999,
           background: '#065f46', padding: '16px 20px',
