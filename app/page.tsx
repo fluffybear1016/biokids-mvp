@@ -20,21 +20,19 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero */}
+      {/* Hero — the +4.3cm moment */}
       <section className="pt-24 sm:pt-32 pb-0 sm:pb-0 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-4 sm:mb-6">
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(5, 150, 105, 0.1)', padding: '0.75rem 1rem', borderRadius: '9999px', fontSize: '0.875rem', fontWeight: 600, color: '#065f46', marginBottom: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mb-6">
-              For High-Agency Parents
-            </span>
-            <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(1.875rem, 5vw, 3.75rem)', color: '#1c1917', marginBottom: '1.5rem', fontWeight: 800, lineHeight: 1.2 }}>
+            <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(1.875rem, 5vw, 3.75rem)', color: '#1c1917', marginBottom: '1.25rem', fontWeight: 800, lineHeight: 1.15 }}>
               Make your child <span style={{ color: '#065f46' }}>taller.</span>
             </h1>
+
             <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#57534e', marginBottom: '1.25rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }}>
               The evidence-based system that helps children reach their maximum height. No prescriptions. No supplements. Just the levers parents actually control.
             </p>
             <p style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: '#065f46', marginBottom: '2rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, fontStyle: 'italic' }}>
-              Height isn&apos;t the only benefit — every growth signal simultaneously supports brain development.
+              Height isn&apos;t the only benefit &mdash; every growth signal simultaneously supports brain development.
             </p>
             <div className="flex flex-col items-center gap-3">
               <a href="#height-calculator" style={{ background: '#065f46', color: 'white', padding: '0.75rem 2rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", display: 'inline-block' }} className="sm:text-lg">
@@ -47,10 +45,49 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Height Predictor — interactive conversion tool (moved above trajectory) */}
+      {/* Height Predictor */}
       <div id="height-calculator">
         <LandingHeightPredictor />
       </div>
+
+      {/* The Sprint Stack — the "holy shit" moment for athletic parents */}
+      <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#fafaf9' }} className="sm:py-16">
+        <div className="max-w-3xl mx-auto">
+          <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #065f46', padding: '2rem 1.5rem', boxShadow: '0 4px 24px rgba(6,95,70,0.08)' }} className="sm:p-10">
+            <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: '0.75rem' }}>
+              Featured protocol
+            </div>
+            <h3 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.25rem', color: '#1c1917', fontWeight: 800, marginBottom: '0.75rem' }} className="sm:text-2xl">
+              The Sprint Stack
+            </h3>
+            <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.9375rem', color: '#57534e', lineHeight: 1.75, marginBottom: '1.25rem' }} className="sm:text-base">
+              Your child already sprints at practice. What they eat before and after changes the growth response dramatically.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4" style={{ marginBottom: '1.25rem' }}>
+              <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '14px 16px', textAlign: 'center' }}>
+                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, marginBottom: 4 }}>Before</div>
+                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', fontWeight: 600, lineHeight: 1.5 }}>1 beef liver meatball + 1 egg + peanuts</div>
+                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#78716c', marginTop: 4 }}>loads choline + niacin</div>
+              </div>
+              <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '14px 16px', textAlign: 'center' }}>
+                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, marginBottom: 4 }}>Sprint</div>
+                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', fontWeight: 600, lineHeight: 1.5 }}>6 &times; 30-sec all-out</div>
+                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#78716c', marginTop: 4 }}>triggers lactate response</div>
+              </div>
+              <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '14px 16px', textAlign: 'center' }}>
+                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, marginBottom: 4 }}>After</div>
+                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', fontWeight: 600, lineHeight: 1.5 }}>Cold A2 milk + raw honey</div>
+                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#78716c', marginTop: 4 }}>converts signal to growth</div>
+              </div>
+            </div>
+
+            <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.75rem', color: '#78716c', lineHeight: 1.6, textAlign: 'center' }}>
+              This is one stack. The full protocol goes much deeper.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* Growth Trajectory Graph */}
       <section style={{ padding: '0 1rem 3rem', backgroundColor: '#fafaf9' }} className="sm:pb-16">
@@ -73,41 +110,18 @@ export default function Home() {
             {/* SVG Graph */}
             <div className="relative h-48 sm:h-64">
               <svg viewBox="0 0 400 200" className="w-full h-full" preserveAspectRatio="none">
-                {/* Grid lines */}
                 <defs>
                   <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
                     <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#f0f0f0" strokeWidth="1"/>
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#grid)" />
-
-                {/* Average child curve - flattens early, plateaus */}
-                <path
-                  d="M 20 180 Q 50 170, 80 155 Q 120 135, 180 115 Q 250 95, 320 85 Q 360 82, 380 80"
-                  fill="none"
-                  stroke="#d1d5db"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-
-                {/* bioKid curve - separates early, keeps rising strongly */}
-                <path
-                  d="M 20 180 Q 50 165, 80 140 Q 120 100, 180 60 Q 250 30, 320 18 Q 360 12, 380 10"
-                  fill="none"
-                  stroke="#065f46"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-
-                {/* Start point - same for both */}
+                <path d="M 20 180 Q 50 170, 80 155 Q 120 135, 180 115 Q 250 95, 320 85 Q 360 82, 380 80" fill="none" stroke="#d1d5db" strokeWidth="3" strokeLinecap="round" />
+                <path d="M 20 180 Q 50 165, 80 140 Q 120 100, 180 60 Q 250 30, 320 18 Q 360 12, 380 10" fill="none" stroke="#065f46" strokeWidth="3" strokeLinecap="round" />
                 <circle cx="20" cy="180" r="6" fill="#065f46" />
-
-                {/* End points */}
                 <circle cx="380" cy="80" r="5" fill="#d1d5db" />
                 <circle cx="380" cy="10" r="6" fill="#065f46" />
               </svg>
-
-              {/* X-axis labels */}
               <div className="absolute bottom-0 left-0 right-0 flex justify-between text-[10px] sm:text-xs px-2 sm:px-4" style={{ color: '#1c1917', fontFamily: "'Courier New', Courier, monospace" }}>
                 <span>Birth</span>
                 <span className="hidden sm:inline">Age 5</span>
@@ -122,95 +136,60 @@ export default function Home() {
             </div>
 
             <p style={{ textAlign: 'center', fontSize: '0.875rem', color: '#57534e', marginTop: '1rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }} className="sm:text-sm">
-              Same genes, different environment: a structured height-supportive system changes the height curve.
+              Same genes, different environment. The gap compounds every year.
             </p>
           </div>
         </div>
       </section>
 
-      {/* The Gap Section */}
+      {/* The Gap Section — polygenic framing (felt, not explained) */}
       <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#065f46' }} className="sm:py-20">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.5rem', color: '#ffffff', marginBottom: '1.5rem', fontWeight: 800 }} className="sm:text-4xl">Most parents don&apos;t know what they&apos;re leaving on the table.</h2>
+          <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.5rem', color: '#ffffff', marginBottom: '1.5rem', fontWeight: 800 }} className="sm:text-4xl">Height optimization isn&apos;t taught.</h2>
           <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.85)', marginBottom: '1.5rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }} className="sm:text-xl">
-            Height optimization isn&apos;t taught in schools. It isn&apos;t in parenting books.
-            It&apos;s buried in peer-reviewed journals that no one reads.
+            Not in schools. Not at checkups. Not by coaches. The science exists &mdash; it&apos;s just buried in academic journals that no parent has time to read.
           </p>
           <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.75)', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }} className="sm:text-base">
-            We read them. We built the protocol. Now it&apos;s yours.
+            We spent 2,400+ hours reading them and turned it into a daily protocol. Now it&apos;s yours.
           </p>
         </div>
       </section>
 
-      {/* Trust / Research Section — research notebook artifacts */}
-      <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#fafaf9' }} className="sm:py-20">
+      {/* Testimonials */}
+      <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#fafaf9' }} className="sm:py-16">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.5rem', color: '#1c1917', marginBottom: '0.75rem', fontWeight: 800 }} className="sm:text-4xl">Built from the research, not the internet</h2>
-          </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-            {/* Artifact 1 */}
-            <div style={{
-              background: '#fff',
-              borderRadius: '14px',
-              padding: '1.75rem 1.5rem',
-              border: '1px solid #e7e5e4',
-              borderLeft: '4px solid #065f46',
-              position: 'relative',
-            }}>
-              <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.75rem' }}>
-                Literature review
-              </div>
-              <p style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2.25rem', color: '#065f46', fontWeight: 800, lineHeight: 1, marginBottom: '0.5rem' }}>312</p>
-              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', fontWeight: 600, marginBottom: '0.5rem' }}>peer-reviewed studies</p>
-              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.75rem', color: '#78716c', lineHeight: 1.55 }}>
-                Pediatric endocrinology, sports medicine, sleep science, nutritional biochemistry — mapped into one daily system.
+            <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid #e7e5e4', position: 'relative' }}>
+              <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2rem', color: '#d1fae5', lineHeight: 1, marginBottom: '0.5rem' }}>&ldquo;</div>
+              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', lineHeight: 1.7, marginBottom: '1rem' }}>
+                My son just turned 13 and is in the 97th percentile for height thanks to bioKids. My husband and I are 5&apos;9 and 5&apos;7.5&rdquo; respectively. I am starting my other two boys 11 and 7 on bioKids now.
               </p>
+              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', fontWeight: 700 }}>Maggie</p>
+              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#78716c' }}>Mom of 3 &middot; New York</p>
             </div>
 
-            {/* Artifact 2 */}
-            <div style={{
-              background: '#fff',
-              borderRadius: '14px',
-              padding: '1.75rem 1.5rem',
-              border: '1px solid #e7e5e4',
-              borderLeft: '4px solid #065f46',
-              position: 'relative',
-            }}>
-              <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.75rem' }}>
-                Total synthesis time
-              </div>
-              <p style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2.25rem', color: '#065f46', fontWeight: 800, lineHeight: 1, marginBottom: '0.5rem' }}>2,400+</p>
-              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', fontWeight: 600, marginBottom: '0.5rem' }}>hours of research</p>
-              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.75rem', color: '#78716c', lineHeight: 1.55 }}>
-                Every claim traced to source. Every mechanism cross-referenced. Every food timing validated against the original data.
+            <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid #e7e5e4', position: 'relative' }}>
+              <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2rem', color: '#d1fae5', lineHeight: 1, marginBottom: '0.5rem' }}>&ldquo;</div>
+              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', lineHeight: 1.7, marginBottom: '1rem' }}>
+                Both my kids are in the 99th percentile, 8 and 7 years old. We helped create the bioKids protocol and are starting tennis lessons for them next year in hopes of a D1 scholarship.
               </p>
+              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', fontWeight: 700 }}>Marko</p>
+              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#78716c' }}>Dad of 2 &middot; New York</p>
             </div>
 
-            {/* Artifact 3 */}
-            <div style={{
-              background: '#fff',
-              borderRadius: '14px',
-              padding: '1.75rem 1.5rem',
-              border: '1px solid #e7e5e4',
-              borderLeft: '4px solid #065f46',
-              position: 'relative',
-            }}>
-              <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.75rem' }}>
-                Source integrity
-              </div>
-              <p style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2.25rem', color: '#065f46', fontWeight: 800, lineHeight: 1, marginBottom: '0.5rem' }}>100%</p>
-              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', fontWeight: 600, marginBottom: '0.5rem' }}>academic sourced</p>
-              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.75rem', color: '#78716c', lineHeight: 1.55 }}>
-                Zero influencer science. Every protocol item cites the original study. Tap any card in the app to see the citation.
+            <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid #e7e5e4', position: 'relative' }}>
+              <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2rem', color: '#d1fae5', lineHeight: 1, marginBottom: '0.5rem' }}>&ldquo;</div>
+              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', lineHeight: 1.7, marginBottom: '1rem' }}>
+                I&apos;ve trained top NBA talent all the way down to elementary school kids. The limiting factor is always height. bioKids might just change the game forever&hellip;
               </p>
+              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', fontWeight: 700 }}>Thomas</p>
+              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#78716c' }}>Athletic Trainer &middot; Miami</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pricing */}
+      {/* Pricing — with anchoring */}
       <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#fafaf9' }} className="sm:py-20">
         <div className="max-w-2xl mx-auto">
           <div style={{ border: '2px solid rgba(5, 150, 105, 0.25)', borderRadius: '20px', padding: '2rem 1.5rem', textAlign: 'center', background: '#fff', boxShadow: '0 4px 24px rgba(6,95,70,0.08)' }} className="sm:p-10">
@@ -219,32 +198,23 @@ export default function Home() {
               <span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2.5rem', color: '#065f46' }}>$0</span>
               <span style={{ fontSize: '1rem', color: '#78716c', fontWeight: 500 }}> for 7 days</span>
             </h2>
-            <p style={{ fontSize: '0.8125rem', color: '#a8a29e', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500, marginBottom: '1.25rem' }}>
-              then $30/mo · cancel anytime
+            <p style={{ fontSize: '0.8125rem', color: '#a8a29e', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500, marginBottom: '0.5rem' }}>
+              then $30/mo &middot; cancel anytime
             </p>
-            <p style={{ fontSize: '0.875rem', color: '#57534e', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500, marginBottom: '1.5rem', lineHeight: 1.75 }} className="sm:text-base">
-              The complete evidence-based growth protocol.
+            <p style={{ fontSize: '0.75rem', color: '#78716c', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500, marginBottom: '1.5rem', lineHeight: 1.6 }}>
+              Less than $1/day. A single pediatric endocrinologist visit costs $300+.
             </p>
-            <Link href="/onboarding" style={{ background: '#065f46', color: 'white', padding: '0.875rem 2.5rem', borderRadius: '12px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', display: 'inline-block', fontFamily: "'Courier New', Courier, monospace", marginBottom: '1.25rem' }} className="sm:text-lg">
+            <Link href="/onboarding" style={{ background: '#065f46', color: 'white', padding: '0.875rem 2.5rem', borderRadius: '12px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', display: 'inline-block', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-lg">
               Start Free Trial
             </Link>
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm" style={{ color: '#78716c', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500 }}>
-              <span>Daily protocol</span>
-              <span>Science library</span>
-              <span>Weekly articles</span>
-              <span>heightAI</span>
-            </div>
           </div>
-          <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.75rem', color: '#a8a29e', textAlign: 'center', marginTop: '1.25rem', lineHeight: 1.6 }}>
-            This is a living system. New research, new articles, new protocols — delivered as the science evolves.
-          </p>
         </div>
       </section>
 
       {/* Closing Statement */}
       <section style={{ padding: '5rem 1rem', backgroundColor: '#fafaf9' }} className="sm:py-32">
         <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '2.25rem', fontWeight: 800, color: '#065f46', textAlign: 'center' }} className="sm:text-6xl">
-          Grow.
+          Every inch counts.
         </p>
       </section>
 

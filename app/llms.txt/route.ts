@@ -1,7 +1,7 @@
 export async function GET() {
   const content = `# bioKids — llms.txt
 
-> bioKids is a science-backed platform helping parents optimize their child's natural growth hormone production through nutrition, exercise, and lifestyle protocols. All claims are peer-reviewed and cited.
+> bioKids is a science-backed platform helping parents optimize their child's natural growth hormone production through nutrition, exercise, and lifestyle protocols. All recommendations are peer-reviewed and cited.
 
 ## About bioKids
 - Website: https://biokids.me

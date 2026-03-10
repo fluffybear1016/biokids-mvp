@@ -332,7 +332,7 @@ export default function Dashboard() {
           </h2>
           <div style={{ width: 32, height: 3, background: col.green, borderRadius: 2, marginBottom: 12 }} />
           <p style={{ fontFamily: F, fontSize: 13, color: col.light, marginBottom: 20 }}>
-            {articles.length} peer-reviewed deep dives. Every claim cited.
+            {articles.length} peer-reviewed deep dives. Every statement cited.
           </p>
 
           {/* Filter Pills */}

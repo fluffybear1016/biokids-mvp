@@ -208,7 +208,7 @@ const dayData: DayPeriod[] = [
 
   ]},
 
-  { period:"Afternoon", time:"12:00 – 5:00pm", note:"The Sprint Stack (pre-sprint → sprints → post-sprint milk) is the most powerful height combination in the protocol. See the Sprint Stack in the Stacks section below.", items:[
+  { period:"Afternoon", time:"12:00 – 5:00pm", note:"THE SPRINT STACK — the most powerful combination in the protocol. Pre-sprint snack → all-out sprints → cold milk with honey. Your child already sprints at practice — this turns every sprint into a growth event.", items:[
     { id:"lunch", t:"The Growth Meal", sub:"Rotate: liver meatballs · oysters · salmon · turkey · beef — with sauerkraut + lentils + broccoli + seeds", gh:"15+ pathways", headline:"15+ growth pathways activated in one meal — primes the afternoon sprint", tier:0, cite:"Isidori, Curr Med Res Opin 1981; Larnkjaer, J Nutr 2012; Quabbe, JCEM 1983", why:"WHY THESE FOODS?\n\nEvery item in this meal earns its place by activating a specific growth pathway. Together they stack 15+ pathways in a single sitting — more than any supplement can touch.\n\nBEEF LIVER MEATBALLS (2–3×/wk): Mix 2 tbsp liver into ground beef, form meatballs — kids won't taste it. Highest choline density of any food (primes the entire growth axis) plus retinol, B12, niacin, iron, zinc. The single most nutrient-dense food that exists.\n\nOYSTERS (1×/wk): 28.2mg zinc in 3 oz — a full week's supply in one serving. Zinc activates the growth axis at all 3 levels. Pan-seared or in stew.\n\nSALMON (2×/wk): Omega-3s support IGF-1 production. Vitamin D enables the entire growth plate pathway. Any preparation works.\n\nSAUERKRAUT/KIMCHI: Even 2 tbsp counts. Fermentation produces GABA — a natural growth signal that also suppresses the hormone that brakes growth.\n\nLENTILS + CITRUS: The lysine-inositol-B12 combination from a clinical growth trial. Vitamin C alongside boosts iron 2–3×.\n\nBROCCOLI: Contains DIM — delays growth plate closure by blocking the enzyme that converts testosterone to estrogen.\n\nNO DAIRY at this meal — save milk for post-sprint.", tip:"Batch-cook liver meatballs and feed throughout the week. Sauerkraut as a side — even 2 tbsp counts. Pumpkin seeds on top of anything. Broccoli at every lunch. Vitamin C alongside iron foods. NO DAIRY here.",
       pumps:[
         { p:"Lysine + Arginine*", n:"up to 700%", d:"The strongest amino acid combination for growth — in beef, turkey, lentils, seeds" },
@@ -739,7 +739,7 @@ export default function Dashboard() {
             onClick={() => setIntroOpen(o => !o)}
             style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:16, fontWeight:600, color:"#1c1917", lineHeight:1.55, maxWidth:460, marginBottom: introOpen ? 16 : 0, cursor:"pointer" }}
           >
-            <span style={{ color:"#065f46" }}>bioKids</span> arranges your child&apos;s day so every meal, every sprint, every night of sleep makes them taller.
+            <span style={{ color:"#065f46" }}>bioKids</span> is the daily system that turns meals, sprints, and sleep into inches. 15+ science-backed growth levers — one simple checklist.
             <span style={{ color:"#065f46", fontSize:9, transition:"transform 0.2s ease", transform: introOpen ? "rotate(180deg)" : "none", display:"inline-block", marginLeft:6 }}>▼</span>
           </p>
 
@@ -775,7 +775,7 @@ export default function Dashboard() {
               fontSize:13, color:"#065f46", lineHeight:1.65, margin:"0 0 6px",
               maxWidth:360, marginLeft:"auto", marginRight:"auto",
             }}>
-              Everything below is your child&apos;s daily growth protocol — built from peer-reviewed research, arranged into a simple checklist.
+              Everything below is your child&apos;s daily growth protocol — 15+ science-backed levers, arranged into a simple checklist.
             </p>
             <p style={{
               fontFamily:"'Courier New', Courier, monospace",
@@ -845,6 +845,27 @@ export default function Dashboard() {
                   Every single item. That&apos;s extraordinary.
                 </p>
               )}
+              {/* Share button — virality moment */}
+              <button
+                onClick={() => {
+                  const text = `${coreDoneCount}/${coreTotal} core growth goals done today with bioKids. The science is real. biokids.me`;
+                  if (navigator.share) {
+                    navigator.share({ text }).catch(() => {});
+                  } else {
+                    navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard!')).catch(() => {});
+                  }
+                }}
+                style={{
+                  fontFamily:"'Courier New', Courier, monospace",
+                  fontSize:11, fontWeight:600, color:"#065f46",
+                  background:"rgba(255,255,255,0.7)", border:"1px solid #86efac", borderRadius:10,
+                  padding:"8px 18px", cursor:"pointer", marginTop:14,
+                  display:"inline-flex", alignItems:"center", gap:6,
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#065f46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                Share with your team
+              </button>
             </div>
           </div>
         )}
@@ -870,6 +891,26 @@ export default function Dashboard() {
                 {childName === 'Your child' ? ' Your child' : ` ${childName}`} got the full protocol today.
                 That&apos;s a parent who cares deeply. Tomorrow it starts again — and it gets easier.
               </p>
+              <button
+                onClick={() => {
+                  const text = `Perfect day — ${total}/${total} growth goals completed with bioKids. Every lever pulled. biokids.me`;
+                  if (navigator.share) {
+                    navigator.share({ text }).catch(() => {});
+                  } else {
+                    navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard!')).catch(() => {});
+                  }
+                }}
+                style={{
+                  fontFamily:"'Courier New', Courier, monospace",
+                  fontSize:11, fontWeight:600, color:"#fff",
+                  background:"rgba(255,255,255,0.15)", border:"1px solid rgba(255,255,255,0.3)", borderRadius:10,
+                  padding:"8px 18px", cursor:"pointer", marginTop:14,
+                  display:"inline-flex", alignItems:"center", gap:6,
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                Share with your team
+              </button>
             </div>
           </div>
         )}
@@ -1004,16 +1045,8 @@ export default function Dashboard() {
         <div style={{ height:1, background:"#e7e5e4", margin:"36px 0 40px" }} />
 
         {/* Title — centered, outside the box */}
-        <div style={{ fontSize:20, fontWeight:900, color:"#1c1917", letterSpacing:"-0.02em", textAlign:"center", marginBottom:16 }}>Height Optimization Loop</div>
-
-        {/* Daily targets — bold header before all sections */}
-        <div style={{ marginBottom:32, padding:"20px 24px", background:"#f0fdf4", border:"2px solid #065f46", borderRadius:16 }}>
-          <div style={{ fontSize:15, fontWeight:800, color:"#065f46", lineHeight:1.6, letterSpacing:"-0.01em" }}>
-            <div style={{ marginBottom:8 }}>Target 20–24 oz A2 milk/day OR equivalent — 5 oz sheep yogurt = 8 oz A2 milk</div>
-            <div style={{ marginBottom:8 }}>Target 1.2–1.5 g protein per kg of body weight daily</div>
-            <div>Maintain a calorie surplus in clean, whole foods — nothing processed</div>
-          </div>
-        </div>
+        <div style={{ fontSize:20, fontWeight:900, color:"#1c1917", letterSpacing:"-0.02em", textAlign:"center", marginBottom:8 }}>Today&apos;s Game Plan</div>
+        <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#44403c", textAlign:"center", marginBottom:32, lineHeight:1.5 }}>Check them off as you go. It gets easier every day.</div>
 
         {/* Day sections */}
         {dayData.map((p, pi) => (
@@ -1051,9 +1084,9 @@ export default function Dashboard() {
         <div style={{ margin:"52px 0 40px", textAlign:"center" }}>
           <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#1c1917", lineHeight:1.7 }}>
             Every number on this page comes from a peer-reviewed study.<br/>
-            Items marked with * are from adult studies using isolated amino acids or supplements.<br/>
-            Whole foods deliver these same pathways at lower but meaningful doses.<br/>
-            We read the research so you can focus on your child.
+            * from adult studies — whole foods deliver these pathways at lower but meaningful doses.<br/>
+            312 studies. 2,400+ hours of research. Zero influencer science.<br/>
+            We read the journals so you can focus on your child.
           </p>
         </div>
       </div>
