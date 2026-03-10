@@ -1,5 +1,5 @@
 // bioKids Service Worker — offline support + push notifications
-const CACHE_NAME = 'biokids-v1';
+const CACHE_NAME = 'biokids-v2';
 const OFFLINE_URL = '/offline';
 
 // Assets to cache immediately on install
