@@ -232,6 +232,7 @@ export default function Home() {
               <span>Daily protocol</span>
               <span>Science library</span>
               <span>Weekly articles</span>
+              <span>heightAI</span>
             </div>
           </div>
           <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.75rem', color: '#a8a29e', textAlign: 'center', marginTop: '1.25rem', lineHeight: 1.6 }}>
