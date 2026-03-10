@@ -28,13 +28,13 @@ export default function Home() {
               For High-Agency Parents
             </span>
             <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(1.875rem, 5vw, 3.75rem)', color: '#1c1917', marginBottom: '1.5rem', fontWeight: 800, lineHeight: 1.2 }}>
-              A natural way to optimize your child&apos;s <span style={{ color: '#065f46' }}>growth hormone</span>
+              Make your child <span style={{ color: '#065f46' }}>taller.</span> The science exists — most parents just don&apos;t know it.
             </h1>
             <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#57534e', marginBottom: '1.25rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }}>
-              The evidence-based system for natural growth hormone optimization—from childhood through the growth years. No prescriptions, no meds, just the levers parents actually control.
+              The evidence-based system that helps children reach their maximum height. No prescriptions. No supplements. Just the levers parents actually control.
             </p>
             <p style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: '#065f46', marginBottom: '2rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, fontStyle: 'italic' }}>
-              Growth hormone doesn&apos;t just drive height — every GH pulse simultaneously helps optimize brain development.
+              Height isn&apos;t the only benefit — every growth signal simultaneously supports brain development, bone density, and athletic performance.
             </p>
             <div className="flex flex-col items-center gap-3">
               <Link href="/onboarding" style={{ background: '#065f46', color: 'white', padding: '0.75rem 2rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", display: 'inline-block' }} className="sm:text-lg">
