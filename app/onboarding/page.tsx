@@ -104,6 +104,9 @@ function OnboardingContent() {
   }, []);
 
   // Poll subscription status on Step 2 — auto-advance to child setup once payment completes
+  // Delay the first check by 5 seconds so the Stripe Pricing Table has time to render.
+  // Without this delay, users with an already-active subscription (e.g. card fixed via Stripe link)
+  // get auto-advanced before they even see the pricing table.
   useEffect(() => {
     if (step !== 2) return;
     let cancelled = false;
@@ -124,10 +127,15 @@ function OnboardingContent() {
       } catch {}
     };
 
-    // Check immediately, then every 3 seconds
-    checkSubscription();
-    const interval = setInterval(checkSubscription, 3000);
-    return () => { cancelled = true; clearInterval(interval); };
+    // Wait 5 seconds before first check (let Stripe Pricing Table load first),
+    // then poll every 3 seconds
+    const initialDelay = setTimeout(() => {
+      if (!cancelled) {
+        checkSubscription();
+      }
+    }, 5000);
+    const interval = setInterval(checkSubscription, 5000);
+    return () => { cancelled = true; clearTimeout(initialDelay); clearInterval(interval); };
   }, [step, router]);
 
   // Generate year options
@@ -471,16 +479,27 @@ function OnboardingContent() {
             <Script
               async
               src="https://js.stripe.com/v3/pricing-table.js"
-              strategy="lazyOnload"
+              strategy="afterInteractive"
             />
-            {/* @ts-expect-error Stripe pricing table is a custom element */}
-            <stripe-pricing-table
-              pricing-table-id="prctbl_1T21I73eI33ypy3JzXLrhay1"
-              publishable-key="pk_live_51Sw3RG3eI33ypy3JUaKVJ6RY9Xw5ear1j1eQQOp81v6YSc63XuihA4vSoANrCMLemY13GxAi0fT3x7JgFglHmGTn00W88YoFKE"
-              customer-email={userEmail || undefined}
-              client-reference-id={userId || undefined}
-            />
-
+            <div style={{ minHeight: 200 }}>
+              {/* @ts-expect-error Stripe pricing table is a custom element */}
+              <stripe-pricing-table
+                pricing-table-id="prctbl_1T21I73eI33ypy3JzXLrhay1"
+                publishable-key="pk_live_51Sw3RG3eI33ypy3JUaKVJ6RY9Xw5ear1j1eQQOp81v6YSc63XuihA4vSoANrCMLemY13GxAi0fT3x7JgFglHmGTn00W88YoFKE"
+                customer-email={userEmail || undefined}
+                client-reference-id={userId || undefined}
+              />
+            </div>
+            <p style={{ fontFamily: mono, fontSize: 11, color: '#a8a29e', textAlign: 'center', marginTop: 16, lineHeight: 1.6 }}>
+              If the payment form doesn&apos;t appear,{' '}
+              <button
+                onClick={() => window.location.reload()}
+                style={{ background: 'none', border: 'none', color: '#065f46', fontWeight: 700, fontFamily: mono, fontSize: 11, cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
+              >
+                refresh the page
+              </button>
+              {' '}or try an incognito window.
+            </p>
           </div>
         )}
 
