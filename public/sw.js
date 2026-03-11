@@ -1,5 +1,5 @@
 // bioKids Service Worker — offline support + push notifications
-const CACHE_NAME = 'biokids-v2';
+const CACHE_NAME = 'biokids-v3';
 const OFFLINE_URL = '/offline';
 
 // Assets to cache immediately on install
@@ -84,11 +84,13 @@ self.addEventListener('push', (event) => {
     icon: '/icons/icon-192.png',
     badge: '/icons/icon-192.png',
     vibrate: [100, 50, 100],
+    tag: data.tag || 'biokids-protocol',
+    renotify: true,
     data: {
       url: data.url || '/home',
     },
     actions: [
-      { action: 'open', title: 'Start Protocol' },
+      { action: 'open', title: 'Open Protocol' },
     ],
   };
 

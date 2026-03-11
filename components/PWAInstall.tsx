@@ -78,43 +78,76 @@ export default function PWAInstall() {
 
   const handleEnableNotifications = async () => {
     try {
+      // Step 1: Check if Notification API exists
       if (!('Notification' in window)) {
-        console.log('[PWA] Notification API not available');
-        alert('Push notifications require opening this app from your Home Screen. Make sure you added it via Share → Add to Home Screen.');
+        alert('Notifications not available.\n\nThis app must be opened from your Home Screen.\n\n1. Tap the Share button in Safari\n2. Tap "Add to Home Screen"\n3. Open the app from your Home Screen\n4. Then tap Enable Reminders again');
         setShowNotifPrompt(false);
         return;
       }
 
+      // Step 2: Check current permission state
+      const currentPerm = Notification.permission;
+      console.log('[PWA] Current permission:', currentPerm);
+
+      if (currentPerm === 'denied') {
+        alert('Notifications are blocked for this app.\n\nTo fix this:\n1. Go to Settings → Notifications\n2. Scroll down and find "biokids" under your web apps\n3. Turn on "Allow Notifications"\n4. Come back here and tap Enable Reminders again');
+        setShowNotifPrompt(false);
+        return;
+      }
+
+      // Step 3: Make sure service worker is registered first
+      if (!('serviceWorker' in navigator)) {
+        alert('Service workers not supported on this device.');
+        setShowNotifPrompt(false);
+        return;
+      }
+
+      // Wait for service worker to be ready before requesting permission
+      const reg = await navigator.serviceWorker.ready;
+      console.log('[PWA] SW ready before permission request:', reg.scope);
+
+      // Step 4: Request permission (this should show the iOS system popup)
       console.log('[PWA] Requesting notification permission...');
       const permission = await Notification.requestPermission();
       console.log('[PWA] Permission result:', permission);
 
       if (permission === 'granted') {
-        // Subscribe to push
-        const reg = await navigator.serviceWorker.ready;
-        console.log('[PWA] SW ready, VAPID key present:', !!VAPID_PUBLIC_KEY);
+        console.log('[PWA] VAPID key present:', !!VAPID_PUBLIC_KEY, 'length:', VAPID_PUBLIC_KEY?.length);
 
         if (VAPID_PUBLIC_KEY) {
           const subscription = await reg.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
           });
-          console.log('[PWA] Push subscription created');
+          console.log('[PWA] Push subscription created:', JSON.stringify(subscription).slice(0, 100));
 
-          // Send subscription to your server
+          // Send subscription to server
           const resp = await fetch('/api/push-subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(subscription),
           });
-          console.log('[PWA] Subscription saved, status:', resp.status);
+          const respText = await resp.text();
+          console.log('[PWA] Subscription saved, status:', resp.status, 'body:', respText);
+
+          if (resp.ok) {
+            alert('Notifications enabled! You\'ll get protocol reminders throughout the day.');
+          } else {
+            alert('Subscription saved locally but server returned: ' + resp.status + '. Notifications may still work.');
+          }
         } else {
+          alert('Notifications enabled, but push setup incomplete (missing server key). Contact support.');
           console.log('[PWA] No VAPID key — subscription skipped');
         }
+      } else if (permission === 'denied') {
+        alert('You denied notifications.\n\nIf you change your mind:\n1. Go to Settings → Notifications\n2. Find "biokids" under your web apps\n3. Turn on "Allow Notifications"');
+      } else {
+        alert('Notification permission was dismissed. Please try again and tap "Allow" when the popup appears.');
       }
     } catch (err) {
+      const errMsg = (err as Error).message || String(err);
       console.log('[PWA] Notification setup failed:', err);
-      alert('Notification setup failed: ' + (err as Error).message);
+      alert('Notification setup error:\n' + errMsg);
     }
     setShowNotifPrompt(false);
   };
@@ -169,7 +202,7 @@ export default function PWAInstall() {
             Get daily reminders?
           </p>
           <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 11, color: '#57534e', margin: '0 0 12px', lineHeight: 1.5 }}>
-            We&apos;ll remind you each morning to start the height protocol. Consistency is everything.
+            We&apos;ll send protocol reminders throughout the day — morning, lunch, exercise, dinner &amp; bedtime.
           </p>
           <div style={{ display: 'flex', gap: 8 }}>
             <button
