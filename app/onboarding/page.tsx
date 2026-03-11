@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import GoalSelection from '@/components/GoalSelection';
 import HeightPotentialCalculator from '@/components/HeightPotentialCalculator';
+import ExpressCheckout from '@/components/ExpressCheckout';
 import { createClient } from '@/lib/supabase';
 import { Suspense } from 'react';
 
@@ -480,6 +481,11 @@ function OnboardingContent() {
               async
               src="https://js.stripe.com/v3/pricing-table.js"
               strategy="afterInteractive"
+            />
+            <ExpressCheckout
+              email={userEmail}
+              userId={userId}
+              onSuccess={() => setStep(3)}
             />
             <div style={{ minHeight: 200 }}>
               {/* @ts-expect-error Stripe pricing table is a custom element */}
