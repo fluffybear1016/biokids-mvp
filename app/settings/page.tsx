@@ -57,9 +57,17 @@ export default function Settings() {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  // Load children on mount
+  // Load children on mount — auto-create a child profile if none exist
   useEffect(() => {
-    const kids = getChildren();
+    let kids = getChildren();
+
+    // If no children exist yet (fresh device / first visit), create one
+    if (kids.length === 0) {
+      const newChild = createEmptyChild();
+      kids = addChild(newChild);
+      setActiveChildId(newChild.id);
+    }
+
     setChildrenState(kids);
     const aid = getActiveChildId();
     if (aid && kids.find(c => c.id === aid)) {
