@@ -3,11 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import Script from 'next/script';
 import GoalSelection from '@/components/GoalSelection';
 import HeightPotentialCalculator from '@/components/HeightPotentialCalculator';
-import ExpressCheckout from '@/components/ExpressCheckout';
 import { createClient } from '@/lib/supabase';
+import { analytics } from '@/lib/analytics';
 import { Suspense } from 'react';
 
 // Shared styles
@@ -55,8 +54,12 @@ function OnboardingContent() {
   const [fatherHeightFt, setFatherHeightFt] = useState('');
   const [fatherHeightIn, setFatherHeightIn] = useState('');
 
-  // Total steps depends on whether height data already exists
-  const totalSteps = hasHeightData ? 5 : 6;
+  // Newsletter opt-in
+  const [newsletterOptIn, setNewsletterOptIn] = useState(true);
+
+  // Total steps: 1=Account, 2=ChildInfo, 3=Habits, 4=Goals, 5=Height (if needed)
+  // (Stripe step removed — app is free during beta)
+  const totalSteps = hasHeightData ? 4 : 5;
 
   // Check for existing height data from landing page
   useEffect(() => {
@@ -89,7 +92,7 @@ function OnboardingContent() {
           setUserEmail(session.user.email || '');
           setUserId(session.user.id);
           // If user is already authenticated (e.g. via Google OAuth) and still on step 1,
-          // skip account creation and go straight to Stripe payment
+          // skip account creation and go straight to child info
           if (step === 1) {
             setStep(2);
           }
@@ -104,40 +107,17 @@ function OnboardingContent() {
     }
   }, []);
 
-  // Poll subscription status on Step 2 — auto-advance to child setup once payment completes
-  // Delay the first check by 5 seconds so the Stripe Pricing Table has time to render.
-  // Without this delay, users with an already-active subscription (e.g. card fixed via Stripe link)
-  // get auto-advanced before they even see the pricing table.
-  useEffect(() => {
-    if (step !== 2) return;
-    let cancelled = false;
-
-    const checkSubscription = async () => {
-      try {
-        const supabase = createClient();
-        if (!supabase) return;
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session?.user) return;
-
-        const res = await fetch(`/api/auth/user-state?userId=${session.user.id}`);
-        const data = await res.json();
-        const status = data?.profile?.subscription_status;
-        if ((status === 'active' || status === 'trial') && !cancelled) {
-          setStep(3); // advance to child info setup
-        }
-      } catch {}
-    };
-
-    // Wait 5 seconds before first check (let Stripe Pricing Table load first),
-    // then poll every 3 seconds
-    const initialDelay = setTimeout(() => {
-      if (!cancelled) {
-        checkSubscription();
-      }
-    }, 5000);
-    const interval = setInterval(checkSubscription, 5000);
-    return () => { cancelled = true; clearTimeout(initialDelay); clearInterval(interval); };
-  }, [step, router]);
+  // Save newsletter subscription
+  const saveNewsletterSubscription = async (email: string, uid: string) => {
+    if (!newsletterOptIn) return;
+    try {
+      await fetch('/api/auth/subscribe-newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, userId: uid }),
+      });
+    } catch {}
+  };
 
   // Generate year options
   const currentYear = new Date().getFullYear();
@@ -195,7 +175,16 @@ function OnboardingContent() {
         localStorage.setItem('biokids_auth_email', signupEmail);
         localStorage.setItem('biokids_auth_user_id', data.user.id);
 
-        setStep(2); // → Stripe Payment
+        // Save newsletter subscription
+        saveNewsletterSubscription(signupEmail, data.user.id);
+
+        // Track analytics
+        analytics.identify(data.user.id, signupEmail);
+        analytics.signup('email', signupEmail);
+        analytics.onboardingStep(1, 'Account Created');
+        if (newsletterOptIn) analytics.newsletterSubscribe('onboarding');
+
+        setStep(2); // → Child Info (Stripe removed — free during beta)
       }
     } catch (err) {
       console.error('Signup error:', err);
@@ -205,7 +194,7 @@ function OnboardingContent() {
     }
   };
 
-  // Step 3: Child Info — save and advance
+  // Step 2: Child Info — save and advance
   const saveChildInfo = () => {
     const bmi = calculateBMI();
     if (bmi) localStorage.setItem('childBMI', bmi.toString());
@@ -227,18 +216,24 @@ function OnboardingContent() {
         body: JSON.stringify({ userId, name, birthDate }),
       }).catch(() => {});
     }
-    setStep(4);
+    // Track child info for segmentation
+    analytics.onboardingStep(2, 'Child Info');
+    if (birthYear && birthMonth) {
+      const ageMonths = ((new Date().getFullYear() - parseInt(birthYear)) * 12) + (new Date().getMonth() + 1 - parseInt(birthMonth));
+      analytics.setChildInfo({ age_months: ageMonths });
+    }
+    setStep(3);
   };
 
-  // Auto-advance Step 3 when all fields filled
+  // Auto-advance Step 2 when all fields filled
   useEffect(() => {
-    if (step === 3 && name && birthMonth && birthYear && heightFt && heightIn && weight) {
+    if (step === 2 && name && birthMonth && birthYear && heightFt && heightIn && weight) {
       const t = setTimeout(saveChildInfo, 600);
       return () => clearTimeout(t);
     }
   }, [step, name, birthMonth, birthYear, heightFt, heightIn, weight]);
 
-  // Step 4: Daily Habits — save and advance
+  // Step 3: Daily Habits — save and advance
   const saveHabits = () => {
     localStorage.setItem('sleepHours', sleepHours);
     localStorage.setItem('bedtime', bedtime);
@@ -246,12 +241,13 @@ function OnboardingContent() {
     localStorage.setItem('exercise', exercise);
     localStorage.setItem('screenTime', screenTime);
     localStorage.setItem('processedFoods', processedFoods);
-    setStep(5);
+    analytics.onboardingStep(3, 'Daily Habits');
+    setStep(4);
   };
 
-  // Auto-advance Step 4 when all selections made
+  // Auto-advance Step 3 when all selections made
   useEffect(() => {
-    if (step === 4 && sleepHours && bedtime && dairy && exercise && screenTime && processedFoods) {
+    if (step === 3 && sleepHours && bedtime && dairy && exercise && screenTime && processedFoods) {
       const t = setTimeout(saveHabits, 600);
       return () => clearTimeout(t);
     }
@@ -270,7 +266,7 @@ function OnboardingContent() {
     return ((fatherCm - 13) + motherCm) / 2;
   })() : null;
 
-  // Step 6: Height Potential — save and go to home
+  // Step 5: Height Potential — save and go to home
   const handleHeightSubmit = () => {
     if (geneticTargetCm) {
       localStorage.setItem('childGender', childGender);
@@ -279,12 +275,15 @@ function OnboardingContent() {
       localStorage.setItem('geneticTarget', geneticTargetCm.toString());
     }
     localStorage.setItem('biokids_onboarding_complete', 'true');
+    analytics.onboardingStep(5, 'Height Potential');
+    analytics.onboardingComplete();
+    if (childGender) analytics.setChildInfo({ gender: childGender });
     router.push('/home');
   };
 
-  // Auto-advance Step 6 when all height fields filled
+  // Auto-advance Step 5 when all height fields filled
   useEffect(() => {
-    if (step === 6 && canCalculateHeight && geneticTargetCm) {
+    if (step === 5 && canCalculateHeight && geneticTargetCm) {
       const t = setTimeout(handleHeightSubmit, 1200); // slightly longer to show result
       return () => clearTimeout(t);
     }
@@ -367,8 +366,9 @@ function OnboardingContent() {
             <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6, textAlign: 'center' }}>
               Create your account
             </h2>
+            <span style={{ display: 'inline-block', fontSize: 9, fontWeight: 700, color: '#fff', background: '#065f46', borderRadius: 4, padding: '2px 6px', letterSpacing: '0.08em', marginBottom: 12 }}>BETA</span>
             <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', marginBottom: 24, textAlign: 'center', lineHeight: 1.6 }}>
-              Quick signup, then start your free trial.
+              Free access to the full protocol. No credit card needed.
             </p>
 
             {/* Social Login Buttons */}
@@ -449,6 +449,17 @@ function OnboardingContent() {
                   <Link href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Privacy Policy</Link>
                 </span>
               </label>
+              <label style={{ display: 'flex', alignItems: 'flex-start', gap: 8, cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={newsletterOptIn}
+                  onChange={(e) => setNewsletterOptIn(e.target.checked)}
+                  style={{ marginTop: 3, width: 16, height: 16, accentColor: '#065f46' }}
+                />
+                <span style={{ fontFamily: mono, fontSize: 12, color: '#78716c', lineHeight: 1.5 }}>
+                  Send me weekly growth tips and protocol updates
+                </span>
+              </label>
               <button
                 type="submit"
                 style={btnStyle(signupLoading || !agreedToTerms)}
@@ -465,52 +476,8 @@ function OnboardingContent() {
           </div>
         )}
 
-        {/* ========== Step 2: Stripe Payment ========== */}
+        {/* ========== Step 2: Child Info ========== */}
         {step === 2 && (
-          <div style={{
-            background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
-            padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
-          }}>
-            <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6, textAlign: 'center' }}>
-              Start your free trial
-            </h2>
-            <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', textAlign: 'center', marginBottom: 20, lineHeight: 1.6 }}>
-              7-day free trial. Cancel anytime.
-            </p>
-            <Script
-              async
-              src="https://js.stripe.com/v3/pricing-table.js"
-              strategy="afterInteractive"
-            />
-            <ExpressCheckout
-              email={userEmail}
-              userId={userId}
-              onSuccess={() => setStep(3)}
-            />
-            <div style={{ minHeight: 200 }}>
-              {/* @ts-expect-error Stripe pricing table is a custom element */}
-              <stripe-pricing-table
-                pricing-table-id="prctbl_1T21I73eI33ypy3JzXLrhay1"
-                publishable-key="pk_live_51Sw3RG3eI33ypy3JUaKVJ6RY9Xw5ear1j1eQQOp81v6YSc63XuihA4vSoANrCMLemY13GxAi0fT3x7JgFglHmGTn00W88YoFKE"
-                customer-email={userEmail || undefined}
-                client-reference-id={userId || undefined}
-              />
-            </div>
-            <p style={{ fontFamily: mono, fontSize: 11, color: '#a8a29e', textAlign: 'center', marginTop: 16, lineHeight: 1.6 }}>
-              If the payment form doesn&apos;t appear,{' '}
-              <button
-                onClick={() => window.location.reload()}
-                style={{ background: 'none', border: 'none', color: '#065f46', fontWeight: 700, fontFamily: mono, fontSize: 11, cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
-              >
-                refresh the page
-              </button>
-              {' '}or try an incognito window.
-            </p>
-          </div>
-        )}
-
-        {/* ========== Step 3: Child Info ========== */}
-        {step === 3 && (
           <div style={{
             background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
             padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
@@ -590,8 +557,8 @@ function OnboardingContent() {
           </div>
         )}
 
-        {/* ========== Step 4: Daily Habits ========== */}
-        {step === 4 && (
+        {/* ========== Step 3: Daily Habits ========== */}
+        {step === 3 && (
           <div style={{
             background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
             padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
@@ -674,8 +641,8 @@ function OnboardingContent() {
           </div>
         )}
 
-        {/* ========== Step 5: Goal Selection ========== */}
-        {step === 5 && (
+        {/* ========== Step 4: Goal Selection ========== */}
+        {step === 4 && (
           <div style={{ animation: 'fadeSlideIn 0.4s ease' }}>
             <GoalSelection
               childName={name || 'Your child'}
@@ -684,19 +651,21 @@ function OnboardingContent() {
                   goal,
                   date: new Date().toISOString(),
                 }));
+                analytics.onboardingStep(4, 'Goal Selection');
+                analytics.setChildInfo({ goal });
                 if (hasHeightData) {
                   // Height data already saved from landing page — go straight to home
                   completeOnboarding();
                 } else {
-                  setStep(6); // → Height Potential
+                  setStep(5); // → Height Potential
                 }
               }}
             />
           </div>
         )}
 
-        {/* ========== Step 6: Height Potential (only if not from landing page) ========== */}
-        {step === 6 && !hasHeightData && (
+        {/* ========== Step 5: Height Potential (only if not from landing page) ========== */}
+        {step === 5 && !hasHeightData && (
           <div style={{
             background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
             padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',

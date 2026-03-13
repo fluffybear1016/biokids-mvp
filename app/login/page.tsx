@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
+import { analytics } from '@/lib/analytics';
 import { generateDeviceFingerprint, storeSessionToken, SESSION_KICKED_MESSAGE } from '@/lib/session-manager';
 
 function LoginForm() {
@@ -68,40 +69,27 @@ function LoginForm() {
           storeSessionToken(result.sessionToken);
         }
 
-        // Check user state via server API (bypasses RLS)
-        let hasSubscription = false;
-        let hasChild = false;
-
+        // Restore child name from server or auth metadata
         try {
           const stateRes = await fetch(`/api/auth/user-state?userId=${authData.user.id}`);
           const state = await stateRes.json();
-          hasSubscription = state.profile?.subscription_status === 'active' || state.profile?.subscription_status === 'trial';
-          hasChild = state.children && state.children.length > 0;
-
-          // Restore child name to localStorage from server (survives cross-device login)
-          if (hasChild && state.children[0].name) {
+          if (state.children?.length > 0 && state.children[0].name) {
             localStorage.setItem('childName', state.children[0].name);
           }
-        } catch {
-          // API failed — fall through to localStorage check
-        }
+        } catch {}
 
-        // Also try auth user metadata for child name
         if (!localStorage.getItem('childName') && authData.user.user_metadata?.child_name) {
           localStorage.setItem('childName', authData.user.user_metadata.child_name);
         }
 
-        const hasLocalChild = !!localStorage.getItem('childName');
+        // Track login analytics
+        analytics.identify(authData.user.id, email);
+        analytics.login('email');
+        analytics.sessionStart();
 
-        if (hasSubscription) {
-          const redirectTo = searchParams.get('redirect') || '/home';
-          router.push(redirectTo);
-        } else if (hasLocalChild) {
-          // User started onboarding but may not have paid — send to Stripe step
-          router.push('/onboarding?step=2');
-        } else {
-          router.push('/onboarding');
-        }
+        // Go straight to home (app is free during beta)
+        const redirectTo = searchParams.get('redirect') || '/home';
+        router.push(redirectTo);
       }
     } catch (err) {
       console.error('Login error:', err);

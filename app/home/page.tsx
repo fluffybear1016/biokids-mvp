@@ -5,6 +5,7 @@ import Nav from '@/components/Nav';
 import { Child } from '@/lib/supabase';
 import { useChildName } from '@/lib/useChildName';
 import { getActiveChild } from '@/lib/children';
+import { analytics } from '@/lib/analytics';
 
 const mockChild: Child = {
   id: '1',
@@ -646,6 +647,9 @@ export default function Dashboard() {
     try { localStorage.setItem(todayKey, JSON.stringify(done)); } catch {}
   }, [done, todayKey]);
 
+  // Track session start on mount
+  useEffect(() => { analytics.sessionStart(); analytics.pageView('home'); }, []);
+
   // Compute items early — needed by streak tracking below
   const allItems = dayData.flatMap(d => d.items);
   const total = allItems.length;
@@ -1275,7 +1279,7 @@ export default function Dashboard() {
                   isOpen={openId === item.id}
                   onToggle={() => setOpenId(openId === item.id ? null : item.id)}
                   done={!!done[item.id]}
-                  onDone={() => setDone(d => ({ ...d, [item.id]: !d[item.id] }))}
+                  onDone={() => { setDone(d => { const next = !d[item.id]; analytics.checklistToggle(item.id, next, 'daily'); return { ...d, [item.id]: next }; }); }}
                 />
               ))}
             </div>
