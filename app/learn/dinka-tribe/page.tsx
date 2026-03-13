@@ -47,31 +47,26 @@ export default function DinkaTribeArticle() {
             </p>
           </section>
 
-          {/* The Numbers */}
+          {/* The Legend */}
           <section style={{ background: "#f0fdf4", borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.sigBorder}` }}>
-            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 14px" }}>The Numbers</h2>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 14px" }}>The Legend of Bol Nyuol</h2>
             <p style={{ fontSize: 13, color: C.body, lineHeight: 1.7, marginBottom: 14, fontFamily: F }}>
-              In 1953&ndash;1954, anthropologists Roberts and Bainbridge traveled to southern Sudan and measured Dinka men across multiple subgroups. What they recorded stunned the scientific community:
+              Among the Dinka, there is a family line that reads like mythology. Bol Nyuol, a great chief of the Tuic Dinka, stood &mdash; according to his descendants and tribal oral history &mdash; at <strong>7 feet 10 inches tall</strong>. His great-great-grandson, Manute Bol, was measured at 7&apos;7&quot; and became one of the tallest players in NBA history. Manute&apos;s mother was 6&apos;10&quot;. His father, a tribal elder, was 6&apos;8&quot;. His sister was 6&apos;8&quot;. His son, Bol Bol, plays in the NBA today at 7&apos;2&quot;.
             </p>
-            <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
-              <div style={{ flex: 1, background: C.card, borderRadius: 10, padding: 14, textAlign: "center", border: `1px solid ${C.border}` }}>
-                <div style={{ fontSize: 22, fontWeight: 800, color: C.green, fontFamily: F }}>6&apos;0&quot;</div>
-                <div style={{ fontSize: 10, color: C.light, fontFamily: F, marginTop: 2 }}>avg. male height</div>
-                <div style={{ fontSize: 9, color: C.light, fontFamily: F }}>(182.6 cm)</div>
-              </div>
-              <div style={{ flex: 1, background: C.card, borderRadius: 10, padding: 14, textAlign: "center", border: `1px solid ${C.border}` }}>
-                <div style={{ fontSize: 22, fontWeight: 800, color: C.green, fontFamily: F }}>5&apos;10&quot;</div>
-                <div style={{ fontSize: 10, color: C.light, fontFamily: F, marginTop: 2 }}>avg. female height</div>
-                <div style={{ fontSize: 9, color: C.light, fontFamily: F }}>(178 cm)</div>
-              </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, background: C.card, borderRadius: 10, padding: 14, marginBottom: 14, border: `1px solid ${C.border}` }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: C.green, textTransform: "uppercase", letterSpacing: 1, fontFamily: F, marginBottom: 2 }}>The Bol Lineage</div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Bol Nyuol (great-great-grandfather)</span><span style={{ fontWeight: 700, color: C.green }}>7&apos;10&quot;</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Manute Bol</span><span style={{ fontWeight: 700, color: C.green }}>7&apos;7&quot;</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Bol Bol (NBA, current)</span><span style={{ fontWeight: 700, color: C.green }}>7&apos;2&quot;</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Mother (Okwok)</span><span style={{ fontWeight: 700, color: C.green }}>6&apos;10&quot;</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Father (Madut)</span><span style={{ fontWeight: 700, color: C.green }}>6&apos;8&quot;</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Sister</span><span style={{ fontWeight: 700, color: C.green }}>6&apos;8&quot;</span></div>
             </div>
-            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.7, marginBottom: 14, fontFamily: F }}>
-              These were <em>averages</em>. Not outliers. Not NBA players. The typical Dinka man in the 1950s was taller than the average American man today &mdash; while living in one of the poorest, most remote regions on the planet. The typical Dinka woman was taller than most European men.
-            </p>
+
             <p style={{ fontSize: 13, color: C.body, lineHeight: 1.7, fontFamily: F }}>
-              No other population on Earth has ever been measured taller. Not the Dutch. Not the Scandinavians. Not anyone. The Dinka hold the record.
+              This isn&apos;t one tall family. This is what happens across the entire Dinka population. The Dinka produce more 7-footers per capita than any population on Earth &mdash; from a group of just four million people, living with no modern healthcare, no supplements, and no technology. South Sudan, one of the world&apos;s poorest nations, has sent multiple players to the NBA, all Dinka. Their secret has nothing to do with wealth. It has everything to do with what they feed their children.
             </p>
-            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginTop: 10, fontFamily: F }}>Roberts DF, Bainbridge DR. Nilotic physique. Am J Phys Anthropol. 1963;21(3):341-370.</p>
           </section>
 
           {/* The Cattle Camps */}
@@ -127,32 +122,15 @@ export default function DinkaTribeArticle() {
 
           {/* Manute Bol */}
           <section style={{ background: C.card, borderRadius: 14, padding: 20, marginBottom: 16, border: `1px solid ${C.border}` }}>
-            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 14px" }}>Manute Bol: The Cattle Camp Boy Who Reached the NBA</h2>
+            <h2 style={{ fontFamily: F, fontSize: 17, fontWeight: 700, color: C.title, margin: "0 0 14px" }}>Manute Bol: From Herdsboy to the NBA</h2>
             <p style={{ fontSize: 13, color: C.body, lineHeight: 1.7, marginBottom: 14, fontFamily: F }}>
-              The most famous Dinka to ever live was born in Turalei, a small village in what is now South Sudan. His name was Manute Bol.
+              Manute Bol never attended school as a child. Born in Turalei, a small village in what is now South Sudan, he grew up herding cattle and goats in the traditional Dinka way. He lived in the cattle camps. He milked the cows before dawn. He drank raw milk all day. He grew up on the same diet that had produced his 7&apos;10&quot; great-great-grandfather Bol Nyuol and generations of towering Dinka chiefs before him.
             </p>
             <p style={{ fontSize: 13, color: C.body, lineHeight: 1.7, marginBottom: 14, fontFamily: F }}>
-              Manute never attended school as a child. Instead, he herded cattle and goats in the traditional Dinka way. He lived in the cattle camps. He milked the cows. He drank the milk. He grew up on the same raw-milk diet that had produced generations of towering Dinka men before him.
-            </p>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, background: "#f0fdf4", borderRadius: 10, padding: 14, marginBottom: 14, border: `1px solid ${C.sigBorder}` }}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: C.green, textTransform: "uppercase", letterSpacing: 1, fontFamily: F, marginBottom: 2 }}>The Bol Family</div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Manute Bol</span><span style={{ fontWeight: 700, color: C.green }}>7&apos;7&quot;</span></div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Great-grandfather</span><span style={{ fontWeight: 700, color: C.green }}>7&apos;10&quot;</span></div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Mother (Okwok)</span><span style={{ fontWeight: 700, color: C.green }}>6&apos;10&quot;</span></div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Father (Madut)</span><span style={{ fontWeight: 700, color: C.green }}>6&apos;8&quot;</span></div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Sister</span><span style={{ fontWeight: 700, color: C.green }}>6&apos;8&quot;</span></div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.body, fontFamily: F }}><span>Son (Bol Bol, NBA)</span><span style={{ fontWeight: 700, color: C.green }}>7&apos;2&quot;</span></div>
-            </div>
-
-            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.7, marginBottom: 14, fontFamily: F }}>
-              When Manute was finally measured in 1979, at around age 18 or 19, he stood 7 feet 7 inches tall. He later recalled: &ldquo;I was born in a village where measuring height wasn&apos;t possible. I learned I was 7 foot 7 in 1979 when I was already grown.&rdquo;
-            </p>
-            <p style={{ fontSize: 13, color: C.body, lineHeight: 1.7, marginBottom: 14, fontFamily: F }}>
-              He went on to become one of the two tallest players in NBA history, playing for the Washington Bullets, Golden State Warriors, and Philadelphia 76ers. He held the record for blocked shots per game. His son, Bol Bol, currently plays in the NBA at 7&apos;2&quot; &mdash; the Dinka milk-camp lineage continuing into the next generation.
+              When Manute was finally measured in 1979, he stood 7 feet 7 inches tall. He didn&apos;t even know his own height until then &mdash; there were no rulers in his village. He went on to become one of the two tallest players in NBA history, holding the record for blocked shots per game across three teams.
             </p>
             <p style={{ fontSize: 13, color: C.body, lineHeight: 1.7, fontFamily: F }}>
-              But Manute was not an anomaly among the Dinka. He was an extreme expression of a population-wide pattern. His father, a tribal elder, was 6&apos;8&quot;. His mother was 6&apos;10&quot;. His great-grandfather was 7&apos;10&quot;. In Dinka society, exceptional height runs in every family &mdash; not just the Bols.
+              Manute was not a Dinka anomaly. He was the Dinka system working exactly as designed &mdash; a milk-camp boy who reached the extreme end of what that system can produce. And his son Bol Bol, at 7&apos;2&quot;, carries the lineage into the NBA today.
             </p>
           </section>
 

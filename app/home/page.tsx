@@ -1246,6 +1246,41 @@ export default function Dashboard() {
           );
         })()}
 
+        {/* ═══ Featured Investigation ═══ */}
+        <div
+          onClick={() => { analytics.track('dinka_article_click', { source: 'home' }); window.location.href = '/learn/dinka-tribe'; }}
+          style={{
+            cursor:"pointer", marginTop:36,
+            background:"linear-gradient(135deg, #1c1917 0%, #292524 100%)",
+            borderRadius:20, overflow:"hidden",
+            border:"1.5px solid #44403c",
+            position:"relative",
+          }}
+        >
+          {/* Top accent bar */}
+          <div style={{ height:3, background:"linear-gradient(90deg, #f59e0b, #ef4444, #f59e0b)" }} />
+          <div style={{ padding:"24px 20px 20px" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:14 }}>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#f59e0b", textTransform:"uppercase", letterSpacing:"0.1em", background:"rgba(245,158,11,0.12)", padding:"3px 8px", borderRadius:6 }}>Investigation</span>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c" }}>5 min read</span>
+            </div>
+            <div style={{ fontSize:19, fontWeight:900, color:"#fafaf9", letterSpacing:"-0.02em", lineHeight:1.3, marginBottom:10 }}>
+              The Dinka Tribe of South Sudan
+            </div>
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:12, color:"#a8a29e", lineHeight:1.65, margin:"0 0 16px" }}>
+              A tiny tribe produces more 7-footers per capita than anywhere on Earth. Their secret? Cattle camps where children drink raw milk by the gallon. The legend of Bol Nyuol — Manute Bol&apos;s 7&apos;10&quot; grandfather — begins here.
+            </p>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+              <div style={{ display:"flex", gap:6 }}>
+                {["Raw Milk", "Growth", "7-Footers"].map(tag => (
+                  <span key={tag} style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c", background:"rgba(120,113,108,0.15)", padding:"3px 8px", borderRadius:6 }}>{tag}</span>
+                ))}
+              </div>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#f59e0b", fontWeight:700 }}>Read →</span>
+            </div>
+          </div>
+        </div>
+
         {/* Breath before the day begins */}
         <div style={{ height:1, background:"#e7e5e4", margin:"36px 0 40px" }} />
 
