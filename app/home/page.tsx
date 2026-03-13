@@ -1248,7 +1248,7 @@ export default function Dashboard() {
 
         {/* ═══ Featured Investigation ═══ */}
         <div
-          onClick={() => { analytics.track('dinka_article_click', { source: 'home' }); window.location.href = '/learn/dinka-tribe'; }}
+          onClick={() => { analytics.citationTap('dinka_article_home'); window.location.href = '/learn/dinka-tribe'; }}
           style={{
             cursor:"pointer", marginTop:36,
             background:"linear-gradient(135deg, #1c1917 0%, #292524 100%)",
