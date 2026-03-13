@@ -24,17 +24,17 @@ export default function Home() {
       {/* Featured Article Banner */}
       <section className="pt-20 sm:pt-24 px-4 sm:px-6 pb-0">
         <div className="max-w-3xl mx-auto">
-          <Link href="/learn/raw-milk-tallest-people" style={{ textDecoration: 'none', display: 'block' }}>
+          <Link href="/learn/dinka-tribe" style={{ textDecoration: 'none', display: 'block' }}>
             <div style={{ background: '#065f46', borderRadius: 14, padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, cursor: 'pointer' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1, minWidth: 0 }}>
-                <span style={{ fontSize: 28, lineHeight: 1, flexShrink: 0 }}>🥛</span>
+                <span style={{ fontSize: 28, lineHeight: 1, flexShrink: 0 }}>🐄</span>
                 <div style={{ minWidth: 0 }}>
-                  <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 9, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 2 }}>Featured Article</div>
-                  <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 14, color: '#fff', fontWeight: 700, lineHeight: 1.3 }}>Raw Milk and the Tallest People on Earth</div>
-                  <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 11, color: 'rgba(255,255,255,0.7)', marginTop: 2 }}>Why the Dinka, the Dutch, and elite athletes share one childhood factor</div>
+                  <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 9, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 2 }}>Featured Investigation</div>
+                  <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 14, color: '#fff', fontWeight: 700, lineHeight: 1.3 }}>The Dinka Tribe of South Sudan</div>
+                  <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 11, color: 'rgba(255,255,255,0.7)', marginTop: 2 }}>Inside the cattle camps where the tallest people on Earth raise their children on raw milk</div>
                 </div>
               </div>
-              <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: 18, flexShrink: 0 }}>→</span>
+              <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: 18, flexShrink: 0 }}>&rarr;</span>
             </div>
           </Link>
         </div>
