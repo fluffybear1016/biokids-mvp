@@ -1,0 +1,45 @@
+name: Push Notifications
+
+on:
+  schedule:
+    - cron: '45 10 * * *'
+    - cron: '30 15 * * *'
+    - cron: '0 19 * * *'
+    - cron: '30 21 * * *'
+    - cron: '30 23 * * *'
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: 'Notification slot to trigger (morning/lunch/exercise/dinner/bedtime)'
+        required: false
+        type: string
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger notification
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          SLOT: ${{ github.event.inputs.slot }}
+        run: |
+          URL="https://www.biokids.me/api/cron/notify"
+          if [ -n "$SLOT" ]; then
+            URL="${URL}?slot=${SLOT}"
+          fi
+
+          echo "Calling: $URL"
+          RESPONSE=$(curl -s -w "\n%{http_code}" "$URL" \
+            -H "Authorization: Bearer $CRON_SECRET")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          BODY=$(echo "$RESPONSE" | head -n -1)
+
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          if [ "$HTTP_CODE" -ge 400 ]; then
+            echo "::error::Notification request failed with status $HTTP_CODE"
+            exit 1
+          fi
+
