@@ -18,22 +18,55 @@ function urlBase64ToUint8Array(base64String: string) {
   return outputArray;
 }
 
+type NotifState = 'loading' | 'unsupported' | 'default' | 'denied' | 'granted-no-sub' | 'subscribed';
+
 export default function PWAInstall() {
   const [showInstallBanner, setShowInstallBanner] = useState(false);
-  const [showNotifPrompt, setShowNotifPrompt] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
-  const [isStandaloneMode, setIsStandaloneMode] = useState(false);
+  const [notifState, setNotifState] = useState<NotifState>('loading');
+  const [dismissed, setDismissed] = useState(false);
+  const [subscribing, setSubscribing] = useState(false);
+
+  // Check notification state on mount and periodically
+  const checkNotifState = async () => {
+    if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+      setNotifState('unsupported');
+      return;
+    }
+
+    const perm = Notification.permission;
+    console.log('[PWA] Permission check:', perm);
+
+    if (perm === 'denied') {
+      setNotifState('denied');
+      return;
+    }
+
+    if (perm === 'default') {
+      setNotifState('default');
+      return;
+    }
+
+    // Permission is granted — check if we have a subscription
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      const sub = await reg.pushManager.getSubscription();
+      if (sub) {
+        setNotifState('subscribed');
+        console.log('[PWA] Already subscribed:', sub.endpoint.slice(0, 60));
+      } else {
+        setNotifState('granted-no-sub');
+        console.log('[PWA] Granted but no subscription — will auto-subscribe');
+      }
+    } catch (err) {
+      console.log('[PWA] Error checking subscription:', err);
+      setNotifState('granted-no-sub');
+    }
+  };
 
   useEffect(() => {
-    // Detect standalone mode (opened from home screen)
-    const standalone = window.matchMedia('(display-mode: standalone)').matches ||
-      (window.navigator as unknown as Record<string, boolean>).standalone === true;
-    setIsStandaloneMode(standalone);
-
-    console.log('[PWA] standalone:', standalone);
-    console.log('[PWA] Notification in window:', 'Notification' in window);
-    console.log('[PWA] Notification.permission:', 'Notification' in window ? Notification.permission : 'N/A');
-    console.log('[PWA] serviceWorker in navigator:', 'serviceWorker' in navigator);
+    console.log('[PWA] Component mounted');
+    console.log('[PWA] VAPID key present:', !!VAPID_PUBLIC_KEY, 'length:', VAPID_PUBLIC_KEY.length);
 
     // Register service worker
     if ('serviceWorker' in navigator) {
@@ -44,6 +77,9 @@ export default function PWAInstall() {
       });
     }
 
+    // Check notification state
+    checkNotifState();
+
     // Listen for install prompt (Android / desktop Chrome)
     const handler = (e: Event) => {
       e.preventDefault();
@@ -52,22 +88,103 @@ export default function PWAInstall() {
     };
     window.addEventListener('beforeinstallprompt', handler);
 
-    // Show notification prompt after 2 seconds
-    // On iOS standalone, Notification API should be available on 16.4+
-    const hasNotificationAPI = 'Notification' in window;
-    const notYetGranted = hasNotificationAPI && Notification.permission === 'default';
+    // Re-check permission every 5s in case user changed it in Settings
+    const interval = setInterval(() => {
+      if ('Notification' in window) {
+        const perm = Notification.permission;
+        // If permission changed from denied to something else, re-check
+        checkNotifState();
+      }
+    }, 5000);
 
-    console.log('[PWA] hasNotificationAPI:', hasNotificationAPI, 'notYetGranted:', notYetGranted);
-
-    // Show the prompt if notifications are available and not yet granted,
-    // OR if we're in standalone mode (so we can at least show a helpful message)
-    if (notYetGranted || standalone) {
-      console.log('[PWA] Will show notification prompt in 2 seconds');
-      setTimeout(() => setShowNotifPrompt(true), 2000);
-    }
-
-    return () => window.removeEventListener('beforeinstallprompt', handler);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handler);
+      clearInterval(interval);
+    };
   }, []);
+
+  // Auto-subscribe when permission is granted but no subscription exists
+  useEffect(() => {
+    if (notifState === 'granted-no-sub' && VAPID_PUBLIC_KEY && !subscribing) {
+      console.log('[PWA] Auto-subscribing...');
+      createSubscription();
+    }
+  }, [notifState]);
+
+  const createSubscription = async () => {
+    if (subscribing) return;
+    setSubscribing(true);
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      const subscription = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+      });
+      console.log('[PWA] Push subscription created:', JSON.stringify(subscription).slice(0, 100));
+
+      // Send subscription to server
+      const resp = await fetch('/api/push-subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(subscription),
+      });
+      const respText = await resp.text();
+      console.log('[PWA] Subscription saved, status:', resp.status, 'body:', respText);
+
+      if (resp.ok) {
+        setNotifState('subscribed');
+      }
+    } catch (err) {
+      console.log('[PWA] Subscription creation failed:', err);
+    }
+    setSubscribing(false);
+  };
+
+  const handleEnableNotifications = async () => {
+    try {
+      if (!('Notification' in window)) {
+        alert('Notifications not available.\n\nThis app must be opened from your Home Screen.\n\n1. Tap the Share button in Safari\n2. Tap "Add to Home Screen"\n3. Open the app from your Home Screen\n4. Then tap Enable Reminders again');
+        return;
+      }
+
+      const currentPerm = Notification.permission;
+      console.log('[PWA] Enable tapped, current permission:', currentPerm);
+
+      if (currentPerm === 'denied') {
+        // Can't re-request after denied — show instructions
+        const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+        if (isIOS) {
+          alert('Notifications are blocked.\n\nTo fix:\n1. Go to Settings → Notifications\n2. Scroll to find "biokids"\n3. Turn on "Allow Notifications"\n4. Come back and tap this button again');
+        } else {
+          alert('Notifications are blocked.\n\nTo fix:\n1. Click the lock/info icon in your browser\'s address bar\n2. Find "Notifications" and change it to "Allow"\n3. Refresh this page\n4. Tap "Enable reminders" again');
+        }
+        return;
+      }
+
+      // Make sure service worker is ready
+      const reg = await navigator.serviceWorker.ready;
+      console.log('[PWA] SW ready, requesting permission...');
+
+      const permission = await Notification.requestPermission();
+      console.log('[PWA] Permission result:', permission);
+
+      if (permission === 'granted') {
+        await createSubscription();
+        alert('Notifications enabled! You\'ll get protocol reminders throughout the day.');
+      } else if (permission === 'denied') {
+        setNotifState('denied');
+        alert('You denied notifications.\n\nIf you change your mind, you can change this in your browser settings and tap "Enable reminders" again.');
+      } else {
+        alert('Permission was dismissed. Please try again and tap "Allow" when the popup appears.');
+      }
+
+      checkNotifState();
+    } catch (err) {
+      const errMsg = (err as Error).message || String(err);
+      console.log('[PWA] Notification setup failed:', err);
+      alert('Notification setup error:\n' + errMsg);
+    }
+  };
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
@@ -76,88 +193,15 @@ export default function PWAInstall() {
     setDeferredPrompt(null);
   };
 
-  const handleEnableNotifications = async () => {
-    try {
-      // Step 1: Check if Notification API exists
-      if (!('Notification' in window)) {
-        alert('Notifications not available.\n\nThis app must be opened from your Home Screen.\n\n1. Tap the Share button in Safari\n2. Tap "Add to Home Screen"\n3. Open the app from your Home Screen\n4. Then tap Enable Reminders again');
-        setShowNotifPrompt(false);
-        return;
-      }
-
-      // Step 2: Check current permission state
-      const currentPerm = Notification.permission;
-      console.log('[PWA] Current permission:', currentPerm);
-
-      if (currentPerm === 'denied') {
-        alert('Notifications are blocked for this app.\n\nTo fix this:\n1. Go to Settings → Notifications\n2. Scroll down and find "biokids" under your web apps\n3. Turn on "Allow Notifications"\n4. Come back here and tap Enable Reminders again');
-        setShowNotifPrompt(false);
-        return;
-      }
-
-      // Step 3: Make sure service worker is registered first
-      if (!('serviceWorker' in navigator)) {
-        alert('Service workers not supported on this device.');
-        setShowNotifPrompt(false);
-        return;
-      }
-
-      // Wait for service worker to be ready before requesting permission
-      const reg = await navigator.serviceWorker.ready;
-      console.log('[PWA] SW ready before permission request:', reg.scope);
-
-      // Step 4: Request permission (this should show the iOS system popup)
-      console.log('[PWA] Requesting notification permission...');
-      const permission = await Notification.requestPermission();
-      console.log('[PWA] Permission result:', permission);
-
-      if (permission === 'granted') {
-        console.log('[PWA] VAPID key present:', !!VAPID_PUBLIC_KEY, 'length:', VAPID_PUBLIC_KEY?.length);
-
-        if (VAPID_PUBLIC_KEY) {
-          const subscription = await reg.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
-          });
-          console.log('[PWA] Push subscription created:', JSON.stringify(subscription).slice(0, 100));
-
-          // Send subscription to server
-          const resp = await fetch('/api/push-subscribe', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(subscription),
-          });
-          const respText = await resp.text();
-          console.log('[PWA] Subscription saved, status:', resp.status, 'body:', respText);
-
-          if (resp.ok) {
-            alert('Notifications enabled! You\'ll get protocol reminders throughout the day.');
-          } else {
-            alert('Subscription saved locally but server returned: ' + resp.status + '. Notifications may still work.');
-          }
-        } else {
-          alert('Notifications enabled, but push setup incomplete (missing server key). Contact support.');
-          console.log('[PWA] No VAPID key — subscription skipped');
-        }
-      } else if (permission === 'denied') {
-        alert('You denied notifications.\n\nIf you change your mind:\n1. Go to Settings → Notifications\n2. Find "biokids" under your web apps\n3. Turn on "Allow Notifications"');
-      } else {
-        alert('Notification permission was dismissed. Please try again and tap "Allow" when the popup appears.');
-      }
-    } catch (err) {
-      const errMsg = (err as Error).message || String(err);
-      console.log('[PWA] Notification setup failed:', err);
-      alert('Notification setup error:\n' + errMsg);
-    }
-    setShowNotifPrompt(false);
-  };
+  // Don't show notification banner if: loading, already subscribed, unsupported, or user dismissed
+  const showNotifBanner = !dismissed && notifState !== 'loading' && notifState !== 'subscribed' && notifState !== 'unsupported';
 
   return (
     <>
       {/* Install banner — only show when NOT in standalone mode */}
-      {!isStandaloneMode && showInstallBanner && (
+      {showInstallBanner && (
         <div style={{
-          position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 9999,
+          position: 'fixed', bottom: showNotifBanner ? 120 : 0, left: 0, right: 0, zIndex: 9999,
           background: '#065f46', padding: '16px 20px',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
@@ -191,22 +235,24 @@ export default function PWAInstall() {
         </div>
       )}
 
-      {/* Push notification prompt */}
-      {showNotifPrompt && (
+      {/* Push notification banner — shows for default, denied, and granted-no-sub states */}
+      {showNotifBanner && (
         <div style={{
           position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 9999,
           background: '#fff', padding: '20px', borderTop: '2px solid #065f46',
           boxShadow: '0 -4px 20px rgba(0,0,0,0.1)',
         }}>
           <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 13, fontWeight: 700, color: '#1c1917', margin: '0 0 4px' }}>
-            Get daily reminders?
+            {notifState === 'denied' ? 'Notifications are blocked' : 'Get daily reminders?'}
           </p>
           <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 11, color: '#57534e', margin: '0 0 12px', lineHeight: 1.5 }}>
-            We&apos;ll send protocol reminders throughout the day — morning, lunch, exercise, dinner &amp; bedtime.
+            {notifState === 'denied'
+              ? 'Tap below for instructions to unblock notifications so you can get protocol reminders.'
+              : 'We\'ll send protocol reminders throughout the day — morning, lunch, exercise, dinner & bedtime.'}
           </p>
           <div style={{ display: 'flex', gap: 8 }}>
             <button
-              onClick={() => setShowNotifPrompt(false)}
+              onClick={() => setDismissed(true)}
               style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 12, color: '#78716c', background: 'none', border: '1px solid #e7e5e4', borderRadius: 8, padding: '8px 16px', cursor: 'pointer', flex: 1 }}
             >
               Not now
@@ -215,11 +261,12 @@ export default function PWAInstall() {
               onClick={handleEnableNotifications}
               style={{
                 fontFamily: "'Courier New', Courier, monospace", fontSize: 12, fontWeight: 700,
-                color: '#fff', background: '#065f46', border: 'none', borderRadius: 8,
+                color: '#fff', background: notifState === 'denied' ? '#b45309' : '#065f46',
+                border: 'none', borderRadius: 8,
                 padding: '8px 16px', cursor: 'pointer', flex: 1,
               }}
             >
-              Enable reminders
+              {notifState === 'denied' ? 'Unblock notifications' : 'Enable reminders'}
             </button>
           </div>
         </div>

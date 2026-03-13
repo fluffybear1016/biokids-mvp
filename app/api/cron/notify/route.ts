@@ -1,35 +1,37 @@
 import { NextResponse } from 'next/server';
 import { sendPushToAll, PushPayload } from '@/lib/push';
 
-// Vercel Cron Job — sends timed push notifications for each protocol block
-// Each cron schedule passes a ?slot= query param to select which notification to send
-
+// Vercel Cron Job — single endpoint that runs every 30 minutes
+// Determines which notification slot (if any) matches the current time
+//
 // ═══════════════════════════════════════════════════════
-// NOTIFICATION SCHEDULE
+// NOTIFICATION SCHEDULE (US Eastern Time)
 // ═══════════════════════════════════════════════════════
 //
-// Slot 1: 6:45 AM  — Morning wake-up & breakfast protocol
-// Slot 2: 11:30 AM — Lunch & hydration reminder
-// Slot 3: 3:00 PM  — Afternoon exercise protocol
-// Slot 4: 5:30 PM  — Dinner & evening wind-down
-// Slot 5: 7:30 PM  — Bedtime sleep protocol
+// Morning:   6:45 AM ET  → 10:45 UTC
+// Lunch:     11:30 AM ET → 15:30 UTC
+// Exercise:  3:00 PM ET  → 19:00 UTC
+// Dinner:    5:30 PM ET  → 21:30 UTC
+// Bedtime:   7:30 PM ET  → 23:30 UTC
 //
-// All times are US Eastern (ET). Vercel cron uses UTC.
-// ET = UTC-5 (EST) or UTC-4 (EDT)
-// We use EDT (UTC-4) offsets since most of the year is DST:
-//   6:45 AM ET  = 10:45 UTC
-//   11:30 AM ET = 15:30 UTC
-//   3:00 PM ET  = 19:00 UTC
-//   5:30 PM ET  = 21:30 UTC
-//   7:30 PM ET  = 23:30 UTC
+// Using EDT (UTC-4) offsets. During EST (UTC-5) notifications
+// will arrive 1 hour later in local time, which is acceptable.
+//
+// The cron runs every 30 min. We check if current UTC time
+// is within ±20 min of any target slot.
 // ═══════════════════════════════════════════════════════
 
 type NotificationSlot = {
+  name: string;
+  utcHour: number;
+  utcMinute: number;
   messages: PushPayload[];
 };
 
-const SLOTS: Record<string, NotificationSlot> = {
-  morning: {
+const SLOTS: NotificationSlot[] = [
+  {
+    name: 'morning',
+    utcHour: 10, utcMinute: 45,
     messages: [
       {
         title: "Rise & shine — start the protocol",
@@ -58,8 +60,9 @@ const SLOTS: Record<string, NotificationSlot> = {
       },
     ],
   },
-
-  lunch: {
+  {
+    name: 'lunch',
+    utcHour: 15, utcMinute: 30,
     messages: [
       {
         title: "Growth Meal time",
@@ -78,8 +81,9 @@ const SLOTS: Record<string, NotificationSlot> = {
       },
     ],
   },
-
-  exercise: {
+  {
+    name: 'exercise',
+    utcHour: 19, utcMinute: 0,
     messages: [
       {
         title: "Sprint & jump protocol time",
@@ -98,8 +102,9 @@ const SLOTS: Record<string, NotificationSlot> = {
       },
     ],
   },
-
-  dinner: {
+  {
+    name: 'dinner',
+    utcHour: 21, utcMinute: 30,
     messages: [
       {
         title: "Dinner & wind-down protocol",
@@ -118,8 +123,9 @@ const SLOTS: Record<string, NotificationSlot> = {
       },
     ],
   },
-
-  bedtime: {
+  {
+    name: 'bedtime',
+    utcHour: 23, utcMinute: 30,
     messages: [
       {
         title: "Bedtime protocol — this is the big one",
@@ -138,7 +144,30 @@ const SLOTS: Record<string, NotificationSlot> = {
       },
     ],
   },
-};
+];
+
+// Find which slot matches the current UTC time (within ±45 min window)
+// Wider window because Vercel Hobby plan has "flexible 1-hour" cron timing
+function getCurrentSlot(): NotificationSlot | null {
+  const now = new Date();
+  const currentMinutes = now.getUTCHours() * 60 + now.getUTCMinutes();
+
+  let bestSlot: NotificationSlot | null = null;
+  let bestDiff = Infinity;
+
+  for (const slot of SLOTS) {
+    const targetMinutes = slot.utcHour * 60 + slot.utcMinute;
+    let diff = Math.abs(currentMinutes - targetMinutes);
+    // Handle midnight wraparound
+    if (diff > 720) diff = 1440 - diff;
+    // Within 45-minute window (handles Vercel Hobby's flexible timing)
+    if (diff <= 45 && diff < bestDiff) {
+      bestSlot = slot;
+      bestDiff = diff;
+    }
+  }
+  return bestSlot;
+}
 
 // Verify this is a legitimate cron request from Vercel
 function verifyCron(request: Request): boolean {
@@ -160,31 +189,51 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
+  // Support explicit ?slot= param for manual testing
   const { searchParams } = new URL(request.url);
-  const slot = searchParams.get('slot');
-
-  if (!slot || !SLOTS[slot]) {
-    return NextResponse.json(
-      { error: 'Invalid slot. Valid: morning, lunch, exercise, dinner, bedtime' },
-      { status: 400 }
-    );
-  }
+  const explicitSlot = searchParams.get('slot');
 
   try {
-    const slotData = SLOTS[slot];
+    let slot: NotificationSlot | null = null;
+    let slotSource = 'auto';
+
+    if (explicitSlot) {
+      slot = SLOTS.find(s => s.name === explicitSlot) || null;
+      slotSource = 'explicit';
+      if (!slot) {
+        return NextResponse.json(
+          { error: 'Invalid slot. Valid: morning, lunch, exercise, dinner, bedtime' },
+          { status: 400 }
+        );
+      }
+    } else {
+      slot = getCurrentSlot();
+    }
+
+    if (!slot) {
+      // No slot matches current time — this is normal, just skip
+      return NextResponse.json({
+        success: true,
+        skipped: true,
+        reason: 'No notification slot matches current UTC time',
+        currentUTC: new Date().toISOString(),
+      });
+    }
+
     // Pick a random message from the slot's rotation
-    const message = slotData.messages[Math.floor(Math.random() * slotData.messages.length)];
+    const message = slot.messages[Math.floor(Math.random() * slot.messages.length)];
 
     const result = await sendPushToAll(message);
 
     return NextResponse.json({
       success: true,
-      slot,
+      slot: slot.name,
+      slotSource,
       message: message.title,
       ...result,
     });
   } catch (err) {
-    console.error(`Cron notify error (${slot}):`, err);
+    console.error('Cron notify error:', err);
     return NextResponse.json(
       { error: 'Failed to send notifications', details: String(err) },
       { status: 500 }
