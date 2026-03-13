@@ -51,45 +51,6 @@ export default function Home() {
         <LandingHeightPredictor />
       </div>
 
-      {/* The Sprint Stack — the "holy shit" moment for athletic parents */}
-      <section style={{ padding: 'var(--py-12, 3rem) var(--px-4, 1rem)', backgroundColor: '#fafaf9' }} className="sm:py-16">
-        <div className="max-w-3xl mx-auto">
-          <div style={{ background: '#fff', borderRadius: 20, border: '2px solid #065f46', padding: '2rem 1.5rem', boxShadow: '0 4px 24px rgba(6,95,70,0.08)' }} className="sm:p-10">
-            <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: '0.75rem' }}>
-              Featured protocol
-            </div>
-            <h3 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.25rem', color: '#1c1917', fontWeight: 800, marginBottom: '0.75rem' }} className="sm:text-2xl">
-              The Sprint Stack
-            </h3>
-            <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.9375rem', color: '#57534e', lineHeight: 1.75, marginBottom: '1.25rem' }} className="sm:text-base">
-              Your child already sprints at practice. What they eat before and after changes the growth response dramatically.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4" style={{ marginBottom: '1.25rem' }}>
-              <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '14px 16px', textAlign: 'center' }}>
-                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, marginBottom: 4 }}>Before</div>
-                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', fontWeight: 600, lineHeight: 1.5 }}>1 beef liver meatball + 1 egg + peanuts</div>
-                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#78716c', marginTop: 4 }}>loads choline + niacin</div>
-              </div>
-              <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '14px 16px', textAlign: 'center' }}>
-                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, marginBottom: 4 }}>Sprint</div>
-                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', fontWeight: 600, lineHeight: 1.5 }}>6 &times; 30-sec all-out</div>
-                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#78716c', marginTop: 4 }}>triggers lactate response</div>
-              </div>
-              <div style={{ background: '#f0fdf4', borderRadius: 12, padding: '14px 16px', textAlign: 'center' }}>
-                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, marginBottom: 4 }}>After</div>
-                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', fontWeight: 600, lineHeight: 1.5 }}>Cold A2 milk + raw honey</div>
-                <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#78716c', marginTop: 4 }}>converts signal to growth</div>
-              </div>
-            </div>
-
-            <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.75rem', color: '#78716c', lineHeight: 1.6, textAlign: 'center' }}>
-              This is one stack. The full protocol goes much deeper.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Growth Trajectory Graph */}
       <section style={{ padding: '0 1rem 3rem', backgroundColor: '#fafaf9' }} className="sm:pb-16">
         <div className="max-w-6xl mx-auto">
