@@ -59,16 +59,14 @@ export async function sendPushToAll(payload: PushPayload): Promise<{ sent: numbe
     tag: payload.tag || 'biokids-protocol',
   });
 
-  const currentHour = new Date().getUTCHours();
   let sent = 0;
   let failed = 0;
   let skipped = 0;
 
   for (const sub of subs) {
-    // Check frequency preference: 0 = off, 1 = every hour, 2 = every 2h, 4 = every 4h
+    // Check if notifications are disabled for this subscriber
     const freq = sub.notify_every_hours ?? 1;
-    if (freq === 0) { skipped++; continue; } // Notifications disabled
-    if (freq > 1 && currentHour % freq !== 0) { skipped++; continue; } // Not this hour
+    if (freq === 0) { skipped++; continue; }
 
     const subscription = {
       endpoint: sub.endpoint,
