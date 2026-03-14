@@ -2,11 +2,61 @@ name: Push Notifications
 
 on:
   schedule:
-    - cron: '0 11-23,0-3 * * *'
+    # 7 AM ET — Morning protocol
+    - cron: '0 11 * * *'
+    # 8 AM ET — Cod liver oil
+    - cron: '0 12 * * *'
+    # 9 AM ET — Dairy serving 1
+    - cron: '0 13 * * *'
+    # 10 AM ET Sunday — Weekly article
+    - cron: '0 14 * * 0'
+    # 12 PM ET — Lunch
+    - cron: '0 16 * * *'
+    # 1 PM ET — Dairy serving 2
+    - cron: '0 17 * * *'
+    # 3 PM ET — Exercise
+    - cron: '0 19 * * *'
+    # 5 PM ET — Dairy serving 3
+    - cron: '0 21 * * *'
+    # 6 PM ET — Dinner
+    - cron: '0 22 * * *'
+    # 8 PM ET — Bedtime
+    - cron: '0 0 * * *'
   workflow_dispatch:
     inputs:
       slot:
-        description: 'Notification slot to trigger (morning/lunch/exercise/dinner/bedtime)'
+        description: 'Notification slot (morning/cod-liver-oil/dairy-1/dairy-2/dairy-3/lunch/exercise/dinner/bedtime/weekly-article)'
+        required: false
+        type: string
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger notification
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          SLOT: ${{ github.event.inputs.slot }}
+        run: |
+          URL="https://www.biokids.me/api/cron/notify"
+          if [ -n "$SLOT" ]; then
+            URL="${URL}?slot=${SLOT}"
+          fi
+
+          echo "Calling: $URL"
+          RESPONSE=$(curl -s -w "\n%{http_code}" "$URL" \
+            -H "Authorization: Bearer $CRON_SECRET")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          BODY=$(echo "$RESPONSE" | head -n -1)
+
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          if [ "$HTTP_CODE" -ge 400 ]; then
+            echo "::error::Notification request failed with status $HTTP_CODE"
+            exit 1
+          fi
         required: false
         type: string
 
