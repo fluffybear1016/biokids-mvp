@@ -2,11 +2,7 @@ name: Push Notifications
 
 on:
   schedule:
-    - cron: '45 10 * * *'
-    - cron: '30 15 * * *'
-    - cron: '0 19 * * *'
-    - cron: '30 21 * * *'
-    - cron: '30 23 * * *'
+    - cron: '0 11-23,0-3 * * *'
   workflow_dispatch:
     inputs:
       slot:
@@ -42,4 +38,3 @@ jobs:
             echo "::error::Notification request failed with status $HTTP_CODE"
             exit 1
           fi
-
