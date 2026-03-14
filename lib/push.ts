@@ -33,8 +33,8 @@ export type PushPayload = {
   tag?: string; // Prevents duplicate notifications
 };
 
-// Send push notification to all subscribers
-export async function sendPushToAll(payload: PushPayload): Promise<{ sent: number; failed: number; total: number }> {
+// Send push notification to all subscribers (respecting per-subscription frequency)
+export async function sendPushToAll(payload: PushPayload): Promise<{ sent: number; failed: number; total: number; skipped: number }> {
   initWebPush();
   const supabase = getSupabase();
 
@@ -49,7 +49,7 @@ export async function sendPushToAll(payload: PushPayload): Promise<{ sent: numbe
 
   if (!subs || subs.length === 0) {
     console.log('No subscriptions found.');
-    return { sent: 0, failed: 0, total: 0 };
+    return { sent: 0, failed: 0, total: 0, skipped: 0 };
   }
 
   const body = JSON.stringify({
@@ -59,10 +59,17 @@ export async function sendPushToAll(payload: PushPayload): Promise<{ sent: numbe
     tag: payload.tag || 'biokids-protocol',
   });
 
+  const currentHour = new Date().getUTCHours();
   let sent = 0;
   let failed = 0;
+  let skipped = 0;
 
   for (const sub of subs) {
+    // Check frequency preference: 0 = off, 1 = every hour, 2 = every 2h, 4 = every 4h
+    const freq = sub.notify_every_hours ?? 1;
+    if (freq === 0) { skipped++; continue; } // Notifications disabled
+    if (freq > 1 && currentHour % freq !== 0) { skipped++; continue; } // Not this hour
+
     const subscription = {
       endpoint: sub.endpoint,
       keys: {
@@ -90,6 +97,6 @@ export async function sendPushToAll(payload: PushPayload): Promise<{ sent: numbe
     }
   }
 
-  console.log(`Push: ${sent} sent, ${failed} failed, ${subs.length} total`);
-  return { sent, failed, total: subs.length };
+  console.log(`Push: ${sent} sent, ${failed} failed, ${skipped} skipped, ${subs.length} total`);
+  return { sent, failed, total: subs.length, skipped };
 }

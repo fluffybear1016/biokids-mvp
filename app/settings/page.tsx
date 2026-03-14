@@ -17,7 +17,7 @@ import {
   removeChild,
 } from '@/lib/children';
 
-type SectionId = 'child' | 'habits' | 'goal' | 'height';
+type SectionId = 'child' | 'habits' | 'goal' | 'height' | 'notifications';
 
 const C = { green: '#065f46', bg: '#fafaf9', fill: '#f0fdf4' };
 const mono = "'Courier New', Courier, monospace";
@@ -144,7 +144,51 @@ export default function Settings() {
     setConfirmDelete(null);
   };
 
-  const sectionOrder: SectionId[] = ['child', 'habits', 'goal', 'height'];
+  // Notification frequency state
+  const [notifyFreq, setNotifyFreq] = useState<number>(1);
+  const [notifyLoading, setNotifyLoading] = useState(true);
+  const [pushEndpoint, setPushEndpoint] = useState<string | null>(null);
+
+  // Load notification preference on mount
+  useEffect(() => {
+    async function loadNotifPref() {
+      try {
+        if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+          setNotifyLoading(false);
+          return;
+        }
+        const reg = await navigator.serviceWorker.ready;
+        const sub = await reg.pushManager.getSubscription();
+        if (sub) {
+          setPushEndpoint(sub.endpoint);
+          const res = await fetch(`/api/notification-preferences?endpoint=${encodeURIComponent(sub.endpoint)}`);
+          const data = await res.json();
+          setNotifyFreq(data.notify_every_hours ?? 1);
+        }
+      } catch (e) {
+        console.error('Failed to load notification preference:', e);
+      }
+      setNotifyLoading(false);
+    }
+    loadNotifPref();
+  }, []);
+
+  const saveNotifyFreq = async (freq: number) => {
+    setNotifyFreq(freq);
+    if (!pushEndpoint) return;
+    try {
+      await fetch('/api/notification-preferences', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ endpoint: pushEndpoint, notify_every_hours: freq }),
+      });
+      showSaved('notifications');
+    } catch (e) {
+      console.error('Failed to save notification preference:', e);
+    }
+  };
+
+  const sectionOrder: SectionId[] = ['child', 'habits', 'goal', 'height', 'notifications'];
 
   const showSaved = (section: SectionId) => {
     setSaved(section);
@@ -513,6 +557,61 @@ export default function Settings() {
                 <button onClick={saveHeight} style={{ width: '100%', padding: '12px 20px', background: saved === 'height' ? '#059669' : C.green, color: '#fff', fontSize: '15px', fontWeight: 700, borderRadius: '10px', border: 'none', cursor: 'pointer', fontFamily: mono, transition: 'all 0.3s ease', transform: saved === 'height' ? 'scale(1.02)' : 'scale(1)' }}>
                   {saved === 'height' ? '\u2713  All saved!' : 'Save'}
                 </button>
+              </div>
+            )}
+          </div>
+
+          {/* Notifications */}
+          <div id="section-notifications" style={{ background: openSection === 'notifications' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'notifications' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
+            <button onClick={() => toggle('notifications')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Notifications</span></span>
+              <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('notifications')}</span>
+            </button>
+            {openSection === 'notifications' && (
+              <div style={{ padding: '0 18px 18px 18px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {notifyLoading ? (
+                  <p style={{ fontSize: 13, color: '#a8a29e' }}>Loading...</p>
+                ) : !pushEndpoint ? (
+                  <p style={{ fontSize: 13, color: '#a8a29e' }}>Enable notifications from the banner on your home screen to adjust frequency.</p>
+                ) : (
+                  <>
+                    <p style={{ fontSize: 13, color: '#57534e', margin: 0 }}>How often should we remind you about the protocol?</p>
+                    {[
+                      { value: 1, label: 'Every hour', desc: 'Maximum reminders' },
+                      { value: 2, label: 'Every 2 hours', desc: '~8 per day' },
+                      { value: 4, label: 'Every 4 hours', desc: '~4 per day' },
+                      { value: 0, label: 'Off', desc: 'No notifications' },
+                    ].map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => saveNotifyFreq(opt.value)}
+                        style={{
+                          width: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          padding: '14px 16px',
+                          borderRadius: '8px',
+                          border: notifyFreq === opt.value ? `1px solid ${C.green}` : '1px solid #e7e5e4',
+                          textAlign: 'left',
+                          background: notifyFreq === opt.value ? C.fill : '#fff',
+                          cursor: 'pointer',
+                          fontFamily: mono,
+                          transition: 'all 0.2s'
+                        }}
+                      >
+                        <div>
+                          <p style={{ fontSize: '14px', fontWeight: 600, color: notifyFreq === opt.value ? C.green : '#1c1917', margin: 0 }}>{opt.label}</p>
+                          <p style={{ fontSize: '12px', color: '#a8a29e', margin: '2px 0 0 0' }}>{opt.desc}</p>
+                        </div>
+                      </button>
+                    ))}
+                    {saved === 'notifications' && (
+                      <p style={{ fontSize: 13, color: C.green, fontWeight: 600, margin: 0, textAlign: 'center' }}>&#10003; Saved!</p>
+                    )}
+                  </>
+                )}
               </div>
             )}
           </div>
