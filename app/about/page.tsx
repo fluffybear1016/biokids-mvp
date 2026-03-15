@@ -25,19 +25,17 @@ export default function AboutPage() {
         </div>
       </nav>
 
-      {/* Hero */}
+      {/* Hero — Research Org */}
       <section className="pt-28 sm:pt-36 pb-12 sm:pb-20 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
           <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 700, marginBottom: '1.25rem' }}>
             About bioKids
           </p>
-          <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', color: '#1c1917', fontWeight: 800, lineHeight: 1.2, marginBottom: '1.5rem' }}>
-            Biology is becoming <span style={{ color: '#065f46' }}>engineering.</span>
-            <br />
-            We&apos;re applying that to human growth.
-          </h1>
-          <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(0.875rem, 1.5vw, 1.0625rem)', color: '#57534e', lineHeight: 1.85, marginBottom: '2rem', maxWidth: 560 }}>
-            For the first time in human history, the science of how children grow &mdash; taller, stronger, healthier &mdash; can be systematized and followed like a protocol. Not guesswork. Not folklore. Engineering.
+          <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(0.9375rem, 1.8vw, 1.125rem)', color: '#1c1917', lineHeight: 1.85, marginBottom: '1.25rem' }}>
+            We are a research organization focused on advancing human growth optimization through fundamental biological principles rather than conventional pediatric approaches. Our work centers on studying the core mechanisms that drive height &mdash; from IGF-1 signaling and growth hormone pulsatility to bone mineralization and epiphyseal plate activity &mdash; and translating them into daily protocols.
+          </p>
+          <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(0.9375rem, 1.8vw, 1.125rem)', color: '#1c1917', lineHeight: 1.85 }}>
+            We believe the path to maximizing a child&apos;s genetic potential lies in understanding and implementing the essential mechanisms of growth &mdash; from nutritional biochemistry and circadian biology to mechanical loading and hormonal adaptation. Our approach examines how the human body processes growth signals the way they were designed to be processed.
           </p>
         </div>
       </section>
