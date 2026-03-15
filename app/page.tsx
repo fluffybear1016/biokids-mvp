@@ -33,7 +33,7 @@ export default function Home() {
             </h1>
 
             <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#57534e', marginBottom: '1.25rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }}>
-              The evidence-based system that helps children and young adults reach their maximum height. Your body keeps growing until 25. No prescriptions. No supplements. Just the levers that actually work.
+              Your body keeps growing until 25. No prescriptions. No supplements. Just the levers that work.
             </p>
             <p style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: '#065f46', marginBottom: '2rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, fontStyle: 'italic' }}>
               Height isn&apos;t the only benefit &mdash; every growth signal simultaneously supports brain development.
