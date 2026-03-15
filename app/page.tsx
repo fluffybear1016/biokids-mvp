@@ -108,9 +108,6 @@ export default function Home() {
           <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(0.9375rem, 1.5vw, 1.0625rem)', color: '#57534e', lineHeight: 1.85, marginBottom: '0.75rem' }}>
             From childhood through 25 years old. No prescriptions, no meds, just the levers parents actually control.
           </p>
-          <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: '#065f46', lineHeight: 1.75, fontStyle: 'italic' }}>
-            Height isn&apos;t the only benefit &mdash; every growth signal simultaneously supports brain development.
-          </p>
         </div>
       </section>
 
