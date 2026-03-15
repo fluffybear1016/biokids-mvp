@@ -6,6 +6,7 @@ import { Child } from '@/lib/supabase';
 import { useChildName } from '@/lib/useChildName';
 import { getActiveChild } from '@/lib/children';
 import { analytics } from '@/lib/analytics';
+import InstallButton from '@/components/InstallButton';
 
 const mockChild: Child = {
   id: '1',
@@ -853,6 +854,11 @@ export default function Dashboard() {
               </div>
             </div>
           </>}
+        </div>
+
+        {/* Install to Home Screen prompt */}
+        <div style={{ marginTop: 16 }}>
+          <InstallButton />
         </div>
 
         {/* Quick links — Shopping List + Height Log */}
