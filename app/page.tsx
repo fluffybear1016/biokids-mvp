@@ -27,9 +27,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-4 sm:mb-6">
             <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(1.875rem, 5vw, 3.75rem)', color: '#1c1917', marginBottom: '1.25rem', fontWeight: 800, lineHeight: 1.15 }}>
-              What if you can teach <span style={{ color: '#065f46' }}>height.</span>
-              <br />
-              How to make your child <span style={{ color: '#065f46' }}>taller.</span>
+              Teach <span style={{ color: '#065f46' }}>Height.</span>
             </h1>
 
             <h2 style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#57534e', marginBottom: '1.25rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, fontWeight: 400 }}>
