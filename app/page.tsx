@@ -32,7 +32,7 @@ export default function Home() {
             </h1>
 
             <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#57534e', marginBottom: '1.25rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }}>
-              The evidence-based system that helps children reach their maximum height. No prescriptions. No supplements. Just the levers parents actually control.
+              The evidence-based system that helps children and young adults reach their maximum height. Your body keeps growing until 25. No prescriptions. No supplements. Just the levers that actually work.
             </p>
             <p style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: '#065f46', marginBottom: '2rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, fontStyle: 'italic' }}>
               Height isn&apos;t the only benefit &mdash; every growth signal simultaneously supports brain development.
@@ -179,8 +179,11 @@ export default function Home() {
                 What age does this work for?
               </summary>
               <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
-                <p style={{ marginBottom: '0.75rem' }}>Any age before growth plates close &mdash; typically up to age 17 for girls and age 20 for boys. Starting at any age is powerful. The earlier you start, the more years of compounding you get.</p>
-                <p>The levers work the same way at every age: nutrition fuels the growth axis, sprints trigger the response, sleep is when growth actually happens. Even starting at 12 or 14 gives your child years of optimization during their peak growth window.</p>
+                <p style={{ marginBottom: '0.75rem' }}>Birth through age 25. Your body keeps growing longer than most people think.</p>
+                <p style={{ marginBottom: '0.75rem' }}>Growth plates in males commonly remain open into the early 20s. Many 18, 19, and 20-year-olds still have active growth plates and are still gaining height &mdash; especially with the right inputs. Even after plates close, bone mass (density, thickness, and vertebral structure) continues increasing until your mid-20s. This adds measurable height. You reach peak bone mass around age 25 &mdash; and every bit of density you build before that point becomes your foundation for life.</p>
+                <p style={{ marginBottom: '0.75rem' }}>The earlier you start, the more years of compounding you get. But starting at 16, 18, or even 22 still gives you years of real, meaningful optimization during the window that matters most.</p>
+                <p>The protocol works the same way at every age: nutrition fuels the growth axis, sprints and impact exercise trigger the hormonal response, and sleep is when growth actually happens.</p>
+                <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', marginTop: '0.75rem' }}>Recker et al., JAMA 1992 &middot; Baxter-Jones et al., JBMR 2011 &middot; Gilsanz et al., J Pediatr 2011</p>
               </div>
             </details>
 
@@ -221,8 +224,9 @@ export default function Home() {
                 Is this just about height?
               </summary>
               <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
-                <p style={{ marginBottom: '0.75rem' }}>No. Every growth signal &mdash; sleep quality, nutrient density, sprint-triggered hormones &mdash; simultaneously supports brain development. The same pathways that drive height drive cognitive function, bone density, and long-term health. You&apos;re not choosing between height and health. They&apos;re the same system.</p>
-                <p>You are giving your child the best chance to maximize their genetic expression.</p>
+                <p style={{ marginBottom: '0.75rem' }}>No. Every growth signal &mdash; sleep quality, nutrient density, sprint-triggered hormones &mdash; simultaneously supports brain development, bone density, and long-term health. The same pathways that drive height drive cognitive function and skeletal strength. You&apos;re not choosing between height and health. They&apos;re the same system.</p>
+                <p style={{ marginBottom: '0.75rem' }}>And the benefits extend well beyond childhood. Peak bone mass is reached around age 25. The calcium, vitamin D, protein, and impact exercise your child gets now is literally building the bone bank they&apos;ll carry for the rest of their life. A stronger peak means stronger bones at 40, 60, and 80.</p>
+                <p>You are giving your child the best chance to maximize their genetic expression &mdash; from birth through their mid-20s.</p>
               </div>
             </details>
 
