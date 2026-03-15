@@ -80,7 +80,7 @@ export default function HomePreview() {
     { id:"lunch", t:"The Growth Meal", sub:"Rotate: liver meatballs · oysters · salmon · turkey · beef — with sauerkraut + lentils + broccoli + seeds", gh:"15+ pathways", headline:"15+ growth pathways activated in one meal", tier:0, cite:"Isidori, Curr Med Res Opin 1981" },
     { id:"water", t:"Water or milk between meals", sub:"No juice boxes, no soda, no sweeteners · A2 milk is fine and encouraged", gh:"protects growth window", headline:"protected — each sugar spike suppresses up to 80%", tier:2, cite:"Lanzi, Metabolism 1999" },
     { id:"spr", t:"6 × 30-sec all-out sprints", sub:"MON / WED / FRI — alternate days with jumping", gh:"strongest lever", headline:"per sprint in adult studies — nothing in nutrition comes close", tier:0, cite:"Stokes, J Sports Sci 2002" },
-    { id:"pm", t:"A2 milk + raw honey after sprints — ALWAYS!", sub:"8–12 oz cold A2 milk + 1 tbsp raw honey · immediately after any physical activity", gh:"24-hr growth signal", headline:"GH to IGF-1 conversion — still 451% above baseline at 24h in adult study", tier:0, sig:true, cite:"Zajac, Biol Sport 2018" },
+    { id:"pm", t:"Dairy Serving #2", sub:"8–12 oz cold A2 milk + 1 tbsp raw honey · immediately after any physical activity", gh:"24-hr growth signal", headline:"GH to IGF-1 conversion — still 451% above baseline at 24h in adult study", tier:0, sig:true, cite:"Zajac, Biol Sport 2018" },
   ];
 
   const eveningItems = [
