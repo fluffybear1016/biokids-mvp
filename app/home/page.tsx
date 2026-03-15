@@ -453,7 +453,7 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
   const noGH = !item.gh || item.gh === "—";
 
   return (
-    <div style={{
+    <div id={`item-${item.id}`} style={{
       background: isSig ? "#f0fdf4" : "#fff",
       borderRadius: isSig ? 20 : 14,
       border: isSig ? "1.5px solid #065f46" : item.feat ? "2px solid #fbbf24" : "1px solid #e7e5e4",
@@ -749,15 +749,28 @@ export default function Dashboard() {
     else current = 'Evening'; // before 6am = still evening/sleep territory
     setActivePeriod(current);
 
-    // Auto-scroll to current period after a brief delay for render
-    setTimeout(() => {
-      const el = periodRefs.current[current];
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Offset for nav
-        setTimeout(() => window.scrollBy(0, -80), 400);
-      }
-    }, 300);
+    // Deep link: if URL has a hash like #item-clo, scroll to that card and open it
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#item-')) {
+      const itemId = hash.replace('#item-', '');
+      setTimeout(() => {
+        const el = document.getElementById(hash.slice(1));
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setOpenId(itemId);
+        }
+      }, 400);
+    } else {
+      // Auto-scroll to current period after a brief delay for render
+      setTimeout(() => {
+        const el = periodRefs.current[current];
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Offset for nav
+          setTimeout(() => window.scrollBy(0, -80), 400);
+        }
+      }, 300);
+    }
   }, []);
 
   return (

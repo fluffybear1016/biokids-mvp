@@ -97,7 +97,7 @@ self.addEventListener('push', (event) => {
   event.waitUntil(self.registration.showNotification(data.title, options));
 });
 
-// Notification click — open the app
+// Notification click — open the app at the right protocol item
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
@@ -105,9 +105,10 @@ self.addEventListener('notificationclick', (event) => {
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
-      // Focus existing window if open
+      // Focus existing window and navigate to the deep link
       for (const client of windowClients) {
         if (client.url.includes('/home') && 'focus' in client) {
+          client.navigate(url);
           return client.focus();
         }
       }
