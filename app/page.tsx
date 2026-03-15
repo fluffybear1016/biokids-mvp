@@ -33,10 +33,7 @@ export default function Home() {
             <h2 style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#57534e', marginBottom: '1.25rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, fontWeight: 400 }}>
               The parent&apos;s system for growing taller kids naturally &mdash; backed by 312 medical studies.
             </h2>
-            <p style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: '#065f46', marginBottom: '2rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, fontStyle: 'italic' }}>
-              Height isn&apos;t the only benefit &mdash; every growth signal simultaneously supports brain development.
-            </p>
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center gap-3" style={{ marginTop: '2rem' }}>
               <a href="#height-calculator" style={{ background: '#065f46', color: 'white', padding: '0.75rem 2rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", display: 'inline-block' }} className="sm:text-lg">
                 Free Height Calculator
               </a>
