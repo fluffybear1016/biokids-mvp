@@ -32,9 +32,9 @@ export default function Home() {
               How to make your child <span style={{ color: '#065f46' }}>taller.</span>
             </h1>
 
-            <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#57534e', marginBottom: '1.25rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }}>
-              Your body keeps growing until 25. No prescriptions. No supplements. Just the levers that work.
-            </p>
+            <h2 style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#57534e', marginBottom: '1.25rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, fontWeight: 400 }}>
+              The evidence-based system for optimizing height naturally &mdash; from childhood through 25 years old. No prescriptions, no meds, just the levers parents actually control.
+            </h2>
             <p style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: '#065f46', marginBottom: '2rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, fontStyle: 'italic' }}>
               Height isn&apos;t the only benefit &mdash; every growth signal simultaneously supports brain development.
             </p>
