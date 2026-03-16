@@ -46,31 +46,19 @@ type NotificationSlot = {
 // 80 lb kid → 44–54 g/day
 // 100 lb kid → 55–68 g/day
 
-// ── Day-of-week helpers ──
-function getDayOfWeek(): number {
-  // Approximate ET from UTC (good enough for rotation logic)
+// ── Day-of-week helper ──
+function isSprintDay(): boolean {
   const now = new Date();
   const etOffset = now.getUTCMonth() >= 2 && now.getUTCMonth() <= 10 ? -4 : -5;
   const etHour = now.getUTCHours() + etOffset;
-  // If ET hour rolled back to previous day
+  let day = now.getUTCDay();
   if (etHour < 0) {
     const yesterday = new Date(now);
     yesterday.setUTCDate(yesterday.getUTCDate() - 1);
-    return yesterday.getUTCDay();
+    day = yesterday.getUTCDay();
   }
-  return now.getUTCDay(); // 0=Sun, 1=Mon, ... 6=Sat
-}
-
-function isSprintDay(): boolean {
-  // Mon, Wed, Fri, Sun = sprint days
-  const day = getDayOfWeek();
+  // Alternate days: Mon, Wed, Fri, Sun = sprint; Tue, Thu, Sat = jump
   return [0, 1, 3, 5].includes(day);
-}
-
-function isLiverDay(): boolean {
-  // Mon, Wed, Fri = liver meatball days (2-3x/week)
-  const day = getDayOfWeek();
-  return [1, 3, 5].includes(day);
 }
 
 const SLOTS: NotificationSlot[] = [
@@ -84,7 +72,7 @@ const SLOTS: NotificationSlot[] = [
     messages: [
       {
         title: "A2 milk + lemon CLO",
-        body: "Dairy serving #1: cold A2 milk with honey, yogurt bowl, or smoothie — pick one. Then half a spoon of lemon cod liver oil (hidden in the smoothie works). Skip CLO on liver days.",
+        body: "Dairy serving #1: cold A2 milk with honey, yogurt bowl, or smoothie — pick one. Then half a spoon of lemon cod liver oil (hidden in the smoothie works). Skip CLO on liver days. Serving #2 when they get home from school. Kids 10+: add a 3rd serving (e.g. post-sprint milk).",
         url: "/home#item-d1",
         tag: "biokids-morning",
       },
@@ -100,15 +88,21 @@ const SLOTS: NotificationSlot[] = [
   },
 
   // ══════════════════════════════════════════════════════════
-  // BIG 5 #3 — 12 PM ET — Protein target + rotation
+  // BIG 5 #3 — 12 PM ET — Protein target + power foods
   // ══════════════════════════════════════════════════════════
-  // Liver meatball days: Mon/Wed/Fri
-  // Other days: rotate through protein options
-  // Always include the daily target math
+  // List ALL the growth proteins. Give the g/lb target.
+  // Don't prescribe days — let parents rotate freely.
   {
     name: 'protein',
     utcHour: 16,
-    messages: getProteinMessage(),
+    messages: [
+      {
+        title: "Protein check — 0.6 g per pound",
+        body: "Daily target: ~0.6 g per lb body weight (80 lb = 48 g, 100 lb = 60 g). The growth proteins — rotate these: liver meatballs (beef or chicken liver, 2–3×/wk), beef, chicken, turkey, wild salmon, eggs, oysters (1×/wk = full week of zinc), lentils. Cooked vegetables + a fermented side (sauerkraut, kimchi). No dairy at lunch — save it for the sprint stack.",
+        url: "/home#item-lunch",
+        tag: "biokids-protein",
+      },
+    ],
   },
 
   // ══════════════════════════════════════════════════════════
@@ -141,87 +135,19 @@ const SLOTS: NotificationSlot[] = [
   },
 ];
 
-// ── Protein rotation ──
-// On liver days (Mon/Wed/Fri): liver meatballs
-// Other days: rotate through proteins with the daily target
-function getProteinMessage(): PushPayload[] {
-  if (isLiverDay()) {
-    return [
-      {
-        title: "Liver meatballs today",
-        body: "2 tbsp beef or chicken liver mixed into ground beef — they won't taste it. The single most nutrient-dense food on earth. Daily target: ~0.6 g protein per pound of body weight (80 lb kid = 48 g). Rotate proteins across the week.",
-        url: "/home#item-lunch",
-        tag: "biokids-protein",
-      },
-    ];
-  }
-
-  // Non-liver days: rotate through other proteins
-  const day = getDayOfWeek();
-  const rotations: PushPayload[] = [
-    // Sunday
-    {
-      title: "Chicken thighs + vegetables today",
-      body: "Dark meat has more zinc and iron than breast. Roasted with broccoli, carrots, bell peppers. Daily target: ~0.6 g protein per pound of body weight (80 lb kid = 48 g). Add a spoonful of sauerkraut on the side.",
-      url: "/home#item-lunch",
-      tag: "biokids-protein",
-    },
-    // Monday (liver day — won't reach here)
-    {
-      title: "Liver meatballs today",
-      body: "2 tbsp liver mixed into ground beef — they won't taste it.",
-      url: "/home#item-lunch",
-      tag: "biokids-protein",
-    },
-    // Tuesday
-    {
-      title: "Wild salmon + sweet potato today",
-      body: "Omega-3s from a whole food, not a pill. Baked or pan-seared with sweet potato and spinach. Daily target: ~0.6 g protein per pound of body weight (80 lb kid = 48 g). Fish days = brain days.",
-      url: "/home#item-lunch",
-      tag: "biokids-protein",
-    },
-    // Wednesday (liver day — won't reach here)
-    {
-      title: "Liver meatballs today",
-      body: "2 tbsp liver mixed into ground beef — they won't taste it.",
-      url: "/home#item-lunch",
-      tag: "biokids-protein",
-    },
-    // Thursday
-    {
-      title: "Eggs + ground beef today",
-      body: "3 eggs any style + ground beef with roasted vegetables. Simple, fast, protein-dense. Daily target: ~0.6 g protein per pound of body weight (80 lb kid = 48 g). Eggs alone = 18 g. Ground beef patty = 22 g. You're already there.",
-      url: "/home#item-lunch",
-      tag: "biokids-protein",
-    },
-    // Friday (liver day — won't reach here)
-    {
-      title: "Liver meatballs today",
-      body: "2 tbsp liver mixed into ground beef — they won't taste it.",
-      url: "/home#item-lunch",
-      tag: "biokids-protein",
-    },
-    // Saturday
-    {
-      title: "Whole chicken or steak today",
-      body: "Weekend cooking day. Roast a whole chicken (use bones for broth later) or grill steak with roasted Brussels sprouts. Daily target: ~0.6 g protein per pound of body weight (80 lb kid = 48 g). Leftovers = tomorrow's lunch.",
-      url: "/home#item-lunch",
-      tag: "biokids-protein",
-    },
-  ];
-
-  return [rotations[day]];
-}
+// Protein message is now inlined in SLOTS — no rotation logic needed.
+// All growth proteins listed every day. Parents rotate freely.
 
 // ── Sprint Stack ──
 // Alternates sprint days and jump days
-// Always includes: explicit snack → activity → stretch → post-sprint milk
+// Snack: peanut butter + egg (niacin + choline) OR a liver meatball (has both)
+// Always includes: snack → activity → stretch → cold milk (dairy #2, or #3 for 10+)
 function getSprintStackMessage(): PushPayload[] {
   if (isSprintDay()) {
     return [
       {
         title: "Sprint Stack — snack first",
-        body: "Step 1: Peanut butter on toast or a liver meatball + an egg (niacin + choline fuel the sprint). Step 2: Six 30-second all-out sprints, full rest between. Step 3: Stretch. Step 4: Cold A2 milk with honey within 30 min. That sequence is the most powerful growth trigger in the protocol.",
+        body: "Snack: peanut butter + egg (niacin + choline) or a liver meatball (has both). Then 6 all-out 30-sec sprints, full rest between. Stretch. Cold A2 milk with honey within 30 min — dairy serving #2 (for kids 10+, this is #3). That sequence is the most powerful growth trigger in the protocol.",
         url: "/home#item-spr",
         tag: "biokids-sprint-stack",
       },
@@ -232,7 +158,7 @@ function getSprintStackMessage(): PushPayload[] {
   return [
     {
       title: "Jump Stack — snack first",
-      body: "Step 1: Peanut butter on toast or a liver meatball + an egg (niacin + choline load the spring). Step 2: 50 jumps — jump rope, box jumps, just jumping. Step 3: Stretch. Step 4: Cold A2 milk with honey within 30 min. Alternate with sprints tomorrow.",
+      body: "Snack: peanut butter + egg (niacin + choline) or a liver meatball (has both). Then 50 jumps — rope, box, just jumping. Stretch. Cold A2 milk with honey within 30 min — dairy serving #2 (for kids 10+, this is #3). Alternate with sprints tomorrow.",
       url: "/home#item-jump",
       tag: "biokids-sprint-stack",
     },
