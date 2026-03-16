@@ -35,6 +35,7 @@ type NotificationSlot = {
   utcHour: number;
   weekdayOnly?: boolean; // true = skip weekends
   sundayOnly?: boolean;  // true = only on Sundays
+  sendAll?: boolean;     // true = send every message in order (full protocol)
   messages: PushPayload[];
 };
 
@@ -46,29 +47,33 @@ type NotificationSlot = {
 // pull the parent into the app.
 
 const SLOTS: NotificationSlot[] = [
-  // ── 7 AM ET ── Morning
-  // Title = the ingredient. Body = warm, no pressure.
+  // ── 7 AM ET ── Morning (FULL PROTOCOL — sends all 3 in order)
+  // Parents get the complete morning sequence so nothing gets missed.
+  // Step 1: Music + sunlight + stretch (sets the circadian clock)
+  // Step 2: Dairy — let the kids build their own bowl
+  // Step 3: Eggs + cod liver oil
   {
     name: 'morning',
     utcHour: 11,
+    sendAll: true,
     messages: [
       {
-        title: "Claire de Lune + sunlight",
-        body: "Put on something slow — Debussy, Bach, anything calm. Then 10 min outside. Even the porch counts. You're setting tonight's sleep clock right now.",
+        title: "Step 1: Claire de Lune + sunlight + stretch",
+        body: "Put on something slow — Debussy, Bach, anything calm. Then 10 min outside with a gentle stretch. Even the porch counts. You're setting tonight's sleep clock right now.",
         url: "/home#item-music-am",
-        tag: "biokids-morning",
+        tag: "biokids-morning-1",
       },
       {
-        title: "Sheep yogurt + pumpkin seeds",
-        body: "The Growth Bowl. If you can't find sheep yogurt, any A2 yogurt or whole milk works — the key is A2 + toppings. Seeds, berries, honey. Let them build it.",
+        title: "Step 2: The Growth Bowl — let them build it",
+        body: "Sheep yogurt (or any A2/whole milk yogurt), pumpkin seeds, berries, raw honey. Let the kids pour, sprinkle, build. A smoothie or cold milk works too. The ritual matters.",
         url: "/home#item-d1",
-        tag: "biokids-morning",
+        tag: "biokids-morning-2",
       },
       {
-        title: "Sunny side up eggs + cod liver oil",
-        body: "2–3 eggs, any way they'll eat them. Half a spoon of CLO hidden in the smoothie — they won't taste it. Skip CLO on liver days.",
+        title: "Step 3: Sunny side up eggs + cod liver oil",
+        body: "2–3 eggs, any way they'll eat them. Half a spoon of CLO hidden in the smoothie — they won't taste it. Skip CLO on liver days. That's the morning done.",
         url: "/home#item-bkf",
-        tag: "biokids-morning",
+        tag: "biokids-morning-3",
       },
     ],
   },
@@ -148,54 +153,56 @@ const SLOTS: NotificationSlot[] = [
     ],
   },
 
-  // ── 5 PM ET ── Dinner
+  // ── 5 PM ET ── Dinner (FULL PROTOCOL — sends all 3 in order)
   {
     name: 'dinner',
     utcHour: 21,
+    sendAll: true,
     messages: [
       {
-        title: "Bone broth first",
+        title: "Step 1: Bone broth first",
         body: "A warm mug to start dinner. Glycine lowers core temp for deep sleep tonight. Store-bought is fine — homemade when you can.",
         url: "/home#item-din",
-        tag: "biokids-dinner",
+        tag: "biokids-dinner-1",
       },
       {
-        title: "Cooked spinach + broccoli tonight",
+        title: "Step 2: Cooked spinach + broccoli tonight",
         body: "Load the plate with cooked vegetables — spinach, carrots, Brussels sprouts, whatever you have. No raw salads at dinner — cook everything for better sleep.",
         url: "/home#item-din",
-        tag: "biokids-dinner",
+        tag: "biokids-dinner-2",
       },
       {
-        title: "Bovine gelatin jello",
+        title: "Step 3: Bovine gelatin jello",
         body: "Gelatin + tart cherry juice + monk fruit. Set it now — they'll think it's regular jello. Even store-bought gelatin works. This is dessert that builds growth plates.",
         url: "/home#item-gly",
-        tag: "biokids-dinner",
+        tag: "biokids-dinner-3",
       },
     ],
   },
 
-  // ── 7 PM ET ── Wind-down
+  // ── 7 PM ET ── Wind-down (FULL PROTOCOL — sends all 3 in order)
   {
     name: 'wind-down',
     utcHour: 23,
+    sendAll: true,
     messages: [
       {
-        title: "Chopin Nocturnes on",
-        body: "Soft classical music. Epsom salt bath, 20 min. Then magnesium lotion on their feet while you read together. The whole sequence becomes a sleep trigger.",
+        title: "Step 1: Chopin Nocturnes on",
+        body: "Soft classical music. This signals the transition — screens off, pace slows. The whole evening ritual starts here.",
         url: "/home#item-music-pm",
-        tag: "biokids-winddown",
+        tag: "biokids-winddown-1",
       },
       {
-        title: "Tart cherry + A2 milk",
-        body: "The Sleep Drink. 4 oz milk, 1 oz tart cherry, unsweetened. Then a book in bed together — 15 min. Any A2 or whole milk works.",
+        title: "Step 2: Tart cherry + A2 milk",
+        body: "The Sleep Drink. 4 oz milk, 1 oz tart cherry, unsweetened. Any A2 or whole milk works. This is the melatonin + casein one-two punch.",
         url: "/home#item-drink",
-        tag: "biokids-winddown",
+        tag: "biokids-winddown-2",
       },
       {
-        title: "Epsom bath + book in bed",
-        body: "Warm bath. Magnesium on feet. Sleep Drink. Read together until they're drowsy. You're doing great — even one of these steps tonight matters.",
+        title: "Step 3: Epsom bath + book in bed",
+        body: "Warm bath, 20 min. Magnesium lotion on feet. Then read together until they're drowsy. You're doing great — even one of these steps tonight matters.",
         url: "/home#item-rtn",
-        tag: "biokids-winddown",
+        tag: "biokids-winddown-3",
       },
     ],
   },
@@ -350,17 +357,34 @@ export async function GET(request: Request) {
       });
     }
 
-    // Pick a random message from the slot's variants
-    const message = slot.messages[Math.floor(Math.random() * slot.messages.length)];
-    const result = await sendPushToAll(message);
-
-    return NextResponse.json({
-      success: true,
-      slot: slot.name,
-      slotSource,
-      message: message.title,
-      ...result,
-    });
+    if (slot.sendAll) {
+      // Full protocol — send every message in order so parents don't miss a step
+      const results = [];
+      for (const message of slot.messages) {
+        const result = await sendPushToAll(message);
+        results.push({ title: message.title, ...result });
+      }
+      return NextResponse.json({
+        success: true,
+        slot: slot.name,
+        slotSource,
+        mode: 'full-protocol',
+        messagesSent: results.length,
+        results,
+      });
+    } else {
+      // Rotation — pick one random variant (for slots with alternatives, not steps)
+      const message = slot.messages[Math.floor(Math.random() * slot.messages.length)];
+      const result = await sendPushToAll(message);
+      return NextResponse.json({
+        success: true,
+        slot: slot.name,
+        slotSource,
+        mode: 'rotation',
+        message: message.title,
+        ...result,
+      });
+    }
   } catch (err) {
     console.error('Cron notify error:', err);
     return NextResponse.json(
