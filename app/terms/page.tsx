@@ -94,13 +94,9 @@ export default function TermsOfService() {
 
             {/* Section 5 */}
             <section>
-              <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.125rem', color: '#1c1917', marginBottom: '1rem', fontWeight: 800 }} className="sm:text-2xl">5. Subscription and Payment</h2>
+              <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.125rem', color: '#1c1917', marginBottom: '1rem', fontWeight: 800 }} className="sm:text-2xl">5. Service Access</h2>
               <div className="space-y-4">
-                <p><strong style={{ color: '#1c1917' }}>(a) Free Trial:</strong> The Service may offer a free trial period. You may use one free trial per household. Abuse of free trials, including creating multiple accounts, is a violation of these Terms and grounds for immediate termination.</p>
-                <p><strong style={{ color: '#1c1917' }}>(b) Subscription:</strong> Following any trial period, continued access requires a paid subscription at the then-current rate. Subscriptions are billed on a recurring monthly basis.</p>
-                <p><strong style={{ color: '#1c1917' }}>(c) Cancellation:</strong> You may cancel your subscription at any time through your account settings. Cancellation takes effect at the end of the current billing period. No partial refunds are issued for unused portions of a billing period.</p>
-                <p><strong style={{ color: '#1c1917' }}>(d) No Refunds:</strong> All payments are final and non-refundable, except as required by applicable law.</p>
-                <p><strong style={{ color: '#1c1917' }}>(e) Price Changes:</strong> We reserve the right to modify subscription pricing at any time. Changes will be communicated at least 30 days in advance and will apply to the next billing cycle following notice.</p>
+                <p>The Service is currently provided free of charge. No payment, credit card, or billing information is required. We reserve the right to introduce paid features or subscription tiers in the future, in which case we will provide advance notice and clearly distinguish free and paid functionality. You will never be charged without your explicit consent.</p>
               </div>
             </section>
 

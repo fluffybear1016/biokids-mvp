@@ -42,7 +42,7 @@ export default function PrivacyPolicy() {
               <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.125rem', color: '#1c1917', marginBottom: '1rem', fontWeight: 800 }} className="sm:text-2xl">1. Information We Collect</h2>
               <div className="space-y-4">
                 <p>
-                  <strong style={{ color: '#1c1917' }}>Account Information:</strong> When you create an account, we collect your name, email address, and payment information. Payment data is processed securely by Stripe, Inc. — we never store, access, or retain your credit card or bank details on our servers.
+                  <strong style={{ color: '#1c1917' }}>Account Information:</strong> When you create an account, we collect your name and email address. bioKids is 100% free — we do not collect any payment or billing information.
                 </p>
                 <p>
                   <strong style={{ color: '#1c1917' }}>Child-Related Information:</strong> To personalize protocols, we collect limited, non-identifying data about your child as provided by you, the parent or legal guardian. This may include age, biological sex, and height. We do not collect children&apos;s names, photographs, school information, location data, or any other personally identifiable information about minors.
@@ -59,8 +59,8 @@ export default function PrivacyPolicy() {
               <p className="mb-3">We use collected information exclusively to:</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Provide, personalize, and improve the Service</li>
-                <li>Process payments and manage subscriptions</li>
                 <li>Send essential account and service communications</li>
+                <li>Send daily protocol reminder notifications (if enabled)</li>
                 <li>Comply with legal obligations</li>
               </ul>
               <p className="mt-4">
@@ -72,7 +72,7 @@ export default function PrivacyPolicy() {
             <section>
               <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.125rem', color: '#1c1917', marginBottom: '1rem', fontWeight: 800 }} className="sm:text-2xl">3. Data Security</h2>
               <p>
-                We implement industry-standard security measures including TLS/SSL encryption for all data in transit, secure authentication through Supabase, and encrypted data at rest. Payment processing is handled exclusively by Stripe, Inc., a PCI-DSS Level 1 compliant payment processor. While we take commercially reasonable measures to protect your data, no method of electronic transmission or storage is 100% secure, and we cannot guarantee absolute security.
+                We implement industry-standard security measures including TLS/SSL encryption for all data in transit, secure authentication through Supabase, and encrypted data at rest. While we take commercially reasonable measures to protect your data, no method of electronic transmission or storage is 100% secure, and we cannot guarantee absolute security.
               </p>
             </section>
 
@@ -97,9 +97,9 @@ export default function PrivacyPolicy() {
               <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '1.125rem', color: '#1c1917', marginBottom: '1rem', fontWeight: 800 }} className="sm:text-2xl">6. Third-Party Services</h2>
               <p className="mb-3">The Service integrates the following third-party providers, each operating under their own privacy policies and security standards:</p>
               <ul className="list-disc pl-5 space-y-1">
-                <li>Stripe, Inc. — payment processing</li>
                 <li>Supabase, Inc. — authentication and database services</li>
                 <li>Vercel, Inc. — web hosting and deployment</li>
+                <li>Expo (Software Mansion S.A.) — push notification delivery</li>
               </ul>
               <p className="mt-4">We are not responsible for the privacy practices of these third-party services.</p>
             </section>
@@ -151,9 +151,9 @@ export default function PrivacyPolicy() {
               <ul className="list-disc pl-5 space-y-1">
                 <li>Access, correct, or update your account information</li>
                 <li>Request deletion of your account and all associated data</li>
-                <li>Cancel your subscription</li>
                 <li>Request a portable copy of your data</li>
                 <li>Opt out of non-essential communications</li>
+                <li>Disable push notifications through your device settings</li>
               </ul>
               <p className="mt-4">
                 To exercise any of these rights, contact us at <a href="mailto:contact@biokids.me" style={{ color: '#065f46', textDecoration: 'underline' }}>contact@biokids.me</a>. We will respond to all requests within 30 days.

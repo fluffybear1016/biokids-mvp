@@ -3,9 +3,9 @@ import "./globals.css";
 import PWAInstall from "@/components/PWAInstall";
 
 export const metadata: Metadata = {
-  title: "bioKids — Height Protocol",
-  description: "The science-backed daily protocol to maximize your child's height potential — meals, sprints, and sleep arranged by science.",
-  keywords: ["height", "children", "taller", "natural", "growth hormone", "optimization", "parenting"],
+  title: "bioKids — Healthy Growth Guide",
+  description: "The evidence-based daily guide that supports healthy growth through nutrition, exercise, and sleep — based on published research.",
+  keywords: ["height", "children", "healthy growth", "nutrition", "exercise", "sleep", "parenting", "pediatric research"],
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
     title: "bioKids",
   },
   openGraph: {
-    title: "bioKids — Height Protocol",
-    description: "The science-backed daily protocol to maximize your child's height potential.",
+    title: "bioKids — Healthy Growth Guide",
+    description: "The evidence-based daily guide that supports healthy growth through nutrition, exercise, and sleep.",
     type: "website",
     siteName: "bioKids",
   },

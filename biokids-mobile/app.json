@@ -1,0 +1,55 @@
+{
+  "expo": {
+    "name": "bioKids",
+    "slug": "biokids",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "biokids",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#065f46"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "me.biokids.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "UIBackgroundModes": ["remote-notification"]
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "me.biokids.app",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#065f46",
+        "foregroundImage": "./assets/icon.png"
+      },
+      "permissions": ["NOTIFICATIONS"]
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#065f46"
+        }
+      ],
+      "expo-secure-store",
+      "expo-font",
+      "expo-apple-authentication"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": ""
+      },
+      "supabaseUrl": "",
+      "supabaseAnonKey": ""
+    }
+  }
+}
