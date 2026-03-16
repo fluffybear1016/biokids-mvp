@@ -38,30 +38,35 @@ type NotificationSlot = {
   messages: PushPayload[];
 };
 
+// ── Design philosophy (Ive) ──
+// Name the ingredient, not the category. "Sheep yogurt" not "dairy."
+// "Beef liver meatballs" not "protein." "Tart cherry" not "the Sleep Drink."
+// The exotic specificity IS the brand. It signals: this is not your
+// pediatrician's generic advice. Trust the material. Let curiosity
+// pull the parent into the app.
+
 const SLOTS: NotificationSlot[] = [
-  // ── 7 AM ET ── Morning (sunlight + Growth Bowl + eggs + CLO — all one meal)
-  // The Growth Bowl (sheep yogurt + toppings) IS dairy serving #1 AND breakfast.
-  // CLO goes in the smoothie version or on its own spoon. One notification covers it all.
+  // ── 7 AM ET ── Morning
   {
     name: 'morning',
     utcHour: 11,
     messages: [
       {
         title: "Good morning",
-        body: "A few minutes of sunlight, then the Growth Bowl. You've got this.",
-        url: "/home#item-sun",
-        tag: "biokids-morning",
-      },
-      {
-        title: "Good morning",
-        body: "Sunlight, stretch, Growth Bowl with eggs. A beautiful start to the day.",
+        body: "Sunlight. Sheep yogurt. Pumpkin seeds. That's the morning.",
         url: "/home#item-d1",
         tag: "biokids-morning",
       },
       {
         title: "Good morning",
-        body: "Step outside together for a few minutes, then breakfast. That's the whole morning.",
+        body: "10 minutes outside, then the Growth Bowl — sheep yogurt, berries, honey, cod liver oil hidden in the smoothie.",
         url: "/home#item-sun",
+        tag: "biokids-morning",
+      },
+      {
+        title: "Good morning",
+        body: "Stretch in the sun. Sheep yogurt bowl with hemp hearts and chia. Over-easy eggs in olive oil.",
+        url: "/home#item-d1",
         tag: "biokids-morning",
       },
     ],
@@ -81,128 +86,133 @@ const SLOTS: NotificationSlot[] = [
     utcHour: 16,
     messages: [
       {
-        title: "Lunch time",
-        body: "Protein + iron + a squeeze of lemon. Simple and powerful.",
+        title: "Lunch",
+        body: "Beef liver meatballs with lemon. The most nutrient-dense meal on earth.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
       {
-        title: "Lunch time",
-        body: "Liver meatballs, lentils, or salmon — whatever's easy today. Vitamin C alongside.",
+        title: "Lunch",
+        body: "Sauerkraut alongside today's protein. Even two spoonfuls produce GABA naturally.",
+        url: "/home#item-lunch",
+        tag: "biokids-lunch",
+      },
+      {
+        title: "Lunch",
+        body: "Lentils with lemon, broccoli, pumpkin seeds on top. Every topping earns its place.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
     ],
   },
 
-  // ── 3 PM ET ── Exercise (sprints or jumps + stretching)
+  // ── 3 PM ET ── Exercise
   {
     name: 'exercise',
     utcHour: 19,
     messages: [
       {
-        title: "Time to move",
-        body: "Sprints, jumps, or just chasing each other around. Then stretch together.",
+        title: "Sprint time",
+        body: "6 × 30 seconds, all out. Hill sprints if you can. Then dead hangs and cobra stretch.",
         url: "/home#item-spr",
         tag: "biokids-exercise",
       },
       {
-        title: "Time to move",
-        body: "Tag, races, hill sprints — whatever gets them going all out. Stretch after.",
-        url: "/home#item-spr",
+        title: "Jump time",
+        body: "50–100 jumps. Rope, drop jumps, single-leg hops. Then hang and stretch.",
+        url: "/home#item-jump",
         tag: "biokids-exercise",
       },
     ],
   },
 
   // ── 4 PM ET ── Post-exercise dairy #2
-  // The protocol says: within 30 min of exercise, cold A2 milk + raw honey.
-  // This converts the GH spike into actual growth signal (IGF-1).
   {
     name: 'post-exercise',
     utcHour: 20,
     messages: [
       {
-        title: "Dairy Serving #2",
-        body: "Cold A2 milk with a little honey after activity. This is the conversion window.",
+        title: "Cold A2 milk + raw honey",
+        body: "Right after activity. Whey converts the sprint into a growth signal. Casein carries it for hours.",
         url: "/home#item-pm",
         tag: "biokids-dairy-2",
       },
       {
-        title: "Dairy Serving #2",
-        body: "Post-activity milk turns today's exercise into tonight's growth signal.",
+        title: "Post-sprint milk",
+        body: "Cold A2 milk, one spoon of raw honey. Without this, the GH spike is orphaned.",
         url: "/home#item-pm",
         tag: "biokids-dairy-2",
       },
     ],
   },
 
-  // ── 5 PM ET ── Dinner (start now, aim to finish by 6)
-  // Protocol says "Dinner (by 6 PM)" — so the reminder needs to come
-  // early enough for parents to actually prepare and serve.
+  // ── 5 PM ET ── Dinner
   {
     name: 'dinner',
     utcHour: 21,
     messages: [
       {
-        title: "Dinner",
-        body: "Good time to start — bone broth, protein, veggies. Aim to wrap up by 6.",
+        title: "Bone broth first",
+        body: "A mug of bone broth to start dinner. Glycine lowers core temp for tonight's deep sleep.",
         url: "/home#item-din",
         tag: "biokids-dinner",
       },
       {
-        title: "Dinner",
-        body: "Start with a mug of bone broth, then whatever protein you have. Finish by 6 if you can.",
+        title: "Dinner by 6",
+        body: "Bone broth starter, rotated protein, lentils with lemon, broccoli. Wrap up by 6 if you can.",
         url: "/home#item-din",
+        tag: "biokids-dinner",
+      },
+      {
+        title: "Gelatin jello tonight?",
+        body: "Bovine gelatin + tart cherry juice + monk fruit. Set it now — they'll think it's regular jello.",
+        url: "/home#item-gly",
         tag: "biokids-dinner",
       },
     ],
   },
 
-  // ── 7 PM ET ── Wind-down (bath, magnesium, sleep drink, screens off)
-  // This is the gap that was completely missing. The Sleep Stack has a
-  // whole evening sequence: screens off → bath with Epsom salts → magnesium
-  // lotion → Sleep Drink (dairy #3 = A2 milk + tart cherry) → lights out.
+  // ── 7 PM ET ── Wind-down
   {
     name: 'wind-down',
     utcHour: 23,
     messages: [
       {
-        title: "Wind-down time",
-        body: "Screens off, warm bath, magnesium lotion, then the Sleep Drink. Cozy evening ahead.",
+        title: "Epsom salt bath",
+        body: "Warm water, 20 minutes. Then magnesium lotion on their feet. The core temp drop triggers deep sleep.",
         url: "/home#item-bath",
         tag: "biokids-winddown",
       },
       {
-        title: "Wind-down time",
-        body: "Bath with Epsom salts, magnesium on feet, Sleep Drink. The evening routine does so much.",
-        url: "/home#item-bath",
+        title: "Tart cherry + A2 milk",
+        body: "The Sleep Drink. 4 oz A2 milk, 1 oz tart cherry, unsweetened. Casein feeds growth all night.",
+        url: "/home#item-drink",
         tag: "biokids-winddown",
       },
       {
-        title: "Wind-down time",
-        body: "Time to slow down together. Bath, lotion, Sleep Drink, then a book. They'll be drowsy soon.",
+        title: "Wind-down",
+        body: "Epsom bath. Magnesium on feet. Tart cherry + A2 milk. Book. They'll be drowsy soon.",
         url: "/home#item-rtn",
         tag: "biokids-winddown",
       },
     ],
   },
 
-  // ── 8 PM ET ── Bedtime (dark room, lights out)
+  // ── 8 PM ET ── Bedtime
   {
     name: 'bedtime',
     utcHour: 0,
     messages: [
       {
-        title: "Bedtime",
-        body: "Dark room, cool air, nose breathing. Tonight's growth is on its way.",
-        url: "/home#item-bed",
+        title: "Lights out",
+        body: "65°F. Blackout curtains. Every LED taped. Nose breathing. This is where it all compounds.",
+        url: "/home#item-dark",
         tag: "biokids-bedtime",
       },
       {
-        title: "Bedtime",
-        body: "Lights out, every LED covered. Everything you did today builds to this moment.",
-        url: "/home#item-dark",
+        title: "Lights out",
+        body: "Dark room, cool air. The casein is slow-releasing. The glycine is lowering core temp. Growth is happening.",
+        url: "/home#item-bed",
         tag: "biokids-bedtime",
       },
     ],
@@ -210,56 +220,57 @@ const SLOTS: NotificationSlot[] = [
 ];
 
 // ── Weekly Pro Tips ──
-// Rotates by week number — one high-leverage insight each Sunday
-// Tone: warm, encouraging, share the "why" without pressure
+// Rotates by week number. Lead with the specific ingredient or insight
+// that makes bioKids different. Let the parent think "I've never heard
+// that before" — that's the pull.
 function getWeeklyMessages(): PushPayload[] {
   const tips = [
     {
-      title: "Sunday Tip",
-      body: "Raw honey and fruit are perfectly fine. It's the refined sugar in packaged snacks that quietly stalls growth for hours.",
-      url: "/home#item-nse",
+      title: "Sheep yogurt",
+      body: "Up to 35× more lactoferrin than cow. 70% more casein. 100% A2 naturally. The Growth Bowl base.",
+      url: "/home#item-d1",
       tag: "biokids-weekly",
     },
     {
-      title: "Sunday Tip",
-      body: "Even 5 minutes of morning sunlight programs tonight's sleep quality. Overcast days still count.",
-      url: "/home#item-sun",
+      title: "Broccoli sprouts",
+      body: "20–100× more sulforaphane than mature broccoli. A small handful in a smoothie after junk food accelerates recovery.",
+      url: "/home#item-junk",
       tag: "biokids-weekly",
     },
     {
-      title: "Sunday Tip",
-      body: "A consistent wake time — even on weekends — does more for growth than almost anything else. And it's free.",
-      url: "/home#item-wake",
+      title: "Bovine gelatin",
+      body: "Pure glycine. Lowers core temp for sleep, signals growth, builds growth plate cartilage. Kids think it's regular jello.",
+      url: "/home#item-gly",
       tag: "biokids-weekly",
     },
     {
-      title: "Sunday Tip",
-      body: "Dead hangs are wonderful. Just 30 seconds reverses a full day of spinal compression from gravity.",
-      url: "/home#item-stretch",
-      tag: "biokids-weekly",
-    },
-    {
-      title: "Sunday Tip",
-      body: "Watch your child sleep tonight. If their mouth is open, it might be worth a chat with your pediatrician.",
-      url: "/home#item-airway",
-      tag: "biokids-weekly",
-    },
-    {
-      title: "Sunday Tip",
-      body: "Magnesium lotion on their feet before bed — it absorbs well and helps them fall into deeper sleep.",
-      url: "/home#item-mag",
-      tag: "biokids-weekly",
-    },
-    {
-      title: "Sunday Tip",
-      body: "The Sleep Drink is the quiet star of the protocol. A2 milk + tart cherry — casein feeds growth all night long.",
+      title: "Tart cherry juice",
+      body: "The highest food source of melatonin. In the Sleep Drink, it deepens slow-wave sleep and inhibits aromatase.",
       url: "/home#item-drink",
       tag: "biokids-weekly",
     },
     {
-      title: "Sunday Tip",
-      body: "10 minutes of jump rope builds more bone density at the growth plate than most sports. A great rainy-day option.",
-      url: "/home#item-jump",
+      title: "Cod liver oil",
+      body: "Retinol + vitamin D + omega-3 in one spoon. Hidden in a berry smoothie, they'll never taste it.",
+      url: "/home#item-clo",
+      tag: "biokids-weekly",
+    },
+    {
+      title: "Sauerkraut",
+      body: "Even two spoonfuls. Fermentation produces GABA — a natural growth signal that also removes the brake on GH.",
+      url: "/home#item-lunch",
+      tag: "biokids-weekly",
+    },
+    {
+      title: "Epsom salt baths",
+      body: "Transdermal magnesium + a core temp rise that triggers rapid cooling. The fastest path to deep sleep.",
+      url: "/home#item-bath",
+      tag: "biokids-weekly",
+    },
+    {
+      title: "Pistachios",
+      body: "The highest melatonin per gram of any nut. The perfect evening snack — better than anything in a package.",
+      url: "/home#item-nse",
       tag: "biokids-weekly",
     },
   ];
