@@ -196,6 +196,63 @@ export default function GrowthLogPage() {
           </div>
         )}
 
+        {/* Trajectory card — where they're headed */}
+        {latest && heightData && (
+          <div style={{
+            background:"linear-gradient(145deg, #065f46 0%, #047857 50%, #065f46 100%)",
+            borderRadius:16, padding:"20px 18px", marginBottom:24,
+            position:"relative", overflow:"hidden",
+          }}>
+            <div style={{ position:"absolute", inset:0, opacity:0.04, backgroundImage:"repeating-linear-gradient(90deg, #fff 0px, transparent 1px, transparent 20px), repeating-linear-gradient(0deg, #fff 0px, transparent 1px, transparent 20px)" }} />
+            <div style={{ position:"relative" }}>
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, fontWeight:700, color:"rgba(255,255,255,0.5)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:12 }}>
+                Where {childName === 'Your child' ? 'they' : childName}&apos;re headed
+              </div>
+              <div style={{ display:"flex", alignItems:"flex-end", gap:6, marginBottom:16 }}>
+                <div>
+                  <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"rgba(255,255,255,0.4)", marginBottom:2 }}>now</div>
+                  <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:24, fontWeight:800, color:"rgba(255,255,255,0.7)", lineHeight:1 }}>
+                    {inToFtIn(latest.heightIn)}
+                  </div>
+                </div>
+                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:16, color:"rgba(255,255,255,0.3)", paddingBottom:2 }}>&rarr;</div>
+                <div>
+                  <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"rgba(255,255,255,0.4)", marginBottom:2 }}>genetic range</div>
+                  <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:24, fontWeight:800, color:"rgba(255,255,255,0.7)", lineHeight:1 }}>
+                    {inToFtIn(heightData.rangeHighIn)}
+                  </div>
+                </div>
+                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:16, color:"rgba(52,211,153,0.5)", paddingBottom:2 }}>&rarr;</div>
+                <div>
+                  <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#34d399", marginBottom:2 }}>bioKids zone</div>
+                  <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:28, fontWeight:800, color:"#ffffff", lineHeight:1 }}>
+                    {inToFtIn(heightData.bioHighIn)}
+                  </div>
+                </div>
+              </div>
+
+              {/* Progress bar: current → genetic → bioKids */}
+              {(() => {
+                const currentIn = latest.heightIn;
+                const totalRange = heightData.bioHighIn - currentIn;
+                const geneticPct = totalRange > 0 ? ((heightData.rangeHighIn - currentIn) / totalRange) * 100 : 50;
+                return (
+                  <div style={{ position:"relative", height:8, borderRadius:4, background:"rgba(255,255,255,0.1)", overflow:"hidden" }}>
+                    <div style={{ position:"absolute", left:0, top:0, bottom:0, width:`${geneticPct}%`, background:"rgba(255,255,255,0.2)", borderRadius:"4px 0 0 4px" }} />
+                    <div style={{ position:"absolute", left:`${geneticPct}%`, top:0, bottom:0, right:0, background:"linear-gradient(90deg, #34d399 0%, #065f46 100%)", borderRadius:"0 4px 4px 0" }} />
+                  </div>
+                );
+              })()}
+
+              <div style={{ display:"flex", justifyContent:"space-between", marginTop:6 }}>
+                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"rgba(255,255,255,0.35)" }}>current</span>
+                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"rgba(255,255,255,0.35)" }}>genetic ceiling</span>
+                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#34d399" }}>bioKids ceiling</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Growth Chart */}
         {sorted.length >= 1 && (
           <div style={{ background:"#fff", border:"1px solid #e7e5e4", borderRadius:16, padding:"20px 16px", marginBottom:24 }}>
@@ -247,6 +304,17 @@ export default function GrowthLogPage() {
                     genetic range
                   </text>
                 </>
+              )}
+
+              {/* Projection dashed line — from last point toward bioKids zone */}
+              {sorted.length >= 1 && heightData && (
+                <line
+                  x1={dateToX(sorted[sorted.length - 1].date)}
+                  y1={yForHeight(sorted[sorted.length - 1].heightIn)}
+                  x2={chartW - padR}
+                  y2={yForHeight(heightData.bioHighIn)}
+                  stroke="#34d399" strokeWidth={1.5} strokeDasharray="4,4" opacity={0.5}
+                />
               )}
 
               {/* Data line */}

@@ -981,6 +981,61 @@ export default function Dashboard() {
           </div>
         )}
 
+        {/* START HERE — Big 5 gateway for new parents */}
+        {!allCoreDone && doneCount < 3 && (
+          <div style={{
+            background:"#fff", borderRadius:20, border:"1.5px solid #065f46",
+            padding:"24px 20px", margin:"24px 0 0",
+            boxShadow:"0 2px 12px rgba(6,95,70,0.06)",
+          }}>
+            <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:800, color:"#065f46", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:4 }}>
+              Start here
+            </div>
+            <div style={{ fontSize:17, fontWeight:800, color:"#1c1917", lineHeight:1.3, marginBottom:4 }}>
+              The 5 that matter most.
+            </div>
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#57534e", lineHeight:1.6, marginBottom:18 }}>
+              Master these first. Everything else multiplies them.
+            </p>
+
+            {[
+              { num:"1", title:"A2 milk every morning", sub:"A glass with honey, a yogurt bowl, or a smoothie — dairy serving #1. One more when they get home from school.", anchor:"d1" },
+              { num:"2", title:"Lemon-flavored cod liver oil", sub:"Half a spoon hidden in the smoothie. Three growth levers in one. Don't tell them what it is.", anchor:"clo" },
+              { num:"3", title:"Liver meatballs 2–3× per week", sub:"Mix 2 tbsp beef or chicken liver into ground beef. They won't taste it. The single most nutrient-dense food.", anchor:"lunch" },
+              { num:"4", title:"The Sprint Stack", sub:"Light snack → all-out sprints (they already do this at practice) → cold milk with honey right after. That sequence is the most powerful combination in the protocol.", anchor:"spr" },
+              { num:"5", title:"10+ hours in complete darkness", sub:"Blackout curtains, tape every LED. This is when 60–80% of growth hormone is released. Non-negotiable.", anchor:"bed" },
+            ].map((item, i) => (
+              <div
+                key={i}
+                onClick={() => {
+                  const el = document.getElementById(`item-${item.anchor}`);
+                  if (el) { el.scrollIntoView({ behavior:'smooth', block:'center' }); setOpenId(item.anchor); }
+                }}
+                style={{
+                  display:"flex", gap:12, padding:"14px 0",
+                  borderTop: i > 0 ? "1px solid #f0eeec" : "none",
+                  cursor:"pointer",
+                }}
+              >
+                <div style={{
+                  width:28, height:28, borderRadius:14, flexShrink:0,
+                  background:"#065f46", display:"flex", alignItems:"center", justifyContent:"center",
+                }}>
+                  <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:14, fontWeight:800, color:"#fff" }}>{item.num}</span>
+                </div>
+                <div>
+                  <div style={{ fontSize:14, fontWeight:700, color:"#1c1917", lineHeight:1.3 }}>{item.title}</div>
+                  <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#57534e", lineHeight:1.5, marginTop:3 }}>{item.sub}</div>
+                </div>
+              </div>
+            ))}
+
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#065f46", marginTop:14, fontStyle:"italic", lineHeight:1.6 }}>
+              Full protocol below — but these five are your foundation.
+            </p>
+          </div>
+        )}
+
         {/* Core goals celebration — screenshot-worthy card */}
         {showCoreCelebration && (
           <div style={{

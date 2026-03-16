@@ -128,71 +128,80 @@ export default function LandingHeightPredictor() {
             </div>
           </div>
 
-          {/* Result */}
+          {/* Result — screenshot-worthy branded card */}
           {result && tapeData ? (
             <div style={{ animation: 'fadeIn 0.4s ease' }}>
-              {/* Tape measure + big number */}
-              <div style={{
-                background: '#fafaf9', borderRadius: 16,
-                border: '1.5px solid #e7e5e4',
-                padding: '24px 20px 20px',
-                marginBottom: 16,
+              {/* The shareable card */}
+              <div id="biokids-result-card" style={{
+                background: 'linear-gradient(145deg, #065f46 0%, #047857 50%, #065f46 100%)',
+                borderRadius: 20, padding: '28px 24px 24px',
+                marginBottom: 16, position: 'relative', overflow: 'hidden',
               }}>
-                <div style={{ display: 'flex', gap: 18, alignItems: 'stretch' }}>
-                  {/* Tape measure bar */}
-                  <div style={{ width: 16, flexShrink: 0, position: 'relative', minHeight: 160 }}>
-                    <div style={{
-                      position: 'absolute', bottom: 0, left: 0, right: 0,
-                      height: `${tapeData.geneticPct}%`,
-                      background: '#ebe9e6', borderRadius: '0 0 8px 8px',
-                    }} />
-                    <div style={{
-                      position: 'absolute', top: 0, left: 0, right: 0,
-                      height: `${100 - tapeData.geneticPct}%`,
-                      background: 'linear-gradient(to top, #065f46 0%, #059669 40%, #34d399 100%)',
-                      borderRadius: '8px 8px 0 0',
-                    }} />
-                    {Array.from({ length: tapeData.totalSpan + 1 }, (_, i) => {
-                      const pct = (i / tapeData.totalSpan) * 100;
-                      const isMajor = i % 2 === 0;
-                      const isZoneLine = i === (tapeData.rangeHighTotal - tapeData.rangeLowTotal);
-                      const inGreen = i >= (tapeData.rangeHighTotal - tapeData.rangeLowTotal);
-                      return (
-                        <div key={i} style={{
-                          position: 'absolute', bottom: `${pct}%`, right: 0,
-                          width: isZoneLine ? 20 : isMajor ? 8 : 5,
-                          height: isZoneLine ? 2 : 1,
-                          background: isZoneLine ? '#065f46' : inGreen ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.08)',
-                        }} />
-                      );
-                    })}
-                  </div>
+                {/* Subtle grid pattern */}
+                <div style={{ position: 'absolute', inset: 0, opacity: 0.04, backgroundImage: 'repeating-linear-gradient(90deg, #fff 0px, transparent 1px, transparent 20px), repeating-linear-gradient(0deg, #fff 0px, transparent 1px, transparent 20px)' }} />
 
-                  {/* Heights */}
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 160 }}>
-                    <div>
-                      <div style={{ fontFamily: serif, fontSize: 36, fontWeight: 800, color: '#065f46', lineHeight: 1, letterSpacing: '-0.03em' }}>
-                        {result.bioHigh}
-                      </div>
-                      <div style={{ fontFamily: mono, fontSize: 10, color: '#059669', marginTop: 4 }}>
-                        with optimized environment
-                      </div>
-                    </div>
-                    <div style={{ padding: '8px 0' }}>
-                      <div style={{ fontFamily: mono, fontSize: 8, color: '#065f46', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 2 }}>bioKids Zone</div>
-                      <div style={{ fontFamily: serif, fontSize: 15, fontWeight: 800, color: '#065f46' }}>
-                        {result.bioLow} — {result.bioHigh}
-                      </div>
-                    </div>
-                    <div>
-                      <div style={{ fontFamily: mono, fontSize: 8, color: '#a8a29e', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 2 }}>Genetic range</div>
-                      <div style={{ fontFamily: serif, fontSize: 13, fontWeight: 700, color: '#a8a29e' }}>
-                        {result.rangeLow} — {result.rangeHigh}
-                      </div>
-                    </div>
+                {/* bioKids branding */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20, position: 'relative' }}>
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
+                  <span style={{ fontFamily: mono, fontSize: 11, fontWeight: 700, color: '#d1fae5', letterSpacing: '0.06em' }}>bioKids Height Report</span>
+                </div>
+
+                {/* Big number — the screenshot moment */}
+                <div style={{ position: 'relative', marginBottom: 24 }}>
+                  <div style={{ fontFamily: mono, fontSize: 9, fontWeight: 600, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>
+                    Your {gender === 'boy' ? 'son' : 'daughter'}&apos;s potential ceiling
+                  </div>
+                  <div style={{ fontFamily: serif, fontSize: 52, fontWeight: 800, color: '#ffffff', lineHeight: 1, letterSpacing: '-0.04em' }}>
+                    {result.bioHigh}
                   </div>
                 </div>
+
+                {/* Two zones side by side */}
+                <div style={{ display: 'flex', gap: 12, position: 'relative' }}>
+                  <div style={{ flex: 1, background: 'rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 16px' }}>
+                    <div style={{ fontFamily: mono, fontSize: 8, fontWeight: 700, color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Genetic range</div>
+                    <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 800, color: 'rgba(255,255,255,0.7)' }}>
+                      {result.rangeLow} — {result.rangeHigh}
+                    </div>
+                    <div style={{ fontFamily: mono, fontSize: 9, color: 'rgba(255,255,255,0.35)', marginTop: 4 }}>without optimization</div>
+                  </div>
+                  <div style={{ flex: 1, background: 'rgba(52,211,153,0.15)', borderRadius: 12, padding: '14px 16px', border: '1px solid rgba(52,211,153,0.2)' }}>
+                    <div style={{ fontFamily: mono, fontSize: 8, fontWeight: 700, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>bioKids zone</div>
+                    <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 800, color: '#ffffff' }}>
+                      {result.bioLow} — {result.bioHigh}
+                    </div>
+                    <div style={{ fontFamily: mono, fontSize: 9, color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>with optimized environment</div>
+                  </div>
+                </div>
+
+                {/* Footer branding */}
+                <div style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative' }}>
+                  <span style={{ fontFamily: mono, fontSize: 9, color: 'rgba(255,255,255,0.3)' }}>biokids.me · free during beta</span>
+                  <span style={{ fontFamily: mono, fontSize: 8, color: 'rgba(255,255,255,0.25)' }}>137 peer-reviewed studies</span>
+                </div>
               </div>
+
+              {/* Share button */}
+              <button
+                onClick={async () => {
+                  const text = `My ${gender === 'boy' ? "son's" : "daughter's"} height potential:\n\nGenetic range: ${result.rangeLow} — ${result.rangeHigh}\nbioKids zone: ${result.bioLow} — ${result.bioHigh}\n\nFree height calculator at biokids.me`;
+                  if (navigator.share) {
+                    try { await navigator.share({ title: 'bioKids Height Report', text }); } catch {}
+                  } else {
+                    try { await navigator.clipboard.writeText(text); alert('Copied to clipboard!'); } catch {}
+                  }
+                }}
+                style={{
+                  width: '100%', padding: '12px', marginBottom: 16,
+                  background: '#f0fdf4', border: '1.5px solid #d1fae5', borderRadius: 12,
+                  fontSize: 13, fontWeight: 700, color: '#065f46',
+                  fontFamily: mono, cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#065f46" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                Share with your team
+              </button>
 
               {/* CTA */}
               <div style={{ textAlign: 'center' }}>
@@ -201,7 +210,6 @@ export default function LandingHeightPredictor() {
                 </p>
                 <button
                   onClick={() => {
-                    // Save height data so onboarding can skip the height step
                     if (result) {
                       localStorage.setItem('childGender', gender);
                       localStorage.setItem('motherHeight', `${momFt}'${momIn}"`);
