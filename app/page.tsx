@@ -13,8 +13,8 @@ export default function Home() {
             <span style={{ fontSize: 9, fontWeight: 700, color: '#fff', background: '#065f46', borderRadius: 4, padding: '1px 5px', letterSpacing: '0.08em', marginLeft: 4 }}>BETA</span>
           </Link>
           <div className="flex items-center gap-3 sm:gap-6">
-            <Link href="/about" className="hidden sm:inline" style={{ fontSize: '0.875rem', fontWeight: 500, color: '#1c1917', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>About</Link>
-            <Link href="/login" className="hidden sm:inline" style={{ fontSize: '0.875rem', fontWeight: 500, color: '#1c1917', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>Log in</Link>
+            <Link href="/about" style={{ fontSize: '0.75rem', fontWeight: 500, color: '#1c1917', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-sm">About</Link>
+            <Link href="/login" style={{ fontSize: '0.75rem', fontWeight: 500, color: '#1c1917', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-sm">Log in</Link>
             <Link href="/onboarding" className="text-xs sm:text-sm" style={{ background: '#065f46', color: 'white', padding: '0.4rem 0.75rem', borderRadius: '10px', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>
               Join Beta
             </Link>
