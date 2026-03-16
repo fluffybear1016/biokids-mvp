@@ -177,7 +177,7 @@ export default function LandingHeightPredictor() {
                 {/* Footer branding */}
                 <div style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative' }}>
                   <span style={{ fontFamily: mono, fontSize: 9, color: 'rgba(255,255,255,0.3)' }}>biokids.me · free during beta</span>
-                  <span style={{ fontFamily: mono, fontSize: 8, color: 'rgba(255,255,255,0.25)' }}>137 peer-reviewed studies</span>
+                  <span style={{ fontFamily: mono, fontSize: 8, color: 'rgba(255,255,255,0.25)' }}>based on published medical research</span>
                 </div>
               </div>
 
@@ -237,33 +237,34 @@ export default function LandingHeightPredictor() {
                 </p>
               </div>
 
-              {/* References — prominent */}
-              <div style={{ marginTop: 20, padding: '16px 16px', background: '#ecfdf5', borderRadius: 12, border: '1.5px solid #86efac' }}>
-                <p style={{ fontFamily: mono, fontSize: 10, fontWeight: 700, color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>
-                  Peer-Reviewed Sources
+              {/* Science credibility — plain language, unmistakably real */}
+              <div style={{ marginTop: 20, padding: '18px 16px', background: '#ecfdf5', borderRadius: 12, border: '1.5px solid #86efac' }}>
+                <p style={{ fontFamily: mono, fontSize: 11, fontWeight: 800, color: '#065f46', marginBottom: 4 }}>
+                  This calculator is based on published medical research.
                 </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                    <span style={{ fontFamily: serif, fontSize: 14, fontWeight: 800, color: '#065f46', lineHeight: 1 }}>1</span>
-                    <p style={{ fontFamily: mono, fontSize: 11, color: '#065f46', lineHeight: 1.55, margin: 0 }}>
-                      <a href="https://pubmed.ncbi.nlm.nih.gov/9773847/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 2 }}>
-                        Luo, Albertsson-Wikland &amp; Karlberg 1998
-                      </a>{' '}
-                      — Pediatric Research. Standard genetic height band calculation (mid-parental ±2&quot;).
+                <p style={{ fontFamily: mono, fontSize: 10, color: '#059669', lineHeight: 1.55, marginBottom: 14 }}>
+                  Every number above comes from studies published in medical journals and reviewed by independent scientists before publication. You can click each one to read the original paper on PubMed (the U.S. National Library of Medicine).
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{ background: 'rgba(255,255,255,0.7)', borderRadius: 8, padding: '10px 12px' }}>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/9773847/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: mono, fontSize: 11, fontWeight: 700, color: '#065f46', textDecoration: 'underline', textUnderlineOffset: 2 }}>
+                      Luo, Albertsson-Wikland &amp; Karlberg, 1998
+                    </a>
+                    <p style={{ fontFamily: mono, fontSize: 10, color: '#065f46', lineHeight: 1.5, margin: '4px 0 0' }}>
+                      Published in <em>Pediatric Research</em>. This is the standard formula used by pediatric endocrinologists worldwide to predict a child&apos;s genetic height range from the parents&apos; heights. The &quot;genetic range&quot; above comes directly from this method.
                     </p>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                    <span style={{ fontFamily: serif, fontSize: 14, fontWeight: 800, color: '#065f46', lineHeight: 1 }}>2</span>
-                    <p style={{ fontFamily: mono, fontSize: 11, color: '#065f46', lineHeight: 1.55, margin: 0 }}>
-                      <a href="https://pubmed.ncbi.nlm.nih.gov/39201851/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 2 }}>
-                        Zeevi et al. 2024
-                      </a>{' '}
-                      — Children (MDPI). Maximal expression (+3–4 SD above midpoint) documented in healthy families with optimized environment.
+                  <div style={{ background: 'rgba(255,255,255,0.7)', borderRadius: 8, padding: '10px 12px' }}>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/39201851/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: mono, fontSize: 11, fontWeight: 700, color: '#065f46', textDecoration: 'underline', textUnderlineOffset: 2 }}>
+                      Zeevi et al., 2024
+                    </a>
+                    <p style={{ fontFamily: mono, fontSize: 10, color: '#065f46', lineHeight: 1.5, margin: '4px 0 0' }}>
+                      Published in <em>Children</em> (MDPI). Studied healthy families and documented that children can reach 3–4 standard deviations above their predicted midpoint when sleep, nutrition, and physical activity are optimized during the growth window. The &quot;bioKids zone&quot; above is based on this finding.
                     </p>
                   </div>
                 </div>
-                <p style={{ fontFamily: mono, fontSize: 9, color: '#059669', marginTop: 10, lineHeight: 1.5, fontStyle: 'italic' }}>
-                  * The earlier you start optimizing sleep, nutrition, and movement, the greater the window for growth. Growth plates close after puberty — every year counts.
+                <p style={{ fontFamily: mono, fontSize: 9, color: '#059669', marginTop: 12, lineHeight: 1.5, fontStyle: 'italic' }}>
+                  Growth plates close after puberty. The earlier you optimize sleep, nutrition, and movement, the larger the window. Every year counts.
                 </p>
               </div>
             </div>
