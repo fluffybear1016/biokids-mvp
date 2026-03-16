@@ -176,7 +176,7 @@ export default function LandingHeightPredictor() {
 
                 {/* Footer branding */}
                 <div style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative' }}>
-                  <span style={{ fontFamily: mono, fontSize: 9, color: 'rgba(255,255,255,0.3)' }}>biokids.me · free during beta</span>
+                  <span style={{ fontFamily: mono, fontSize: 9, color: 'rgba(255,255,255,0.3)' }}>biokids.me · 100% free</span>
                   <span style={{ fontFamily: mono, fontSize: 8, color: 'rgba(255,255,255,0.25)' }}>based on published medical research</span>
                 </div>
               </div>
@@ -230,11 +230,8 @@ export default function LandingHeightPredictor() {
                     fontFamily: mono,
                   }}
                 >
-                  Start Free Trial
+                  Get Started — Free
                 </button>
-                <p style={{ fontFamily: mono, fontSize: 11, color: '#a8a29e', marginTop: 8 }}>
-                  7 days free · then $30/mo · cancel anytime
-                </p>
               </div>
 
               {/* Science credibility — plain language, unmistakably real */}

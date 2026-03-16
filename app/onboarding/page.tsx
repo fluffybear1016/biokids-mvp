@@ -58,7 +58,7 @@ function OnboardingContent() {
   const [newsletterOptIn, setNewsletterOptIn] = useState(true);
 
   // Total steps: 1=Account, 2=ChildInfo, 3=Habits, 4=Goals, 5=Height (if needed)
-  // (Stripe step removed — app is free during beta)
+  // App is 100% free — just sign up
   const totalSteps = hasHeightData ? 4 : 5;
 
   // Check for existing height data from landing page
@@ -184,7 +184,7 @@ function OnboardingContent() {
         analytics.onboardingStep(1, 'Account Created');
         if (newsletterOptIn) analytics.newsletterSubscribe('onboarding');
 
-        setStep(2); // → Child Info (Stripe removed — free during beta)
+        setStep(2); // → Child Info
       }
     } catch (err) {
       console.error('Signup error:', err);
