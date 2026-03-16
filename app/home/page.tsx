@@ -1002,7 +1002,7 @@ export default function Dashboard() {
               { num:"1", title:"A2 milk every morning + afternoon", sub:"A glass with honey, a yogurt bowl, or a smoothie — dairy serving #1. One more when they get home from school — #2. Minimum is 2 glasses per day.", anchor:"d1" },
               { num:"2", title:"Lemon-flavored cod liver oil", sub:"½ to full spoon direct or hidden in smoothie. Three growth levers in one. Don't tell them what it is. Do NOT consume on liver days.", anchor:"clo" },
               { num:"3", title:"Liver meatballs 2–3× per week", sub:"Mix 2 tbsp beef or chicken liver into ground beef. They won't taste it. The single most nutrient-dense food.", anchor:"lunch" },
-              { num:"4", title:"The Sprint Stack", sub:"Light snack (peanut butter or liver meatball, egg — for niacin + choline) → all-out sprints (they already do this at practice + with friends) → stretch → cold milk with honey right after. That sequence is the most powerful combination in the protocol.", anchor:"spr" },
+              { num:"4", title:"The Sprint Stack", sub:"Light snack (peanut butter + egg for niacin + choline, or just a liver meatball — it has both) → all-out sprints (they already do this at practice + with friends) → stretch → cold milk with honey right after. That sequence is the most powerful combination in the protocol.", anchor:"spr" },
               { num:"5", title:"10+ hours in complete darkness", sub:"Blackout curtains, tape every LED. This is when 60–80% of growth hormone is released. Non-negotiable.", anchor:"bed" },
             ].map((item, i) => (
               <div
@@ -1029,6 +1029,30 @@ export default function Dashboard() {
                 </div>
               </div>
             ))}
+
+            {/* Joy — unnumbered, lighter feel, the soul of the protocol */}
+            <div
+              onClick={() => {
+                const el = document.getElementById('item-joy');
+                if (el) { el.scrollIntoView({ behavior:'smooth', block:'center' }); setOpenId('joy'); }
+              }}
+              style={{
+                display:"flex", gap:12, padding:"14px 0",
+                borderTop:"1px solid #f0eeec",
+                cursor:"pointer",
+              }}
+            >
+              <div style={{
+                width:28, height:28, borderRadius:14, flexShrink:0,
+                background:"linear-gradient(135deg, #fbbf24, #f59e0b)", display:"flex", alignItems:"center", justifyContent:"center",
+              }}>
+                <span style={{ fontSize:14 }}>&#9728;</span>
+              </div>
+              <div>
+                <div style={{ fontSize:14, fontWeight:700, color:"#1c1917", lineHeight:1.3 }}>Sunlight, laughter, outside, every day</div>
+                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#57534e", lineHeight:1.5, marginTop:3 }}>10 minutes of morning sun sets tonight's sleep clock. Laughter alone raised growth hormone 87% in one study. Let them play, roughhouse, be silly. Joy is not a bonus — it's a growth lever. Make it fun for everyone.</div>
+              </div>
+            </div>
 
             <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#065f46", marginTop:14, fontStyle:"italic", lineHeight:1.6 }}>
               Full protocol below — but these five are your foundation.
