@@ -47,26 +47,27 @@ type NotificationSlot = {
 
 const SLOTS: NotificationSlot[] = [
   // ── 7 AM ET ── Morning
+  // Title = the ingredient. Body = warm, no pressure.
   {
     name: 'morning',
     utcHour: 11,
     messages: [
       {
-        title: "Good morning",
-        body: "Claire de Lune on. Sunlight. Sheep yogurt with pumpkin seeds. That's the morning.",
+        title: "Claire de Lune + sunlight",
+        body: "Put on something slow — Debussy, Bach, anything calm. Then 10 min outside. Even the porch counts. You're setting tonight's sleep clock right now.",
         url: "/home#item-music-am",
         tag: "biokids-morning",
       },
       {
-        title: "Good morning",
-        body: "Put on some Bach or Debussy. 10 minutes outside, then the Growth Bowl — sheep yogurt, berries, honey.",
-        url: "/home#item-sun",
+        title: "Sheep yogurt + pumpkin seeds",
+        body: "The Growth Bowl. If you can't find sheep yogurt, any A2 yogurt or whole milk works — the key is A2 + toppings. Seeds, berries, honey. Let them build it.",
+        url: "/home#item-d1",
         tag: "biokids-morning",
       },
       {
-        title: "Good morning",
-        body: "Classical music on, stretch in the sun. Sheep yogurt bowl with hemp hearts. Sunny side up eggs.",
-        url: "/home#item-d1",
+        title: "Sunny side up eggs + cod liver oil",
+        body: "2–3 eggs, any way they'll eat them. Half a spoon of CLO hidden in the smoothie — they won't taste it. Skip CLO on liver days.",
+        url: "/home#item-bkf",
         tag: "biokids-morning",
       },
     ],
@@ -86,20 +87,20 @@ const SLOTS: NotificationSlot[] = [
     utcHour: 16,
     messages: [
       {
-        title: "Lunch",
-        body: "Beef liver meatballs with lemon. The most nutrient-dense meal on earth.",
+        title: "Beef liver meatballs + lemon",
+        body: "Mix 2 tbsp liver into ground beef — they'll never know. Squeeze lemon on top for iron absorption. Load the plate with vegetables — any kind, lots of variety.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
       {
-        title: "Lunch",
-        body: "Sauerkraut alongside today's protein. Even two spoonfuls produce GABA naturally.",
+        title: "Sauerkraut — even two spoonfuls",
+        body: "A small side of sauerkraut alongside today's protein. It produces GABA naturally. No need to force it — even a taste counts. Pile on the cooked veggies.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
       {
-        title: "Lunch",
-        body: "Lentils with lemon, broccoli, pumpkin seeds on top. Every topping earns its place.",
+        title: "Lentils + broccoli + pumpkin seeds",
+        body: "Lentils in soup or as a side, lemon on top. Broccoli steamed or roasted. Pumpkin seeds sprinkled on anything. Add spinach, carrots, whatever's in the fridge.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
@@ -107,39 +108,40 @@ const SLOTS: NotificationSlot[] = [
   },
 
   // ── 3 PM ET ── Exercise
+  // "Be outside" is the real message.
   {
     name: 'exercise',
     utcHour: 19,
     messages: [
       {
-        title: "Sprint time",
-        body: "6 × 30 seconds, all out. Hill sprints if you can. Then dead hangs and cobra stretch.",
+        title: "Sprints + dead hangs",
+        body: "6 × 30 seconds, all out — backyard, park, hill, anywhere. Then hang from anything for 20 sec. Even monkey bars count. Get them outside.",
         url: "/home#item-spr",
         tag: "biokids-exercise",
       },
       {
-        title: "Jump time",
-        body: "50–100 jumps. Rope, drop jumps, single-leg hops. Then hang and stretch.",
+        title: "50 jumps + stretching",
+        body: "Jump rope, drop jumps, just jumping around — doesn't need to be formal. Then hang and stretch. The more time outside the better today.",
         url: "/home#item-jump",
         tag: "biokids-exercise",
       },
     ],
   },
 
-  // ── 4 PM ET ── Post-exercise dairy #2
+  // ── 4 PM ET ── Post-exercise dairy
   {
     name: 'post-exercise',
     utcHour: 20,
     messages: [
       {
         title: "Cold A2 milk + raw honey",
-        body: "Right after activity. Whey converts the sprint into a growth signal. Casein carries it for hours.",
+        body: "Right after activity. Any A2 or whole milk works — the key is protein within 30 min. One spoon of honey. This turns the sprint into actual growth.",
         url: "/home#item-pm",
         tag: "biokids-dairy-2",
       },
       {
         title: "Post-sprint milk",
-        body: "Cold A2 milk, one spoon of raw honey. Without this, the GH spike is orphaned.",
+        body: "Cold milk, one spoon of honey. Without dairy after sprints, the growth signal is wasted. A2 is ideal — any whole milk is good.",
         url: "/home#item-pm",
         tag: "biokids-dairy-2",
       },
@@ -153,19 +155,19 @@ const SLOTS: NotificationSlot[] = [
     messages: [
       {
         title: "Bone broth first",
-        body: "A mug of bone broth to start dinner. Glycine lowers core temp for tonight's deep sleep.",
+        body: "A warm mug to start dinner. Glycine lowers core temp for deep sleep tonight. Store-bought is fine — homemade when you can.",
         url: "/home#item-din",
         tag: "biokids-dinner",
       },
       {
-        title: "Dinner by 6",
-        body: "Bone broth starter, rotated protein, lentils with lemon, cooked spinach + broccoli. No salads — cook all veggies at dinner.",
+        title: "Cooked spinach + broccoli tonight",
+        body: "Load the plate with cooked vegetables — spinach, carrots, Brussels sprouts, whatever you have. No raw salads at dinner — cook everything for better sleep.",
         url: "/home#item-din",
         tag: "biokids-dinner",
       },
       {
-        title: "Gelatin jello tonight?",
-        body: "Bovine gelatin + tart cherry juice + monk fruit. Set it now — they'll think it's regular jello.",
+        title: "Bovine gelatin jello",
+        body: "Gelatin + tart cherry juice + monk fruit. Set it now — they'll think it's regular jello. Even store-bought gelatin works. This is dessert that builds growth plates.",
         url: "/home#item-gly",
         tag: "biokids-dinner",
       },
@@ -178,20 +180,20 @@ const SLOTS: NotificationSlot[] = [
     utcHour: 23,
     messages: [
       {
-        title: "Claire de Lune on",
-        body: "Classical music, Epsom salt bath, 20 minutes. Then magnesium lotion on their feet. The core temp drop triggers deep sleep.",
+        title: "Chopin Nocturnes on",
+        body: "Soft classical music. Epsom salt bath, 20 min. Then magnesium lotion on their feet while you read together. The whole sequence becomes a sleep trigger.",
         url: "/home#item-music-pm",
         tag: "biokids-winddown",
       },
       {
         title: "Tart cherry + A2 milk",
-        body: "The Sleep Drink. 4 oz A2 milk, 1 oz tart cherry, unsweetened. Then read a book in bed together.",
+        body: "The Sleep Drink. 4 oz milk, 1 oz tart cherry, unsweetened. Then a book in bed together — 15 min. Any A2 or whole milk works.",
         url: "/home#item-drink",
         tag: "biokids-winddown",
       },
       {
-        title: "Wind-down",
-        body: "Chopin on softly. Epsom bath. Magnesium on feet. Sleep Drink. Read a book in bed. They'll be drowsy soon.",
+        title: "Epsom bath + book in bed",
+        body: "Warm bath. Magnesium on feet. Sleep Drink. Read together until they're drowsy. You're doing great — even one of these steps tonight matters.",
         url: "/home#item-rtn",
         tag: "biokids-winddown",
       },
@@ -204,14 +206,14 @@ const SLOTS: NotificationSlot[] = [
     utcHour: 0,
     messages: [
       {
-        title: "Lights out",
-        body: "65°F. Blackout curtains. Every LED taped. Nose breathing. This is where it all compounds.",
+        title: "Dark room, cool air",
+        body: "65°F if you can. Blackout curtains. Tape any LEDs. Nose breathing. Everything today builds to this moment. You showed up — that's what matters.",
         url: "/home#item-dark",
         tag: "biokids-bedtime",
       },
       {
-        title: "Lights out",
-        body: "Dark room, cool air. The casein is slow-releasing. The glycine is lowering core temp. Growth is happening.",
+        title: "Growth is happening",
+        body: "The casein is slow-releasing. The glycine is lowering core temp. The melatonin is firing. You did the hard part. Sleep does the rest.",
         url: "/home#item-bed",
         tag: "biokids-bedtime",
       },
