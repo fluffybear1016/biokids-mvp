@@ -308,14 +308,14 @@ function getCurrentSlot(): NotificationSlot | null {
   return matching[0];
 }
 
-// Verify this is a legitimate cron request
+// Verify this is a legitimate cron request (fail-closed: deny if no secret configured)
 function verifyCron(request: Request): boolean {
   const authHeader = request.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
-  if (cronSecret) {
-    return authHeader === `Bearer ${cronSecret}`;
+  if (!cronSecret) {
+    return false; // Deny access if CRON_SECRET is not configured
   }
-  return true;
+  return authHeader === `Bearer ${cronSecret}`;
 }
 
 export async function GET(request: Request) {

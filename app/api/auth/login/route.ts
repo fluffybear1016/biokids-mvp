@@ -37,12 +37,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Login failed' }, { status: 401 });
     }
 
-    // Ensure user profile exists
+    // Ensure user profile exists with trial subscription_status
+    // (app is free during beta — every user gets trial access)
     await supabase
       .from('profiles')
       .upsert({
         id: authData.user.id,
         email: authData.user.email,
+        subscription_status: 'trial',
       }, { onConflict: 'id' });
 
     return NextResponse.json({

@@ -1,4 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 function getSupabaseAdmin() {
@@ -15,12 +17,27 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Server not configured' }, { status: 503 });
     }
 
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
-
-    if (!userId) {
-      return NextResponse.json({ error: 'Missing userId' }, { status: 400 });
+    // Authenticate the request — only allow users to fetch their own data
+    const cookieStore = await cookies();
+    const authClient = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return cookieStore.getAll();
+          },
+          setAll() {},
+        },
+      }
+    );
+    const { data: { user }, error: authError } = await authClient.auth.getUser();
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    // Only allow fetching the authenticated user's own data
+    const userId = user.id;
 
     const [{ data: profile }, { data: children }] = await Promise.all([
       supabase

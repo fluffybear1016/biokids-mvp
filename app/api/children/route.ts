@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     const { data, error } = await supabase
       .from('children')
       .select('*')
-      .eq('account_id', accountId);
+      .eq('user_id', accountId);
 
     if (error) {
       console.error('Fetch children error:', error);
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     const { data, error } = await supabase
       .from('children')
       .insert({
-        account_id: accountId,
+        user_id: accountId,
         name,
         birth_date: birthDate,
       })

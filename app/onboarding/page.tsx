@@ -266,8 +266,23 @@ function OnboardingContent() {
     return ((fatherCm - 13) + motherCm) / 2;
   })() : null;
 
+  // Ensure the profile has trial subscription_status so the middleware allows access
+  const ensureProfileAccess = async () => {
+    const email = userEmail || localStorage.getItem('biokids_auth_email') || '';
+    const uid = userId || localStorage.getItem('biokids_auth_user_id') || '';
+    if (uid && email) {
+      try {
+        await fetch('/api/auth/create-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: uid, email }),
+        });
+      } catch {}
+    }
+  };
+
   // Step 5: Height Potential — save and go to home
-  const handleHeightSubmit = () => {
+  const handleHeightSubmit = async () => {
     if (geneticTargetCm) {
       localStorage.setItem('childGender', childGender);
       localStorage.setItem('motherHeight', `${motherHeightFt}'${motherHeightIn}"`);
@@ -278,6 +293,7 @@ function OnboardingContent() {
     analytics.onboardingStep(5, 'Height Potential');
     analytics.onboardingComplete();
     if (childGender) analytics.setChildInfo({ gender: childGender });
+    await ensureProfileAccess();
     router.push('/home');
   };
 
@@ -290,8 +306,9 @@ function OnboardingContent() {
   }, [step, canCalculateHeight, geneticTargetCm]);
 
   // Complete onboarding (when height data already exists from landing page)
-  const completeOnboarding = () => {
+  const completeOnboarding = async () => {
     localStorage.setItem('biokids_onboarding_complete', 'true');
+    await ensureProfileAccess();
     router.push('/home');
   };
 

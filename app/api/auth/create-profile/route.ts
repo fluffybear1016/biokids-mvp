@@ -27,11 +27,14 @@ export async function POST(request: Request) {
     }
 
     // Create profile row (bypasses RLS with service role key)
+    // Set subscription_status to 'trial' so the middleware allows access
+    // (app is free during beta — every new signup gets trial status)
     const { error } = await supabase
       .from('profiles')
       .upsert({
         id: userId,
         email,
+        subscription_status: 'trial',
       }, { onConflict: 'id' });
 
     if (error) {

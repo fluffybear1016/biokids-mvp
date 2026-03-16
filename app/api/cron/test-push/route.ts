@@ -5,10 +5,10 @@ import { sendPushToAll } from '@/lib/push';
 // Usage: GET /api/cron/test-push
 // This verifies the full pipeline: VAPID keys → Supabase → web-push → device
 export async function GET(request: Request) {
-  // Only allow in development or with CRON_SECRET
+  // Only allow with valid CRON_SECRET (fail-closed: deny if not configured)
   const authHeader = request.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
