@@ -5,27 +5,28 @@ import { sendPushToAll, PushPayload } from '@/lib/push';
 // BIOKIDS NOTIFICATION SYSTEM — Time-Based Architecture
 // ═══════════════════════════════════════════════════════════
 //
-// GitHub Actions fires every hour from 11 UTC to 3 UTC+1
-// (~7 AM to ~11 PM Eastern). Each slot is assigned a specific
-// UTC hour window. The system picks the right notification
-// for the current time — no more rotation bugs.
+// GitHub Actions fires at specific UTC hours. Each slot is
+// assigned a specific UTC hour. The system picks the right
+// notification for the current time.
 //
 // Eastern Time = UTC - 4 (EDT) or UTC - 5 (EST)
 // We target EDT (summer) as the baseline.
 //
 // Schedule (all times ET / UTC):
-//   7:00 AM /  11 UTC — Morning protocol
-//   8:00 AM /  12 UTC — Cod liver oil
-//   9:00 AM /  13 UTC — Dairy serving 1
-//  12:00 PM /  16 UTC — Lunch
-//   1:00 PM /  17 UTC — Dairy serving 2
-//   3:00 PM /  19 UTC — Exercise
-//   5:00 PM /  21 UTC — Dairy serving 3
-//   6:00 PM /  22 UTC — Dinner
-//   8:00 PM /   0 UTC — Bedtime
+//   7:00 AM /  11 UTC — Morning (sunlight + Growth Bowl + eggs + CLO)
+//  12:00 PM /  16 UTC — Lunch (Growth Meal)
+//   3:00 PM /  19 UTC — Exercise (sprints or jumps + stretching)
+//   4:00 PM /  20 UTC — Post-exercise dairy #2
+//   5:00 PM /  21 UTC — Dinner (start now, finish by 6)
+//   7:00 PM /  23 UTC — Wind-down (bath, magnesium, sleep drink)
+//   8:00 PM /   0 UTC — Bedtime (dark room, lights out)
 //
 // Weekly (Sunday only):
-//  10:00 AM /  14 UTC — Weekly article
+//  10:00 AM /  14 UTC — Weekly pro tip
+//
+// TONE: Warm, encouraging, never pressuring. These should
+// feel like a friend gently reminding you — parents should
+// look forward to opening the app, never feel anxious.
 //
 // ═══════════════════════════════════════════════════════════
 
@@ -38,62 +39,30 @@ type NotificationSlot = {
 };
 
 const SLOTS: NotificationSlot[] = [
-  // ── 7 AM ET ── Morning
+  // ── 7 AM ET ── Morning (sunlight + Growth Bowl + eggs + CLO — all one meal)
+  // The Growth Bowl (sheep yogurt + toppings) IS dairy serving #1 AND breakfast.
+  // CLO goes in the smoothie version or on its own spoon. One notification covers it all.
   {
     name: 'morning',
     utcHour: 11,
     messages: [
       {
-        title: "Morning",
-        body: "Sun. Stretch. Breakfast. The first hour matters most.",
+        title: "Good morning",
+        body: "A few minutes of sunlight, then the Growth Bowl. You've got this.",
         url: "/home#item-sun",
         tag: "biokids-morning",
       },
       {
-        title: "Morning",
-        body: "10 min sunlight, then breakfast. Simple start.",
-        url: "/home#item-bkf",
+        title: "Good morning",
+        body: "Sunlight, stretch, Growth Bowl with eggs. A beautiful start to the day.",
+        url: "/home#item-d1",
         tag: "biokids-morning",
       },
-    ],
-  },
-
-  // ── 8 AM ET ── Cod liver oil
-  {
-    name: 'cod-liver-oil',
-    utcHour: 12,
-    messages: [
       {
-        title: "Cod Liver Oil",
-        body: "One spoon with breakfast. Vitamin A, D, and omega-3.",
-        url: "/home#item-clo",
-        tag: "biokids-clo",
-      },
-      {
-        title: "Pro Tip",
-        body: "Cod liver oil absorbs best with fat. Pair it with eggs or avocado.",
-        url: "/home#item-clo",
-        tag: "biokids-clo",
-      },
-    ],
-  },
-
-  // ── 9 AM ET ── Dairy serving 1
-  {
-    name: 'dairy-1',
-    utcHour: 13,
-    messages: [
-      {
-        title: "Dairy Serving #1",
-        body: "A2 milk, yogurt bowl, or smoothie. Serving 1 of 3.",
-        url: "/home#item-d1",
-        tag: "biokids-dairy-1",
-      },
-      {
-        title: "Pro Tip",
-        body: "Any A2 milk works — cow A2, goat, sheep, buffalo. Just avoid A1 casein.",
-        url: "/home#item-d1",
-        tag: "biokids-dairy-1",
+        title: "Good morning",
+        body: "Step outside together for a few minutes, then breakfast. That's the whole morning.",
+        url: "/home#item-sun",
+        tag: "biokids-morning",
       },
     ],
   },
@@ -112,115 +81,128 @@ const SLOTS: NotificationSlot[] = [
     utcHour: 16,
     messages: [
       {
-        title: "Growth Meal",
-        body: "Protein, iron, zinc. Pair iron with vitamin C for 2–3× absorption.",
+        title: "Lunch time",
+        body: "Protein + iron + a squeeze of lemon. Simple and powerful.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
       {
-        title: "Pro Tip",
-        body: "Squeeze lemon on meat or lentils. Vitamin C doubles iron absorption.",
+        title: "Lunch time",
+        body: "Liver meatballs, lentils, or salmon — whatever's easy today. Vitamin C alongside.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
     ],
   },
 
-  // ── 1 PM ET ── Dairy serving 2
-  {
-    name: 'dairy-2',
-    utcHour: 17,
-    messages: [
-      {
-        title: "Dairy Serving #2",
-        body: "A2 milk + raw honey after activity. Serving 2 of 3.",
-        url: "/home#item-pm",
-        tag: "biokids-dairy-2",
-      },
-      {
-        title: "Pro Tip",
-        body: "Post-exercise milk converts the GH spike into actual growth signal. Don't skip it.",
-        url: "/home#item-pm",
-        tag: "biokids-dairy-2",
-      },
-    ],
-  },
-
-  // ── 3 PM ET ── Exercise
+  // ── 3 PM ET ── Exercise (sprints or jumps + stretching)
   {
     name: 'exercise',
     utcHour: 19,
     messages: [
       {
-        title: "Exercise",
-        body: "Sprints or jumps. 6 rounds, 30 seconds each. Then stretch.",
+        title: "Time to move",
+        body: "Sprints, jumps, or just chasing each other around. Then stretch together.",
         url: "/home#item-spr",
         tag: "biokids-exercise",
       },
       {
-        title: "Pro Tip",
-        body: "30-second sprints trigger the largest natural GH spike. Nothing else comes close.",
+        title: "Time to move",
+        body: "Tag, races, hill sprints — whatever gets them going all out. Stretch after.",
         url: "/home#item-spr",
         tag: "biokids-exercise",
       },
     ],
   },
 
-  // ── 5 PM ET ── Dairy serving 3
+  // ── 4 PM ET ── Post-exercise dairy #2
+  // The protocol says: within 30 min of exercise, cold A2 milk + raw honey.
+  // This converts the GH spike into actual growth signal (IGF-1).
   {
-    name: 'dairy-3',
+    name: 'post-exercise',
+    utcHour: 20,
+    messages: [
+      {
+        title: "Dairy Serving #2",
+        body: "Cold A2 milk with a little honey after activity. This is the conversion window.",
+        url: "/home#item-pm",
+        tag: "biokids-dairy-2",
+      },
+      {
+        title: "Dairy Serving #2",
+        body: "Post-activity milk turns today's exercise into tonight's growth signal.",
+        url: "/home#item-pm",
+        tag: "biokids-dairy-2",
+      },
+    ],
+  },
+
+  // ── 5 PM ET ── Dinner (start now, aim to finish by 6)
+  // Protocol says "Dinner (by 6 PM)" — so the reminder needs to come
+  // early enough for parents to actually prepare and serve.
+  {
+    name: 'dinner',
     utcHour: 21,
     messages: [
       {
-        title: "Dairy Serving #3",
-        body: "Last serving. A2 milk, kefir, or cheese. All 3 done.",
-        url: "/home#item-drink",
-        tag: "biokids-dairy-3",
+        title: "Dinner",
+        body: "Good time to start — bone broth, protein, veggies. Aim to wrap up by 6.",
+        url: "/home#item-din",
+        tag: "biokids-dinner",
       },
-      {
-        title: "Pro Tip",
-        body: "Spacing dairy across the day beats one big serving. Absorption peaks then resets.",
-        url: "/home#item-drink",
-        tag: "biokids-dairy-3",
-      },
-    ],
-  },
-
-  // ── 6 PM ET ── Dinner
-  {
-    name: 'dinner',
-    utcHour: 22,
-    messages: [
       {
         title: "Dinner",
-        body: "Eat early. Bone broth, protein, vegetables. Finish 2–3 hrs before bed.",
-        url: "/home#item-din",
-        tag: "biokids-dinner",
-      },
-      {
-        title: "Pro Tip",
-        body: "Glycine from bone broth lowers core temp for deeper sleep. Start dinner with a cup.",
+        body: "Start with a mug of bone broth, then whatever protein you have. Finish by 6 if you can.",
         url: "/home#item-din",
         tag: "biokids-dinner",
       },
     ],
   },
 
-  // ── 8 PM ET ── Bedtime
+  // ── 7 PM ET ── Wind-down (bath, magnesium, sleep drink, screens off)
+  // This is the gap that was completely missing. The Sleep Stack has a
+  // whole evening sequence: screens off → bath with Epsom salts → magnesium
+  // lotion → Sleep Drink (dairy #3 = A2 milk + tart cherry) → lights out.
+  {
+    name: 'wind-down',
+    utcHour: 23,
+    messages: [
+      {
+        title: "Wind-down time",
+        body: "Screens off, warm bath, magnesium lotion, then the Sleep Drink. Cozy evening ahead.",
+        url: "/home#item-bath",
+        tag: "biokids-winddown",
+      },
+      {
+        title: "Wind-down time",
+        body: "Bath with Epsom salts, magnesium on feet, Sleep Drink. The evening routine does so much.",
+        url: "/home#item-bath",
+        tag: "biokids-winddown",
+      },
+      {
+        title: "Wind-down time",
+        body: "Time to slow down together. Bath, lotion, Sleep Drink, then a book. They'll be drowsy soon.",
+        url: "/home#item-rtn",
+        tag: "biokids-winddown",
+      },
+    ],
+  },
+
+  // ── 8 PM ET ── Bedtime (dark room, lights out)
   {
     name: 'bedtime',
     utcHour: 0,
     messages: [
       {
-        title: "Sleep",
-        body: "Bath. Magnesium. Sleep Drink. Dark room. This is where growth happens.",
-        url: "/home#item-bath",
+        title: "Bedtime",
+        body: "Dark room, cool air, nose breathing. Tonight's growth is on its way.",
+        url: "/home#item-bed",
         tag: "biokids-bedtime",
       },
       {
-        title: "Pro Tip",
-        body: "60–80% of daily growth hormone releases in the first 90 minutes of sleep. Protect it.",
-        url: "/home#item-bed",
+        title: "Bedtime",
+        body: "Lights out, every LED covered. Everything you did today builds to this moment.",
+        url: "/home#item-dark",
         tag: "biokids-bedtime",
       },
     ],
@@ -229,53 +211,54 @@ const SLOTS: NotificationSlot[] = [
 
 // ── Weekly Pro Tips ──
 // Rotates by week number — one high-leverage insight each Sunday
+// Tone: warm, encouraging, share the "why" without pressure
 function getWeeklyMessages(): PushPayload[] {
   const tips = [
     {
-      title: "Pro Tip · Sunday",
-      body: "One sugar spike suppresses GH for up to 2 hours. Raw honey and fruit are fine. Refined sugar isn't.",
+      title: "Sunday Tip",
+      body: "Raw honey and fruit are perfectly fine. It's the refined sugar in packaged snacks that quietly stalls growth for hours.",
       url: "/home#item-nse",
       tag: "biokids-weekly",
     },
     {
-      title: "Pro Tip · Sunday",
-      body: "Morning sunlight sets the circadian clock. 10 min within an hour of waking. No sunglasses.",
+      title: "Sunday Tip",
+      body: "Even 5 minutes of morning sunlight programs tonight's sleep quality. Overcast days still count.",
       url: "/home#item-sun",
       tag: "biokids-weekly",
     },
     {
-      title: "Pro Tip · Sunday",
-      body: "Consistent wake time matters more than total hours. Same time every day, even weekends.",
+      title: "Sunday Tip",
+      body: "A consistent wake time — even on weekends — does more for growth than almost anything else. And it's free.",
       url: "/home#item-wake",
       tag: "biokids-weekly",
     },
     {
-      title: "Pro Tip · Sunday",
-      body: "Dead hangs decompress the spine. Just 30–60 seconds reverses daily compression from gravity.",
+      title: "Sunday Tip",
+      body: "Dead hangs are wonderful. Just 30 seconds reverses a full day of spinal compression from gravity.",
       url: "/home#item-stretch",
       tag: "biokids-weekly",
     },
     {
-      title: "Pro Tip · Sunday",
-      body: "Nose breathing during sleep raises oxygen absorption and supports deeper SWS. Mouth tape helps.",
+      title: "Sunday Tip",
+      body: "Watch your child sleep tonight. If their mouth is open, it might be worth a chat with your pediatrician.",
       url: "/home#item-airway",
       tag: "biokids-weekly",
     },
     {
-      title: "Pro Tip · Sunday",
-      body: "Magnesium is a gateway mineral. Most kids are deficient. Lotion on feet before bed absorbs well.",
+      title: "Sunday Tip",
+      body: "Magnesium lotion on their feet before bed — it absorbs well and helps them fall into deeper sleep.",
       url: "/home#item-mag",
       tag: "biokids-weekly",
     },
     {
-      title: "Pro Tip · Sunday",
-      body: "The sleep drink — A2 milk, tart cherry, honey — delivers tryptophan, melatonin, and casein overnight.",
+      title: "Sunday Tip",
+      body: "The Sleep Drink is the quiet star of the protocol. A2 milk + tart cherry — casein feeds growth all night long.",
       url: "/home#item-drink",
       tag: "biokids-weekly",
     },
     {
-      title: "Pro Tip · Sunday",
-      body: "Jumping builds bone density at the growth plate. 10 min of jump rope outperforms most sports.",
+      title: "Sunday Tip",
+      body: "10 minutes of jump rope builds more bone density at the growth plate than most sports. A great rainy-day option.",
       url: "/home#item-jump",
       tag: "biokids-weekly",
     },
