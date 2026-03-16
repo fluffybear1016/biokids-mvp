@@ -76,7 +76,7 @@ MORNING (6:30-8:30 AM):
 MIDDAY (Lunch + Sprint):
 - Beef liver 1x/week (mix in burgers/meatballs) — highest choline + retinol + B12 + zinc
 - Eggs + peanuts — more choline + niacin (suppresses free fatty acids that brake GH)
-- Vitamin C with iron-rich foods (never pair iron meals with dairy)
+- High-vitamin-C vegetables (bell pepper, broccoli) with iron-rich foods — never citrus/fruit with protein, never dairy with iron
 - 1 hr after lunch: 4-6x 30-sec all-out sprints — ~530% GH spike via lactate pathway [Stokes, Sports Med 2002]
 - Immediately after: 10 min stretching + dead hangs — spinal decompression
 - Within 30 min: 8-12 oz A2 milk or sheep yogurt — converts GH → IGF-1 via STAT5 pathway
@@ -220,7 +220,7 @@ KEY NUTRIENTS FOR GROWTH (with optimal ranges):
 - Zinc: 70-120 mcg/dL — IGF-1 receptor function. Body cannot store zinc — daily intake non-negotiable. Lactose in milk aids zinc absorption. Phytates in grains/legumes reduce it. [Prasad, Nutrition 1998]
 - Vitamin D: 40-60 ng/mL — GH receptor sensitivity + bone mineralization [Holick, NEJM 2007]
 - Vitamin A (Retinol): 30-65 mcg/dL — required for GH receptor gene expression. Cod liver oil or beef liver. [Balmer, J Lipid Res 2002]
-- Iron (Ferritin): 50-100 ng/mL — growth fuel. Always pair iron meals with vitamin C, never with dairy. [Baker, Pediatrics 2010]
+- Iron (Ferritin): 50-100 ng/mL — growth fuel. Always pair iron meals with high-C vegetables (bell pepper, broccoli) — never citrus/fruit with protein, never dairy with iron. [Baker, Pediatrics 2010]
 - Vitamin K2: Directs calcium to bones (not arteries). Found in natto, egg yolks, grass-fed butter.
 - Magnesium: Cofactor in 300+ enzyme reactions including GH signaling. Pumpkin seeds, dark leafy greens.
 
@@ -586,7 +586,7 @@ bioKids organizes the daily protocol into 5 stacks. Know these thoroughly:
 Key items: Same wake time, morning sunlight, sheep yogurt or A2 milk, pumpkin seeds + berries, 2-3 eggs, cod liver oil, zero sugar until lunch, filtered water only
 
 2. SPRINT STACK — ~530% GH spike → converted to IGF-1
-Key items: Beef liver at lunch, eggs + peanuts, vitamin C with iron, 4-6x 30-sec sprints 1hr after lunch, stretching + dead hangs, milk within 30 min, no weight lifting until plates close, no intense exercise after 6 PM
+Key items: Beef liver at lunch, eggs + peanuts, high-C vegetables (bell pepper, broccoli) with iron — never citrus with protein, 4-6x 30-sec sprints 1hr after lunch, stretching + dead hangs, milk within 30 min, no weight lifting until plates close, no intense exercise after 6 PM
 
 3. SLEEP STACK — 60-80% of daily GH produced during overnight fast
 Key items: Glycine-rich dinner by 6 PM, no food 2-3 hrs before bed, no screens, warm Epsom bath 60 min before bed, magnesium lotion after bath, Sleep Drink 30 min before bed (1oz tart cherry + 4oz A2 milk), zero caffeine + zero chocolate ever, 65-68°F complete darkness, in bed 8-8:30 PM

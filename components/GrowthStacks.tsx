@@ -41,7 +41,7 @@ const stacks = [
       { time: 'Never', action: 'No weight lifting until plates close', why: 'Axial compression on open growth plates — sprints, jumps, climbing only' },
       { time: 'Never', action: 'No intense exercise after 6 PM', why: 'Raises core temp when it needs to fall for optimal sleep onset' },
     ],
-    note: 'Without post-sprint dairy, the GH pulse is "orphaned" — present but not converted to growth. Separate dairy from iron-rich meals (beef liver) by 2+ hrs. Add vitamin C to all iron meals.',
+    note: 'Without post-sprint dairy, the GH pulse is "orphaned" — present but not converted to growth. Separate dairy from iron-rich meals (beef liver) by 2+ hrs. Add high-vitamin-C vegetables (bell pepper, broccoli) to all iron meals — never citrus or fruit with protein.',
   },
   {
     id: 'sleep',
@@ -125,7 +125,7 @@ const stacks = [
       { time: 'Daily', action: 'Sheep\'s milk yogurt + pumpkin seeds', why: 'Highest casein density + zinc + arginine for continued GH-IGF1 axis support' },
       { time: 'Daily', action: 'Bovine gelatin — max daily intake', why: 'Pure glycine pump for disc, cartilage, and connective tissue repair. Superior to collagen supplements' },
       { time: 'Daily', action: 'Zinc-rich foods + vitamin D', why: 'Maintain all 3 levels of GH axis: pituitary, liver, growth plate' },
-      { time: 'Daily', action: 'Anti-inflammatory whole foods + vitamin C with iron meals', why: 'Systemic inflammation degrades disc/joint tissue. Separate dairy from iron by 2+ hrs' },
+      { time: 'Daily', action: 'Anti-inflammatory whole foods + high-C vegetables with iron meals', why: 'Systemic inflammation degrades disc/joint tissue. Bell pepper or broccoli alongside iron — never citrus with protein. Separate dairy from iron by 2+ hrs' },
 
       // ── Posture & Decompression ──
       { time: 'Throughout day', action: 'Move every 45 min + posture checks', why: 'Prevent disc compression from sitting' },

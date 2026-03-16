@@ -35,7 +35,7 @@ export default function ShoppingListPage() {
           { item:"Lemon-flavored cod liver oil", note:"½ tsp daily. Retinol + D + omega-3 in one spoon. Hidden in the smoothie." },
           { item:"Bone broth", note:"Richest glycine source. Dinner starter. Lowers core temp for sleep + growth plate collagen." },
           { item:"Bovine gelatin (unflavored)", note:"Pure collagen. Homemade jello with tart cherry. Glycine dessert." },
-          { item:"Lentils & beans (chickpeas, black beans, kidney beans)", note:"DAILY. Iron + lysine + inositol + arginine + magnesium + fiber. Plant protein delays puberty = longer growth window. Pair with citrus." },
+          { item:"Lentils & beans (chickpeas, black beans, kidney beans)", note:"DAILY. Iron + lysine + inositol + arginine + magnesium + fiber. Plant protein delays puberty = longer growth window. Pair with red bell pepper for vitamin C." },
           { item:"Carrots", note:"Beta-carotene → retinol. Supports vitamin A pathway for bone growth and immune function." },
           { item:"Raw honey", note:"Compliance driver. Post-sprint milk + Bowl drizzle. Gentle insulin for IGF-1 conversion." },
                   ].map((r, i) => (
@@ -86,7 +86,7 @@ export default function ShoppingListPage() {
           { item:"Pistachios", note:"Highest melatonin per gram of any nut. Best evening snack." },
           { item:"Walnuts", note:"Melatonin support + omega-3s. Evening snack." },
           { item:"Sardines / mackerel (with bones)", note:"Calcium + vitamin D + omega-3. Bone density. Wild-caught only." },
-          { item:"Oranges / kiwi", note:"Vitamin C alongside iron meals. Kiwi = highest density per bite." },
+          { item:"Brussels sprouts / cauliflower", note:"Extra vitamin C vegetables for iron meals. Roast with olive oil — kids love the crunch." },
           { item:"Watermelon", note:"Citrulline → arginine. Better oral bioavailability than arginine itself." },
           { item:"Beets", note:"Dopamine signaling — directly inhibits somatostatin release." },
           { item:"Fresh ginger", note:"Increases ghrelin — natural GH secretagogue. In meals or as tea." },

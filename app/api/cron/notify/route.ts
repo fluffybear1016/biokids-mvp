@@ -92,8 +92,8 @@ const SLOTS: NotificationSlot[] = [
     utcHour: 16,
     messages: [
       {
-        title: "Beef liver meatballs + lemon",
-        body: "Mix 2 tbsp liver into ground beef — they'll never know. Squeeze lemon on top for iron absorption. Load the plate with vegetables — any kind, lots of variety.",
+        title: "Beef liver meatballs + red bell pepper",
+        body: "Mix 2 tbsp liver into ground beef — they'll never know. Red bell pepper slices alongside for iron absorption. Load the plate with vegetables — any kind, lots of variety.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
@@ -105,7 +105,7 @@ const SLOTS: NotificationSlot[] = [
       },
       {
         title: "Lentils + broccoli + pumpkin seeds",
-        body: "Lentils in soup or as a side, lemon on top. Broccoli steamed or roasted. Pumpkin seeds sprinkled on anything. Add spinach, carrots, whatever's in the fridge.",
+        body: "Lentils in soup or as a side, red bell pepper alongside. Broccoli steamed or roasted. Pumpkin seeds sprinkled on anything. Add spinach, carrots, whatever's in the fridge.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
