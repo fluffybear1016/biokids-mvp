@@ -87,47 +87,48 @@ const SLOTS: NotificationSlot[] = [
     messages: getWeeklyMessages(),
   },
 
-  // ── 12 PM ET ── Lunch
+  // ── 12 PM ET ── Lunch (rotation — these are alternatives, not steps)
+  // Ive: the title is the ingredient. The body ends with a thread.
   {
     name: 'lunch',
     utcHour: 16,
     messages: [
       {
-        title: "Beef liver meatballs + red bell pepper",
-        body: "Mix 2 tbsp liver into ground beef — they'll never know. Red bell pepper slices alongside for iron absorption. Load the plate with vegetables — any kind, lots of variety.",
+        title: "Beef liver meatballs",
+        body: "2 tbsp liver mixed into ground beef. They'll never know. Red bell pepper alongside. One bite of this has more growth fuel than a month of vitamins.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
       {
-        title: "Sauerkraut — even two spoonfuls",
-        body: "A small side of sauerkraut alongside today's protein. It produces GABA naturally. No need to force it — even a taste counts. Pile on the cooked veggies.",
+        title: "Two spoonfuls of sauerkraut",
+        body: "Alongside whatever protein you're serving. Just two spoonfuls. It produces something called GABA — tap to see what that does.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
       {
-        title: "Lentils + broccoli + pumpkin seeds",
-        body: "Lentils in soup or as a side, red bell pepper alongside. Broccoli steamed or roasted. Pumpkin seeds sprinkled on anything. Add spinach, carrots, whatever's in the fridge.",
+        title: "Lentils + pumpkin seeds",
+        body: "Lentils in soup or as a side. Pumpkin seeds sprinkled on top. Broccoli alongside. This combination was in an actual growth trial.",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
     ],
   },
 
-  // ── 3 PM ET ── Exercise
-  // "Be outside" is the real message.
+  // ── 3 PM ET ── Exercise (rotation)
+  // Ive: the action is singular. Outside is the real product.
   {
     name: 'exercise',
     utcHour: 19,
     messages: [
       {
-        title: "Sprints + dead hangs",
-        body: "6 × 30 seconds, all out — backyard, park, hill, anywhere. Then hang from anything for 20 sec. Even monkey bars count. Get them outside.",
+        title: "Six 30-second sprints",
+        body: "Backyard, park, hill — anywhere. All out, 30 seconds, six times. Then hang from something for 20 seconds. This triggers the biggest growth signal of the day.",
         url: "/home#item-spr",
         tag: "biokids-exercise",
       },
       {
-        title: "50 jumps + stretching",
-        body: "Jump rope, drop jumps, just jumping around — doesn't need to be formal. Then hang and stretch. The more time outside the better today.",
+        title: "50 jumps + a dead hang",
+        body: "Jump rope, drop jumps, just jumping. Then hang from anything — monkey bars, a door frame. Why hanging? Tap to see.",
         url: "/home#item-jump",
         tag: "biokids-exercise",
       },
@@ -135,19 +136,14 @@ const SLOTS: NotificationSlot[] = [
   },
 
   // ── 4 PM ET ── Post-exercise dairy
+  // Ive: one instruction. The science hides behind the tap.
   {
     name: 'post-exercise',
     utcHour: 20,
     messages: [
       {
-        title: "Cold A2 milk + raw honey",
-        body: "Right after activity. Any A2 or whole milk works — the key is protein within 30 min. One spoon of honey. This turns the sprint into actual growth.",
-        url: "/home#item-pm",
-        tag: "biokids-dairy-2",
-      },
-      {
-        title: "Post-sprint milk",
-        body: "Cold milk, one spoon of honey. Without dairy after sprints, the growth signal is wasted. A2 is ideal — any whole milk is good.",
+        title: "Cold A2 milk, one spoon of honey",
+        body: "Dairy serving #2. Within 30 minutes of activity. Without this step, today's sprint is wasted. There's a 30-minute window — here's why.",
         url: "/home#item-pm",
         tag: "biokids-dairy-2",
       },
@@ -155,26 +151,27 @@ const SLOTS: NotificationSlot[] = [
   },
 
   // ── 5 PM ET ── Dinner (FULL PROTOCOL — sends all 3 in order)
+  // Ive: no "Step 1/2/3" labels. The sequence is the order they arrive.
   {
     name: 'dinner',
     utcHour: 21,
     sendAll: true,
     messages: [
       {
-        title: "Step 1: Bone broth first",
-        body: "A warm mug to start dinner. Glycine lowers core temp for deep sleep tonight. Store-bought is fine — homemade when you can.",
+        title: "A warm mug of bone broth",
+        body: "Start dinner with this. Store-bought is fine. One amino acid in here does three things at once tonight — tap to see which one.",
         url: "/home#item-din",
         tag: "biokids-dinner-1",
       },
       {
-        title: "Step 2: Cooked spinach + broccoli tonight",
-        body: "Load the plate with cooked vegetables — spinach, carrots, Brussels sprouts, whatever you have. No raw salads at dinner — cook everything for better sleep.",
+        title: "Cooked vegetables — no salads tonight",
+        body: "Spinach, broccoli, carrots, Brussels sprouts — whatever you have, cooked. There's a reason we say no raw salads at dinner.",
         url: "/home#item-din",
         tag: "biokids-dinner-2",
       },
       {
-        title: "Step 3: Bovine gelatin jello",
-        body: "Gelatin + tart cherry juice + monk fruit. Set it now — they'll think it's regular jello. Even store-bought gelatin works. This is dessert that builds growth plates.",
+        title: "Gelatin jello for dessert",
+        body: "Bovine gelatin + tart cherry juice + monk fruit. Set it now. They'll think it's regular jello. It's building growth plates.",
         url: "/home#item-gly",
         tag: "biokids-dinner-3",
       },
@@ -182,26 +179,27 @@ const SLOTS: NotificationSlot[] = [
   },
 
   // ── 7 PM ET ── Wind-down (FULL PROTOCOL — sends all 3 in order)
+  // Ive: each notification is one quiet action. No checklists.
   {
     name: 'wind-down',
     utcHour: 23,
     sendAll: true,
     messages: [
       {
-        title: "Step 1: Chopin Nocturnes on",
-        body: "Soft classical music. This signals the transition — screens off, pace slows. The whole evening ritual starts here.",
+        title: "Chopin Nocturnes on",
+        body: "Screens off. Music on. The pace changes now. This becomes a sleep trigger — their brain will learn to wind down when it hears this.",
         url: "/home#item-music-pm",
         tag: "biokids-winddown-1",
       },
       {
-        title: "Step 2: Tart cherry + A2 milk",
-        body: "The Sleep Drink. 4 oz milk, 1 oz tart cherry, unsweetened. Any A2 or whole milk works. This is the melatonin + casein one-two punch.",
+        title: "Tart cherry + A2 milk",
+        body: "4 oz milk, 1 oz tart cherry juice, unsweetened. This is the highest food source of melatonin on earth. Tap to see how it works with tonight's sleep.",
         url: "/home#item-drink",
         tag: "biokids-winddown-2",
       },
       {
-        title: "Step 3: Epsom bath + book in bed",
-        body: "Warm bath, 20 min. Magnesium lotion on feet. Then read together until they're drowsy. You're doing great — even one of these steps tonight matters.",
+        title: "Epsom bath, then a book in bed",
+        body: "Warm bath, 20 min. Magnesium lotion on their feet. Then read together until they're drowsy. Even one of these steps tonight matters.",
         url: "/home#item-rtn",
         tag: "biokids-winddown-3",
       },
@@ -209,19 +207,20 @@ const SLOTS: NotificationSlot[] = [
   },
 
   // ── 8 PM ET ── Bedtime
+  // Ive: the product disappears. Just reassurance.
   {
     name: 'bedtime',
     utcHour: 0,
     messages: [
       {
-        title: "Dark room, cool air",
-        body: "65°F if you can. Blackout curtains. Tape any LEDs. Nose breathing. Everything today builds to this moment. You showed up — that's what matters.",
+        title: "65°F, dark, quiet",
+        body: "Blackout curtains. Tape any LEDs. Nose breathing. Everything today was building to this moment.",
         url: "/home#item-dark",
         tag: "biokids-bedtime",
       },
       {
-        title: "Growth is happening",
-        body: "The casein is slow-releasing. The glycine is lowering core temp. The melatonin is firing. You did the hard part. Sleep does the rest.",
+        title: "Growth is happening right now",
+        body: "The casein is slow-releasing. The glycine is lowering core temp. The melatonin is firing. Sleep does the rest. You showed up today.",
         url: "/home#item-bed",
         tag: "biokids-bedtime",
       },
@@ -234,52 +233,53 @@ const SLOTS: NotificationSlot[] = [
 // that makes bioKids different. Let the parent think "I've never heard
 // that before" — that's the pull.
 function getWeeklyMessages(): PushPayload[] {
+  // Ive: each tip is one ingredient, one surprising fact, one thread to pull.
   const tips = [
     {
       title: "Sheep yogurt",
-      body: "Up to 35× more lactoferrin than cow. 70% more casein. 100% A2 naturally. The Growth Bowl base.",
+      body: "35× more lactoferrin than cow milk. Most parents have never heard of lactoferrin. Tap to see why it matters.",
       url: "/home#item-d1",
       tag: "biokids-weekly",
     },
     {
       title: "Broccoli sprouts",
-      body: "20–100× more sulforaphane than mature broccoli. A small handful in a smoothie after junk food accelerates recovery.",
+      body: "100× more sulforaphane than regular broccoli. A small handful in a smoothie after junk food. Here's what sulforaphane actually does.",
       url: "/home#item-junk",
       tag: "biokids-weekly",
     },
     {
       title: "Bovine gelatin",
-      body: "Pure glycine. Lowers core temp for sleep, signals growth, builds growth plate cartilage. Kids think it's regular jello.",
+      body: "Your kids think it's jello. It's pure glycine — the amino acid that does three things at once while they sleep.",
       url: "/home#item-gly",
       tag: "biokids-weekly",
     },
     {
       title: "Tart cherry juice",
-      body: "The highest food source of melatonin. In the Sleep Drink, it deepens slow-wave sleep and inhibits aromatase.",
+      body: "The highest food source of melatonin on earth. Not a supplement — a juice. Here's how 1 oz changes tonight's sleep.",
       url: "/home#item-drink",
       tag: "biokids-weekly",
     },
     {
       title: "Cod liver oil",
-      body: "Retinol + vitamin D + omega-3 in one spoon. Hidden in a berry smoothie, they'll never taste it.",
+      body: "Three growth levers in one spoon. Hidden in a berry smoothie, they'll never taste it. Here's what those three levers are.",
       url: "/home#item-clo",
       tag: "biokids-weekly",
     },
     {
       title: "Sauerkraut",
-      body: "Even two spoonfuls. Fermentation produces GABA — a natural growth signal that also removes the brake on GH.",
+      body: "Two spoonfuls. That's all it takes. Fermentation produces something called GABA. Tap to see what GABA does to growth hormone.",
       url: "/home#item-lunch",
       tag: "biokids-weekly",
     },
     {
       title: "Epsom salt baths",
-      body: "Transdermal magnesium + a core temp rise that triggers rapid cooling. The fastest path to deep sleep.",
+      body: "A warm bath 60 min before bed. The trick isn't the warming — it's what happens after. Tap to see the cooling effect.",
       url: "/home#item-bath",
       tag: "biokids-weekly",
     },
     {
       title: "Pistachios",
-      body: "The highest melatonin per gram of any nut. The perfect evening snack — better than anything in a package.",
+      body: "The highest melatonin per gram of any nut. Better than any supplement. The perfect evening snack — and here's why evening specifically.",
       url: "/home#item-nse",
       tag: "biokids-weekly",
     },
