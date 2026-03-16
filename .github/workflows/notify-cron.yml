@@ -2,30 +2,26 @@ name: Push Notifications
 
 on:
   schedule:
-    # 7 AM ET - Morning protocol
+    # 7 AM ET - Morning (sunlight + Growth Bowl + eggs + CLO)
     - cron: '0 11 * * *'
-    # 8 AM ET - Cod liver oil
-    - cron: '0 12 * * *'
-    # 9 AM ET - Dairy serving 1
-    - cron: '0 13 * * *'
-    # 10 AM ET Sunday - Weekly article
+    # 10 AM ET Sunday - Weekly pro tip
     - cron: '0 14 * * 0'
-    # 12 PM ET - Lunch
+    # 12 PM ET - Lunch (Growth Meal)
     - cron: '0 16 * * *'
-    # 1 PM ET - Dairy serving 2
-    - cron: '0 17 * * *'
-    # 3 PM ET - Exercise
+    # 3 PM ET - Exercise (sprints or jumps + stretching)
     - cron: '0 19 * * *'
-    # 5 PM ET - Dairy serving 3
+    # 4 PM ET - Post-exercise dairy #2
+    - cron: '0 20 * * *'
+    # 5 PM ET - Dinner (start now, finish by 6)
     - cron: '0 21 * * *'
-    # 6 PM ET - Dinner
-    - cron: '0 22 * * *'
-    # 8 PM ET - Bedtime
+    # 7 PM ET - Wind-down (bath, magnesium, sleep drink)
+    - cron: '0 23 * * *'
+    # 8 PM ET - Bedtime (dark room, lights out)
     - cron: '0 0 * * *'
   workflow_dispatch:
     inputs:
       slot:
-        description: 'Notification slot (morning/cod-liver-oil/dairy-1/dairy-2/dairy-3/lunch/exercise/dinner/bedtime/weekly-article)'
+        description: 'Notification slot (morning/lunch/exercise/post-exercise/dinner/wind-down/bedtime/weekly-article)'
         required: false
         type: string
 
