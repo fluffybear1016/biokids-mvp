@@ -2,284 +2,293 @@ import { NextResponse } from 'next/server';
 import { sendPushToAll, PushPayload } from '@/lib/push';
 
 // ═══════════════════════════════════════════════════════════
-// BIOKIDS NOTIFICATION SYSTEM — Time-Based Architecture
+// BIOKIDS NOTIFICATION SYSTEM — Big 5 Architecture
 // ═══════════════════════════════════════════════════════════
 //
-// GitHub Actions fires at specific UTC hours. Each slot is
-// assigned a specific UTC hour. The system picks the right
-// notification for the current time.
-//
-// Eastern Time = UTC - 4 (EDT) or UTC - 5 (EST)
-// We target EDT (summer) as the baseline.
+// Rebuilt around the Big 5 — the 5 things that actually
+// move the needle. Everything else lives in the app.
+// Parents won't open the app every day. The push notification
+// IS the product. So it has to be signal, not noise.
 //
 // Schedule (all times ET / UTC):
-//   7:00 AM /  11 UTC — Morning (sunlight + Growth Bowl + eggs + CLO)
-//  12:00 PM /  16 UTC — Lunch (Growth Meal)
-//   3:00 PM /  19 UTC — Exercise (sprints or jumps + stretching)
-//   4:00 PM /  20 UTC — Post-exercise dairy #2
-//   5:00 PM /  21 UTC — Dinner (start now, finish by 6)
-//   7:00 PM /  23 UTC — Wind-down (bath, magnesium, sleep drink)
-//   8:00 PM /   0 UTC — Bedtime (dark room, lights out)
+//   7:00 AM /  11 UTC — Dairy #1 + CLO (Big 5: items 1 & 2)
+//  12:00 PM /  16 UTC — Protein target + rotation (Big 5: item 3)
+//   3:00 PM /  19 UTC — The Sprint Stack (Big 5: item 4)
+//   8:00 PM /   0 UTC — Sleep (Big 5: item 5)
 //
 // Weekly (Sunday only):
-//  10:00 AM /  14 UTC — Weekly pro tip
+//  10:00 AM /  14 UTC — Weekly pro tip (earns trust, drives re-engagement)
 //
-// TONE: Warm, encouraging, never pressuring. These should
-// feel like a friend gently reminding you — parents should
-// look forward to opening the app, never feel anxious.
+// TONE: One clear action. No menus. The parent should think
+// "oh right, that's the one thing I need to do right now."
 //
 // ═══════════════════════════════════════════════════════════
 
 type NotificationSlot = {
   name: string;
   utcHour: number;
-  weekdayOnly?: boolean; // true = skip weekends
-  sundayOnly?: boolean;  // true = only on Sundays
-  sendAll?: boolean;     // true = send every message in order (full protocol)
+  weekdayOnly?: boolean;
+  sundayOnly?: boolean;
+  sendAll?: boolean;
   messages: PushPayload[];
 };
 
 // ── Design philosophy (Ive) ──
-// Name the ingredient, not the category. "Sheep yogurt" not "dairy."
-// "Beef liver meatballs" not "protein." "Tart cherry" not "the Sleep Drink."
-// The exotic specificity IS the brand. It signals: this is not your
-// pediatrician's generic advice. Trust the material. Let curiosity
-// pull the parent into the app.
+// 4 notifications per day. Each one is a Big 5 action.
+// Name the material. Be specific. One thing per notification.
+// The parent should never feel overwhelmed — just reminded
+// of the one thing that matters right now.
+
+// ── Protein math ──
+// Target: 1.2–1.5 g protein per kg body weight
+// In pounds: ~0.55–0.68 g per pound
+// 60 lb kid → 33–41 g/day
+// 80 lb kid → 44–54 g/day
+// 100 lb kid → 55–68 g/day
+
+// ── Day-of-week helpers ──
+function getDayOfWeek(): number {
+  // Approximate ET from UTC (good enough for rotation logic)
+  const now = new Date();
+  const etOffset = now.getUTCMonth() >= 2 && now.getUTCMonth() <= 10 ? -4 : -5;
+  const etHour = now.getUTCHours() + etOffset;
+  // If ET hour rolled back to previous day
+  if (etHour < 0) {
+    const yesterday = new Date(now);
+    yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+    return yesterday.getUTCDay();
+  }
+  return now.getUTCDay(); // 0=Sun, 1=Mon, ... 6=Sat
+}
+
+function isSprintDay(): boolean {
+  // Mon, Wed, Fri, Sun = sprint days
+  const day = getDayOfWeek();
+  return [0, 1, 3, 5].includes(day);
+}
+
+function isLiverDay(): boolean {
+  // Mon, Wed, Fri = liver meatball days (2-3x/week)
+  const day = getDayOfWeek();
+  return [1, 3, 5].includes(day);
+}
 
 const SLOTS: NotificationSlot[] = [
-  // ── 7 AM ET ── Morning (FULL PROTOCOL — sends all 3 in order)
-  // Ive: one material per step. No menus. No alternatives in the title.
-  // Each notification should feel like one small, effortless thing.
-  // Step 1: Claire de Lune + sunlight (sets the circadian clock)
-  // Step 2: A glass of A2 milk (dairy serving #1 — that's it)
-  // Step 3: Eggs + cod liver oil
+  // ══════════════════════════════════════════════════════════
+  // BIG 5 #1 & #2 — 7 AM ET — Dairy serving #1 + CLO
+  // ══════════════════════════════════════════════════════════
+  // One notification. Two actions. Both take 60 seconds.
   {
     name: 'morning',
     utcHour: 11,
-    sendAll: true,
     messages: [
       {
-        title: "Claire de Lune + stretch + sunlight",
-        body: "Play Claire de Lune. Gentle stretch. Then 10 minutes outside — even the porch counts. This sets tonight's sleep clock.",
-        url: "/home#item-music-am",
-        tag: "biokids-morning-1",
-      },
-      {
-        title: "A glass of cold A2 milk",
-        body: "Dairy serving #1. Cold A2 milk, drizzle of honey. That's it. Why A2 specifically? Tap to see.",
+        title: "A2 milk + lemon CLO",
+        body: "Dairy serving #1: cold A2 milk with honey, yogurt bowl, or smoothie — pick one. Then half a spoon of lemon cod liver oil (hidden in the smoothie works). Skip CLO on liver days.",
         url: "/home#item-d1",
-        tag: "biokids-morning-2",
-      },
-      {
-        title: "Sunny side up eggs + cod liver oil",
-        body: "2–3 eggs. Half a spoon of CLO hidden in a berry smoothie — they won't taste it. Skip CLO on liver days. There's a reason we say sunny side up.",
-        url: "/home#item-bkf",
-        tag: "biokids-morning-3",
+        tag: "biokids-morning",
       },
     ],
   },
 
   // ── 10 AM ET (Sunday only) ── Weekly Pro Tip
   {
-    name: 'weekly-article',
+    name: 'weekly-tip',
     utcHour: 14,
     sundayOnly: true,
     messages: getWeeklyMessages(),
   },
 
-  // ── 12 PM ET ── Lunch (rotation — these are alternatives, not steps)
-  // Ive: the title is the ingredient. The body ends with a thread.
+  // ══════════════════════════════════════════════════════════
+  // BIG 5 #3 — 12 PM ET — Protein target + rotation
+  // ══════════════════════════════════════════════════════════
+  // Liver meatball days: Mon/Wed/Fri
+  // Other days: rotate through protein options
+  // Always include the daily target math
   {
-    name: 'lunch',
+    name: 'protein',
     utcHour: 16,
-    messages: [
-      {
-        title: "Beef liver meatballs",
-        body: "2 tbsp liver mixed into ground beef. They'll never know. Red bell pepper alongside. One bite of this has more growth fuel than a month of vitamins.",
-        url: "/home#item-lunch",
-        tag: "biokids-lunch",
-      },
-      {
-        title: "Two spoonfuls of sauerkraut",
-        body: "Alongside whatever protein you're serving. Just two spoonfuls. It produces something called GABA — tap to see what that does.",
-        url: "/home#item-lunch",
-        tag: "biokids-lunch",
-      },
-      {
-        title: "Lentils + pumpkin seeds",
-        body: "Lentils in soup or as a side. Pumpkin seeds sprinkled on top. Broccoli alongside. This combination was in an actual growth trial.",
-        url: "/home#item-lunch",
-        tag: "biokids-lunch",
-      },
-    ],
+    messages: getProteinMessage(),
   },
 
-  // ── 3 PM ET ── Exercise (rotation)
-  // Ive: the action is singular. Outside is the real product.
+  // ══════════════════════════════════════════════════════════
+  // BIG 5 #4 — 3 PM ET — The Sprint Stack
+  // ══════════════════════════════════════════════════════════
+  // The full sequence: snack → activity → stretch → cold milk
+  // Sprint days alternate with jump days
   {
-    name: 'exercise',
+    name: 'sprint-stack',
     utcHour: 19,
-    messages: [
-      {
-        title: "Six 30-second sprints",
-        body: "Backyard, park, hill — anywhere. All out, 30 seconds, six times. Then hang from something for 20 seconds. This triggers the biggest growth signal of the day.",
-        url: "/home#item-spr",
-        tag: "biokids-exercise",
-      },
-      {
-        title: "50 jumps + a dead hang",
-        body: "Jump rope, drop jumps, just jumping. Then hang from anything — monkey bars, a door frame. Why hanging? Tap to see.",
-        url: "/home#item-jump",
-        tag: "biokids-exercise",
-      },
-    ],
+    messages: getSprintStackMessage(),
   },
 
-  // ── 4 PM ET ── Post-exercise dairy
-  // Ive: one instruction. The science hides behind the tap.
+  // ══════════════════════════════════════════════════════════
+  // BIG 5 #5 — 8 PM ET — Sleep
+  // ══════════════════════════════════════════════════════════
+  // 10+ hours in complete darkness. This is when 60-80% of
+  // growth hormone is released. Non-negotiable.
   {
-    name: 'post-exercise',
-    utcHour: 20,
-    messages: [
-      {
-        title: "Cold A2 milk, one spoon of honey",
-        body: "Dairy serving #2. Within 30 minutes of activity. Without this step, today's sprint is wasted. There's a 30-minute window — here's why.",
-        url: "/home#item-pm",
-        tag: "biokids-dairy-2",
-      },
-    ],
-  },
-
-  // ── 5 PM ET ── Dinner (FULL PROTOCOL — sends all 3 in order)
-  // Ive: no "Step 1/2/3" labels. The sequence is the order they arrive.
-  {
-    name: 'dinner',
-    utcHour: 21,
-    sendAll: true,
-    messages: [
-      {
-        title: "A warm mug of bone broth",
-        body: "Start dinner with this. Store-bought is fine. One amino acid in here does three things at once tonight — tap to see which one.",
-        url: "/home#item-din",
-        tag: "biokids-dinner-1",
-      },
-      {
-        title: "Cooked vegetables — no salads tonight",
-        body: "Spinach, broccoli, carrots, Brussels sprouts — whatever you have, cooked. There's a reason we say no raw salads at dinner.",
-        url: "/home#item-din",
-        tag: "biokids-dinner-2",
-      },
-      {
-        title: "Gelatin jello for dessert",
-        body: "Bovine gelatin + tart cherry juice + monk fruit. Set it now. They'll think it's regular jello. It's building growth plates.",
-        url: "/home#item-gly",
-        tag: "biokids-dinner-3",
-      },
-    ],
-  },
-
-  // ── 7 PM ET ── Wind-down (FULL PROTOCOL — sends all 3 in order)
-  // Ive: each notification is one quiet action. No checklists.
-  {
-    name: 'wind-down',
-    utcHour: 23,
-    sendAll: true,
-    messages: [
-      {
-        title: "Chopin Nocturnes on",
-        body: "Screens off. Music on. The pace changes now. This becomes a sleep trigger — their brain will learn to wind down when it hears this.",
-        url: "/home#item-music-pm",
-        tag: "biokids-winddown-1",
-      },
-      {
-        title: "Tart cherry + A2 milk",
-        body: "4 oz milk, 1 oz tart cherry juice, unsweetened. This is the highest food source of melatonin on earth. Tap to see how it works with tonight's sleep.",
-        url: "/home#item-drink",
-        tag: "biokids-winddown-2",
-      },
-      {
-        title: "Epsom bath, then a book in bed",
-        body: "Warm bath, 20 min. Magnesium lotion on their feet. Then read together until they're drowsy. Even one of these steps tonight matters.",
-        url: "/home#item-rtn",
-        tag: "biokids-winddown-3",
-      },
-    ],
-  },
-
-  // ── 8 PM ET ── Bedtime
-  // Ive: the product disappears. Just reassurance.
-  {
-    name: 'bedtime',
+    name: 'sleep',
     utcHour: 0,
     messages: [
       {
-        title: "65°F, dark, quiet",
-        body: "Blackout curtains. Tape any LEDs. Nose breathing. Everything today was building to this moment.",
+        title: "10+ hours of complete darkness",
+        body: "Blackout curtains. Tape every LED. This is when 60–80% of growth hormone is released. Everything today — the milk, the protein, the sprints — was building to this moment. You showed up today.",
         url: "/home#item-dark",
-        tag: "biokids-bedtime",
-      },
-      {
-        title: "Growth is happening right now",
-        body: "The casein is slow-releasing. The glycine is lowering core temp. The melatonin is firing. Sleep does the rest. You showed up today.",
-        url: "/home#item-bed",
-        tag: "biokids-bedtime",
+        tag: "biokids-sleep",
       },
     ],
   },
 ];
 
+// ── Protein rotation ──
+// On liver days (Mon/Wed/Fri): liver meatballs
+// Other days: rotate through proteins with the daily target
+function getProteinMessage(): PushPayload[] {
+  if (isLiverDay()) {
+    return [
+      {
+        title: "Liver meatballs today",
+        body: "2 tbsp beef or chicken liver mixed into ground beef — they won't taste it. The single most nutrient-dense food on earth. Daily target: ~0.6 g protein per pound of body weight (80 lb kid = 48 g). Rotate proteins across the week.",
+        url: "/home#item-lunch",
+        tag: "biokids-protein",
+      },
+    ];
+  }
+
+  // Non-liver days: rotate through other proteins
+  const day = getDayOfWeek();
+  const rotations: PushPayload[] = [
+    // Sunday
+    {
+      title: "Chicken thighs + vegetables today",
+      body: "Dark meat has more zinc and iron than breast. Roasted with broccoli, carrots, bell peppers. Daily target: ~0.6 g protein per pound of body weight (80 lb kid = 48 g). Add a spoonful of sauerkraut on the side.",
+      url: "/home#item-lunch",
+      tag: "biokids-protein",
+    },
+    // Monday (liver day — won't reach here)
+    {
+      title: "Liver meatballs today",
+      body: "2 tbsp liver mixed into ground beef — they won't taste it.",
+      url: "/home#item-lunch",
+      tag: "biokids-protein",
+    },
+    // Tuesday
+    {
+      title: "Wild salmon + sweet potato today",
+      body: "Omega-3s from a whole food, not a pill. Baked or pan-seared with sweet potato and spinach. Daily target: ~0.6 g protein per pound of body weight (80 lb kid = 48 g). Fish days = brain days.",
+      url: "/home#item-lunch",
+      tag: "biokids-protein",
+    },
+    // Wednesday (liver day — won't reach here)
+    {
+      title: "Liver meatballs today",
+      body: "2 tbsp liver mixed into ground beef — they won't taste it.",
+      url: "/home#item-lunch",
+      tag: "biokids-protein",
+    },
+    // Thursday
+    {
+      title: "Eggs + ground beef today",
+      body: "3 eggs any style + ground beef with roasted vegetables. Simple, fast, protein-dense. Daily target: ~0.6 g protein per pound of body weight (80 lb kid = 48 g). Eggs alone = 18 g. Ground beef patty = 22 g. You're already there.",
+      url: "/home#item-lunch",
+      tag: "biokids-protein",
+    },
+    // Friday (liver day — won't reach here)
+    {
+      title: "Liver meatballs today",
+      body: "2 tbsp liver mixed into ground beef — they won't taste it.",
+      url: "/home#item-lunch",
+      tag: "biokids-protein",
+    },
+    // Saturday
+    {
+      title: "Whole chicken or steak today",
+      body: "Weekend cooking day. Roast a whole chicken (use bones for broth later) or grill steak with roasted Brussels sprouts. Daily target: ~0.6 g protein per pound of body weight (80 lb kid = 48 g). Leftovers = tomorrow's lunch.",
+      url: "/home#item-lunch",
+      tag: "biokids-protein",
+    },
+  ];
+
+  return [rotations[day]];
+}
+
+// ── Sprint Stack ──
+// Alternates sprint days and jump days
+// Always includes: explicit snack → activity → stretch → post-sprint milk
+function getSprintStackMessage(): PushPayload[] {
+  if (isSprintDay()) {
+    return [
+      {
+        title: "Sprint Stack — snack first",
+        body: "Step 1: Peanut butter on toast or a liver meatball + an egg (niacin + choline fuel the sprint). Step 2: Six 30-second all-out sprints, full rest between. Step 3: Stretch. Step 4: Cold A2 milk with honey within 30 min. That sequence is the most powerful growth trigger in the protocol.",
+        url: "/home#item-spr",
+        tag: "biokids-sprint-stack",
+      },
+    ];
+  }
+
+  // Jump day
+  return [
+    {
+      title: "Jump Stack — snack first",
+      body: "Step 1: Peanut butter on toast or a liver meatball + an egg (niacin + choline load the spring). Step 2: 50 jumps — jump rope, box jumps, just jumping. Step 3: Stretch. Step 4: Cold A2 milk with honey within 30 min. Alternate with sprints tomorrow.",
+      url: "/home#item-jump",
+      tag: "biokids-sprint-stack",
+    },
+  ];
+}
+
 // ── Weekly Pro Tips ──
-// Rotates by week number. Lead with the specific ingredient or insight
-// that makes bioKids different. Let the parent think "I've never heard
-// that before" — that's the pull.
+// Rotates by week number. The deeper-cut knowledge that earns trust
+// and re-engagement. These are the "I've never heard that before" moments.
 function getWeeklyMessages(): PushPayload[] {
-  // Ive: each tip is one ingredient, one surprising fact, one thread to pull.
   const tips = [
     {
       title: "Sheep yogurt",
-      body: "35× more lactoferrin than cow milk. Most parents have never heard of lactoferrin. Tap to see why it matters.",
+      body: "35× more lactoferrin than cow milk. Most parents have never heard of lactoferrin. Tap to see why it matters for growth.",
       url: "/home#item-d1",
       tag: "biokids-weekly",
     },
     {
-      title: "Broccoli sprouts",
-      body: "100× more sulforaphane than regular broccoli. A small handful in a smoothie after junk food. Here's what sulforaphane actually does.",
-      url: "/home#item-junk",
-      tag: "biokids-weekly",
-    },
-    {
       title: "Bovine gelatin",
-      body: "Your kids think it's jello. It's pure glycine — the amino acid that does three things at once while they sleep.",
+      body: "Your kids think it's jello. It's pure glycine — the amino acid that builds growth plates while they sleep. 5 ways to serve it daily.",
       url: "/home#item-gly",
       tag: "biokids-weekly",
     },
     {
       title: "Tart cherry juice",
-      body: "The highest food source of melatonin on earth. Not a supplement — a juice. Here's how 1 oz changes tonight's sleep.",
+      body: "The highest food source of melatonin on earth. Not a supplement — a juice. 1 oz in their evening milk changes tonight's sleep.",
       url: "/home#item-drink",
       tag: "biokids-weekly",
     },
     {
-      title: "Cod liver oil",
-      body: "Three growth levers in one spoon. Hidden in a berry smoothie, they'll never taste it. Here's what those three levers are.",
+      title: "Lemon cod liver oil",
+      body: "Three growth levers in one spoon: vitamin A, vitamin D, omega-3. Hidden in a berry smoothie, they'll never taste it.",
       url: "/home#item-clo",
       tag: "biokids-weekly",
     },
     {
-      title: "Sauerkraut",
-      body: "Two spoonfuls. That's all it takes. Fermentation produces something called GABA. Tap to see what GABA does to growth hormone.",
+      title: "The 30-minute window",
+      body: "Cold milk with honey within 30 minutes of sprints. Miss this window and the growth signal fades. Here's the science behind the timing.",
+      url: "/home#item-pm",
+      tag: "biokids-weekly",
+    },
+    {
+      title: "Protein math",
+      body: "0.55–0.68 g per pound of body weight, every day. An 80 lb kid needs 44–54 g. Two eggs (12 g) + a glass of A2 milk (8 g) + a chicken thigh (26 g) = you're there.",
       url: "/home#item-lunch",
       tag: "biokids-weekly",
     },
     {
-      title: "Epsom salt baths",
-      body: "A warm bath 60 min before bed. The trick isn't the warming — it's what happens after. Tap to see the cooling effect.",
-      url: "/home#item-bath",
+      title: "Sauerkraut — two spoonfuls",
+      body: "Fermentation produces GABA. GABA stimulates growth hormone release during sleep. Two spoonfuls alongside any protein. That's it.",
+      url: "/home#item-lunch",
       tag: "biokids-weekly",
     },
     {
-      title: "Pistachios",
-      body: "The highest melatonin per gram of any nut. Better than any supplement. The perfect evening snack — and here's why evening specifically.",
+      title: "Pistachios before bed",
+      body: "The highest melatonin per gram of any nut. Better than any supplement. A handful as an evening snack — here's why evening specifically.",
       url: "/home#item-nse",
       tag: "biokids-weekly",
     },
@@ -298,7 +307,6 @@ function getCurrentSlot(): NotificationSlot | null {
   const utcHour = now.getUTCHours();
   const utcDay = now.getUTCDay(); // 0 = Sunday
 
-  // Find matching slot for this hour
   const matching = SLOTS.filter(slot => {
     if (slot.utcHour !== utcHour) return false;
     if (slot.sundayOnly && utcDay !== 0) return false;
@@ -306,9 +314,6 @@ function getCurrentSlot(): NotificationSlot | null {
   });
 
   if (matching.length === 0) return null;
-
-  // If multiple match (shouldn't normally happen), pick the first non-sunday-only one,
-  // or the sunday one if it's Sunday
   return matching[0];
 }
 
@@ -317,7 +322,7 @@ function verifyCron(request: Request): boolean {
   const authHeader = request.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
   if (!cronSecret) {
-    return false; // Deny access if CRON_SECRET is not configured
+    return false;
   }
   return authHeader === `Bearer ${cronSecret}`;
 }
@@ -359,7 +364,6 @@ export async function GET(request: Request) {
     }
 
     if (slot.sendAll) {
-      // Full protocol — send every message in order so parents don't miss a step
       const results = [];
       for (const message of slot.messages) {
         const result = await sendPushToAll(message);
@@ -374,7 +378,6 @@ export async function GET(request: Request) {
         results,
       });
     } else {
-      // Rotation — pick one random variant (for slots with alternatives, not steps)
       const message = slot.messages[Math.floor(Math.random() * slot.messages.length)];
       const result = await sendPushToAll(message);
       return NextResponse.json({
