@@ -65,7 +65,7 @@ const SLOTS: NotificationSlot[] = [
       },
       {
         title: "Good morning",
-        body: "Stretch in the sun. Sheep yogurt bowl with hemp hearts and chia. Over-easy eggs in olive oil.",
+        body: "Stretch in the sun. Sheep yogurt bowl with hemp hearts. Sunny side up eggs.",
         url: "/home#item-d1",
         tag: "biokids-morning",
       },

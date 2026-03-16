@@ -17,7 +17,7 @@ const stacks = [
       { time: 'Wake', action: 'Same time daily after 10-12 hrs sleep', why: 'Circadian consistency maximizes SWS depth' },
       { time: 'Within 30 min', action: 'Outdoor stretching in morning sunlight (5-10 min)', why: 'Sets circadian clock → melatonin timing 14-16 hrs later → deeper SWS → larger GH pulses' },
       { time: 'Start the day', action: 'Laughter and joy', why: 'Anticipation of fun raises GH 87% (Berk et al. 2006)' },
-      { time: 'Breakfast', action: 'The Growth Bowl — sheep yogurt + PB + berries + seeds + honey', why: 'One bowl, 15+ GH pathways: sheep yogurt (up to 35× more lactoferrin, 46% more β-lactoglobulin, 70% more casein, GABA from fermentation) + peanut butter (niacin + arginine) + berries (vitamin C) + pumpkin seeds (zinc + arginine) + chia (omega-3) + hemp hearts (complete protein). Let kids build their own.' },
+      { time: 'Breakfast', action: 'The Growth Bowl — sheep yogurt + PB + berries + seeds + honey', why: 'One bowl, 15+ GH pathways: sheep yogurt (up to 35× more lactoferrin, 46% more β-lactoglobulin, 70% more casein, GABA from fermentation) + peanut butter (niacin + arginine) + berries (vitamin C) + pumpkin seeds (zinc + arginine) + hemp hearts (complete protein). Let kids build their own.' },
       { time: 'Breakfast', action: '2-3 pasture-raised eggs', why: 'Choline → acetylcholine → primes GH axis' },
       { time: 'Breakfast', action: 'Cod liver oil (non-liver days only)', why: 'Retinol + vitamin D + omega-3. Skip on beef liver days to avoid excess retinol' },
       { time: 'Breakfast', action: 'No oats or conventional grains', why: 'Glyphosate residues disrupt gut + hormones' },
@@ -32,7 +32,7 @@ const stacks = [
     subtitle: '~530% GH spike → converted to IGF-1',
     steps: [
       { time: 'Lunch', action: 'Big pump meal — beef liver meatballs, protein, lentils, broccoli, seeds', why: 'Stacks 15+ GH pathways: choline, niacin, arginine, glutamine, zinc, DIM, GABA' },
-      { time: '~60 min before', action: 'Light pre-sprint snack: 1 meatball + 1 egg + a few peanuts', why: 'Very light — choline loads A-GPC pathway, niacin blocks FFA brake on GH. NOT a full meal.' },
+      { time: '~60 min before', action: 'Light pre-sprint snack: 1 meatball + 1 egg + natural peanut butter', why: 'Very light — choline loads A-GPC pathway, niacin blocks FFA brake on GH. NOT a full meal.' },
       { time: 'Sprint time', action: '4-6x 30-sec all-out sprints (up to 4 min rest)', why: '~530% GH spike via lactate pathway (Stokes et al. 2002)' },
       { time: 'Immediately after', action: '10 min stretching + dead hangs', why: 'Spinal decompression + microfractures heal elongated under traction' },
       { time: 'Within 30 min', action: '8-12 oz whole A2/raw milk OR sheep yogurt + raw honey', why: 'Whey converts GH → IGF-1 via STAT5 pathway; casein sustains amino delivery' },
@@ -75,7 +75,7 @@ const stacks = [
 
       // ── Tier 3: Phytoestrogen competitors + citrus ──
       { time: 'Daily', action: 'Beans, lentils, peas', why: 'Weak phytoestrogens compete for receptors → delays HPG axis activation' },
-      { time: 'Daily', action: 'Citrus with peel/pulp (orange, grapefruit, lemon zest)', why: 'Hesperidin + naringenin in peel/pith are natural aromatase inhibitors. Use whole fruit or zest' },
+      { time: 'Daily', action: 'Citrus with peel/pulp (orange, grapefruit)', why: 'Hesperidin + naringenin in peel/pith are natural aromatase inhibitors. Use whole fruit' },
 
       // ── The Smoothie ──
       { time: 'Daily', action: 'Puberty Delay Smoothie: ¾c A2 milk + ¼c broccoli sprouts + 1c frozen berries + ¼c pomegranate + 10-15g gelatin + honey', why: 'Delivers crucifers + polyphenols + glycine + IGF-1 in one drink. Rotate add-ins weekly (see note)' },

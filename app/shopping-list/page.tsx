@@ -24,7 +24,7 @@ export default function ShoppingListPage() {
         {[
           { item:"A2 whole milk (organic, full-fat)", note:"Daily target: 20–24 oz. Bowl/smoothie + post-sprint + Sleep Drink. Each 8 oz/day = +0.39 cm." },
           { item:"Sheep yogurt (plain, whole)", note:"35× more lactoferrin. 5 oz = 8 oz A2 milk. Height Bowl base." },
-          { item:"Pasture-raised eggs", note:"2–3 daily. Richest whole-food choline source. Over easy in olive oil." },
+          { item:"Pasture-raised eggs", note:"2–3 daily. Richest whole-food choline source. Sunny side up." },
           { item:"Grass-fed beef (any cut)", note:"Richest glutamine + ornithine + tyrosine. Daily protein rotation." },
           { item:"Beef liver (grass-fed)", note:"Most nutrient-dense food on earth. Mix 2 tbsp into meatballs — kids won't taste it." },
           { item:"Turkey breast", note:"Highest niacin + arginine per gram of any common meat. Dinner rotation." },
@@ -38,8 +38,7 @@ export default function ShoppingListPage() {
           { item:"Lentils & beans (chickpeas, black beans, kidney beans)", note:"DAILY. Iron + lysine + inositol + arginine + magnesium + fiber. Plant protein delays puberty = longer growth window. Pair with citrus." },
           { item:"Carrots", note:"Beta-carotene → retinol. Supports vitamin A pathway for bone growth and immune function." },
           { item:"Raw honey", note:"Compliance driver. Post-sprint milk + Bowl drizzle. Gentle insulin for IGF-1 conversion." },
-          { item:"Olive oil (extra virgin)", note:"Cook eggs in it. Fat-soluble vitamin absorption from yolks." },
-        ].map((r, i) => (
+                  ].map((r, i) => (
           <div key={i} style={{ display:"flex", gap:12, marginBottom:10, alignItems:"baseline" }}>
             <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#065f46", minWidth:20, textAlign:"right" }}>{i+1}</span>
             <div>
@@ -64,8 +63,7 @@ export default function ShoppingListPage() {
           { item:"Kefir (full-fat, grass-fed)", note:"Fermented dairy. GABA-producing bacteria + all 6 milk height proteins. Counts toward daily dairy." },
           { item:"Collard greens", note:"Lower oxalate than spinach. Magnesium + vitamin K + calcium. Primary leafy green." },
           { item:"Pineapple", note:"Bromelain aids amino acid extraction from meats. Serotonin support. Manganese for bone." },
-          { item:"Chia seeds", note:"Omega-3s. Bowl topping or blended into smoothie." },
-          { item:"Hemp hearts", note:"Complete protein — all essential aminos. Bowl topping." },
+                    { item:"Hemp hearts", note:"Complete protein — all essential aminos. Bowl topping." },
           { item:"Bananas", note:"Smoothie version. Potassium + creaminess. Dopamine signaling." },
           { item:"Allulose or monk fruit sweetener", note:"Zero insulin spike. Gelatin jello + homemade ice cream sweetener." },
           { item:"Epsom salt", note:"Warm bath before bed. Transdermal magnesium for deeper SWS." },

@@ -83,7 +83,7 @@ export const dayData: DayPeriod[] = [
           { f: "Pumpkin seeds, handful", d: "Zinc + arginine + magnesium." },
           { f: "Raw honey drizzle", d: "Sweetness drives compliance." },
         ]},
-      { id: "bkf", t: "Pasture-raised eggs — over easy", sub: "2–3 daily in olive oil + red bell pepper", gh: "primes the whole day", headline: "choline from eggs primes the entire growth axis", tier: 0, cite: "Ziegenfuss, JISSN 2008; Zeisel, Nutr Rev 2009", tip: "Over easy in olive oil. Red bell pepper slices alongside.",
+      { id: "bkf", t: "Pasture-raised eggs — sunny side up", sub: "2–3 daily + red bell pepper", gh: "primes the whole day", headline: "choline from eggs primes the entire growth axis", tier: 0, cite: "Ziegenfuss, JISSN 2008; Zeisel, Nutr Rev 2009", tip: "Sunny side up preserves the most nutrients. Red bell pepper slices alongside.",
         pumps: [
           { p: "Choline → growth axis", n: "axis primer", d: "Two eggs ≈ 300mg choline" },
           { p: "Choline pathway*", n: "up to 4,400%", d: "A-GPC amplified growth signals with exercise" },

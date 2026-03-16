@@ -215,15 +215,6 @@ export default function GlycineArticle() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-black text-base mb-1">Collagen Peptides</h3>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
-                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Dissolves in any liquid</li>
-                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Flavorless</li>
-                  <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Can add to smoothies, milk, or warm drinks</li>
-                </ul>
-              </div>
-
-              <div>
                 <h3 className="font-semibold text-black text-base mb-1">Connective Tissue Cuts</h3>
                 <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
                   <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Oxtail, shanks, chicken feet</li>
@@ -248,7 +239,7 @@ export default function GlycineArticle() {
             <ul style={{ listStyle: "none", padding: 0, margin: "0 0 12px", display: "flex", flexDirection: "column", gap: 3 }}>
               <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>1 cup bone broth at dinner or before bed</li>
               <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Gelatin dessert (homemade jello with real gelatin)</li>
-              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Collagen peptides in warm milk</li>
+              <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Bovine gelatin dissolved in warm milk</li>
               <li style={{ display: "flex", gap: 6, fontSize: 13, color: C.body, fontFamily: F }}><span style={{ color: C.green }}>&#10003;</span>Gummy snacks made with gelatin</li>
             </ul>
 
