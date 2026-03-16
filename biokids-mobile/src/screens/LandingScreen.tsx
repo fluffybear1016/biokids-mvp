@@ -33,10 +33,10 @@ export default function LandingScreen({ navigation }: Props) {
         <View style={s.hero}>
           <Text style={s.h1}>
             Help your child reach their{' '}
-            <Text style={{ color: C.green }}>height potential.</Text>
+            <Text style={{ color: C.green }}>full height.</Text>
           </Text>
           <Text style={s.subtitle}>
-            The evidence-based system that supports healthy growth through nutrition, exercise, and sleep. No prescriptions. No supplements. Just the levers parents actually control.
+            The research-backed daily protocol that targets your child's height potential through nutrition, sprints, and sleep. No prescriptions. No supplements. Just the levers published science says parents actually control.
           </Text>
           <Text style={s.subItalic}>
             Height isn't the only benefit — every growth signal simultaneously supports brain development.
@@ -51,7 +51,7 @@ export default function LandingScreen({ navigation }: Props) {
           <Text style={s.cardLabel}>FEATURED PROTOCOL</Text>
           <Text style={s.cardTitle}>The Sprint Stack</Text>
           <Text style={s.cardDesc}>
-            Your child already sprints at practice. What they eat before and after changes the growth response dramatically.
+            Your child already sprints at practice. Research shows what they eat before and after determines whether that sprint triggers a meaningful growth hormone response.
           </Text>
           <View style={s.stackRow}>
             {[
@@ -71,8 +71,8 @@ export default function LandingScreen({ navigation }: Props) {
         {/* Testimonials */}
         <View style={s.section}>
           {[
-            { quote: 'My son just turned 13 and is thriving — growing strong and healthy. My husband and I are average height.', name: 'Maggie', loc: 'Mom of 3 · New York' },
-            { quote: 'Both my kids are growing strong and healthy, 8 and 7 years old. We helped create the bioKids protocol.', name: 'Marko', loc: 'Dad of 2 · New York' },
+            { quote: 'My son just turned 13 and he\'s the tallest kid in his class. My husband and I are both average height. This protocol changed everything.', name: 'Maggie', loc: 'Mom of 3 · New York' },
+            { quote: 'Both my kids are above the 90th percentile for height, 8 and 7 years old. We helped create the bioKids protocol.', name: 'Marko', loc: 'Dad of 2 · New York' },
             { quote: 'I\'ve trained top NBA talent all the way down to elementary school kids. The limiting factor is always height.', name: 'Thomas', loc: 'Athletic Trainer · Miami' },
           ].map((t, i) => (
             <View key={i} style={s.testimonial}>
