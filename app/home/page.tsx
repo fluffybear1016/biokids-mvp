@@ -124,6 +124,12 @@ const dayData: DayPeriod[] = [
         { p:"Normal sleep advantage", n:"3×", d:"Normal sleep = 3× more peak GH than disrupted" },
       ]},
 
+    { id:"music-am", t:"Classical music", sub:"Claire de Lune, Bach, Mozart — play softly during morning routine", gh:"cortisol reducer", headline:"slow-tempo classical lowers cortisol — a direct GH suppressor", tier:2, cite:"Thoma, PLoS ONE 2013; Khalfa, Ann N Y Acad Sci 2003", why:"Music at 60–80 BPM synchronizes heart rate and breathing toward calm parasympathetic states. Thoma et al. showed classical music significantly reduced salivary cortisol — and cortisol directly suppresses growth hormone. Playing Claire de Lune or slow Bach during breakfast creates a calm, focused morning that primes the entire GH axis. It also becomes a conditioned routine cue — the brain associates this music with 'morning protocol starting.'", tip:"Start a playlist when they wake. Claire de Lune, Gymnopédie No. 1, Bach Cello Suite No. 1, Debussy Arabesques. Keep it soft — background level. This is the easiest addition to the protocol.",
+      pumps:[
+        { p:"Cortisol reduction", n:"significant", d:"Classical music reduced salivary cortisol in controlled study" },
+        { p:"Parasympathetic activation", n:"HRV increase", d:"60–80 BPM music synchronizes autonomic nervous system toward calm" },
+      ]},
+
     { id:"sun", t:"Morning sunlight + stretch", sub:"10 min outside — dead hang, fold over, cobra, cat-cow", gh:"melatonin trigger", headline:"melatonin tonight + spinal decompression — two levers in one", tier:1, cite:"Roenneberg, Curr Biol 2007; Forsling, J Pineal Res 1999; Nachemson, Scand J Rehabil Med 1970; Reilly, Ergonomics 1984", why:"Morning light hits melanopsin receptors — synchronizes the suprachiasmatic nucleus — programs melatonin release 14–16 hours from now. Melatonin raised GH up to 157% in adult studies AND inhibits aromatase (the enzyme that closes growth plates). Gravity compresses spinal discs all day — up to 1% of height lost by evening. Dead hang creates pure axial traction that rehydrates discs. Stretching both upper and lower body daily decompresses the spine and allows growth plates to recover. 5–10 minutes is enough — circadian clock + spinal decompression in one.", tip:"Backyard, bus stop walk, porch. Dead hang 3 × 20 sec (thumbs over bar, relax shoulders). Fold over, cobra, cat-cow. Upper and lower body. Overcast still works for light.",
       pumps:[
         { p:"Melatonin timing*", n:"up to 157%", d:"Tonight's melatonin set by this morning's light — raised GH 157% in adults" },
@@ -235,6 +241,8 @@ const dayData: DayPeriod[] = [
         { f:"Sauerkraut or kimchi", d:"Even 2 tbsp counts. Produces GABA naturally." },
         { f:"Lentils + citrus", d:"Growth combo from clinical trial. Vitamin C boosts iron 2–3×." },
         { f:"Broccoli", d:"DIM — keeps growth plates open longer." },
+        { f:"Spinach (cooked)", d:"Iron + magnesium + folate + vitamin K. Cook to reduce oxalates. Add to meatballs, stews, anything." },
+        { f:"Lots of vegetables — variety matters", d:"Carrots, bell peppers, Brussels sprouts, cauliflower, cabbage. Rotate daily. Every color delivers different micronutrients." },
         { f:"Pumpkin seeds", d:"Zinc + arginine + magnesium (+0.33cm/yr)." },
       ]},
 
@@ -295,7 +303,7 @@ const dayData: DayPeriod[] = [
   ]},
 
   { period:"Late Afternoon", time:"after school", items:[
-    { id:"rest", t:"Rest and play", sub:"Unstructured time with friends", gh:"stress ↓ cortisol ↓", headline:"anticipation of fun raised GH 87% in adult study — cortisol down 39%", tier:1, cite:"Berk, FASEB J 2006; Berk, Am J Med Sci 1989", why:"Unstructured play is growth time. In adult studies, anticipation of fun raised GH 87% and reduced cortisol 39%. Chronic stress from overscheduling is one of the strongest GH suppressors.", tip:"No homework pressure right after school. Play first, eat, then homework. No competitive sports in the evening." },
+    { id:"rest", t:"Be outside and active as much as possible", sub:"Unstructured outdoor play with friends — the more time outside the better", gh:"stress ↓ cortisol ↓", headline:"outdoor play combines sunlight + movement + cortisol reduction — three GH levers at once", tier:1, cite:"Berk, FASEB J 2006; Berk, Am J Med Sci 1989; Li, Environ Health Prev Med 2010", why:"Unstructured outdoor play is growth time — three independent levers at once. (1) Continued sunlight exposure supports vitamin D synthesis and circadian rhythm. (2) Movement and play — jumping, climbing, running — are natural GH triggers. (3) Nature exposure measurably reduces cortisol within 20 minutes, and cortisol is a direct GH suppressor. In adult studies, anticipation of fun raised GH 87% and reduced cortisol 39%. Get them outside as much as humanly possible.", tip:"No homework pressure right after school. Play outside first, eat, then homework. Backyard, park, bike ride, climbing, anything outside. The more time outdoors the better. No competitive sports in the evening." },
   ]},
 
   { period:"Evening", time:"wind-down hours", note:"Do these in order. By the end, they're drowsy.", items:[
@@ -328,6 +336,8 @@ const dayData: DayPeriod[] = [
         { f:"Beef, chicken, turkey, salmon", d:"Rotate nightly. All deliver key growth-supporting aminos." },
         { f:"Lentils + citrus", d:"Iron + lysine + inositol. Vitamin C boosts absorption 2–3×." },
         { f:"Broccoli", d:"DIM — keeps growth plates open longer." },
+        { f:"Cooked spinach + lots of vegetables", d:"Spinach, carrots, Brussels sprouts, cauliflower, cabbage — cooked, not raw. Variety delivers broad micronutrient coverage." },
+        { f:"No salads at dinner", d:"Raw greens are harder to digest at night and can cause bloating that disrupts deep sleep. Cook all vegetables at dinner." },
       ]},
 
     { id:"gly", t:"Bovine gelatin jello with tart cherry", sub:"Glycine dessert — gelatin + tart cherry juice + allulose or monk fruit", gh:"sleep + growth plates", headline:"glycine — GH secretagogue + lowers core temp + growth plate collagen", tier:1, cite:"Kawai, Neuropsychopharmacology 2015; Kasai, Metabolism 1980", why:"Bovine gelatin is pure collagen — the richest source of glycine available. Glycine: (1) lowers core temp via NMDA receptors — triggers sleep onset, (2) a direct GH secretagogue (raised GH up to 300% in adult studies), (3) most abundant amino acid in collagen — the structural protein of growth plates. Adding tart cherry juice delivers melatonin (the highest food source) plus aromatase inhibition. Use allulose or monk fruit to sweeten — no insulin spike.", tip:"Dissolve bovine gelatin in warm tart cherry juice, add allulose or monk fruit, set in fridge. Kids think it's regular jello. Gelatin powder has no taste — mix into anything.",
@@ -368,6 +378,13 @@ const dayData: DayPeriod[] = [
         { p:"SWS depth", n:"60–80%", d:"Melatonin deepens slow-wave sleep" },
       ]},
 
+    { id:"music-pm", t:"Classical music", sub:"Claire de Lune, Chopin Nocturnes, Debussy — play softly after dinner through bath time", gh:"cortisol reducer", headline:"slow-tempo classical reduces cortisol and primes the brain for sleep", tier:2, cite:"Thoma, PLoS ONE 2013; Khalfa, Ann N Y Acad Sci 2003", why:"Music at 60–80 BPM synchronizes heart rate and breathing toward alpha/theta states — the neural precursor to deep sleep. Classical music significantly reduced salivary cortisol in controlled studies, and cortisol is one of the strongest GH suppressors. Playing Debussy or Chopin during the wind-down creates a conditioned sleep cue — after 1–2 weeks the brain associates this music with 'time to sleep.'", tip:"Start a playlist after dinner. Claire de Lune, Gymnopédie No. 1, Chopin Nocturne Op. 9 No. 2, Debussy Clair de Lune, Bach Cello Suite No. 1. Keep it soft — background level. Continue through bath and lotion time.",
+      pumps:[
+        { p:"Cortisol reduction", n:"significant", d:"Classical music reduced salivary cortisol in controlled study" },
+        { p:"Parasympathetic shift", n:"alpha/theta", d:"60–80 BPM music synchronizes brainwaves toward pre-sleep states" },
+        { p:"Conditioned cue", n:"after 1–2 wks", d:"Brain auto-associates this music with sleep onset" },
+      ]},
+
     { id:"bath", t:"Warm bath with Epsom salts", sub:"20 min before wind-down", gh:"tonight's growth", headline:"core temp drop after — fastest SWS onset", tier:1, cite:"Krauchi, Nature 1999; Haghayegh, Sleep Med Rev 2019", why:"Warm bath raises peripheral blood flow — when you get out, core temp drops rapidly — this accelerated cooling signals sleep onset and deepens SWS. Epsom salts add transdermal magnesium. The first SWS cycle contains the largest GH pulse of the day.", tip:"10–20 minutes, warm not hot. Add Epsom salt.",
       pumps:[
         { p:"Core temp drop", n:"faster SWS", d:"Accelerated cooling — deeper sleep onset" },
@@ -397,7 +414,15 @@ const dayData: DayPeriod[] = [
         { p:"Cortisol ↓ (cherry)", n:"↓ stress", d:"Tart cherry reduces cortisol" },
       ]},
 
-    { id:"rtn", t:"Same routine every night", sub:"Bath — lotion — drink — books — bed", gh:"melatonin trigger", headline:"brain auto-releases melatonin when routine starts", tier:0, cite:"Mindell, Sleep 2015; Mindell, Sleep 2009", why:"After 1–2 weeks, the brain starts releasing melatonin as soon as it recognizes the familiar sequence — before lights are off. Melatonin raised GH up to 157% in adult studies. The routine itself becomes a GH lever.", tip:"Same order, always. They stop fighting bedtime.",
+    { id:"read", t:"Read a book in bed", sub:"15–20 min together — physical book, not a screen", gh:"sleep trigger", headline:"reading in bed replaces screens and becomes a conditioned sleep cue", tier:1, cite:"Mindell, Sleep 2015; Chang, PNAS 2014", why:"Reading a physical book in bed activates the parasympathetic nervous system — the opposite of what screens do. After 1–2 weeks, the brain associates book + bed = sleep, and starts releasing melatonin on cue. Chang et al. showed screen reading before bed suppressed melatonin, while book reading did not. Shared reading also deepens parent-child bonding — which lowers cortisol in both parent and child.", tip:"Physical books only — no tablets, no Kindle with backlight. Read together. Let them pick the book. This becomes the last step before lights out. Magnesium lotion on feet while you read.",
+      pumps:[
+        { p:"Melatonin preserved", n:"no suppression", d:"Book reading doesn't suppress melatonin — screens do" },
+        { p:"Parasympathetic activation", n:"sleep onset", d:"Reading activates calm nervous system state" },
+        { p:"Conditioned cue", n:"after 1–2 wks", d:"Brain associates reading + bed = sleep" },
+        { p:"Cortisol ↓ (bonding)", n:"calming", d:"Shared reading lowers cortisol in parent and child" },
+      ]},
+
+    { id:"rtn", t:"Same routine every night", sub:"Bath — lotion — drink — read — bed", gh:"melatonin trigger", headline:"brain auto-releases melatonin when routine starts", tier:0, cite:"Mindell, Sleep 2015; Mindell, Sleep 2009", why:"After 1–2 weeks, the brain starts releasing melatonin as soon as it recognizes the familiar sequence — before lights are off. Melatonin raised GH up to 157% in adult studies. The routine itself becomes a GH lever.", tip:"Same order, always. They stop fighting bedtime.",
       pumps:[
         { p:"Anticipatory melatonin*", n:"up to 157%", d:"Melatonin raised GH 157% in adult studies — routine auto-triggers it" },
         { p:"Sensory ritual", n:"conditioned", d:"After 1–2 weeks the sequence itself triggers sleep" },

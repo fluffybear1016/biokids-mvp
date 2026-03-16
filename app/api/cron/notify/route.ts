@@ -53,19 +53,19 @@ const SLOTS: NotificationSlot[] = [
     messages: [
       {
         title: "Good morning",
-        body: "Sunlight. Sheep yogurt. Pumpkin seeds. That's the morning.",
-        url: "/home#item-d1",
+        body: "Claire de Lune on. Sunlight. Sheep yogurt with pumpkin seeds. That's the morning.",
+        url: "/home#item-music-am",
         tag: "biokids-morning",
       },
       {
         title: "Good morning",
-        body: "10 minutes outside, then the Growth Bowl — sheep yogurt, berries, honey, cod liver oil hidden in the smoothie.",
+        body: "Put on some Bach or Debussy. 10 minutes outside, then the Growth Bowl — sheep yogurt, berries, honey.",
         url: "/home#item-sun",
         tag: "biokids-morning",
       },
       {
         title: "Good morning",
-        body: "Stretch in the sun. Sheep yogurt bowl with hemp hearts. Sunny side up eggs.",
+        body: "Classical music on, stretch in the sun. Sheep yogurt bowl with hemp hearts. Sunny side up eggs.",
         url: "/home#item-d1",
         tag: "biokids-morning",
       },
@@ -159,7 +159,7 @@ const SLOTS: NotificationSlot[] = [
       },
       {
         title: "Dinner by 6",
-        body: "Bone broth starter, rotated protein, lentils with lemon, broccoli. Wrap up by 6 if you can.",
+        body: "Bone broth starter, rotated protein, lentils with lemon, cooked spinach + broccoli. No salads — cook all veggies at dinner.",
         url: "/home#item-din",
         tag: "biokids-dinner",
       },
@@ -178,20 +178,20 @@ const SLOTS: NotificationSlot[] = [
     utcHour: 23,
     messages: [
       {
-        title: "Epsom salt bath",
-        body: "Warm water, 20 minutes. Then magnesium lotion on their feet. The core temp drop triggers deep sleep.",
-        url: "/home#item-bath",
+        title: "Claire de Lune on",
+        body: "Classical music, Epsom salt bath, 20 minutes. Then magnesium lotion on their feet. The core temp drop triggers deep sleep.",
+        url: "/home#item-music-pm",
         tag: "biokids-winddown",
       },
       {
         title: "Tart cherry + A2 milk",
-        body: "The Sleep Drink. 4 oz A2 milk, 1 oz tart cherry, unsweetened. Casein feeds growth all night.",
+        body: "The Sleep Drink. 4 oz A2 milk, 1 oz tart cherry, unsweetened. Then read a book in bed together.",
         url: "/home#item-drink",
         tag: "biokids-winddown",
       },
       {
         title: "Wind-down",
-        body: "Epsom bath. Magnesium on feet. Tart cherry + A2 milk. Book. They'll be drowsy soon.",
+        body: "Chopin on softly. Epsom bath. Magnesium on feet. Sleep Drink. Read a book in bed. They'll be drowsy soon.",
         url: "/home#item-rtn",
         tag: "biokids-winddown",
       },
