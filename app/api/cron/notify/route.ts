@@ -59,20 +59,20 @@ const SLOTS: NotificationSlot[] = [
     sendAll: true,
     messages: [
       {
-        title: "Claire de Lune + sunlight",
-        body: "Play Claire de Lune. Then 10 minutes outside — even the porch counts. You're setting tonight's sleep clock right now.",
+        title: "Claire de Lune + stretch + sunlight",
+        body: "Play Claire de Lune. Gentle stretch. Then 10 minutes outside — even the porch counts. This sets tonight's sleep clock.",
         url: "/home#item-music-am",
         tag: "biokids-morning-1",
       },
       {
         title: "A glass of cold A2 milk",
-        body: "That's dairy serving #1. A glass of cold A2 milk with a drizzle of honey. If they want more, add pumpkin seeds or berries on the side. That's enough.",
+        body: "Dairy serving #1. Cold A2 milk, drizzle of honey. That's it. Why A2 specifically? Tap to see.",
         url: "/home#item-d1",
         tag: "biokids-morning-2",
       },
       {
         title: "Sunny side up eggs + cod liver oil",
-        body: "2–3 eggs, any way they'll eat them. Half a spoon of CLO hidden in a berry smoothie — they won't taste it. Skip CLO on liver days. Morning done.",
+        body: "2–3 eggs. Half a spoon of CLO hidden in a berry smoothie — they won't taste it. Skip CLO on liver days. There's a reason we say sunny side up.",
         url: "/home#item-bkf",
         tag: "biokids-morning-3",
       },
