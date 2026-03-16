@@ -49,38 +49,6 @@ export default function Home() {
         <LandingHeightPredictor />
       </div>
 
-      {/* The case study — factual, public-record, no endorsement */}
-      <section style={{ padding: '0 1rem 2.5rem', backgroundColor: '#fafaf9' }} className="sm:pb-12">
-        <div className="max-w-6xl mx-auto">
-          <div style={{ maxWidth: '32rem', margin: '0 auto' }}>
-            <Link href="/learn/dennis-rodman-growth" style={{ textDecoration: 'none', display: 'block' }}>
-              <div style={{
-                background: '#fff', borderRadius: 16, border: '1.5px solid #e7e5e4',
-                padding: '24px 22px', position: 'relative', overflow: 'hidden',
-                transition: 'border-color 0.2s ease',
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 12 }}>
-                  <span style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 9, fontWeight: 800, color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Case Study</span>
-                  <span style={{ fontSize: 9, color: '#a8a29e' }}>&middot;</span>
-                  <span style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 9, color: '#a8a29e' }}>public record</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 10 }}>
-                  <span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 36, fontWeight: 800, color: '#065f46', lineHeight: 1 }}>5&apos;6&quot;</span>
-                  <span style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 14, color: '#a8a29e' }}>&rarr;</span>
-                  <span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 36, fontWeight: 800, color: '#065f46', lineHeight: 1 }}>6&apos;7&quot;</span>
-                </div>
-                <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 13, color: '#1c1917', lineHeight: 1.65, margin: '0 0 8px' }}>
-                  A well-documented case: an NBA Hall of Famer was 5&apos;6&quot; as a high school senior. After graduation, a combination of delayed puberty and improved nutrition coincided with a dramatic growth spurt to 6&apos;7&quot;.
-                </p>
-                <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 11, color: '#065f46', fontWeight: 600, margin: 0 }}>
-                  What does the science say about late growth spurts? Read the analysis &rarr;
-                </p>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Growth Trajectory Graph */}
       <section style={{ padding: '0 1rem 3rem', backgroundColor: '#fafaf9' }} className="sm:pb-16">
         <div className="max-w-6xl mx-auto">
