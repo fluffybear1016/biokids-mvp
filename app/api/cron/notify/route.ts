@@ -48,9 +48,10 @@ type NotificationSlot = {
 
 const SLOTS: NotificationSlot[] = [
   // ── 7 AM ET ── Morning (FULL PROTOCOL — sends all 3 in order)
-  // Parents get the complete morning sequence so nothing gets missed.
-  // Step 1: Music + sunlight + stretch (sets the circadian clock)
-  // Step 2: Dairy — let the kids build their own bowl
+  // Ive: one material per step. No menus. No alternatives in the title.
+  // Each notification should feel like one small, effortless thing.
+  // Step 1: Claire de Lune + sunlight (sets the circadian clock)
+  // Step 2: A glass of A2 milk (dairy serving #1 — that's it)
   // Step 3: Eggs + cod liver oil
   {
     name: 'morning',
@@ -58,20 +59,20 @@ const SLOTS: NotificationSlot[] = [
     sendAll: true,
     messages: [
       {
-        title: "Step 1: Claire de Lune + sunlight + stretch",
-        body: "Put on something slow — Debussy, Bach, anything calm. Then 10 min outside with a gentle stretch. Even the porch counts. You're setting tonight's sleep clock right now.",
+        title: "Claire de Lune + sunlight",
+        body: "Play Claire de Lune. Then 10 minutes outside — even the porch counts. You're setting tonight's sleep clock right now.",
         url: "/home#item-music-am",
         tag: "biokids-morning-1",
       },
       {
-        title: "Step 2: The Growth Bowl — let them build it",
-        body: "Sheep yogurt (or any A2/whole milk yogurt), pumpkin seeds, berries, raw honey. Let the kids pour, sprinkle, build. A smoothie or cold milk works too. The ritual matters.",
+        title: "A glass of cold A2 milk",
+        body: "That's dairy serving #1. A glass of cold A2 milk with a drizzle of honey. If they want more, add pumpkin seeds or berries on the side. That's enough.",
         url: "/home#item-d1",
         tag: "biokids-morning-2",
       },
       {
-        title: "Step 3: Sunny side up eggs + cod liver oil",
-        body: "2–3 eggs, any way they'll eat them. Half a spoon of CLO hidden in the smoothie — they won't taste it. Skip CLO on liver days. That's the morning done.",
+        title: "Sunny side up eggs + cod liver oil",
+        body: "2–3 eggs, any way they'll eat them. Half a spoon of CLO hidden in a berry smoothie — they won't taste it. Skip CLO on liver days. Morning done.",
         url: "/home#item-bkf",
         tag: "biokids-morning-3",
       },
