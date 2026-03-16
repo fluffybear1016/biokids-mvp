@@ -1050,7 +1050,7 @@ export default function Dashboard() {
               </div>
               <div>
                 <div style={{ fontSize:14, fontWeight:700, color:"#1c1917", lineHeight:1.3 }}>Sunlight, laughter, outside, every day</div>
-                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#57534e", lineHeight:1.5, marginTop:3 }}>10 minutes of morning sun sets tonight's sleep clock. Laughter alone raised growth hormone 87% in one study. Let them play, roughhouse, be silly. Joy is not a bonus — it's a growth lever. Make it fun for everyone.</div>
+                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10.5, color:"#57534e", lineHeight:1.5, marginTop:3 }}>10 minutes of morning sun sets tonight's sleep clock. Laughter alone raised growth hormone 87% in one study. Let them play, be silly, have fun. Joy is not a bonus — it's a growth lever. Make it fun for everyone.</div>
               </div>
             </div>
 
