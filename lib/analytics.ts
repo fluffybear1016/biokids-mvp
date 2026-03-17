@@ -1,5 +1,6 @@
 // Analytics wrapper — dual-sends to Mixpanel + Firebase Analytics
 // Tracks key acquisition metrics: MAU, DAU, retention, engagement
+// Includes retry mechanism to handle CDN load race condition
 
 import { logEvent, setUserId, setUserProperties } from 'firebase/analytics';
 import { getFirebaseAnalytics } from './firebase';
@@ -19,8 +20,42 @@ declare global {
   }
 }
 
+// Waits for Mixpanel CDN to load, polling every 100ms for up to 5 seconds.
+// This fixes the critical race condition where analytics.identify() fires
+// before the Mixpanel script tag in layout.tsx has finished loading.
+function waitForMixpanel(timeoutMs = 5000): Promise<Window['mixpanel'] | null> {
+  return new Promise((resolve) => {
+    if (typeof window === 'undefined') {
+      resolve(null);
+      return;
+    }
+
+    // Already loaded — return immediately
+    if (window.mixpanel && typeof window.mixpanel.track === 'function') {
+      resolve(window.mixpanel);
+      return;
+    }
+
+    const interval = 100;
+    let elapsed = 0;
+
+    const timer = setInterval(() => {
+      elapsed += interval;
+      if (window.mixpanel && typeof window.mixpanel.track === 'function') {
+        clearInterval(timer);
+        resolve(window.mixpanel);
+      } else if (elapsed >= timeoutMs) {
+        clearInterval(timer);
+        console.warn('[analytics] Mixpanel CDN did not load within', timeoutMs, 'ms');
+        resolve(null);
+      }
+    }, interval);
+  });
+}
+
+// Synchronous check — use for non-critical, fire-and-forget events
 function mp() {
-  if (typeof window !== 'undefined' && window.mixpanel) {
+  if (typeof window !== 'undefined' && window.mixpanel && typeof window.mixpanel.track === 'function') {
     return window.mixpanel;
   }
   return null;
@@ -51,8 +86,12 @@ async function fbSetUser(userId: string, properties?: Record<string, string>) {
 // Core events for acquisition metrics
 export const analytics = {
   // Identify user (call after login/signup)
-  identify(userId: string, email?: string) {
-    const m = mp();
+  // CRITICAL: Uses waitForMixpanel() because this fires on OAuth redirect
+  // before the CDN script has loaded. Without the wait, identify silently
+  // fails and the user never gets an email attached in Mixpanel.
+  async identify(userId: string, email?: string) {
+    // Wait for Mixpanel CDN — this is the most important call to get right
+    const m = await waitForMixpanel();
     if (m) {
       m.identify(userId);
       if (email) {
@@ -60,21 +99,27 @@ export const analytics = {
       }
       m.people.set_once({ 'First Seen': new Date().toISOString() });
     }
-    // Firebase
+    // Firebase — also async, no race condition
     fbSetUser(userId, email ? { email } : undefined);
   },
 
-  // Track signup
-  signup(method: 'email' | 'google' | 'apple', email: string) {
-    mp()?.track('Signup', { method, email_domain: email.split('@')[1] });
-    mp()?.people.set({ 'Signup Method': method, 'Signup Date': new Date().toISOString() });
+  // Track signup — also uses wait since it fires right after identify on redirect
+  async signup(method: 'email' | 'google' | 'apple', email: string) {
+    const m = await waitForMixpanel();
+    if (m) {
+      m.track('Signup', { method, email_domain: email.split('@')[1] });
+      m.people.set({ 'Signup Method': method, 'Signup Date': new Date().toISOString() });
+    }
     // Firebase
     fb('sign_up', { method, email_domain: email.split('@')[1] });
   },
 
-  // Track login
-  login(method: 'email' | 'google') {
-    mp()?.track('Login', { method });
+  // Track login — also uses wait since it fires right after auth
+  async login(method: 'email' | 'google') {
+    const m = await waitForMixpanel();
+    if (m) {
+      m.track('Login', { method });
+    }
     fb('login', { method });
   },
 
