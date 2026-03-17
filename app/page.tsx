@@ -140,7 +140,7 @@ export default function Home() {
             <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid #e7e5e4', position: 'relative' }}>
               <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2rem', color: '#d1fae5', lineHeight: 1, marginBottom: '0.5rem' }}>&ldquo;</div>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', lineHeight: 1.7, marginBottom: '1rem' }}>
-                My son just turned 13 and is in the 97th percentile for height thanks to bioKids. My husband and I are 5&apos;9 and 5&apos;7.5&rdquo; respectively. I am starting my other two boys 11 and 7 on bioKids now.
+                My son just turned 13 and went from the 60th to 87th percentile for height thanks to bioKids. My husband and I are 5&apos;9 and 5&apos;7.5&rdquo; respectively. I am starting my other two boys 11 and 7 on bioKids now.
               </p>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', fontWeight: 700 }}>Maggie</p>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#78716c' }}>Mom of 3 &middot; New York</p>
@@ -151,7 +151,7 @@ export default function Home() {
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', lineHeight: 1.7, marginBottom: '1rem' }}>
                 Both my kids are in the 99th percentile, 8 and 7 years old. We helped create the bioKids protocol and are starting tennis lessons for them next year in hopes of a D1 scholarship.
               </p>
-              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', fontWeight: 700 }}>Marko</p>
+              <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', fontWeight: 700 }}>Jeffrey</p>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#78716c' }}>Dad of 2 &middot; New York</p>
             </div>
           </div>
