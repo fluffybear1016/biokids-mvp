@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
+import { serverAnalytics } from '@/lib/posthog-server';
 
 function getSupabaseAdmin() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -41,6 +42,13 @@ export async function POST(request: Request) {
       console.error('Create profile error:', error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
+
+    // Server-side PostHog tracking — this fires for EVERY new signup (email + OAuth)
+    // This is the critical fix: even if client-side PostHog is ad-blocked,
+    // this server-side event guarantees we never miss a signup
+    serverAnalytics.signup(userId, email, 'email');
+    serverAnalytics.profileCreated(userId, email);
+    await serverAnalytics.flush();
 
     return NextResponse.json({ success: true });
   } catch (error) {

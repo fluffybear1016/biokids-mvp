@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
+import { serverAnalytics } from '@/lib/posthog-server';
 
 // Lazy initialization of Supabase client
 function getSupabaseClient() {
@@ -46,6 +47,10 @@ export async function POST(request: Request) {
         email: authData.user.email,
         subscription_status: 'trial',
       }, { onConflict: 'id' });
+
+    // Server-side PostHog tracking — guaranteed to fire even if client is ad-blocked
+    serverAnalytics.login(authData.user.id, email, 'email');
+    await serverAnalytics.flush();
 
     return NextResponse.json({
       user: authData.user,

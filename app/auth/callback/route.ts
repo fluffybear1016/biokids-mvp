@@ -1,6 +1,7 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { serverAnalytics } from '@/lib/posthog-server';
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -45,6 +46,10 @@ export async function GET(request: Request) {
       } catch {
         // Profile may already exist — that's fine
       }
+
+      // Server-side PostHog — track OAuth login (this fires even if client is ad-blocked)
+      serverAnalytics.login(data.user.id, data.user.email || '', 'google');
+      await serverAnalytics.flush();
 
       // Clear the redirect cookie after use
       const response = NextResponse.redirect(`${origin}${next}`);
