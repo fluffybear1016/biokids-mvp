@@ -84,7 +84,11 @@ export default function PWAInstall() {
     const handler = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setTimeout(() => setShowInstallBanner(true), 30000);
+      // Don't show the banner during onboarding (Step 5 handles it there)
+      const isOnboarding = window.location.pathname.includes('/onboarding');
+      if (!isOnboarding) {
+        setTimeout(() => setShowInstallBanner(true), 30000);
+      }
     };
     window.addEventListener('beforeinstallprompt', handler);
 
@@ -193,8 +197,9 @@ export default function PWAInstall() {
     setDeferredPrompt(null);
   };
 
-  // Don't show notification banner if: loading, already subscribed, unsupported, or user dismissed
-  const showNotifBanner = !dismissed && notifState !== 'loading' && notifState !== 'subscribed' && notifState !== 'unsupported';
+  // Don't show notification banner if: loading, already subscribed, unsupported, user dismissed, or during onboarding
+  const isOnboarding = typeof window !== 'undefined' && window.location.pathname.includes('/onboarding');
+  const showNotifBanner = !dismissed && !isOnboarding && notifState !== 'loading' && notifState !== 'subscribed' && notifState !== 'unsupported';
 
   return (
     <>

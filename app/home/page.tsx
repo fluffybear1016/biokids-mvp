@@ -893,7 +893,7 @@ export default function Dashboard() {
           </>}
         </div>
 
-        {/* Install to Home Screen prompt */}
+        {/* Install to Home Screen prompt — top of page for visibility */}
         <div style={{ marginTop: 16 }}>
           <InstallButton />
         </div>

@@ -12,6 +12,12 @@ import { Suspense } from 'react';
 // Shared styles
 const mono = "'Courier New', Courier, monospace";
 
+// Type for beforeinstallprompt
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: string }>;
+}
+
 function OnboardingContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -57,9 +63,15 @@ function OnboardingContent() {
   // Newsletter opt-in
   const [newsletterOptIn, setNewsletterOptIn] = useState(true);
 
-  // Total steps: 1=Account, 2=ChildInfo, 3=Habits, 4=Goals, 5=Height (if needed)
+  // Total steps: 1=Account, 2=ChildInfo, 3=Habits, 4=Goals, 5=Install, 6=Height (if needed)
   // App is 100% free — just sign up
-  const totalSteps = hasHeightData ? 4 : 5;
+  const totalSteps = hasHeightData ? 5 : 6;
+
+  // PWA Install state (Step 5)
+  const [installDeferredPrompt, setInstallDeferredPrompt] = useState<Event | null>(null);
+  const [installPlatform, setInstallPlatform] = useState<'ios' | 'android' | 'desktop' | 'standalone'>('desktop');
+  const [installTriggered, setInstallTriggered] = useState(false);
+  const [notifRequested, setNotifRequested] = useState(false);
 
   // Check for existing height data from landing page
   useEffect(() => {
@@ -70,12 +82,47 @@ function OnboardingContent() {
     }
   }, []);
 
+  // PWA install prompt listener
+  useEffect(() => {
+    // Detect platform
+    if (typeof window !== 'undefined') {
+      if (window.matchMedia('(display-mode: standalone)').matches || (navigator as unknown as { standalone?: boolean }).standalone) {
+        setInstallPlatform('standalone');
+      } else if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        setInstallPlatform('ios');
+      } else if (/Android/.test(navigator.userAgent)) {
+        setInstallPlatform('android');
+      } else {
+        setInstallPlatform('desktop');
+      }
+    }
+
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setInstallDeferredPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  // Advance from Step 5 (install)
+  const advanceFromInstall = () => {
+    // Mark as seen so InstallButton on home page doesn't show again
+    localStorage.setItem('biokids-install-dismissed', 'true');
+    analytics.onboardingStep(5, 'Install App');
+    if (hasHeightData) {
+      completeOnboarding();
+    } else {
+      setStep(6);
+    }
+  };
+
   // Read ?step= URL param to allow resuming onboarding
   useEffect(() => {
     const stepParam = searchParams.get('step');
     if (stepParam) {
       const parsed = parseInt(stepParam, 10);
-      if (parsed >= 1 && parsed <= 6) {
+      if (parsed >= 1 && parsed <= 7) {
         setStep(parsed);
         const savedName = localStorage.getItem('childName');
         if (savedName) setName(savedName);
@@ -281,7 +328,7 @@ function OnboardingContent() {
     }
   };
 
-  // Step 5: Height Potential — save and go to home
+  // Step 6: Height Potential — save and go to home
   const handleHeightSubmit = async () => {
     if (geneticTargetCm) {
       localStorage.setItem('childGender', childGender);
@@ -290,16 +337,16 @@ function OnboardingContent() {
       localStorage.setItem('geneticTarget', geneticTargetCm.toString());
     }
     localStorage.setItem('biokids_onboarding_complete', 'true');
-    analytics.onboardingStep(5, 'Height Potential');
+    analytics.onboardingStep(6, 'Height Potential');
     analytics.onboardingComplete();
     if (childGender) analytics.setChildInfo({ gender: childGender });
     await ensureProfileAccess();
     router.push('/home');
   };
 
-  // Auto-advance Step 5 when all height fields filled
+  // Auto-advance Step 6 when all height fields filled
   useEffect(() => {
-    if (step === 5 && canCalculateHeight && geneticTargetCm) {
+    if (step === 6 && canCalculateHeight && geneticTargetCm) {
       const t = setTimeout(handleHeightSubmit, 1200); // slightly longer to show result
       return () => clearTimeout(t);
     }
@@ -351,6 +398,25 @@ function OnboardingContent() {
         @keyframes fadeSlideIn {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes installBtnGlow {
+          0% { box-shadow: 0 0 0 0 rgba(6, 95, 70, 0.4); }
+          50% { box-shadow: 0 0 0 12px rgba(6, 95, 70, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(6, 95, 70, 0); }
+        }
+        @keyframes installIconFloat {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
+          100% { transform: translateY(0); }
+        }
+        @keyframes installFadeUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes installRingPulse {
+          0% { transform: scale(1); opacity: 0.3; }
+          50% { transform: scale(1.15); opacity: 0.1; }
+          100% { transform: scale(1); opacity: 0.3; }
         }
       `}</style>
       <div style={{ width: '100%', maxWidth: 440 }}>
@@ -670,19 +736,365 @@ function OnboardingContent() {
                 }));
                 analytics.onboardingStep(4, 'Goal Selection');
                 analytics.setChildInfo({ goal });
-                if (hasHeightData) {
-                  // Height data already saved from landing page — go straight to home
-                  completeOnboarding();
-                } else {
-                  setStep(5); // → Height Potential
-                }
+                setStep(5); // → Install App step
               }}
             />
           </div>
         )}
 
-        {/* ========== Step 5: Height Potential (only if not from landing page) ========== */}
-        {step === 5 && !hasHeightData && (
+        {/* ========== Step 5: Install App ========== */}
+        {step === 5 && (
+          <div style={{
+            animation: 'installFadeUp 0.6s ease',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+            padding: '2rem 1.5rem',
+          }}>
+            {/* Glowing app icon */}
+            <div style={{ position: 'relative', marginBottom: 32 }}>
+              {/* Outer pulse ring */}
+              <div style={{
+                position: 'absolute',
+                inset: -16,
+                borderRadius: 28,
+                border: '2px solid #065f46',
+                animation: 'installRingPulse 3s ease-in-out infinite',
+              }} />
+              {/* App icon container */}
+              <div style={{
+                width: 88,
+                height: 88,
+                borderRadius: 22,
+                background: '#065f46',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                animation: 'installIconFloat 4s ease-in-out infinite',
+                boxShadow: '0 8px 32px rgba(6, 95, 70, 0.25)',
+              }}>
+                <span style={{
+                  fontFamily: mono,
+                  fontSize: 28,
+                  fontWeight: 900,
+                  color: '#fff',
+                  letterSpacing: '-0.02em',
+                }}>bk</span>
+              </div>
+            </div>
+
+            {/* Copy */}
+            <p style={{
+              fontFamily: mono,
+              fontSize: 10,
+              fontWeight: 700,
+              color: '#065f46',
+              textTransform: 'uppercase',
+              letterSpacing: '0.15em',
+              margin: '0 0 12px',
+            }}>
+              Almost there
+            </p>
+            <h2 style={{
+              fontFamily: mono,
+              fontSize: 22,
+              fontWeight: 800,
+              color: '#1c1917',
+              margin: '0 0 10px',
+              lineHeight: 1.3,
+            }}>
+              Add bioKids to your<br />Home Screen
+            </h2>
+            <p style={{
+              fontFamily: mono,
+              fontSize: 13,
+              color: '#78716c',
+              margin: '0 0 20px',
+              lineHeight: 1.6,
+              maxWidth: 300,
+            }}>
+              {name ? `${name}'s` : 'Your'} protocol, one tap away.
+            </p>
+
+            {/* NLM Trust signal */}
+            <div style={{
+              background: '#f0fdf4',
+              border: '1.5px solid #065f46',
+              borderRadius: 14,
+              padding: '16px 18px',
+              marginBottom: 28,
+              maxWidth: 320,
+              width: '100%',
+              textAlign: 'left',
+              display: 'flex',
+              gap: 12,
+              alignItems: 'flex-start',
+            }}>
+              {/* Shield icon */}
+              <div style={{
+                width: 36, height: 36, borderRadius: 10,
+                background: '#065f46',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                flexShrink: 0,
+              }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div>
+                <p style={{
+                  fontFamily: mono,
+                  fontSize: 13,
+                  fontWeight: 800,
+                  color: '#065f46',
+                  margin: '0 0 4px',
+                }}>
+                  Backed by 250+ studies
+                </p>
+                <p style={{
+                  fontFamily: mono,
+                  fontSize: 11,
+                  color: '#065f46',
+                  margin: 0,
+                  lineHeight: 1.5,
+                  opacity: 0.8,
+                }}>
+                  Protocols built on academic and scientific literature from the U.S. National Library of Medicine.
+                </p>
+              </div>
+            </div>
+
+            {/* Platform-specific install action */}
+            {installPlatform === 'ios' ? (
+              /* iOS: Super visual, dumbed-down 2-step instructions */
+              <div style={{ width: '100%', maxWidth: 340 }}>
+
+                {/* Step 1: Tap Share — with big visual of the share icon */}
+                <div style={{
+                  background: '#fff',
+                  borderRadius: 16,
+                  border: '1px solid #e7e5e4',
+                  padding: '20px',
+                  marginBottom: 12,
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+                    <div style={{
+                      width: 24, height: 24, borderRadius: 12,
+                      background: '#065f46', color: '#fff',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontFamily: mono, fontSize: 13, fontWeight: 800,
+                    }}>1</div>
+                    <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: '#1c1917' }}>
+                      Tap this button in Safari
+                    </span>
+                  </div>
+                  {/* Mockup of Safari bottom bar with Share button highlighted */}
+                  <div style={{
+                    background: '#f5f5f4',
+                    borderRadius: 12,
+                    padding: '12px 16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                  }}>
+                    {/* Back arrow */}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    {/* Forward arrow */}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    {/* SHARE BUTTON — highlighted with ring */}
+                    <div style={{
+                      position: 'relative',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                      <div style={{
+                        position: 'absolute',
+                        inset: -8,
+                        borderRadius: 12,
+                        border: '2.5px solid #065f46',
+                        animation: 'installRingPulse 2s ease-in-out infinite',
+                      }} />
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#065f46" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="4" y="8" width="16" height="13" rx="2"/>
+                        <line x1="12" y1="2" x2="12" y2="14"/>
+                        <polyline points="8 6 12 2 16 6"/>
+                      </svg>
+                    </div>
+                    {/* Bookmark */}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                    {/* Tabs */}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                  </div>
+                  <p style={{
+                    fontFamily: mono, fontSize: 11, color: '#065f46', fontWeight: 600,
+                    textAlign: 'center', margin: '10px 0 0',
+                  }}>
+                    It&apos;s at the bottom of your screen
+                  </p>
+                </div>
+
+                {/* Step 2: Tap "Add to Home Screen" — with mockup of the menu item */}
+                <div style={{
+                  background: '#fff',
+                  borderRadius: 16,
+                  border: '1px solid #e7e5e4',
+                  padding: '20px',
+                  marginBottom: 20,
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+                    <div style={{
+                      width: 24, height: 24, borderRadius: 12,
+                      background: '#065f46', color: '#fff',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontFamily: mono, fontSize: 13, fontWeight: 800,
+                    }}>2</div>
+                    <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: '#1c1917' }}>
+                      Scroll down and tap this
+                    </span>
+                  </div>
+                  {/* Mockup of iOS share sheet menu item */}
+                  <div style={{
+                    background: '#fff',
+                    borderRadius: 12,
+                    border: '2.5px solid #065f46',
+                    padding: '14px 16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 14,
+                    boxShadow: '0 2px 12px rgba(6, 95, 70, 0.12)',
+                  }}>
+                    {/* Add to Home Screen icon (plus in square) */}
+                    <div style={{
+                      width: 32, height: 32, borderRadius: 7,
+                      background: '#f5f5f4',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      flexShrink: 0,
+                    }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1c1917" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="3"/>
+                        <line x1="12" y1="8" x2="12" y2="16"/>
+                        <line x1="8" y1="12" x2="16" y2="12"/>
+                      </svg>
+                    </div>
+                    <span style={{
+                      fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+                      fontSize: 15,
+                      fontWeight: 400,
+                      color: '#1c1917',
+                    }}>
+                      Add to Home Screen
+                    </span>
+                  </div>
+                  <p style={{
+                    fontFamily: mono, fontSize: 11, color: '#065f46', fontWeight: 600,
+                    textAlign: 'center', margin: '10px 0 0',
+                  }}>
+                    Then tap &quot;Add&quot; in the top right — done!
+                  </p>
+                </div>
+
+                <button
+                  onClick={advanceFromInstall}
+                  style={{
+                    fontFamily: mono,
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: '#065f46',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '14px 16px',
+                    marginTop: 4,
+                  }}
+                >
+                  I&apos;ve added it — continue
+                </button>
+              </div>
+            ) : (
+              /* Android / Desktop: Use native prompt or show instructions */
+              <div style={{ width: '100%', maxWidth: 340 }}>
+                <button
+                  onClick={async () => {
+                    setInstallTriggered(true);
+                    analytics.onboardingStep(5, 'Install App - Tapped Install');
+                    if (installDeferredPrompt) {
+                      (installDeferredPrompt as BeforeInstallPromptEvent).prompt();
+                      const result = await (installDeferredPrompt as BeforeInstallPromptEvent).userChoice;
+                      setInstallDeferredPrompt(null);
+                    }
+                    advanceFromInstall();
+                  }}
+                  style={{
+                    fontFamily: mono,
+                    fontSize: 16,
+                    fontWeight: 700,
+                    width: '100%',
+                    padding: '1rem',
+                    borderRadius: 14,
+                    border: 'none',
+                    cursor: 'pointer',
+                    background: '#065f46',
+                    color: '#fff',
+                    animation: 'installBtnGlow 2.5s ease-in-out infinite',
+                    transition: 'transform 0.15s ease',
+                  }}
+                  onMouseDown={(e) => (e.currentTarget.style.transform = 'scale(0.97)')}
+                  onMouseUp={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                >
+                  Install App
+                </button>
+
+                {/* Three value props */}
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: 24,
+                  marginTop: 24,
+                  marginBottom: 24,
+                }}>
+                  {[
+                    { icon: '⚡', label: 'Instant open' },
+                    { icon: '🔔', label: 'Reminders' },
+                    { icon: '📱', label: 'Full screen' },
+                  ].map((item) => (
+                    <div key={item.label} style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: 20, marginBottom: 4 }}>{item.icon}</div>
+                      <span style={{ fontFamily: mono, fontSize: 10, color: '#a8a29e', fontWeight: 600 }}>{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Skip link */}
+            <button
+              onClick={() => {
+                analytics.onboardingStep(5, 'Install App - Skipped');
+                advanceFromInstall();
+              }}
+              style={{
+                fontFamily: mono,
+                fontSize: 12,
+                color: '#c4b5a4',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '12px 16px',
+                marginTop: 4,
+                transition: 'color 0.2s',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#78716c')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#c4b5a4')}
+            >
+              skip for now
+            </button>
+          </div>
+        )}
+
+        {/* ========== Step 6: Height Potential (only if not from landing page) ========== */}
+        {step === 6 && !hasHeightData && (
           <div style={{
             background: '#fff', borderRadius: 20, border: '1px solid #e7e5e4',
             padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',

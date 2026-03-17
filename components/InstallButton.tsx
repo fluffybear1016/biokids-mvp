@@ -27,6 +27,7 @@ export default function InstallButton() {
   const [showInstructions, setShowInstructions] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = useState(false);
+  const [minimized, setMinimized] = useState(false);
 
   useEffect(() => {
     setPlatform(detectPlatform());
@@ -69,78 +70,108 @@ export default function InstallButton() {
     }
   };
 
-  const handleDismiss = () => {
-    setInstalled(true);
-    localStorage.setItem('biokids-install-dismissed', 'true');
+  const handleMinimize = () => {
+    setMinimized(true);
   };
 
   return (
     <>
-      {/* Install button */}
-      <div style={{
-        background: '#fff',
-        border: '1px solid #e7e5e4',
-        borderRadius: 14,
-        padding: '16px 20px',
-        marginBottom: 16,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: 12,
-      }}>
-        <div style={{ flex: 1 }}>
-          <p style={{
-            fontFamily: "'Courier New', Courier, monospace",
-            fontSize: 13,
-            fontWeight: 700,
-            color: '#1c1917',
-            margin: '0 0 3px',
-          }}>
-            Add to Home Screen
-          </p>
-          <p style={{
+      {/* Minimized state — small tap target to re-expand */}
+      {minimized ? (
+        <button
+          onClick={() => setMinimized(false)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
             fontFamily: "'Courier New', Courier, monospace",
             fontSize: 11,
-            color: '#78716c',
-            margin: 0,
-            lineHeight: 1.4,
-          }}>
-            One tap to open. Get push reminders.
-          </p>
-        </div>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <button
-            onClick={handleDismiss}
-            style={{
+            fontWeight: 600,
+            color: '#065f46',
+            background: '#f0fdf4',
+            border: '1px solid #d1fae5',
+            borderRadius: 10,
+            padding: '8px 14px',
+            marginBottom: 12,
+            cursor: 'pointer',
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#065f46" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="4" y="8" width="16" height="13" rx="2"/>
+            <line x1="12" y1="2" x2="12" y2="14"/>
+            <polyline points="8 6 12 2 16 6"/>
+          </svg>
+          Add to Home Screen
+        </button>
+      ) : (
+        /* Full install card */
+        <div style={{
+          background: '#fff',
+          border: '1px solid #e7e5e4',
+          borderRadius: 14,
+          padding: '16px 20px',
+          marginBottom: 16,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 12,
+        }}>
+          <div style={{ flex: 1 }}>
+            <p style={{
+              fontFamily: "'Courier New', Courier, monospace",
+              fontSize: 13,
+              fontWeight: 700,
+              color: '#1c1917',
+              margin: '0 0 3px',
+            }}>
+              Add to Home Screen
+            </p>
+            <p style={{
               fontFamily: "'Courier New', Courier, monospace",
               fontSize: 11,
-              color: '#a8a29e',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '6px 8px',
-            }}
-          >
-            Dismiss
-          </button>
-          <button
-            onClick={handleInstall}
-            style={{
-              fontFamily: "'Courier New', Courier, monospace",
-              fontSize: 12,
-              fontWeight: 700,
-              color: '#fff',
-              background: '#065f46',
-              border: 'none',
-              borderRadius: 10,
-              padding: '10px 18px',
-              cursor: 'pointer',
-            }}
-          >
-            Install
-          </button>
+              color: '#78716c',
+              margin: 0,
+              lineHeight: 1.4,
+            }}>
+              One tap to open your protocol daily.
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            <button
+              onClick={handleMinimize}
+              style={{
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: 16,
+                color: '#a8a29e',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '4px 8px',
+                lineHeight: 1,
+              }}
+              aria-label="Minimize"
+            >
+              &minus;
+            </button>
+            <button
+              onClick={handleInstall}
+              style={{
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: 12,
+                fontWeight: 700,
+                color: '#fff',
+                background: '#065f46',
+                border: 'none',
+                borderRadius: 10,
+                padding: '10px 18px',
+                cursor: 'pointer',
+              }}
+            >
+              Install
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* iOS / Fallback instructions overlay */}
       {showInstructions && (
