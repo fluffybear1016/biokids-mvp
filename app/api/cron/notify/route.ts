@@ -10,8 +10,8 @@ import { sendPushToAll, PushPayload } from '@/lib/push';
 // just reminded of the one thing that matters right now.
 //
 // Schedule (all times ET / UTC):
-//   7:00 AM /  11 UTC — Dairy #1 + CLO
-//  12:00 PM /  16 UTC — Protein target + rotation
+//   7:00 AM /  11 UTC — Breakfast + Dairy #1 + CLO (skip cereal)
+//  12:00 PM /  16 UTC — Lunch: growth proteins + fermented side + protein check
 //   3:00 PM /  19 UTC — Sprint/Jump Stack + Dairy #2
 //   6:00 PM /  22 UTC — Dinner + gelatin (no exercise after this)
 //   8:00 PM /   0 UTC — Bedtime routine (the full sequence)
@@ -62,16 +62,17 @@ function isSprintDay(): boolean {
 
 const SLOTS: NotificationSlot[] = [
   // ══════════════════════════════════════════════════════════
-  // BIG 5 #1 & #2 — 7 AM ET — Dairy serving #1 + CLO
+  // 7 AM ET — Breakfast + Dairy #1 + CLO
   // ══════════════════════════════════════════════════════════
-  // One notification. Two actions. Both take 60 seconds.
+  // Skip cereal. Real food breakfast with dairy serving #1
+  // and cod liver oil. Give actual breakfast options.
   {
     name: 'morning',
     utcHour: 11,
     messages: [
       {
-        title: "A2 milk + lemon CLO",
-        body: "Dairy serving #1: cold A2 milk with honey, yogurt bowl, or smoothie — pick one. Then half a spoon of lemon cod liver oil (hidden in the smoothie works). Skip CLO on liver days. Serving #2 when they get home from school. Kids 10+: add a 3rd serving (e.g. post-sprint milk).",
+        title: "Breakfast + Dairy Serving #1 + CLO",
+        body: "Skip cereal. Pick one: eggs + A2 milk with honey, sheep yogurt bowl with berries + granola, or a berry smoothie with A2 milk. That's Dairy Serving #1. Then half a spoon of lemon cod liver oil (hide it in the smoothie). Skip CLO on liver days. Serving #2 comes after school with the sprint stack.",
         url: "/home#item-d1",
         tag: "biokids-morning",
       },
@@ -87,19 +88,19 @@ const SLOTS: NotificationSlot[] = [
   },
 
   // ══════════════════════════════════════════════════════════
-  // BIG 5 #3 — 12 PM ET — Protein target + power foods
+  // 12 PM ET — Lunch: growth proteins + fermented side
   // ══════════════════════════════════════════════════════════
-  // List ALL the growth proteins. Give the g/lb target.
-  // Don't prescribe days — let parents rotate freely.
+  // This is where the fermented side goes (not dinner).
+  // Protein check built in. No dairy at lunch.
   {
-    name: 'protein',
+    name: 'lunch',
     utcHour: 16,
     messages: [
       {
-        title: "Protein check — 0.6 g per pound",
-        body: "Daily target: ~0.6 g per lb body weight (80 lb = 48 g, 100 lb = 60 g). The growth proteins — rotate these: liver meatballs (beef or chicken liver, 2–3×/wk), beef, chicken, turkey, wild salmon, eggs, oysters (1×/wk = full week of zinc), lentils. Cooked vegetables + a fermented side (sauerkraut, kimchi). No dairy at lunch — save it for the sprint stack.",
+        title: "Lunch — growth protein + fermented side",
+        body: "Rotate the growth proteins: liver meatballs (2–3×/wk), beef, chicken, turkey, wild salmon, eggs, oysters (1×/wk = full week of zinc), lentils. Cooked veg + a fermented side — sauerkraut or kimchi (GABA for tonight's GH release). No dairy at lunch — save it for the sprint stack. Protein check: ~0.6 g per lb (80 lb = 48 g, 100 lb = 60 g).",
         url: "/home#item-lunch",
-        tag: "biokids-protein",
+        tag: "biokids-lunch",
       },
     ],
   },
@@ -118,16 +119,16 @@ const SLOTS: NotificationSlot[] = [
   // ══════════════════════════════════════════════════════════
   // 6 PM ET — Dinner + Gelatin (no exercise after this)
   // ══════════════════════════════════════════════════════════
-  // Dinner is the last active meal. Protein + lentils + veg +
-  // fermented side. Gelatin in any form. No dairy at dinner —
-  // save it for bedtime drink. No exercise after this.
+  // Dinner is the last active meal. Protein + lentils + veg.
+  // Fermented side is at lunch, not dinner. Gelatin in any form.
+  // No dairy at dinner — save it for bedtime drink.
   {
     name: 'dinner',
     utcHour: 22,
     messages: [
       {
         title: "Growth dinner + gelatin — no exercise after this",
-        body: "Rotated protein + lentils + cooked veg + a fermented side (sauerkraut or kimchi). No dairy at dinner. Add gelatin in any form — jello, gummies, or stirred into a smoothie. It's glycine: builds growth plates while they sleep. No exercise after dinner — core temp must drop for tonight's deep sleep.",
+        body: "Rotated protein + lentils + cooked vegetables. No dairy at dinner — save it for the bedtime drink. Add gelatin in any form: jello, gummies, homemade ice cream, or stirred into a smoothie. It's glycine — builds growth plates while they sleep + lowers core temp. No exercise after dinner.",
         url: "/home#item-lunch",
         tag: "biokids-dinner",
       },
