@@ -71,7 +71,6 @@ function OnboardingContent() {
   const [installDeferredPrompt, setInstallDeferredPrompt] = useState<Event | null>(null);
   const [installPlatform, setInstallPlatform] = useState<'ios' | 'android' | 'desktop' | 'standalone'>('desktop');
   const [installTriggered, setInstallTriggered] = useState(false);
-  const [notifRequested, setNotifRequested] = useState(false);
 
   // Check for existing height data from landing page
   useEffect(() => {
@@ -1012,8 +1011,8 @@ function OnboardingContent() {
                   I&apos;ve added it — continue
                 </button>
               </div>
-            ) : (
-              /* Android / Desktop: Use native prompt or show instructions */
+            ) : installPlatform === 'android' || installDeferredPrompt ? (
+              /* Android / Desktop Chrome: Use native prompt */
               <div style={{ width: '100%', maxWidth: 340 }}>
                 <button
                   onClick={async () => {
@@ -1023,6 +1022,9 @@ function OnboardingContent() {
                       (installDeferredPrompt as BeforeInstallPromptEvent).prompt();
                       const result = await (installDeferredPrompt as BeforeInstallPromptEvent).userChoice;
                       setInstallDeferredPrompt(null);
+                      if (result.outcome === 'accepted') {
+                        analytics.onboardingStep(5, 'Install App - Accepted');
+                      }
                     }
                     advanceFromInstall();
                   }}
@@ -1065,6 +1067,36 @@ function OnboardingContent() {
                     </div>
                   ))}
                 </div>
+              </div>
+            ) : (
+              /* Desktop fallback: no native prompt available */
+              <div style={{ width: '100%', maxWidth: 340 }}>
+                <p style={{
+                  fontFamily: mono,
+                  fontSize: 13,
+                  color: '#57534e',
+                  lineHeight: 1.7,
+                  margin: '0 0 20px',
+                }}>
+                  Open <strong style={{ color: '#065f46' }}>biokids.com</strong> on your phone to add it to your Home Screen.
+                </p>
+                <button
+                  onClick={advanceFromInstall}
+                  style={{
+                    fontFamily: mono,
+                    fontSize: 16,
+                    fontWeight: 700,
+                    width: '100%',
+                    padding: '1rem',
+                    borderRadius: 14,
+                    border: 'none',
+                    cursor: 'pointer',
+                    background: '#065f46',
+                    color: '#fff',
+                  }}
+                >
+                  Continue
+                </button>
               </div>
             )}
 

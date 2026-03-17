@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   keywords: ['biokids app', 'biokids download', 'biokids app store', 'biokids ios', 'biokids android', 'child height app', 'growth protocol app'],
   openGraph: {
     title: 'Get bioKids',
-    description: 'Peer-reviewed growth protocols, delivered directly to your phone.',
+    description: 'Science-based growth protocols, delivered directly to your phone.',
     type: 'website',
   },
 };

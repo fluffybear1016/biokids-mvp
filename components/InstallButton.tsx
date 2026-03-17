@@ -43,12 +43,16 @@ export default function InstallButton() {
     window.addEventListener('beforeinstallprompt', handler);
 
     // Detect if installed after prompt
-    window.addEventListener('appinstalled', () => {
+    const installedHandler = () => {
       setInstalled(true);
       setDeferredPrompt(null);
-    });
+    };
+    window.addEventListener('appinstalled', installedHandler);
 
-    return () => window.removeEventListener('beforeinstallprompt', handler);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handler);
+      window.removeEventListener('appinstalled', installedHandler);
+    };
   }, []);
 
   // Already installed or running as PWA — don't show
