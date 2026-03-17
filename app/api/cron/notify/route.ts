@@ -146,8 +146,8 @@ function getSprintStackMessage(): PushPayload[] {
   if (isSprintDay()) {
     return [
       {
-        title: "Sprint Stack — snack first",
-        body: "Snack: peanut butter + egg (niacin + choline) or a liver meatball (has both). Then 6 all-out 30-sec sprints, full rest between. Stretch. Cold A2 milk with honey within 30 min — dairy serving #2 (for kids 10+, this is #3). That sequence is the most powerful growth trigger in the protocol.",
+        title: "Sprint Stack + Dairy Serving #2",
+        body: "Snack: peanut butter + egg or a liver meatball. Then 6 all-out 30-sec sprints, full rest between. Stretch. Cold A2 milk with honey within 30 min — that's Dairy Serving #2. Kids 10+: this is Serving #3. The sprint-then-milk sequence is the most powerful growth trigger in the protocol.",
         url: "/home#item-spr",
         tag: "biokids-sprint-stack",
       },
@@ -157,8 +157,8 @@ function getSprintStackMessage(): PushPayload[] {
   // Jump day
   return [
     {
-      title: "Jump Stack — snack first",
-      body: "Snack: peanut butter + egg (niacin + choline) or a liver meatball (has both). Then 50 jumps — rope, box, just jumping. Stretch. Cold A2 milk with honey within 30 min — dairy serving #2 (for kids 10+, this is #3). Alternate with sprints tomorrow.",
+      title: "Jump Stack + Dairy Serving #2",
+      body: "Snack: peanut butter + egg or a liver meatball. Then 50 jumps — rope, box, just jumping. Stretch. Cold A2 milk with honey within 30 min — that's Dairy Serving #2. Kids 10+: this is Serving #3. Alternate with sprints tomorrow.",
       url: "/home#item-jump",
       tag: "biokids-sprint-stack",
     },
