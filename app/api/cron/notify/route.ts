@@ -2,25 +2,25 @@ import { NextResponse } from 'next/server';
 import { sendPushToAll, PushPayload } from '@/lib/push';
 
 // ═══════════════════════════════════════════════════════════
-// BIOKIDS NOTIFICATION SYSTEM — Big 5 Architecture
+// BIOKIDS NOTIFICATION SYSTEM — Big 7 Architecture
 // ═══════════════════════════════════════════════════════════
 //
-// Rebuilt around the Big 5 — the 5 things that actually
-// move the needle. Everything else lives in the app.
-// Parents won't open the app every day. The push notification
-// IS the product. So it has to be signal, not noise.
+// 6 daily notifications + 1 weekly. Each one is a single
+// clear action. The parent should never feel overwhelmed —
+// just reminded of the one thing that matters right now.
 //
 // Schedule (all times ET / UTC):
-//   7:00 AM /  11 UTC — Dairy #1 + CLO (Big 5: items 1 & 2)
-//  12:00 PM /  16 UTC — Protein target + rotation (Big 5: item 3)
-//   3:00 PM /  19 UTC — The Sprint Stack (Big 5: item 4)
-//   8:00 PM /   0 UTC — Sleep (Big 5: item 5)
+//   7:00 AM /  11 UTC — Dairy #1 + CLO
+//  12:00 PM /  16 UTC — Protein target + rotation
+//   3:00 PM /  19 UTC — Sprint/Jump Stack + Dairy #2
+//   6:00 PM /  22 UTC — Dinner + gelatin (no exercise after this)
+//   8:00 PM /   0 UTC — Bedtime routine (the full sequence)
 //
 // Weekly (Sunday only):
-//  10:00 AM /  14 UTC — Weekly pro tip (earns trust, drives re-engagement)
+//  10:00 AM /  14 UTC — Weekly pro tip
 //
-// TONE: One clear action. No menus. The parent should think
-// "oh right, that's the one thing I need to do right now."
+// TONE: Jony Ive. One clear action. The parent sees this on
+// her lock screen and knows exactly what to do right now.
 //
 // ═══════════════════════════════════════════════════════════
 
@@ -34,10 +34,9 @@ type NotificationSlot = {
 };
 
 // ── Design philosophy (Ive) ──
-// 4 notifications per day. Each one is a Big 5 action.
+// 6 notifications per day. Each one is a single action.
 // Name the material. Be specific. One thing per notification.
-// The parent should never feel overwhelmed — just reminded
-// of the one thing that matters right now.
+// A mom should glance at her lock screen and know what to do.
 
 // ── Protein math ──
 // Target: 1.2–1.5 g protein per kg body weight
@@ -117,19 +116,39 @@ const SLOTS: NotificationSlot[] = [
   },
 
   // ══════════════════════════════════════════════════════════
-  // BIG 5 #5 — 8 PM ET — Sleep
+  // 6 PM ET — Dinner + Gelatin (no exercise after this)
   // ══════════════════════════════════════════════════════════
-  // 10+ hours in complete darkness. This is when 60-80% of
-  // growth hormone is released. Non-negotiable.
+  // Dinner is the last active meal. Protein + lentils + veg +
+  // fermented side. Gelatin in any form. No dairy at dinner —
+  // save it for bedtime drink. No exercise after this.
   {
-    name: 'sleep',
+    name: 'dinner',
+    utcHour: 22,
+    messages: [
+      {
+        title: "Growth dinner + gelatin — no exercise after this",
+        body: "Rotated protein + lentils + cooked veg + a fermented side (sauerkraut or kimchi). No dairy at dinner. Add gelatin in any form — jello, gummies, or stirred into a smoothie. It's glycine: builds growth plates while they sleep. No exercise after dinner — core temp must drop for tonight's deep sleep.",
+        url: "/home#item-lunch",
+        tag: "biokids-dinner",
+      },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════
+  // 8 PM ET — Bedtime routine (the full sequence)
+  // ══════════════════════════════════════════════════════════
+  // Bath → mag lotion → tart cherry milk → book → lights out.
+  // After two weeks the brain auto-releases melatonin when
+  // it hears this sequence start. That's the goal.
+  {
+    name: 'bedtime',
     utcHour: 0,
     messages: [
       {
-        title: "10+ hours of complete darkness",
-        body: "Blackout curtains. Tape every LED. This is when 60–80% of growth hormone is released. Everything today — the milk, the protein, the sprints — was building to this moment. You showed up today.",
+        title: "Bedtime sequence — start now",
+        body: "Bath. Magnesium lotion on their feet (rub it in while they read — two levers at once). Tart cherry + A2 milk (4 oz milk, 1 oz tart cherry, unsweetened). A book in bed — physical, not a screen. 65°F, fan on. Blackout curtains, tape every LED. Nose breathing. After two weeks, their brain auto-releases melatonin when this sequence starts.",
         url: "/home#item-dark",
-        tag: "biokids-sleep",
+        tag: "biokids-bedtime",
       },
     ],
   },
