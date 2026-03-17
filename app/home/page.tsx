@@ -672,8 +672,17 @@ export default function Dashboard() {
     try { localStorage.setItem(todayKey, JSON.stringify(done)); } catch {}
   }, [done, todayKey]);
 
-  // Track session start on mount
-  useEffect(() => { analytics.sessionStart(); analytics.pageView('home'); }, []);
+  // Identify user + track session start on mount
+  useEffect(() => {
+    // Re-identify the user so Mixpanel ties this session to the right person
+    const uid = localStorage.getItem('biokids_auth_user_id');
+    const email = localStorage.getItem('biokids_auth_email');
+    if (uid) {
+      analytics.identify(uid, email || undefined);
+    }
+    analytics.sessionStart();
+    analytics.pageView('home');
+  }, []);
 
   // Compute items early — needed by streak tracking below
   const allItems = dayData.flatMap(d => d.items);

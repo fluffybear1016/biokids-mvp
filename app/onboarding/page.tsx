@@ -137,9 +137,15 @@ function OnboardingContent() {
         if (session?.user) {
           setUserEmail(session.user.email || '');
           setUserId(session.user.id);
+          // Persist auth info for analytics re-identification on future visits
+          localStorage.setItem('biokids_auth_email', session.user.email || '');
+          localStorage.setItem('biokids_auth_user_id', session.user.id);
+          // Identify in Mixpanel (covers OAuth/Google users who skip the signup form)
+          analytics.identify(session.user.id, session.user.email || undefined);
           // If user is already authenticated (e.g. via Google OAuth) and still on step 1,
           // skip account creation and go straight to child info
           if (step === 1) {
+            analytics.signup('google', session.user.email || '');
             setStep(2);
           }
           return;

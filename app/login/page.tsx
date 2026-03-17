@@ -82,6 +82,10 @@ function LoginForm() {
           localStorage.setItem('childName', authData.user.user_metadata.child_name);
         }
 
+        // Persist auth info for analytics re-identification on future visits
+        localStorage.setItem('biokids_auth_email', email);
+        localStorage.setItem('biokids_auth_user_id', authData.user.id);
+
         // Track login analytics
         analytics.identify(authData.user.id, email);
         analytics.login('email');
