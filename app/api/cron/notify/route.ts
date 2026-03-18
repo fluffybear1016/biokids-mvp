@@ -73,7 +73,7 @@ const SLOTS: NotificationSlot[] = [
     messages: [
       {
         title: "A2 milk + eggs + cod liver oil",
-        body: "A2 milk, yogurt bowl, or smoothie. Eggs with red bell pepper. Half a spoon of lemon cod liver oil.",
+        body: "A2 milk. Eggs with red bell pepper. Half a spoon of lemon cod liver oil. More options in the app.",
         url: "/home#item-d1",
         tag: "biokids-morning",
       },
