@@ -5,20 +5,36 @@ import { Suspense } from "react";
 import PostHogProvider from "@/components/PostHogProvider";
 
 export const metadata: Metadata = {
-  title: "bioKids — Maximize Your Child's Height Potential",
-  description: "Backed by 250+ medical studies.",
+  title: "bioKids — Teach Height",
+  description: "The parent's system for growing taller kids naturally — backed by 137 medical studies.",
   keywords: ["height", "grow taller", "child height", "height potential", "growth protocol", "nutrition", "sprints", "sleep", "parenting", "pediatric research"],
   manifest: "/manifest.json",
+  metadataBase: new URL("https://www.biokids.me"),
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
     title: "bioKids",
   },
   openGraph: {
-    title: "bioKids — Maximize Your Child's Height Potential",
-    description: "Backed by 250+ medical studies.",
+    title: "bioKids — Teach Height",
+    description: "The parent's system for growing taller kids naturally — backed by 137 medical studies.",
+    url: "https://www.biokids.me",
     type: "website",
     siteName: "bioKids",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "bioKids — Teach Height",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "bioKids — Teach Height",
+    description: "The parent's system for growing taller kids naturally — backed by 137 medical studies.",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
