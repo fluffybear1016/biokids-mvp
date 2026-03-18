@@ -224,7 +224,7 @@ export default function Home() {
               </summary>
               <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
                 <p style={{ marginBottom: '0.75rem' }}>Every study is available at the <a href="https://www.nlm.nih.gov/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', textDecoration: 'underline', fontWeight: 600 }}>US National Library of Medicine</a> via <a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', textDecoration: 'underline', fontWeight: 600 }}>PubMed</a> (National Center for Biotechnology Information). Every recommendation links directly to its source &mdash; journals like JAMA, Lancet, JCEM, Nature, and the Journal of Applied Physiology. Every number on every card cites the study it comes from.</p>
-                <p>Some studies are from adults (marked with *). We note this transparently. Whole foods deliver these pathways at lower but meaningful doses. We never overstate what the research shows.</p>
+                <p>Some studies are from human adults, supplements, and some from animals (marked with *). We note this transparently. Whole foods deliver these pathways at lower but meaningful levels &mdash; for example, a-GPC was shown in a study to increase growth hormone by 44&times;, whereas acetylcholine from eggs would hit that same pathway in a lesser but significant way. We do not overstate what the research shows &mdash; but we do show you that research.</p>
               </div>
             </details>
 
