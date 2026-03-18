@@ -31,7 +31,7 @@ export default function Home() {
             </h1>
 
             <h2 style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#57534e', marginBottom: '1.25rem', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75, fontWeight: 400 }}>
-              The parent&apos;s system for growing taller kids naturally &mdash; backed by 120+ medical studies.
+              The parent&apos;s system for growing taller kids naturally &mdash; backed by 250+ medical studies.
             </h2>
             <div className="flex flex-col items-center gap-3" style={{ marginTop: '2rem' }}>
               <a href="#height-calculator" style={{ background: '#065f46', color: 'white', padding: '0.75rem 2rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", display: 'inline-block' }} className="sm:text-lg">
