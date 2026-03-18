@@ -41,9 +41,9 @@ export default function GlyphosateArticle() {
               Glyphosate is the most widely used herbicide in the world, and it shows up most heavily in oat-based and wheat-based convenience foods because these crops are often sprayed right before harvest to dry them down.
             </p>
             <p style={{ fontSize: 13, color: C.body, lineHeight: 1.6, fontFamily: F }}>
-              Children eat a disproportionate amount of these products per kilo of body weight, and multiple surveys have found that kids carry higher glyphosate levels than adults &mdash; largely from cereals, snack bars, crackers, and oat products marketed as &ldquo;healthy.&rdquo;
+              Children eat a disproportionate amount of these products per kilo of body weight &mdash; largely from cereals, snack bars, crackers, and oat products marketed as &ldquo;healthy.&rdquo; Population-level data shows glyphosate excretion has risen significantly over time.
             </p>
-            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginTop: 8, fontFamily: F }}>[Mills PJ. et al. JAMA. 2017]</p>
+            <p style={{ fontSize: 10, color: C.green, fontStyle: "italic", marginTop: 8, fontFamily: F }}>[Mills PJ. et al. &ldquo;Excretion of the herbicide glyphosate in older adults between 1993 and 2016.&rdquo; JAMA. 2017]</p>
           </section>
 
           {/* How Glyphosate Blocks Growth */}
