@@ -187,7 +187,6 @@ export default function Home() {
                 <p style={{ marginBottom: '0.75rem' }}>Birth through age 25. Your body keeps growing longer than most people think.</p>
                 <p style={{ marginBottom: '0.75rem' }}>Growth plates in males commonly remain open into the early 20s. Many 18, 19, and 20-year-olds still have active growth plates and are still gaining height &mdash; especially with the right inputs. Even after plates close, bone mass (density, thickness, and vertebral structure) continues increasing until your mid-20s. This adds measurable height. You reach peak bone mass around age 25 &mdash; and every bit of density you build before that point becomes your foundation for life.</p>
                 <p style={{ marginBottom: '0.75rem' }}>The earlier you start, the more years of compounding you get. But starting at 16, 18, or even 22 still gives you years of real, meaningful optimization during the window that matters most.</p>
-                <p>The protocol works the same way at every age: nutrition fuels the growth axis, sprints and impact exercise trigger the hormonal response, and sleep is when growth actually happens.</p>
                 <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', marginTop: '0.75rem' }}>Recker et al., JAMA 1992 &middot; Baxter-Jones et al., JBMR 2011 &middot; Gilsanz et al., J Pediatr 2011</p>
               </div>
             </details>
@@ -198,8 +197,13 @@ export default function Home() {
               </summary>
               <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
                 <p style={{ marginBottom: '0.75rem' }}>It starts with the standard mid-parental height prediction used by pediatric endocrinologists &mdash; your height plus your partner&apos;s height, adjusted for your child&apos;s sex, with a &plusmn;2&quot; genetic range. This method is grounded in decades of scientific literature on growth prediction models.</p>
-                <p style={{ marginBottom: '0.75rem' }}>Then it shows the <em>bioKids zone</em> &mdash; where your child could land with optimized nutrition, sprint protocols, and sleep architecture. This isn&apos;t a guarantee. It&apos;s the ceiling that the science supports when every lever is pulled consistently. Every variable in the calculator &mdash; from nutritional impact on IGF-1 to exercise-induced growth hormone response &mdash; is backed by published scientific studies.</p>
-                <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46' }}>Tanner et al., Arch Dis Child &middot; Khamis &amp; Roche, Pediatrics 1994 &middot; Hoppe et al., Eur J Clin Nutr 2008 &middot; Wideman et al., Med Sci Sports Exerc 2002</p>
+                <p style={{ marginBottom: '0.75rem' }}>Then it shows the <em>bioKids zone</em> &mdash; where your child could land with optimized nutrition, sprint protocols, and sleep architecture. This isn&apos;t a guarantee. It&apos;s the ceiling that the science supports when every lever is pulled consistently. Every variable in the calculator is backed by published scientific studies:</p>
+                <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', lineHeight: 1.8 }}>
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/13846365/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46' }}>Tanner et al., &ldquo;Standards from Birth to Maturity for Height&rdquo; &mdash; Arch Dis Child</a><br/>
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/7800455/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46' }}>Khamis &amp; Roche, &ldquo;Predicting Adult Stature Without Using Skeletal Age&rdquo; &mdash; Pediatrics 1994</a><br/>
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/19174829/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46' }}>Hoppe et al., &ldquo;Cow&apos;s Milk and Linear Growth in Industrialized and Developing Countries&rdquo; &mdash; Eur J Clin Nutr 2008</a><br/>
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/12019321/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46' }}>Wideman et al., &ldquo;Growth Hormone Release During Acute and Chronic Aerobic and Resistance Exercise&rdquo; &mdash; Med Sci Sports Exerc 2002</a>
+                </p>
               </div>
             </details>
 
@@ -219,7 +223,7 @@ export default function Home() {
                 Where do the citations come from?
               </summary>
               <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
-                <p style={{ marginBottom: '0.75rem' }}>Every recommendation links directly to its source &mdash; journals like JAMA, Lancet, JCEM, Nature, and the Journal of Applied Physiology. Every number on every card cites the study it comes from. Every study should be available at <a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', textDecoration: 'underline' }}>PubMed</a>, which is from the US National Library of Medicine, National Center for Biotechnology Information.</p>
+                <p style={{ marginBottom: '0.75rem' }}>Every study is available at the <a href="https://www.nlm.nih.gov/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', textDecoration: 'underline', fontWeight: 600 }}>US National Library of Medicine</a> via <a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', textDecoration: 'underline', fontWeight: 600 }}>PubMed</a> (National Center for Biotechnology Information). Every recommendation links directly to its source &mdash; journals like JAMA, Lancet, JCEM, Nature, and the Journal of Applied Physiology. Every number on every card cites the study it comes from.</p>
                 <p>Some studies are from adults (marked with *). We note this transparently. Whole foods deliver these pathways at lower but meaningful doses. We never overstate what the research shows.</p>
               </div>
             </details>
