@@ -612,6 +612,7 @@ export default function Dashboard() {
   const child = { ...mockChild, name: childName };
 
   const [openId, setOpenId] = useState<string | null>(null);
+  const [showProtocol, setShowProtocol] = useState(false);
 
   // Per-child checklist: include active child ID in the localStorage key
   const activeChild = typeof window !== 'undefined' ? getActiveChild() : null;
@@ -1281,15 +1282,29 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Breath before the day begins */}
+        {/* Breath before the protocol */}
         <div style={{ height:1, background:"#e7e5e4", margin:"36px 0 40px" }} />
 
-        {/* Title — centered, outside the box */}
-        <div style={{ fontSize:20, fontWeight:900, color:"#1c1917", letterSpacing:"-0.02em", textAlign:"center", marginBottom:8 }}>Today&apos;s Game Plan</div>
-        <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#57534e", textAlign:"center", marginBottom:32, lineHeight:1.6, fontStyle:"italic" }}>Even 60% consistency compounds beautifully over months.</div>
+        {/* Protocol toggle — collapsed by default, calm by design */}
+        <div
+          onClick={() => setShowProtocol(!showProtocol)}
+          style={{ cursor:"pointer", textAlign:"center", marginBottom: showProtocol ? 32 : 0 }}
+        >
+          <div style={{ fontSize:20, fontWeight:900, color:"#1c1917", letterSpacing:"-0.02em", marginBottom:8 }}>
+            Full Daily Protocol
+          </div>
+          <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:12, color:"#065f46", fontWeight:600, marginBottom:4 }}>
+            {showProtocol ? "Hide protocol ▲" : "See all 35 science-backed levers ▼"}
+          </div>
+          {!showProtocol && (
+            <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#57534e", lineHeight:1.6, fontStyle:"italic", marginTop:8 }}>
+              Your notifications walk you through these daily. Tap to explore the science.
+            </div>
+          )}
+        </div>
 
-        {/* Day sections */}
-        {dayData.map((p, pi) => (
+        {/* Day sections — collapsed by default */}
+        {showProtocol && dayData.map((p, pi) => (
           <div key={p.period} ref={el => { periodRefs.current[p.period] = el; }} style={{ marginBottom: pi < dayData.length - 1 ? 44 : 0 }}>
             <div style={{ marginBottom:16 }}>
               <div style={{ display:"flex", alignItems:"baseline", gap:10 }}>
@@ -1319,15 +1334,17 @@ export default function Dashboard() {
         ))}
 
 
-        {/* Footer */}
-        <div style={{ margin:"52px 0 40px", textAlign:"center" }}>
-          <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#065f46", fontWeight:600, marginBottom:6 }}>
-            Every day counts.
-          </p>
-          <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#57534e", lineHeight:1.6 }}>
-            Every number on this page comes from an academic or scientific study. * from adult studies — whole foods deliver these pathways at lower but meaningful doses.
-          </p>
-        </div>
+        {/* Footer — only when protocol is expanded */}
+        {showProtocol && (
+          <div style={{ margin:"52px 0 40px", textAlign:"center" }}>
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#065f46", fontWeight:600, marginBottom:6 }}>
+              Every day counts.
+            </p>
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#57534e", lineHeight:1.6 }}>
+              Every number on this page comes from an academic or scientific study. * from adult studies — whole foods deliver these pathways at lower but meaningful doses.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
