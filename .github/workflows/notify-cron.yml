@@ -2,54 +2,50 @@ name: Push Notifications
 
 on:
   schedule:
-    # 7 AM ET - Morning (sunlight + Growth Bowl + eggs + CLO)
-    - cron: '0 11 * * *'
-    # 10 AM ET Sunday - Weekly pro tip
-    - cron: '0 14 * * 0'
-    # 12 PM ET - Lunch (Growth Meal)
-    - cron: '0 16 * * *'
-    # 3 PM ET - Exercise (sprints or jumps + stretching)
-    - cron: '0 19 * * *'
-    # 4 PM ET - Post-exercise dairy #2
-    - cron: '0 20 * * *'
-    # 5 PM ET - Dinner (start now, finish by 6)
-    - cron: '0 21 * * *'
-    # 7 PM ET - Wind-down (bath, magnesium, sleep drink)
-    - cron: '0 23 * * *'
-    # 8 PM ET - Bedtime (dark room, lights out)
-    - cron: '0 0 * * *'
-  workflow_dispatch:
-    inputs:
-      slot:
-        description: 'Notification slot (morning/lunch/exercise/post-exercise/dinner/wind-down/bedtime/weekly-article)'
-        required: false
-        type: string
+      # 7 AM ET — Breakfast + Dairy #1 + CLO
+          - cron: '0 11 * * *'
+              # 10 AM ET Sunday — Weekly pro tip
+                  - cron: '0 14 * * 0'
+                      # 12 PM ET — Lunch: growth protein + fermented side
+                          - cron: '0 16 * * *'
+                              # 3 PM ET — Sprint/Jump Stack + Dairy #2
+                                  - cron: '0 19 * * *'
+                                      # 6 PM ET — Dinner + gelatin, screens off
+                                          - cron: '0 22 * * *'
+                                              # 7 PM ET — Bedtime sequence (earlier = more growth reps)
+                                                  - cron: '0 23 * * *'
+                                                    workflow_dispatch:
+                                                        inputs:
+                                                              slot:
+                                                                      description: 'Notification slot (morning/lunch/sprint-stack/dinner/bedtime/weekly-tip)'
+                                                                              required: false
+                                                                                      type: string
 
-jobs:
-  notify:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger notification
-        env:
-          CRON_SECRET: ${{ secrets.CRON_SECRET }}
-          SLOT: ${{ github.event.inputs.slot }}
-        run: |
-          URL="https://www.biokids.me/api/cron/notify"
-          if [ -n "$SLOT" ]; then
-            URL="${URL}?slot=${SLOT}"
-          fi
-
-          echo "Calling: $URL"
-          RESPONSE=$(curl -s -w "\n%{http_code}" "$URL" \
-            -H "Authorization: Bearer $CRON_SECRET")
-
-          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
-          BODY=$(echo "$RESPONSE" | head -n -1)
-
-          echo "HTTP Status: $HTTP_CODE"
-          echo "Response: $BODY"
-
-          if [ "$HTTP_CODE" -ge 400 ]; then
-            echo "::error::Notification request failed with status $HTTP_CODE"
-            exit 1
-          fi
+                                                                                      jobs:
+                                                                                        notify:
+                                                                                            runs-on: ubuntu-latest
+                                                                                                steps:
+                                                                                                      - name: Trigger notification
+                                                                                                              env:
+                                                                                                                        CRON_SECRET: ${{ secrets.CRON_SECRET }}
+                                                                                                                                  SLOT: ${{ github.event.inputs.slot }}
+                                                                                                                                          run: |
+                                                                                                                                                    URL="https://www.biokids.me/api/cron/notify"
+                                                                                                                                                              if [ -n "$SLOT" ]; then
+                                                                                                                                                                          URL="${URL}?slot=${SLOT}"
+                                                                                                                                                                                    fi
+                                                                                                                                                                                    
+                                                                                                                                                                                              echo "Calling: $URL"
+                                                                                                                                                                                                        RESPONSE=$(curl -s -w "\n%{http_code}" "$URL" \
+                                                                                                                                                                                                                    -H "Authorization: Bearer $CRON_SECRET")
+                                                                                                                                                                                                                    
+                                                                                                                                                                                                                              HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+                                                                                                                                                                                                                                        BODY=$(echo "$RESPONSE" | head -n -1)
+                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                  echo "HTTP Status: $HTTP_CODE"
+                                                                                                                                                                                                                                                            echo "Response: $BODY"
+                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                                      if [ "$HTTP_CODE" -ge 400 ]; then
+                                                                                                                                                                                                                                                                                  echo "::error::Notification request failed with status $HTTP_CODE"
+                                                                                                                                                                                                                                                                                              exit 1
+                                                                                                                                                                                                                                                                                                        fi
