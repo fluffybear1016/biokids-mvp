@@ -6,7 +6,7 @@ import PostHogProvider from "@/components/PostHogProvider";
 
 export const metadata: Metadata = {
   title: "bioKids — Maximize Your Child's Height Potential",
-  description: "The research-backed daily system that helps your child reach their maximum height — nutrition, sprints, and sleep protocols backed by 250+ medical studies.",
+  description: "Backed by 250+ medical studies.",
   keywords: ["height", "grow taller", "child height", "height potential", "growth protocol", "nutrition", "sprints", "sleep", "parenting", "pediatric research"],
   manifest: "/manifest.json",
   appleWebApp: {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "bioKids — Maximize Your Child's Height Potential",
-    description: "The research-backed daily system that helps your child reach their maximum height — nutrition, sprints, and sleep protocols backed by 250+ medical studies.",
+    description: "Backed by 250+ medical studies.",
     type: "website",
     siteName: "bioKids",
   },
