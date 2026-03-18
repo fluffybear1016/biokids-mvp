@@ -1,4 +1,170 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { createClient } from '@supabase/supabase-js';
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+
+// Supabase admin client for querying user data
+function getSupabaseAdmin() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key);
+}
+
+// Get authenticated user ID from cookies
+async function getAuthUserId(): Promise<string | null> {
+  try {
+    const cookieStore = await cookies();
+    const authClient = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() { return cookieStore.getAll(); },
+          setAll() {},
+        },
+      }
+    );
+    const { data: { user } } = await authClient.auth.getUser();
+    return user?.id || null;
+  } catch {
+    return null;
+  }
+}
+
+// Fetch all user data from Supabase and format as context for Au
+async function getUserContext(userId: string): Promise<string> {
+  const supabase = getSupabaseAdmin();
+  if (!supabase) return '';
+
+  try {
+    // Fetch everything in parallel
+    const [
+      { data: children },
+      { data: measurements },
+      { data: dailyLogs },
+      { data: weeklyTracking },
+      { data: growthWindows },
+    ] = await Promise.all([
+      supabase.from('children').select('*').eq('user_id', userId),
+      supabase.from('measurements').select('*').eq('child_id',
+        // We'll filter after getting children
+        supabase.from('children').select('id').eq('user_id', userId)
+      ).order('measured_at', { ascending: false }).limit(20),
+      supabase.from('daily_logs').select('*').eq('child_id',
+        supabase.from('children').select('id').eq('user_id', userId)
+      ).order('log_date', { ascending: false }).limit(14),
+      supabase.from('weekly_tracking').select('*').eq('child_id',
+        supabase.from('children').select('id').eq('user_id', userId)
+      ).order('week_start', { ascending: false }).limit(4),
+      supabase.from('growth_windows').select('*').eq('child_id',
+        supabase.from('children').select('id').eq('user_id', userId)
+      ).order('week_of', { ascending: false }).limit(4),
+    ]);
+
+    // If no children found, try a simpler query
+    let childData = children;
+    if (!childData || childData.length === 0) {
+      const { data } = await supabase.from('children').select('*').eq('user_id', userId);
+      childData = data;
+    }
+
+    if (!childData || childData.length === 0) return '';
+
+    const child = childData[0];
+    const childId = child.id;
+
+    // Re-fetch with actual child ID if the subquery approach didn't work
+    const [
+      { data: childMeasurements },
+      { data: childDailyLogs },
+      { data: childWeekly },
+      { data: childGrowth },
+    ] = await Promise.all([
+      supabase.from('measurements').select('*').eq('child_id', childId).order('measured_at', { ascending: false }).limit(20),
+      supabase.from('daily_logs').select('*').eq('child_id', childId).order('log_date', { ascending: false }).limit(14),
+      supabase.from('weekly_tracking').select('*').eq('child_id', childId).order('week_start', { ascending: false }).limit(4),
+      supabase.from('growth_windows').select('*').eq('child_id', childId).order('week_of', { ascending: false }).limit(4),
+    ]);
+
+    // Build context string
+    let context = '\n\n═══════════════════════════════════════════════════════════════\nLIVE USER DATA (from Supabase — use this to personalize)\n═══════════════════════════════════════════════════════════════\n\n';
+
+    // Child info
+    const birthDate = new Date(child.birth_date);
+    const ageMs = Date.now() - birthDate.getTime();
+    const ageYears = Math.floor(ageMs / (365.25 * 24 * 60 * 60 * 1000));
+    const ageMonths = Math.floor(ageMs / (30.44 * 24 * 60 * 60 * 1000)) % 12;
+    context += `CHILD: ${child.name}\n`;
+    context += `- Age: ${ageYears} years, ${ageMonths} months\n`;
+    context += `- Birth date: ${child.birth_date}\n`;
+    context += `- Gender: ${child.gender || 'not specified'}\n\n`;
+
+    // Measurements
+    if (childMeasurements && childMeasurements.length > 0) {
+      context += `MEASUREMENTS (most recent first):\n`;
+      for (const m of childMeasurements.slice(0, 10)) {
+        const heightIn = m.height_cm ? (m.height_cm / 2.54).toFixed(1) : '?';
+        const weightLb = m.weight_kg ? (m.weight_kg * 2.205).toFixed(1) : '?';
+        context += `- ${m.measured_at}: ${heightIn}" tall, ${weightLb} lbs${m.notes ? ` (${m.notes})` : ''}\n`;
+      }
+      context += '\n';
+    }
+
+    // Daily logs (last 14 days)
+    if (childDailyLogs && childDailyLogs.length > 0) {
+      const totalDays = childDailyLogs.length;
+      const counts = {
+        early_bedtime: 0, power_breakfast: 0, active_play: 0,
+        screen_free_evening: 0, milk_protocol: 0, morning_sunlight: 0,
+      };
+      for (const log of childDailyLogs) {
+        if (log.early_bedtime) counts.early_bedtime++;
+        if (log.power_breakfast) counts.power_breakfast++;
+        if (log.active_play) counts.active_play++;
+        if (log.screen_free_evening) counts.screen_free_evening++;
+        if (log.milk_protocol) counts.milk_protocol++;
+        if (log.morning_sunlight) counts.morning_sunlight++;
+      }
+      context += `DAILY PROTOCOL ADHERENCE (last ${totalDays} days):\n`;
+      context += `- Early bedtime: ${counts.early_bedtime}/${totalDays} days (${Math.round(counts.early_bedtime/totalDays*100)}%)\n`;
+      context += `- Power breakfast: ${counts.power_breakfast}/${totalDays} days (${Math.round(counts.power_breakfast/totalDays*100)}%)\n`;
+      context += `- Active play: ${counts.active_play}/${totalDays} days (${Math.round(counts.active_play/totalDays*100)}%)\n`;
+      context += `- Screen-free evening: ${counts.screen_free_evening}/${totalDays} days (${Math.round(counts.screen_free_evening/totalDays*100)}%)\n`;
+      context += `- Milk protocol: ${counts.milk_protocol}/${totalDays} days (${Math.round(counts.milk_protocol/totalDays*100)}%)\n`;
+      context += `- Morning sunlight: ${counts.morning_sunlight}/${totalDays} days (${Math.round(counts.morning_sunlight/totalDays*100)}%)\n\n`;
+    }
+
+    // Weekly tracking
+    if (childWeekly && childWeekly.length > 0) {
+      const w = childWeekly[0]; // Most recent week
+      context += `WEEKLY TRACKING (week of ${w.week_start}):\n`;
+      context += `Power Foods: milk ${w.raw_milk_count}/7, CLO ${w.cod_liver_oil_count}/7, eggs ${w.eggs_count}/7, liver ${w.beef_liver_count}/3, salmon ${w.salmon_count}/2, bone broth ${w.bone_broth_count}/7, fermented ${w.fermented_foods_count}/7, gelatin ${w.gelatin_count}/7\n`;
+      context += `Lifestyle: sleep 10+ ${w.sleep_10_plus_count}/7, sprints ${w.sprint_intervals_count}/3, hanging ${w.hanging_stretching_count}/7, play ${w.active_play_count}/7, bedtime milk ${w.bedtime_milk_count}/7, sun ${w.morning_sunlight_count}/7, no late food ${w.no_late_food_count}/7, screen free ${w.screen_free_count}/7\n\n`;
+    }
+
+    // Growth windows
+    if (childGrowth && childGrowth.length > 0) {
+      const g = childGrowth[0];
+      context += `GROWTH WINDOW (week of ${g.week_of}):\n`;
+      if (g.sleep_avg_hours) context += `- Sleep avg: ${g.sleep_avg_hours} hours\n`;
+      if (g.sleep_avg_bedtime) context += `- Avg bedtime: ${g.sleep_avg_bedtime}\n`;
+      context += `- Sleep status: ${g.sleep_status}\n`;
+      if (g.height_percentile) context += `- Height percentile: ${g.height_percentile}th\n`;
+      if (g.height_previous_percentile) context += `- Previous percentile: ${g.height_previous_percentile}th\n`;
+      context += `- Circadian status: ${g.circadian_status}\n`;
+      if (g.circadian_days_aligned) context += `- Circadian days aligned: ${g.circadian_days_aligned}/7\n`;
+      context += '\n';
+    }
+
+    context += `USE THIS DATA to give specific, personalized recommendations. Reference their actual numbers. If adherence is low on something, gently coach them on why it matters. If they're crushing it, celebrate it.`;
+
+    return context;
+  } catch (err) {
+    console.error('Error fetching user context for Au:', err);
+    return '';
+  }
+}
 
 // Rate limiting: 20 requests per minute per IP
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -746,10 +912,22 @@ export async function POST(request: Request) {
     }
 
     let systemPrompt = SYSTEM_PROMPT;
+
+    // Fetch live user data from Supabase (authenticated via cookies)
+    const userId = await getAuthUserId();
+    let userContext = '';
+    if (userId) {
+      userContext = await getUserContext(userId);
+    }
+
+    // Add child context (from frontend) + live data (from Supabase)
     if (safeName || safeAge !== undefined) {
       systemPrompt += `\n\nCURRENT CHILD CONTEXT:\n`;
       if (safeName) systemPrompt += `- Name: ${safeName}\n`;
       if (safeAge !== undefined) systemPrompt += `- Age: ${safeAge} years old\n`;
+    }
+    if (userContext) {
+      systemPrompt += userContext;
     }
 
     const client = new Anthropic({ apiKey });
