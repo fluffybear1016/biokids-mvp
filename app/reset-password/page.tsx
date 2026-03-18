@@ -145,7 +145,7 @@ export default function ResetPassword() {
           )}
         </div>
 
-        <p style={{ textAlign: 'center', fontSize: '0.75rem', color: '#a8a29e', marginTop: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mt-8">
+        <p style={{ textAlign: 'center', fontSize: '0.75rem', color: '#57534e', marginTop: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mt-8">
           Your data stays private. We never sell or share your information.
         </p>
       </div>

@@ -173,7 +173,7 @@ export default function ExpressCheckout({ email, userId, onSuccess }: Props) {
         margin: '16px 0',
       }}>
         <div style={{ flex: 1, height: 1, background: '#e7e5e4' }} />
-        <span style={{ fontFamily: mono, fontSize: 11, color: '#a8a29e' }}>or pay with card</span>
+        <span style={{ fontFamily: mono, fontSize: 11, color: '#57534e' }}>or pay with card</span>
         <div style={{ flex: 1, height: 1, background: '#e7e5e4' }} />
       </div>
     </div>

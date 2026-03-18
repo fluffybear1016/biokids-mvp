@@ -258,7 +258,7 @@ export default function PWAInstall() {
           <div style={{ display: 'flex', gap: 8 }}>
             <button
               onClick={() => setDismissed(true)}
-              style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 12, color: '#78716c', background: 'none', border: '1px solid #e7e5e4', borderRadius: 8, padding: '8px 16px', cursor: 'pointer', flex: 1 }}
+              style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 12, color: '#57534e', background: 'none', border: '1px solid #e7e5e4', borderRadius: 8, padding: '8px 16px', cursor: 'pointer', flex: 1 }}
             >
               Not now
             </button>

@@ -57,7 +57,7 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
         <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>
           What feels right for your family?
         </h2>
-        <p style={{ fontFamily: mono, fontSize: 12, color: '#a8a29e' }}>
+        <p style={{ fontFamily: mono, fontSize: 12, color: '#57534e' }}>
           Tap one. You can always adjust later.
         </p>
       </div>
@@ -85,7 +85,7 @@ export default function GoalSelection({ childName, onSelect }: GoalSelectionProp
               )}
             </div>
             <p style={{ fontFamily: mono, fontSize: 12, color: '#065f46', fontWeight: 600, marginBottom: 4 }}>{goal.subtitle}</p>
-            <p style={{ fontFamily: mono, fontSize: 11, color: '#78716c', lineHeight: 1.5, marginBottom: 0 }}>{goal.description}</p>
+            <p style={{ fontFamily: mono, fontSize: 11, color: '#57534e', lineHeight: 1.5, marginBottom: 0 }}>{goal.description}</p>
           </button>
         ))}
       </div>

@@ -26,7 +26,7 @@ export default function PsychologicalWindow() {
       <main style={{ maxWidth: 540, margin: '0 auto', padding: '0 20px', paddingTop: 32, paddingBottom: 64 }}>
 
         {/* Back Link */}
-        <Link href="/home" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 14, color: '#a8a29e', marginBottom: 32, textDecoration: 'none' }}>
+        <Link href="/home" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 14, color: '#57534e', marginBottom: 32, textDecoration: 'none' }}>
           <svg style={{ width: 16, height: 16 }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
@@ -42,11 +42,11 @@ export default function PsychologicalWindow() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             <div>
               <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>Cortisol</div>
-              <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>suppresses GH</div>
+              <div style={{ fontSize: 12, color: '#57534e', marginTop: 4 }}>suppresses GH</div>
             </div>
             <div>
               <div style={{ fontSize: 22, fontWeight: 800, color: '#065f46' }}>Secure</div>
-              <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>attachment = growth</div>
+              <div style={{ fontSize: 12, color: '#57534e', marginTop: 4 }}>attachment = growth</div>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@ export default function PsychologicalWindow() {
         <section style={{ background: '#fff', borderRadius: 14, border: '1px solid #e7e5e4', padding: '14px 18px', marginBottom: 44 }}>
           <div style={{ marginBottom: 16 }}>
             <h3 style={{ fontSize: 16, fontWeight: 600, color: '#1c1917', marginBottom: 4 }}>{child.name}'s Stress Profile</h3>
-            <p style={{ fontSize: 14, color: '#a8a29e' }}>Pre-Puberty Window · Age 8</p>
+            <p style={{ fontSize: 14, color: '#57534e' }}>Pre-Puberty Window · Age 8</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
             {[
@@ -65,7 +65,7 @@ export default function PsychologicalWindow() {
             ].map((stat) => (
               <div key={stat.label} style={{ background: '#f5f5f4', borderRadius: 10, padding: '12px', textAlign: 'center' }}>
                 <div style={{ fontSize: 18, fontWeight: 800, color: '#065f46' }}>{stat.value}</div>
-                <div style={{ fontSize: 12, color: '#a8a29e', marginTop: 4 }}>{stat.label}</div>
+                <div style={{ fontSize: 12, color: '#57534e', marginTop: 4 }}>{stat.label}</div>
                 {stat.note && <div style={{ fontSize: 12, color: '#065f46', fontWeight: 600, marginTop: 4 }}>{stat.note}</div>}
               </div>
             ))}

@@ -530,7 +530,7 @@ function Card({ item, isOpen, onToggle }: {
             transform: isOpen ? "rotate(180deg)" : "none",
           }}>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M3 4.5L6 7.5L9 4.5" stroke={isOpen ? "#065f46" : "#78716c"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M3 4.5L6 7.5L9 4.5" stroke={isOpen ? "#065f46" : "#57534e"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </span>}
         </div>
@@ -818,17 +818,17 @@ export default function Dashboard() {
               <div style={{ flex:1, background:"#f0fdf4", borderRadius:12, padding:"10px 12px", border:"1px solid #d1fae5" }}>
                 <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#065f46", lineHeight:1 }}>20–24 oz</div>
                 <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8.5, color:"#059669", marginTop:4, lineHeight:1.3 }}>A2 milk/day</div>
-                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, color:"#78716c", marginTop:2 }}>5 oz sheep yogurt = 8 oz milk</div>
+                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, color:"#57534e", marginTop:2 }}>5 oz sheep yogurt = 8 oz milk</div>
               </div>
               <div style={{ flex:1, background:"#f0fdf4", borderRadius:12, padding:"10px 12px", border:"1px solid #d1fae5" }}>
                 <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#065f46", lineHeight:1 }}>1.2–1.5g</div>
                 <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8.5, color:"#059669", marginTop:4, lineHeight:1.3 }}>protein/kg/day</div>
-                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, color:"#78716c", marginTop:2 }}>eggs, dairy, meat, lentils</div>
+                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, color:"#57534e", marginTop:2 }}>eggs, dairy, meat, lentils</div>
               </div>
               <div style={{ flex:1, background:"#f0fdf4", borderRadius:12, padding:"10px 12px", border:"1px solid #d1fae5" }}>
                 <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#065f46", lineHeight:1 }}>surplus</div>
                 <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8.5, color:"#059669", marginTop:4, lineHeight:1.3 }}>clean calories</div>
-                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, color:"#78716c", marginTop:2 }}>whole foods only</div>
+                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:7.5, color:"#57534e", marginTop:2 }}>whole foods only</div>
               </div>
             </div>
           </>}
@@ -1262,18 +1262,18 @@ export default function Dashboard() {
           <div style={{ padding:"24px 20px 20px" }}>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:14 }}>
               <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#f59e0b", textTransform:"uppercase", letterSpacing:"0.1em", background:"rgba(245,158,11,0.12)", padding:"3px 8px", borderRadius:6 }}>Investigation</span>
-              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c" }}>5 min read</span>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e" }}>5 min read</span>
             </div>
             <div style={{ fontSize:19, fontWeight:900, color:"#fafaf9", letterSpacing:"-0.02em", lineHeight:1.3, marginBottom:10 }}>
               The Dinka Tribe of South Sudan
             </div>
-            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:12, color:"#a8a29e", lineHeight:1.65, margin:"0 0 16px" }}>
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:12, color:"#57534e", lineHeight:1.65, margin:"0 0 16px" }}>
               A tiny tribe produces more 7-footers per capita than anywhere on Earth. Their secret? Cattle camps where children drink raw milk by the gallon. The legend of Bol Nyuol — Manute Bol&apos;s 7&apos;10&quot; grandfather — begins here.
             </p>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
               <div style={{ display:"flex", gap:6 }}>
                 {["Raw Milk", "Growth", "7-Footers"].map(tag => (
-                  <span key={tag} style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c", background:"rgba(120,113,108,0.15)", padding:"3px 8px", borderRadius:6 }}>{tag}</span>
+                  <span key={tag} style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e", background:"rgba(120,113,108,0.15)", padding:"3px 8px", borderRadius:6 }}>{tag}</span>
                 ))}
               </div>
               <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#f59e0b", fontWeight:700 }}>Read →</span>
@@ -1286,7 +1286,7 @@ export default function Dashboard() {
 
         {/* Title — centered, outside the box */}
         <div style={{ fontSize:20, fontWeight:900, color:"#1c1917", letterSpacing:"-0.02em", textAlign:"center", marginBottom:8 }}>Today&apos;s Game Plan</div>
-        <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#78716c", textAlign:"center", marginBottom:32, lineHeight:1.6, fontStyle:"italic" }}>Even 60% consistency compounds beautifully over months.</div>
+        <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#57534e", textAlign:"center", marginBottom:32, lineHeight:1.6, fontStyle:"italic" }}>Even 60% consistency compounds beautifully over months.</div>
 
         {/* Day sections */}
         {dayData.map((p, pi) => (
@@ -1324,7 +1324,7 @@ export default function Dashboard() {
           <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#065f46", fontWeight:600, marginBottom:6 }}>
             Every day counts.
           </p>
-          <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#78716c", lineHeight:1.6 }}>
+          <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#57534e", lineHeight:1.6 }}>
             Every number on this page comes from an academic or scientific study. * from adult studies — whole foods deliver these pathways at lower but meaningful doses.
           </p>
         </div>

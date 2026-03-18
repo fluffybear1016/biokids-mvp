@@ -21,7 +21,7 @@ export default function TermsOfService() {
       <div style={{ paddingTop: '6rem', paddingBottom: '4rem', padding: '1rem' }} className="sm:pt-32 sm:pb-24 sm:px-6">
         <div className="max-w-3xl mx-auto">
           {/* Back Link */}
-          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 500, color: '#a8a29e', marginBottom: '2rem', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mb-12">
+          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 500, color: '#57534e', marginBottom: '2rem', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mb-12">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
@@ -30,7 +30,7 @@ export default function TermsOfService() {
 
           {/* Title */}
           <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(1.875rem, 5vw, 3rem)', color: '#1c1917', marginBottom: '0.75rem', fontWeight: 800 }} className="sm:mb-4">Terms of Service</h1>
-          <p style={{ fontSize: '0.875rem', color: '#a8a29e', fontFamily: "'Courier New', Courier, monospace", marginBottom: '2.5rem' }} className="sm:text-base sm:mb-14">Last updated: February 27, 2026</p>
+          <p style={{ fontSize: '0.875rem', color: '#57534e', fontFamily: "'Courier New', Courier, monospace", marginBottom: '2.5rem' }} className="sm:text-base sm:mb-14">Last updated: February 27, 2026</p>
 
           <div style={{ fontSize: '0.875rem', color: '#57534e', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }} className="sm:text-base space-y-8 sm:space-y-10">
             <p>

@@ -52,8 +52,8 @@ export default function HeightPotentialCalculator({
       <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', gap: 12, marginBottom: 20, height: 240 }}>
         {/* Labels column */}
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', width: 56, textAlign: 'right', paddingRight: 8, position: 'relative' }}>
-          <span style={{ position: 'absolute', bottom: '0%', fontFamily: mono, fontSize: 10, color: '#a8a29e' }}>{rangeLow}</span>
-          <span style={{ position: 'absolute', bottom: '36%', fontFamily: mono, fontSize: 10, color: '#a8a29e' }}>{rangeHigh}</span>
+          <span style={{ position: 'absolute', bottom: '0%', fontFamily: mono, fontSize: 10, color: '#57534e' }}>{rangeLow}</span>
+          <span style={{ position: 'absolute', bottom: '36%', fontFamily: mono, fontSize: 10, color: '#57534e' }}>{rangeHigh}</span>
           <span style={{ position: 'absolute', bottom: '92%', fontFamily: mono, fontSize: 10, color: '#065f46', fontWeight: 700 }}>{bioHigh}</span>
         </div>
 
@@ -70,7 +70,7 @@ export default function HeightPotentialCalculator({
           {/* Zone 1: Genetic Target */}
           <div style={{ background: '#f5f5f0', height: '40%', display: 'flex', alignItems: 'center', justifyContent: 'center', borderTop: '2px solid #d6d3d1' }}>
             <div style={{ textAlign: 'center', padding: '0 0.75rem' }}>
-              <p style={{ fontFamily: mono, fontSize: 9, fontWeight: 700, color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Genetic Target</p>
+              <p style={{ fontFamily: mono, fontSize: 9, fontWeight: 700, color: '#57534e', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Genetic Target</p>
               <p style={{ fontFamily: mono, fontSize: 13, fontWeight: 800, color: '#1c1917', marginTop: 2 }}>{rangeLow} to {rangeHigh}</p>
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function HeightPotentialCalculator({
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
         <div style={{ background: '#f5f5f0', borderRadius: 12, padding: '0.875rem 1rem', border: '1px solid #e7e5e4' }}>
           <p style={{ fontFamily: mono, fontSize: 12, fontWeight: 700, color: '#1c1917', marginBottom: 4 }}>Genetic Target · {rangeLow} to {rangeHigh}</p>
-          <p style={{ fontFamily: mono, fontSize: 11, color: '#78716c', lineHeight: 1.55 }}>
+          <p style={{ fontFamily: mono, fontSize: 11, color: '#57534e', lineHeight: 1.55 }}>
             Where most children finish based on mid-parental calculations. Where they land depends on environment — sleep, nutrition, movement.
           </p>
         </div>
@@ -105,10 +105,10 @@ export default function HeightPotentialCalculator({
           <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: mono, fontSize: 11 }}>
             <thead>
               <tr style={{ background: '#f5f5f0' }}>
-                <th style={{ padding: '8px 10px', textAlign: 'left', fontWeight: 600, color: '#78716c' }}>vs target</th>
-                <th style={{ padding: '8px 10px', textAlign: 'left', fontWeight: 600, color: '#78716c' }}>Height</th>
-                <th style={{ padding: '8px 10px', textAlign: 'left', fontWeight: 600, color: '#78716c' }}>Percentile</th>
-                <th style={{ padding: '8px 10px', textAlign: 'right', fontWeight: 600, color: '#78716c' }}></th>
+                <th style={{ padding: '8px 10px', textAlign: 'left', fontWeight: 600, color: '#57534e' }}>vs target</th>
+                <th style={{ padding: '8px 10px', textAlign: 'left', fontWeight: 600, color: '#57534e' }}>Height</th>
+                <th style={{ padding: '8px 10px', textAlign: 'left', fontWeight: 600, color: '#57534e' }}>Percentile</th>
+                <th style={{ padding: '8px 10px', textAlign: 'right', fontWeight: 600, color: '#57534e' }}></th>
               </tr>
             </thead>
             <tbody>
@@ -124,7 +124,7 @@ export default function HeightPotentialCalculator({
                 <tr key={row.offset} style={{ background: row.bio ? '#ecfdf5' : '#fff', borderTop: '1px solid #f0f0f0' }}>
                   <td style={{ padding: '6px 10px', color: '#57534e' }}>+{row.offset}&quot;</td>
                   <td style={{ padding: '6px 10px', fontWeight: 700, color: '#1c1917' }}>{cmToFtIn(geneticTargetCm + row.offset * 2.54)}</td>
-                  <td style={{ padding: '6px 10px', color: '#78716c' }}>{row.pct}</td>
+                  <td style={{ padding: '6px 10px', color: '#57534e' }}>{row.pct}</td>
                   <td style={{ padding: '6px 10px', textAlign: 'right' }}>
                     {row.bio && <span style={{ color: '#065f46', fontWeight: 700, fontSize: 10 }}>bioKids</span>}
                   </td>

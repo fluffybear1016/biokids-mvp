@@ -109,7 +109,7 @@ function LoginForm() {
       <p style={{ fontSize: '0.875rem', color: '#57534e', marginBottom: '1.5rem', textAlign: 'center', lineHeight: 1.75 }} className="sm:text-base">Continue optimizing your child's growth.</p>
 
       {kickedMessage && (
-        <div style={{ background: '#fff', border: '1px solid #e7e5e4', color: '#a8a29e', padding: '0.75rem 1rem', borderRadius: '10px', fontSize: '0.875rem', marginBottom: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }}>
+        <div style={{ background: '#fff', border: '1px solid #e7e5e4', color: '#57534e', padding: '0.75rem 1rem', borderRadius: '10px', fontSize: '0.875rem', marginBottom: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }}>
           <div className="flex items-start gap-3">
             <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -148,7 +148,7 @@ function LoginForm() {
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
         <div style={{ flex: 1, height: 1, background: '#e7e5e4' }} />
-        <span style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 11, color: '#a8a29e' }}>or</span>
+        <span style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 11, color: '#57534e' }}>or</span>
         <div style={{ flex: 1, height: 1, background: '#e7e5e4' }} />
       </div>
 
@@ -191,7 +191,7 @@ function LoginForm() {
       </form>
 
       <div className="flex justify-between items-center mt-6 text-sm">
-        <Link href="/forgot-password" style={{ color: '#a8a29e', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem' }}>
+        <Link href="/forgot-password" style={{ color: '#57534e', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem' }}>
           Forgot password?
         </Link>
         <Link href="/onboarding" style={{ color: '#065f46', fontWeight: 500, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem' }}>
@@ -226,7 +226,7 @@ export default function Login() {
           <LoginForm />
         </Suspense>
 
-        <p style={{ textAlign: 'center', fontSize: '0.75rem', color: '#a8a29e', marginTop: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mt-8">
+        <p style={{ textAlign: 'center', fontSize: '0.75rem', color: '#57534e', marginTop: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mt-8">
           Your data stays private. We never sell or share your information.
         </p>
       </div>

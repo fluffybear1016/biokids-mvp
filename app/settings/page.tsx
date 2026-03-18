@@ -302,7 +302,7 @@ export default function Settings() {
       <main style={{ maxWidth: '540px', margin: '0 auto', padding: '0 20px', paddingTop: '24px', paddingBottom: '40px' }}>
         <button
           onClick={() => router.back()}
-          style={{ fontSize: '14px', color: '#a8a29e', marginBottom: '16px', display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          style={{ fontSize: '14px', color: '#57534e', marginBottom: '16px', display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
         >
           ← Back
         </button>
@@ -323,7 +323,7 @@ export default function Settings() {
                 borderRadius: 20,
                 border: child.id === activeId ? `1.5px solid ${C.green}` : '1px solid #d6d3d1',
                 background: child.id === activeId ? C.fill : '#fff',
-                color: child.id === activeId ? C.green : '#78716c',
+                color: child.id === activeId ? C.green : '#57534e',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
               }}
@@ -364,7 +364,7 @@ export default function Settings() {
                 </button>
                 <button
                   onClick={() => setConfirmDelete(null)}
-                  style={{ fontFamily: mono, fontSize: 12, padding: '4px 12px', borderRadius: 6, border: '1px solid #d6d3d1', background: '#fff', color: '#78716c', cursor: 'pointer' }}
+                  style={{ fontFamily: mono, fontSize: 12, padding: '4px 12px', borderRadius: 6, border: '1px solid #d6d3d1', background: '#fff', color: '#57534e', cursor: 'pointer' }}
                 >
                   Cancel
                 </button>
@@ -372,7 +372,7 @@ export default function Settings() {
             ) : (
               <button
                 onClick={() => setConfirmDelete(activeId)}
-                style={{ fontFamily: mono, fontSize: 11, color: '#a8a29e', background: 'none', border: 'none', cursor: 'pointer', padding: 0, textDecoration: 'underline' }}
+                style={{ fontFamily: mono, fontSize: 11, color: '#57534e', background: 'none', border: 'none', cursor: 'pointer', padding: 0, textDecoration: 'underline' }}
               >
                 Remove this child
               </button>
@@ -386,7 +386,7 @@ export default function Settings() {
           <div id="section-child" style={{ background: openSection === 'child' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'child' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('child')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Child Info</span></span>
-              <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('child')}</span>
+              <span style={{ color: '#57534e', fontSize: '12px' }}>{chevron('child')}</span>
             </button>
             {openSection === 'child' && (
               <div style={{ padding: '0 18px 18px 18px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -427,7 +427,7 @@ export default function Settings() {
           <div id="section-habits" style={{ background: openSection === 'habits' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'habits' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('habits')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Daily Habits</span></span>
-              <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('habits')}</span>
+              <span style={{ color: '#57534e', fontSize: '12px' }}>{chevron('habits')}</span>
             </button>
             {openSection === 'habits' && (
               <div style={{ padding: '0 18px 18px 18px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -448,7 +448,7 @@ export default function Settings() {
           <div id="section-goal" style={{ background: openSection === 'goal' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'goal' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('goal')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Growth Goal</span></span>
-              <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('goal')}</span>
+              <span style={{ color: '#57534e', fontSize: '12px' }}>{chevron('goal')}</span>
             </button>
             {openSection === 'goal' && (
               <div style={{ padding: '0 18px 18px 18px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -474,7 +474,7 @@ export default function Settings() {
                   >
                     <div>
                       <p style={{ fontSize: '14px', fontWeight: 600, color: goal === opt.value ? C.green : '#1c1917', margin: 0 }}>{opt.label}</p>
-                      <p style={{ fontSize: '12px', color: '#a8a29e', margin: '4px 0 0 0' }}>{opt.desc}</p>
+                      <p style={{ fontSize: '12px', color: '#57534e', margin: '4px 0 0 0' }}>{opt.desc}</p>
                     </div>
                   </button>
                 ))}
@@ -491,7 +491,7 @@ export default function Settings() {
           <div id="section-height" style={{ background: openSection === 'height' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'height' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('height')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Height Potential</span></span>
-              <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('height')}</span>
+              <span style={{ color: '#57534e', fontSize: '12px' }}>{chevron('height')}</span>
             </button>
             {openSection === 'height' && (
               <div style={{ padding: '0 18px 18px 18px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -565,14 +565,14 @@ export default function Settings() {
           <div id="section-notifications" style={{ background: openSection === 'notifications' ? C.fill : '#fff', borderRadius: '14px', border: openSection === 'notifications' ? `1px solid ${C.green}` : '1px solid #e7e5e4', overflow: 'hidden', transition: 'all 0.2s' }}>
             <button onClick={() => toggle('notifications')} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: mono }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, flexShrink: 0 }} /><span style={{ fontWeight: 600, color: '#1c1917' }}>Notifications</span></span>
-              <span style={{ color: '#a8a29e', fontSize: '12px' }}>{chevron('notifications')}</span>
+              <span style={{ color: '#57534e', fontSize: '12px' }}>{chevron('notifications')}</span>
             </button>
             {openSection === 'notifications' && (
               <div style={{ padding: '0 18px 18px 18px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {notifyLoading ? (
-                  <p style={{ fontSize: 13, color: '#a8a29e' }}>Loading...</p>
+                  <p style={{ fontSize: 13, color: '#57534e' }}>Loading...</p>
                 ) : !pushEndpoint ? (
-                  <p style={{ fontSize: 13, color: '#a8a29e' }}>Enable notifications from the banner on your home screen to adjust frequency.</p>
+                  <p style={{ fontSize: 13, color: '#57534e' }}>Enable notifications from the banner on your home screen to adjust frequency.</p>
                 ) : (
                   <>
                     <p style={{ fontSize: 13, color: '#57534e', margin: 0 }}>How often should we remind you about the protocol?</p>
@@ -603,7 +603,7 @@ export default function Settings() {
                       >
                         <div>
                           <p style={{ fontSize: '14px', fontWeight: 600, color: notifyFreq === opt.value ? C.green : '#1c1917', margin: 0 }}>{opt.label}</p>
-                          <p style={{ fontSize: '12px', color: '#a8a29e', margin: '2px 0 0 0' }}>{opt.desc}</p>
+                          <p style={{ fontSize: '12px', color: '#57534e', margin: '2px 0 0 0' }}>{opt.desc}</p>
                         </div>
                       </button>
                     ))}

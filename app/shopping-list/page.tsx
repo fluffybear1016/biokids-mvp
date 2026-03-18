@@ -43,7 +43,7 @@ export default function ShoppingListPage() {
             <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#065f46", minWidth:20, textAlign:"right" }}>{i+1}</span>
             <div>
               <div style={{ fontSize:14, fontWeight:700, color:"#1c1917" }}>{r.item}</div>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", marginTop:2 }}>{r.note}</div>
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#57534e", marginTop:2 }}>{r.note}</div>
             </div>
           </div>
         ))}
@@ -70,10 +70,10 @@ export default function ShoppingListPage() {
           { item:"Magnesium lotion", note:"Feet and shoulders at bedtime. Best absorbed for sleep — activates GABA receptors." },
         ].map((r, i) => (
           <div key={i} style={{ display:"flex", gap:12, marginBottom:10, alignItems:"baseline" }}>
-            <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#78716c", minWidth:20, textAlign:"right" }}>{i+18}</span>
+            <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#57534e", minWidth:20, textAlign:"right" }}>{i+18}</span>
             <div>
               <div style={{ fontSize:14, fontWeight:700, color:"#1c1917" }}>{r.item}</div>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", marginTop:2 }}>{r.note}</div>
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#57534e", marginTop:2 }}>{r.note}</div>
             </div>
           </div>
         ))}
@@ -81,7 +81,7 @@ export default function ShoppingListPage() {
 
       {/* Tier 3 — Nice to have */}
       <div style={{ marginBottom:12 }}>
-        <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#a8a29e", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Tier 3 — Nice to have</div>
+        <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#57534e", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Tier 3 — Nice to have</div>
         {[
           { item:"Pistachios", note:"Highest melatonin per gram of any nut. Best evening snack." },
           { item:"Walnuts", note:"Melatonin support + omega-3s. Evening snack." },
@@ -95,16 +95,16 @@ export default function ShoppingListPage() {
           { item:"Quinoa / buckwheat", note:"Complete plant proteins. Low-GI carb base. mTOR support." },
         ].map((r, i) => (
           <div key={i} style={{ display:"flex", gap:12, marginBottom:10, alignItems:"baseline" }}>
-            <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#d6d3d1", minWidth:20, textAlign:"right" }}>{i+34}</span>
+            <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:16, fontWeight:800, color:"#57534e", minWidth:20, textAlign:"right" }}>{i+34}</span>
             <div>
               <div style={{ fontSize:14, fontWeight:700, color:"#1c1917" }}>{r.item}</div>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", marginTop:2 }}>{r.note}</div>
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#57534e", marginTop:2 }}>{r.note}</div>
             </div>
           </div>
         ))}
       </div>
 
-      <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", textAlign:"center", marginTop:20, lineHeight:1.6, fontStyle:"italic" }}>
+      <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#57534e", textAlign:"center", marginTop:20, lineHeight:1.6, fontStyle:"italic" }}>
         Start with Tier 1. Add Tier 2 when it feels easy. Tier 3 whenever you want.
       </div>
     </div>

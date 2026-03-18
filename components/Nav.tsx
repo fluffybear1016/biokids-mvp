@@ -130,7 +130,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
                 fontFamily:"'Courier New', Courier, monospace",
                 fontSize:12,
                 fontWeight: isActive(tab.href) ? 700 : 500,
-                color: isActive(tab.href) ? '#1c1917' : '#78716c',
+                color: isActive(tab.href) ? '#1c1917' : '#57534e',
                 letterSpacing:'0.02em',
                 textDecoration:'none',
                 whiteSpace:'nowrap',
@@ -198,7 +198,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
                     {/* Multi-child switcher */}
                     {allChildren.length > 1 && (
                       <>
-                        <div style={{ padding: '6px 16px 4px', fontSize: 10, fontWeight: 600, color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: "'Courier New', Courier, monospace" }}>
+                        <div style={{ padding: '6px 16px 4px', fontSize: 10, fontWeight: 600, color: '#57534e', textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: "'Courier New', Courier, monospace" }}>
                           Switch child
                         </div>
                         {allChildren.map((child) => (

@@ -388,7 +388,7 @@ function OnboardingContent() {
     width: '100%', padding: '0.875rem', borderRadius: 12,
     border: 'none', cursor: disabled ? 'not-allowed' : 'pointer',
     background: disabled ? '#d6d3d1' : '#065f46',
-    color: disabled ? '#a8a29e' : '#fff',
+    color: disabled ? '#57534e' : '#fff',
     transition: 'all 0.2s ease', marginTop: 24,
   });
 
@@ -442,7 +442,7 @@ function OnboardingContent() {
               />
             ))}
           </div>
-          <p style={{ textAlign: 'center', fontSize: 11, color: '#a8a29e', fontFamily: mono }}>Step {step} of {totalSteps}</p>
+          <p style={{ textAlign: 'center', fontSize: 11, color: '#57534e', fontFamily: mono }}>Step {step} of {totalSteps}</p>
         </div>
 
         {/* ========== Step 1: Create Account ========== */}
@@ -455,7 +455,7 @@ function OnboardingContent() {
               Create your account
             </h2>
             <span style={{ display: 'inline-block', fontSize: 9, fontWeight: 700, color: '#fff', background: '#065f46', borderRadius: 4, padding: '2px 6px', letterSpacing: '0.08em', marginBottom: 12 }}>BETA</span>
-            <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', marginBottom: 24, textAlign: 'center', lineHeight: 1.6 }}>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#57534e', marginBottom: 24, textAlign: 'center', lineHeight: 1.6 }}>
               Free access to the full protocol. No credit card needed.
             </p>
 
@@ -488,7 +488,7 @@ function OnboardingContent() {
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
               <div style={{ flex: 1, height: 1, background: '#e7e5e4' }} />
-              <span style={{ fontFamily: mono, fontSize: 11, color: '#a8a29e' }}>or</span>
+              <span style={{ fontFamily: mono, fontSize: 11, color: '#57534e' }}>or</span>
               <div style={{ flex: 1, height: 1, background: '#e7e5e4' }} />
             </div>
 
@@ -530,7 +530,7 @@ function OnboardingContent() {
                   style={{ marginTop: 3, width: 16, height: 16, accentColor: '#065f46' }}
                   required
                 />
-                <span style={{ fontFamily: mono, fontSize: 12, color: '#78716c', lineHeight: 1.5 }}>
+                <span style={{ fontFamily: mono, fontSize: 12, color: '#57534e', lineHeight: 1.5 }}>
                   I agree to the{' '}
                   <Link href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Terms</Link>
                   {' '}and{' '}
@@ -544,7 +544,7 @@ function OnboardingContent() {
                   onChange={(e) => setNewsletterOptIn(e.target.checked)}
                   style={{ marginTop: 3, width: 16, height: 16, accentColor: '#065f46' }}
                 />
-                <span style={{ fontFamily: mono, fontSize: 12, color: '#78716c', lineHeight: 1.5 }}>
+                <span style={{ fontFamily: mono, fontSize: 12, color: '#57534e', lineHeight: 1.5 }}>
                   Send me weekly growth tips and protocol updates
                 </span>
               </label>
@@ -557,7 +557,7 @@ function OnboardingContent() {
               </button>
             </form>
 
-            <p style={{ textAlign: 'center', fontFamily: mono, fontSize: 12, color: '#a8a29e', marginTop: 20 }}>
+            <p style={{ textAlign: 'center', fontFamily: mono, fontSize: 12, color: '#57534e', marginTop: 20 }}>
               Already have an account?{' '}
               <Link href="/login" style={{ color: '#065f46', fontWeight: 600, textDecoration: 'none' }}>Log in</Link>
             </p>
@@ -571,7 +571,7 @@ function OnboardingContent() {
             padding: '2rem 1.5rem', animation: 'fadeSlideIn 0.4s ease',
           }}>
             <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>Tell us about your child</h2>
-            <p style={{ fontFamily: mono, fontSize: 12, color: '#a8a29e', marginBottom: 24 }}>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#57534e', marginBottom: 24 }}>
               For privacy, consider using just a first initial.
             </p>
 
@@ -654,7 +654,7 @@ function OnboardingContent() {
             <h2 style={{ fontFamily: mono, fontSize: 20, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>
               Help us understand {name || 'your child'}&apos;s day
             </h2>
-            <p style={{ fontFamily: mono, fontSize: 12, color: '#a8a29e', marginBottom: 24 }}>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#57534e', marginBottom: 24 }}>
               You know {name || 'your child'} best. This helps us tailor the protocol.
             </p>
 
@@ -814,7 +814,7 @@ function OnboardingContent() {
             <p style={{
               fontFamily: mono,
               fontSize: 13,
-              color: '#78716c',
+              color: '#57534e',
               margin: '0 0 20px',
               lineHeight: 1.6,
               maxWidth: 300,
@@ -904,9 +904,9 @@ function OnboardingContent() {
                     justifyContent: 'space-around',
                   }}>
                     {/* Back arrow */}
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#57534e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
                     {/* Forward arrow */}
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#57534e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                     {/* SHARE BUTTON — highlighted with ring */}
                     <div style={{
                       position: 'relative',
@@ -928,9 +928,9 @@ function OnboardingContent() {
                       </svg>
                     </div>
                     {/* Bookmark */}
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#57534e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
                     {/* Tabs */}
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#57534e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
                   </div>
                   <p style={{
                     fontFamily: mono, fontSize: 11, color: '#065f46', fontWeight: 600,
@@ -1069,7 +1069,7 @@ function OnboardingContent() {
                   ].map((item) => (
                     <div key={item.label} style={{ textAlign: 'center' }}>
                       <div style={{ fontSize: 20, marginBottom: 4 }}>{item.icon}</div>
-                      <span style={{ fontFamily: mono, fontSize: 10, color: '#a8a29e', fontWeight: 600 }}>{item.label}</span>
+                      <span style={{ fontFamily: mono, fontSize: 10, color: '#57534e', fontWeight: 600 }}>{item.label}</span>
                     </div>
                   ))}
                 </div>
@@ -1123,7 +1123,7 @@ function OnboardingContent() {
                 marginTop: 4,
                 transition: 'color 0.2s',
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#78716c')}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#57534e')}
               onMouseLeave={(e) => (e.currentTarget.style.color = '#c4b5a4')}
             >
               skip for now
@@ -1143,7 +1143,7 @@ function OnboardingContent() {
             <h2 style={{ fontFamily: mono, fontSize: 22, fontWeight: 800, color: '#1c1917', marginBottom: 6 }}>
               {name || 'Your child'}&apos;s growth potential
             </h2>
-            <p style={{ fontFamily: mono, fontSize: 12, color: '#78716c', marginBottom: 24, lineHeight: 1.6 }}>
+            <p style={{ fontFamily: mono, fontSize: 12, color: '#57534e', marginBottom: 24, lineHeight: 1.6 }}>
               Enter parent heights and we&apos;ll show you where {name || 'your child'} could land.
             </p>
 
@@ -1229,7 +1229,7 @@ export default function Onboarding() {
   return (
     <Suspense fallback={
       <div style={{ minHeight: '100vh', backgroundColor: '#fafaf9', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
-        <div style={{ fontFamily: "'Courier New', Courier, monospace", color: '#a8a29e', fontSize: 13 }}>Loading...</div>
+        <div style={{ fontFamily: "'Courier New', Courier, monospace", color: '#57534e', fontSize: 13 }}>Loading...</div>
       </div>
     }>
       <OnboardingContent />

@@ -26,7 +26,7 @@ export default function SupportPage() {
       <div style={{ paddingTop: '6rem', paddingBottom: '4rem', padding: '1rem' }} className="sm:pt-32 sm:pb-24 sm:px-6">
         <div className="max-w-3xl mx-auto">
           {/* Back Link */}
-          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 500, color: '#a8a29e', marginBottom: '2rem', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mb-12">
+          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 500, color: '#57534e', marginBottom: '2rem', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mb-12">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
@@ -35,7 +35,7 @@ export default function SupportPage() {
 
           {/* Title */}
           <h1 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 'clamp(1.875rem, 5vw, 3rem)', color: '#1c1917', marginBottom: '0.75rem', fontWeight: 800 }} className="sm:mb-4">Support</h1>
-          <p style={{ fontSize: '0.875rem', color: '#a8a29e', fontFamily: "'Courier New', Courier, monospace", marginBottom: '2.5rem' }} className="sm:text-base sm:mb-14">We&apos;re here to help.</p>
+          <p style={{ fontSize: '0.875rem', color: '#57534e', fontFamily: "'Courier New', Courier, monospace", marginBottom: '2.5rem' }} className="sm:text-base sm:mb-14">We&apos;re here to help.</p>
 
           <div style={{ fontSize: '0.875rem', color: '#57534e', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }} className="sm:text-base space-y-8 sm:space-y-10">
 
@@ -61,7 +61,7 @@ export default function SupportPage() {
               >
                 contact@biokids.me
               </a>
-              <p className="mt-4" style={{ color: '#a8a29e' }}>We respond to all inquiries within 24 hours.</p>
+              <p className="mt-4" style={{ color: '#57534e' }}>We respond to all inquiries within 24 hours.</p>
             </section>
 
             {/* FAQ */}
@@ -109,7 +109,7 @@ export default function SupportPage() {
             {/* Medical Disclaimer */}
             <section style={{ backgroundColor: '#fefce8', borderRadius: '12px', padding: '1.5rem', border: '1px solid #fde68a' }}>
               <h2 style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.875rem', color: '#92400e', marginBottom: '0.75rem', fontWeight: 800 }}>Medical Disclaimer</h2>
-              <p style={{ color: '#78716c', fontSize: '0.8125rem', lineHeight: 1.7 }}>
+              <p style={{ color: '#57534e', fontSize: '0.8125rem', lineHeight: 1.7 }}>
                 bioKids provides general wellness information based on published nutrition and exercise research. It is not a medical device and does not diagnose, treat, cure, or prevent any disease. The information provided is for educational purposes only and is not intended as a substitute for professional medical advice. Always consult your child&apos;s pediatrician before making changes to their diet, exercise, or sleep routine. Individual results vary.
               </p>
             </section>

@@ -175,10 +175,10 @@ export default function GrowthLogPage() {
               <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:28, fontWeight:800, color:"#065f46", lineHeight:1 }}>
                 +{totalGainIn.toFixed(1)}&quot;
               </div>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c", marginTop:6 }}>
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e", marginTop:6 }}>
                 total growth
               </div>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#a8a29e", marginTop:2 }}>
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#57534e", marginTop:2 }}>
                 since {monthLabel(first.date)}
               </div>
             </div>
@@ -186,10 +186,10 @@ export default function GrowthLogPage() {
               <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:28, fontWeight:800, color:"#1c1917", lineHeight:1 }}>
                 {inToFtIn(latest.heightIn)}
               </div>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c", marginTop:6 }}>
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e", marginTop:6 }}>
                 current height
               </div>
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#a8a29e", marginTop:2 }}>
+              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#57534e", marginTop:2 }}>
                 {fullDateLabel(latest.date)}
               </div>
             </div>
@@ -267,7 +267,7 @@ export default function GrowthLogPage() {
                 return (
                   <g key={i}>
                     <line x1={padL} y1={y} x2={chartW - padR} y2={y} stroke="#f0eeec" strokeWidth={1} />
-                    <text x={padL - 6} y={y + 3} textAnchor="end" fill="#a8a29e" fontSize={9} fontFamily="'Courier New', monospace">
+                    <text x={padL - 6} y={y + 3} textAnchor="end" fill="#57534e" fontSize={9} fontFamily="'Courier New', monospace">
                       {inToFtIn(Math.round(h))}
                     </text>
                   </g>
@@ -300,7 +300,7 @@ export default function GrowthLogPage() {
                   <text x={chartW - padR - 4} y={yForHeight(heightData.bioHighIn) + 12} textAnchor="end" fill="#065f46" fontSize={8} fontFamily="'Courier New', monospace" fontWeight={700} opacity={0.6}>
                     bioKids zone
                   </text>
-                  <text x={chartW - padR - 4} y={yForHeight(heightData.rangeHighIn) + 12} textAnchor="end" fill="#78716c" fontSize={8} fontFamily="'Courier New', monospace" opacity={0.6}>
+                  <text x={chartW - padR - 4} y={yForHeight(heightData.rangeHighIn) + 12} textAnchor="end" fill="#57534e" fontSize={8} fontFamily="'Courier New', monospace" opacity={0.6}>
                     genetic range
                   </text>
                 </>
@@ -348,7 +348,7 @@ export default function GrowthLogPage() {
                 <text
                   key={m.date}
                   x={dateToX(m.date)} y={chartH - 6}
-                  textAnchor="middle" fill="#a8a29e" fontSize={8}
+                  textAnchor="middle" fill="#57534e" fontSize={8}
                   fontFamily="'Courier New', monospace"
                 >
                   {monthLabel(m.date)}
@@ -368,7 +368,7 @@ export default function GrowthLogPage() {
             {/* Height input */}
             <div style={{ display:"flex", gap:10, marginBottom:14 }}>
               <div style={{ flex:1 }}>
-                <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c", display:"block", marginBottom:4 }}>Feet</label>
+                <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e", display:"block", marginBottom:4 }}>Feet</label>
                 <input
                   type="number" min="1" max="7" value={inputFt}
                   onChange={e => setInputFt(e.target.value)}
@@ -381,7 +381,7 @@ export default function GrowthLogPage() {
                 />
               </div>
               <div style={{ flex:1 }}>
-                <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c", display:"block", marginBottom:4 }}>Inches</label>
+                <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e", display:"block", marginBottom:4 }}>Inches</label>
                 <input
                   type="number" min="0" max="11.9" step="0.5" value={inputIn}
                   onChange={e => setInputIn(e.target.value)}
@@ -397,7 +397,7 @@ export default function GrowthLogPage() {
 
             {/* Date */}
             <div style={{ marginBottom:14 }}>
-              <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c", display:"block", marginBottom:4 }}>Date</label>
+              <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e", display:"block", marginBottom:4 }}>Date</label>
               <input
                 type="date" value={inputDate}
                 onChange={e => setInputDate(e.target.value)}
@@ -410,7 +410,7 @@ export default function GrowthLogPage() {
 
             {/* Note */}
             <div style={{ marginBottom:18 }}>
-              <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#78716c", display:"block", marginBottom:4 }}>Note (optional)</label>
+              <label style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e", display:"block", marginBottom:4 }}>Note (optional)</label>
               <input
                 type="text" value={inputNote}
                 onChange={e => setInputNote(e.target.value)}
@@ -436,7 +436,7 @@ export default function GrowthLogPage() {
               <button
                 onClick={() => setShowForm(false)}
                 style={{
-                  padding:"12px 20px", background:"#fafaf9", color:"#78716c",
+                  padding:"12px 20px", background:"#fafaf9", color:"#57534e",
                   border:"1px solid #e7e5e4", borderRadius:12, fontSize:13, fontWeight:600,
                   fontFamily:"'Courier New', Courier, monospace", cursor:"pointer",
                 }}
@@ -454,7 +454,7 @@ export default function GrowthLogPage() {
             style={{
               width:"100%", padding:"14px", background:"#fff",
               border:"1.5px dashed #d6d3d1", borderRadius:14,
-              fontSize:13, fontWeight:700, color:"#78716c",
+              fontSize:13, fontWeight:700, color:"#57534e",
               fontFamily:"'Courier New', Courier, monospace", cursor:"pointer",
               marginBottom:24,
             }}
@@ -490,7 +490,7 @@ export default function GrowthLogPage() {
                         </span>
                       )}
                     </div>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#78716c", marginTop:2 }}>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"#57534e", marginTop:2 }}>
                       {fullDateLabel(m.date)}{m.note ? ` · ${m.note}` : ''}
                     </div>
                   </div>
@@ -498,7 +498,7 @@ export default function GrowthLogPage() {
                     onClick={() => deleteMeasurement(m.date)}
                     style={{
                       background:"none", border:"none", cursor:"pointer",
-                      fontSize:14, color:"#d6d3d1", padding:"4px 8px",
+                      fontSize:14, color:"#57534e", padding:"4px 8px",
                     }}
                   >
                     ×
@@ -515,7 +515,7 @@ export default function GrowthLogPage() {
             <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:48, color:"#e7e5e4", marginBottom:16 }}>
               &#x1F4CF;
             </div>
-            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, color:"#78716c", lineHeight:1.7, maxWidth:280, margin:"0 auto" }}>
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, color:"#57534e", lineHeight:1.7, maxWidth:280, margin:"0 auto" }}>
               Your growth chart starts with one measurement.
               <br /><br />
               Measure in the morning, barefoot, against a wall. Mark it. Measure it. Log it here.
@@ -528,7 +528,7 @@ export default function GrowthLogPage() {
           marginTop:32, padding:"16px 18px",
           background:"#f5f5f4", borderRadius:12,
           fontFamily:"'Courier New', Courier, monospace",
-          fontSize:10, color:"#78716c", lineHeight:1.7,
+          fontSize:10, color:"#57534e", lineHeight:1.7,
         }}>
           <strong style={{ color:"#44403c" }}>Measurement tip:</strong> Same time each day (morning is best). Barefoot. Standing straight against a wall. Use a flat object (book, ruler) on top of their head, mark the wall, measure with a tape. Children are ~1 cm taller in the morning than evening due to spinal compression.
         </div>

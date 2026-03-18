@@ -267,7 +267,7 @@ export default function LandingHeightPredictor() {
             </div>
           ) : (
             <div style={{ textAlign: 'center', padding: '16px 0' }}>
-              <p style={{ fontFamily: mono, fontSize: 12, color: '#a8a29e' }}>
+              <p style={{ fontFamily: mono, fontSize: 12, color: '#57534e' }}>
                 Enter heights above to see your child&apos;s potential
               </p>
             </div>

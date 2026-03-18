@@ -128,7 +128,7 @@ const col = {
   bg: '#fafaf9',
   title: '#1c1917',
   body: '#57534e',
-  light: '#a8a29e',
+  light: '#57534e',
   green: '#065f46',
   card: '#fff',
   border: '#e7e5e4',

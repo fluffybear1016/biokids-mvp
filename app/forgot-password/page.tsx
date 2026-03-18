@@ -64,7 +64,7 @@ export default function ForgotPassword() {
               <p style={{ fontSize: '0.875rem', color: '#57534e', marginBottom: '1.5rem', textAlign: 'center', fontFamily: "'Courier New', Courier, monospace", lineHeight: 1.75 }} className="sm:text-base">
                 We sent a password reset link to <strong>{email}</strong>
               </p>
-              <p style={{ fontSize: '0.75rem', color: '#a8a29e', textAlign: 'center', marginBottom: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }}>
+              <p style={{ fontSize: '0.75rem', color: '#57534e', textAlign: 'center', marginBottom: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }}>
                 Didn't receive the email? Check your spam folder or try again.
               </p>
               <Link href="/login" style={{ background: '#065f46', color: 'white', borderRadius: '10px', fontFamily: "'Courier New', Courier, monospace", fontWeight: 600, padding: '0.75rem 1rem', fontSize: '1rem', width: '100%', border: 'none', cursor: 'pointer', display: 'block', textAlign: 'center', textDecoration: 'none' }}>
@@ -113,7 +113,7 @@ export default function ForgotPassword() {
           )}
         </div>
 
-        <p style={{ textAlign: 'center', fontSize: '0.75rem', color: '#a8a29e', marginTop: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mt-8">
+        <p style={{ textAlign: 'center', fontSize: '0.75rem', color: '#57534e', marginTop: '1.5rem', fontFamily: "'Courier New', Courier, monospace" }} className="sm:mt-8">
           Your data stays private. We never sell or share your information.
         </p>
       </div>

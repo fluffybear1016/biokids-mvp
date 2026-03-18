@@ -1104,7 +1104,7 @@ export default function StagePage() {
 
         {/* Header */}
         <header style={{ marginBottom: '44px' }}>
-          <div style={{ fontSize: '14px', color: '#a8a29e', marginBottom: '8px' }}>{currentStage.ageRange}</div>
+          <div style={{ fontSize: '14px', color: '#57534e', marginBottom: '8px' }}>{currentStage.ageRange}</div>
           <h1 style={{ fontWeight: 800, fontSize: '32px', color: '#1c1917', marginBottom: '12px' }}>
             {currentStage.header}
           </h1>
@@ -1136,7 +1136,7 @@ export default function StagePage() {
                   </h2>
                 </div>
                 <svg
-                  style={{ width: '20px', height: '20px', color: '#a8a29e', transform: openSection === index ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}
+                  style={{ width: '20px', height: '20px', color: '#57534e', transform: openSection === index ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -1167,7 +1167,7 @@ export default function StagePage() {
                     </div>
 
                     {/* Citation */}
-                    <p style={{ color: '#a8a29e', fontSize: '14px', fontStyle: 'italic', margin: 0 }}>
+                    <p style={{ color: '#57534e', fontSize: '14px', fontStyle: 'italic', margin: 0 }}>
                       [{section.citation}]
                     </p>
                   </div>
@@ -1216,7 +1216,7 @@ export default function StagePage() {
                   </button>
                 ))}
               </div>
-              <p style={{ fontSize: '14px', color: '#a8a29e', fontStyle: 'italic', margin: '16px 0 0 0', paddingTop: '12px', borderTop: '1px solid #f5f5f5' }}>
+              <p style={{ fontSize: '14px', color: '#57534e', fontStyle: 'italic', margin: '16px 0 0 0', paddingTop: '12px', borderTop: '1px solid #f5f5f5' }}>
                 More stages coming soon...
               </p>
             </div>

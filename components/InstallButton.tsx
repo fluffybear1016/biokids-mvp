@@ -133,7 +133,7 @@ export default function InstallButton() {
             <p style={{
               fontFamily: "'Courier New', Courier, monospace",
               fontSize: 11,
-              color: '#78716c',
+              color: '#57534e',
               margin: 0,
               lineHeight: 1.4,
             }}>
@@ -146,7 +146,7 @@ export default function InstallButton() {
               style={{
                 fontFamily: "'Courier New', Courier, monospace",
                 fontSize: 16,
-                color: '#a8a29e',
+                color: '#57534e',
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
@@ -221,7 +221,7 @@ export default function InstallButton() {
                   width: 30,
                   height: 30,
                   fontSize: 16,
-                  color: '#78716c',
+                  color: '#57534e',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
@@ -279,7 +279,7 @@ export default function InstallButton() {
             <p style={{
               fontFamily: "'Courier New', Courier, monospace",
               fontSize: 10,
-              color: '#a8a29e',
+              color: '#57534e',
               textAlign: 'center',
               margin: '20px 0 0',
               lineHeight: 1.5,
@@ -325,7 +325,7 @@ function Step({ num, text, detail, icon }: { num: number; text: string; detail: 
         <p style={{
           fontFamily: "'Courier New', Courier, monospace",
           fontSize: 11,
-          color: '#78716c',
+          color: '#57534e',
           margin: 0,
           lineHeight: 1.4,
         }}>

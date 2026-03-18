@@ -61,7 +61,7 @@ export default function GetTheApp() {
         <p style={{
           fontFamily: mono,
           fontSize: 14,
-          color: '#78716c',
+          color: '#57534e',
           margin: '0 0 48px',
           lineHeight: 1.7,
         }}>

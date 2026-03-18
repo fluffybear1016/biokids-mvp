@@ -36,7 +36,7 @@ const C = {
   sigBorder: '#86efac',
   title: '#1c1917',
   body: '#57534e',
-  light: '#a8a29e',
+  light: '#57534e',
   green: '#065f46',
   red: '#dc2626',
   redLight: '#7f1d1d',

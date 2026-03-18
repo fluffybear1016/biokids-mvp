@@ -184,7 +184,7 @@ export default function NutritionWindow() {
   const F = "'Courier New', Courier, monospace";
   const CC = {
     bg: '#fafaf9', card: '#fff', border: '#e7e5e4', sigBorder: '#86efac',
-    title: '#1c1917', body: '#57534e', light: '#a8a29e', green: '#065f46', red: '#dc2626',
+    title: '#1c1917', body: '#57534e', light: '#57534e', green: '#065f46', red: '#dc2626',
   };
 
   const CitationBlock = ({ citations }: { citations: { text: string; url: string }[] }) => (
