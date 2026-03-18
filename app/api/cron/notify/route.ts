@@ -64,15 +64,16 @@ const SLOTS: NotificationSlot[] = [
   // ══════════════════════════════════════════════════════════
   // 7 AM ET — Breakfast + Dairy #1 + CLO
   // ══════════════════════════════════════════════════════════
-  // Skip cereal. Real food breakfast with dairy serving #1
-  // and cod liver oil. Give actual breakfast options.
+  // No cereal, no juice boxes, no refined sugar (suppresses
+  // up to 80% of GH). Eggs + red bell pepper for choline +
+  // iron absorption. Dairy #1. CLO for receptor fuel.
   {
     name: 'morning',
     utcHour: 11,
     messages: [
       {
         title: "Breakfast + Dairy Serving #1 + CLO",
-        body: "Skip cereal. Pick one: eggs + A2 milk with honey, sheep yogurt bowl with berries + granola, or a berry smoothie with A2 milk. That's Dairy Serving #1. Then half a spoon of lemon cod liver oil (hide it in the smoothie). Skip CLO on liver days. Serving #2 comes after school with the sprint stack.",
+        body: "No cereal, no juice boxes — they suppress up to 80% of growth hormone. Eggs with red bell pepper (choline primes the growth axis + 2–3× iron absorption). Dairy Serving #1: cold A2 milk with honey, a yogurt bowl, or a smoothie. Half a spoon of lemon CLO (hide it in the smoothie). Skip CLO on liver days.",
         url: "/home#item-d1",
         tag: "biokids-morning",
       },
@@ -119,16 +120,16 @@ const SLOTS: NotificationSlot[] = [
   // ══════════════════════════════════════════════════════════
   // 6 PM ET — Dinner + Gelatin (no exercise after this)
   // ══════════════════════════════════════════════════════════
-  // Dinner is the last active meal. Protein + lentils + veg.
-  // Fermented side is at lunch, not dinner. Gelatin in any form.
-  // No dairy at dinner — save it for bedtime drink.
+  // Protein + lentils + veg. No ferments here (those are lunch).
+  // Gelatin as bone broth, jello, gummies, or homemade ice cream.
+  // No dairy. Screens off. Kitchen closes 2-3 hrs before bed.
   {
     name: 'dinner',
     utcHour: 22,
     messages: [
       {
-        title: "Growth dinner + gelatin — no exercise after this",
-        body: "Rotated protein + lentils + cooked vegetables. No dairy at dinner — save it for the bedtime drink. Add gelatin in any form: jello, gummies, homemade ice cream, or stirred into a smoothie. It's glycine — builds growth plates while they sleep + lowers core temp. No exercise after dinner.",
+        title: "Growth dinner + gelatin — screens off after this",
+        body: "Rotated protein + lentils + cooked vegetables. No dairy — save it for the bedtime drink. Gelatin in any form: bone broth, jello, gummies, or homemade ice cream. It's glycine — builds growth plates + lowers core temp. No exercise after dinner. Screens off. Kitchen closes 2–3 hours before bed — insulin must clear for tonight's GH surge.",
         url: "/home#item-lunch",
         tag: "biokids-dinner",
       },
@@ -136,18 +137,18 @@ const SLOTS: NotificationSlot[] = [
   },
 
   // ══════════════════════════════════════════════════════════
-  // 8 PM ET — Bedtime routine (the full sequence)
+  // 8 PM ET — Bedtime sequence (the full sequence)
   // ══════════════════════════════════════════════════════════
-  // Bath → mag lotion → tart cherry milk → book → lights out.
-  // After two weeks the brain auto-releases melatonin when
-  // it hears this sequence start. That's the goal.
+  // Epsom bath → mag lotion on feet → tart cherry milk →
+  // book in bed → 65°F fan → blackout → nose breathing.
+  // After two weeks the brain auto-releases melatonin.
   {
     name: 'bedtime',
     utcHour: 0,
     messages: [
       {
         title: "Bedtime sequence — start now",
-        body: "Bath. Magnesium lotion on their feet (rub it in while they read — two levers at once). Tart cherry + A2 milk (4 oz milk, 1 oz tart cherry, unsweetened). A book in bed — physical, not a screen. 65°F, fan on. Blackout curtains, tape every LED. Nose breathing. After two weeks, their brain auto-releases melatonin when this sequence starts.",
+        body: "Epsom bath, 20 min (the cooling after is what triggers deep sleep). Magnesium lotion on their feet while they read — two levers at once. Tart cherry + A2 milk (4 oz milk, 1 oz cherry, unsweetened). A physical book, not a screen. 65°F, fan on. Blackout curtains, tape every LED. Nose breathing only. 10–12 hours — each 90-min cycle is one growth rep.",
         url: "/home#item-dark",
         tag: "biokids-bedtime",
       },
