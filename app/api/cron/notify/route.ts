@@ -73,7 +73,7 @@ const SLOTS: NotificationSlot[] = [
     messages: [
       {
         title: "Breakfast + Dairy Serving #1 + CLO",
-        body: "No cereal, no juice boxes — they suppress up to 80% of growth hormone. Eggs with red bell pepper (choline primes the growth axis + 2–3× iron absorption). Dairy Serving #1: cold A2 milk with honey, a yogurt bowl, or a smoothie. Half a spoon of lemon CLO (hide it in the smoothie). Skip CLO on liver days.",
+        body: "No cereal, no juice boxes — they suppress up to 80% of growth hormone. Eggs with red bell pepper (choline primes the growth axis + 2–3× iron absorption). Dairy Serving #1: cold A2 milk with honey, a yogurt bowl, or a smoothie. Half a spoon of lemon CLO (hide it in the smoothie). No liver on CLO days.",
         url: "/home#item-d1",
         tag: "biokids-morning",
       },
@@ -137,18 +137,18 @@ const SLOTS: NotificationSlot[] = [
   },
 
   // ══════════════════════════════════════════════════════════
-  // 8 PM ET — Bedtime sequence (the full sequence)
+  // 8 PM ET — Bedtime sequence
   // ══════════════════════════════════════════════════════════
-  // Epsom bath → mag lotion on feet → tart cherry milk →
-  // book in bed → 65°F fan → blackout → nose breathing.
-  // After two weeks the brain auto-releases melatonin.
+  // Tart cherry milk 60-90 min before bed → mag lotion on
+  // feet → book → 65°F fan → blackout → nose breathing.
+  // Min 10 hrs. 6+ yrs: 12+ hrs offers most gains.
   {
     name: 'bedtime',
     utcHour: 0,
     messages: [
       {
         title: "Bedtime sequence — start now",
-        body: "Epsom bath, 20 min (the cooling after is what triggers deep sleep). Magnesium lotion on their feet while they read — two levers at once. Tart cherry + A2 milk (4 oz milk, 1 oz cherry, unsweetened). A physical book, not a screen. 65°F, fan on. Blackout curtains, tape every LED. Nose breathing only. 10–12 hours — each 90-min cycle is one growth rep.",
+        body: "Tart cherry + A2 milk 60–90 min before bed (4 oz milk, 1 oz cherry, unsweetened). Magnesium lotion on their feet while they read — two levers at once. A physical book, not a screen. 65°F, fan on. Blackout curtains, tape every LED. Nose breathing only. Minimum 10 hours. Ages 6+: 12 hours or more offers the most gains.",
         url: "/home#item-dark",
         tag: "biokids-bedtime",
       },
@@ -168,7 +168,7 @@ function getSprintStackMessage(): PushPayload[] {
     return [
       {
         title: "Sprint Stack + Dairy Serving #2",
-        body: "Snack: peanut butter + egg or a liver meatball. Then 6 all-out 30-sec sprints, full rest between. Stretch. Cold A2 milk with honey within 30 min — that's Dairy Serving #2. Kids 10+: this is Serving #3. The sprint-then-milk sequence is the most powerful growth trigger in the protocol.",
+        body: "Snack first: one egg + spoon of peanut butter (niacin + choline) or a liver meatball (has both). Then 6 all-out 30-sec sprints, full rest between. Stretch. Cold A2 milk with honey within 30 min — that's Dairy Serving #2. Kids 10+: this is Serving #3.",
         url: "/home#item-spr",
         tag: "biokids-sprint-stack",
       },
@@ -179,7 +179,7 @@ function getSprintStackMessage(): PushPayload[] {
   return [
     {
       title: "Jump Stack + Dairy Serving #2",
-      body: "Snack: peanut butter + egg or a liver meatball. Then 50 jumps — rope, box, just jumping. Stretch. Cold A2 milk with honey within 30 min — that's Dairy Serving #2. Kids 10+: this is Serving #3. Alternate with sprints tomorrow.",
+      body: "Snack first: one egg + spoon of peanut butter (niacin + choline) or a liver meatball (has both). Then 50 jumps — rope, box, just jumping. Stretch. Cold A2 milk with honey within 30 min — that's Dairy Serving #2. Kids 10+: this is Serving #3.",
       url: "/home#item-jump",
       tag: "biokids-sprint-stack",
     },
