@@ -72,8 +72,8 @@ const SLOTS: NotificationSlot[] = [
     utcHour: 11,
     messages: [
       {
-        title: "Breakfast + Dairy Serving #1 + CLO",
-        body: "No cereal, no juice boxes — they suppress up to 80% of growth hormone. Eggs with red bell pepper (choline primes the growth axis + 2–3× iron absorption). Dairy Serving #1: cold A2 milk with honey, a yogurt bowl, or a smoothie. Half a spoon of lemon CLO (hide it in the smoothie). No liver on CLO days.",
+        title: "A2 milk + eggs + CLO",
+        body: "Dairy Serving #1: cold A2 milk with honey, yogurt bowl, or smoothie. Eggs with red bell pepper. Half a spoon of lemon CLO — hide it in the smoothie.",
         url: "/home#item-d1",
         tag: "biokids-morning",
       },
