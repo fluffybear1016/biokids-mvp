@@ -14,7 +14,7 @@ import { sendPushToAll, PushPayload } from '@/lib/push';
 //  12:00 PM /  16 UTC — Lunch: growth proteins + fermented side + protein check
 //   3:00 PM /  19 UTC — Sprint/Jump Stack + Dairy #2
 //   6:00 PM /  22 UTC — Dinner + gelatin (no exercise after this)
-//   8:00 PM /   0 UTC — Bedtime routine (the full sequence)
+//   7:00 PM /  23 UTC — Bedtime sequence (earlier = more growth reps, 8 PM cutoff)
 //
 // Weekly (Sunday only):
 //  10:00 AM /  14 UTC — Weekly pro tip
@@ -137,18 +137,17 @@ const SLOTS: NotificationSlot[] = [
   },
 
   // ══════════════════════════════════════════════════════════
-  // 8 PM ET — Bedtime sequence
+  // 7 PM ET — Bedtime sequence (earlier = more growth reps)
   // ══════════════════════════════════════════════════════════
-  // Tart cherry milk 60-90 min before bed → mag lotion on
-  // feet → book → 65°F fan → blackout → nose breathing.
-  // Min 10 hrs. 6+ yrs: 12+ hrs offers most gains.
+  // Start as early as you can. 8 PM lights out is the latest.
+  // Every hour earlier = another 90-min growth cycle gained.
   {
     name: 'bedtime',
-    utcHour: 0,
+    utcHour: 23,
     messages: [
       {
-        title: "Bedtime sequence — start now",
-        body: "Tart cherry + A2 milk 60–90 min before bed (4 oz milk, 1 oz cherry, unsweetened). Magnesium lotion on their feet while they read — two levers at once. A physical book, not a screen. 65°F, fan on. Blackout curtains, tape every LED. Nose breathing only. Minimum 10 hours. Ages 6+: 12 hours or more offers the most gains.",
+        title: "Bedtime sequence — the earlier you start, the more growth reps tonight",
+        body: "Tart cherry and/or A2 milk now (4 oz milk, 1 oz cherry, unsweetened — 60–90 min before lights out). Magnesium lotion on their feet while they read — two levers at once. Physical book, not a screen. 65°F, fan on. Blackout curtains, tape every LED. Nose breathing only. 8 PM lights out is the latest. Minimum 10 hours sleep. Ages 6+: 12+ hours offers the most gains.",
         url: "/home#item-dark",
         tag: "biokids-bedtime",
       },
