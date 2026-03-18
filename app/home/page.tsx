@@ -945,7 +945,7 @@ export default function Dashboard() {
               { num:"2", title:"Lemon-flavored cod liver oil", sub:"½ to full spoon direct or hidden in smoothie. Three growth levers in one. Don't tell them what it is. Do NOT consume on liver days.", anchor:"clo" },
               { num:"3", title:"Liver meatballs 2–3× per week", sub:"Mix 2 tbsp beef or chicken liver into ground beef. They won't taste it. The single most nutrient-dense food.", anchor:"lunch" },
               { num:"4", title:"The Sprint Stack", sub:"Light snack (peanut butter + egg for niacin + choline, or just a liver meatball — it has both) → all-out sprints (they already do this at practice + with friends) → stretch → cold milk with honey right after. That sequence is the most powerful combination in the protocol.", anchor:"spr" },
-              { num:"5", title:"10+ hours in complete darkness", sub:"Blackout curtains, tape every LED. This is when 60–80% of growth hormone is released. Non-negotiable.", anchor:"bed" },
+              { num:"5", title:"12 hours sleep in complete darkness", sub:"10 hours is the minimum for ages 6+. Target 12 hours always. Blackout curtains, tape every LED. This is when 60–80% of growth hormone is released. Non-negotiable.", anchor:"bed" },
             ].map((item, i) => (
               <div
                 key={i}
