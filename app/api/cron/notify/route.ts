@@ -72,8 +72,8 @@ const SLOTS: NotificationSlot[] = [
     utcHour: 11,
     messages: [
       {
-        title: "A2 milk + eggs + CLO",
-        body: "Dairy Serving #1: cold A2 milk with honey, yogurt bowl, or smoothie. Eggs with red bell pepper. Half a spoon of lemon CLO — hide it in the smoothie.",
+        title: "A2 milk + eggs + cod liver oil",
+        body: "A2 milk, yogurt bowl, or smoothie. Eggs with red bell pepper. Half a spoon of lemon cod liver oil.",
         url: "/home#item-d1",
         tag: "biokids-morning",
       },
