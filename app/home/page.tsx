@@ -465,12 +465,10 @@ const greenNum = (text: string) => {
 // ═══════════════════
 // CARD
 // ═══════════════════
-function Card({ item, isOpen, onToggle, done, onDone }: {
+function Card({ item, isOpen, onToggle }: {
   item: DayItem;
   isOpen: boolean;
   onToggle: () => void;
-  done: boolean;
-  onDone: () => void;
 }) {
   const isSig = item.sig || item.tier === 0;
   const isUtil = item.tier >= 3;
@@ -482,36 +480,20 @@ function Card({ item, isOpen, onToggle, done, onDone }: {
       borderRadius: isSig ? 20 : 14,
       border: isSig ? "1.5px solid #065f46" : item.feat ? "2px solid #fbbf24" : "1px solid #e7e5e4",
       overflow:"hidden",
-      opacity: done ? 0.55 : 1,
       transition:"all 0.3s ease",
       boxShadow: isSig ? "0 4px 24px rgba(6,95,70,0.08)" : "0 1px 3px rgba(0,0,0,0.02)",
     }}>
       {/* Collapsed view */}
       <div onClick={onToggle} style={{ cursor:"pointer", padding: isSig ? "18px 20px" : isUtil ? "12px 16px" : "14px 18px" }}>
         <div style={{ display:"flex", alignItems:"flex-start", gap:12 }}>
-          {/* Check circle */}
-          <div
-            onClick={e => { e.stopPropagation(); onDone(); }}
-            style={{
-              width:22, height:22, borderRadius:11, flexShrink:0, marginTop:1,
-              border: done ? "none" : "2px solid #d6d3d1",
-              background: done ? "#065f46" : "transparent",
-              display:"flex", alignItems:"center", justifyContent:"center",
-              cursor:"pointer", transition:"all 0.2s ease",
-            }}
-          >
-            {done && <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
-          </div>
-
           <div style={{ flex:1, minWidth:0 }}>
             {/* Title + GH number */}
             <div style={{ display:"flex", alignItems:"baseline", gap:8 }}>
               <span style={{
                 fontSize: isSig ? 16 : isUtil ? 13.5 : 14.5,
                 fontWeight:700,
-                color: done ? "#78716c" : "#1c1917",
+                color: "#1c1917",
                 lineHeight:1.3,
-                textDecoration: done ? "line-through" : "none",
               }}>{item.t}</span>
               {!noGH && <span style={{
                 fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif",
@@ -816,50 +798,7 @@ export default function Dashboard() {
       `}</style>
       <Nav currentChild={child} />
 
-      {/* Sticky progress bar — floats at top while scrolling */}
-      {doneCount > 0 && (
-        <div style={{
-          position:"sticky", top:0, zIndex:90,
-          background: allCoreDone ? "rgba(236,253,245,0.95)" : "rgba(250,250,249,0.92)",
-          backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
-          borderBottom: allCoreDone ? "1px solid #86efac" : "1px solid #e7e5e4",
-          padding:"10px 20px 12px",
-          transition:"all 0.5s ease",
-        }}>
-          <div style={{ maxWidth:540, margin:"0 auto" }}>
-            {/* Core progress + streak */}
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>
-              <span style={{ display:"flex", alignItems:"baseline", gap:10 }}>
-                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color: allCoreDone ? "#065f46" : "#78716c" }}>
-                  {allCoreDone ? "Core goals complete" : "Core goals"}
-                </span>
-                {streak > 0 && (
-                  <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, fontWeight:700, color:"#065f46", background:"#f0fdf4", border:"1px solid #86efac", borderRadius:8, padding:"1px 7px" }}>
-                    Day {streak}
-                  </span>
-                )}
-              </span>
-              <span style={{ fontWeight:800, fontFamily:"Georgia, 'Times New Roman', serif", fontSize:15, color:"#065f46" }}>
-                {coreDoneCount}/{coreTotal}
-              </span>
-            </div>
-            <div style={{ height:4, borderRadius:2, background: allCoreDone ? "#86efac" : "#e7e5e4", overflow:"hidden", marginBottom:6 }}>
-              <div style={{ height:"100%", borderRadius:2, background:"#065f46", width:`${corePct}%`, transition:"width 0.4s ease" }} />
-            </div>
-            {/* Bonus progress (secondary — smaller) */}
-            {(doneCount - coreDoneCount > 0 || allCoreDone) && (
-              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline" }}>
-                <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#44403c" }}>
-                  {allDone ? "Everything done" : "Bonus"}
-                </span>
-                <span style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:11, color:"#1c1917", fontWeight:700 }}>
-                  {doneCount - coreDoneCount}/{total - coreTotal}
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      {/* Clean top bar */}
 
       <div style={{ maxWidth:540, margin:"0 auto", padding:"0 20px" }}>
 
@@ -875,7 +814,7 @@ export default function Dashboard() {
 
           {introOpen && <>
             <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, color:"#1c1917", lineHeight:1.75, maxWidth:440, margin:"0 0 8px" }}>
-              Meals, sprints, and sleep — arranged by science to maximize height. Check them off as you go.
+              Meals, sprints, and sleep — arranged by science to maximize height.
             </p>
             <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:12, color:"#065f46", lineHeight:1.6, maxWidth:440, margin:"0 0 16px", fontStyle:"italic" }}>
               Every height signal simultaneously supports brain development.
@@ -960,7 +899,7 @@ export default function Dashboard() {
               fontSize:13, color:"#065f46", lineHeight:1.65, margin:"0 0 6px",
               maxWidth:360, marginLeft:"auto", marginRight:"auto",
             }}>
-              Everything below is your child&apos;s daily height protocol — 15+ science-backed levers, arranged into a simple checklist.
+              Everything below is your child&apos;s daily height protocol — 15+ science-backed levers. Your notifications walk you through it each day.
             </p>
             <p style={{
               fontFamily:"'Courier New', Courier, monospace",
@@ -990,8 +929,8 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* START HERE — Big 5 gateway for new parents */}
-        {!allCoreDone && doneCount < 3 && (
+        {/* START HERE — Big 5 gateway */}
+        {(
           <div style={{
             background:"#fff", borderRadius:20, border:"1.5px solid #065f46",
             padding:"24px 20px", margin:"24px 0 0",
@@ -1149,70 +1088,7 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* All items complete — perfect day card */}
-        {allDone && (
-          <div style={{
-            background:"#065f46", borderRadius:20,
-            padding:"32px 24px", margin:"16px 0 0",
-            boxShadow:"0 8px 32px rgba(6,95,70,0.25)",
-          }}>
-            <div style={{ textAlign:"center" }}>
-              {streak > 0 && (
-                <div style={{ marginBottom:16 }}>
-                  <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:56, fontWeight:800, color:"#fff", lineHeight:1, letterSpacing:"-0.04em" }}>
-                    Day {streak}
-                  </div>
-                  <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:10, color:"rgba(255,255,255,0.6)", textTransform:"uppercase", letterSpacing:"0.1em", fontWeight:700, marginTop:4 }}>
-                    perfect streak
-                  </div>
-                </div>
-              )}
-
-              <div style={{ width:40, height:2, background:"rgba(255,255,255,0.2)", borderRadius:1, margin:"0 auto 16px" }} />
-
-              <p style={{ fontSize:18, fontWeight:800, color:"#fff", margin:"0 0 8px", letterSpacing:"-0.02em" }}>
-                Every single lever. Perfect day.
-              </p>
-              <p style={{
-                fontFamily:"'Courier New', Courier, monospace",
-                fontSize:12, color:"rgba(255,255,255,0.7)", margin:"0 0 4px",
-              }}>
-                {childName === 'Your child' ? 'Your child' : childName} &middot; {new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })}
-              </p>
-
-              <div style={{ margin:"16px 0" }}>
-                <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:28, fontWeight:800, color:"#fff" }}>{total}/{total}</div>
-                <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"rgba(255,255,255,0.5)" }}>every growth lever pulled</div>
-              </div>
-
-              <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"rgba(255,255,255,0.3)", letterSpacing:"0.08em", margin:"12px 0 16px" }}>
-                &#x25CF; bioKids
-              </div>
-
-              <button
-                onClick={() => {
-                  const streakText = streak > 1 ? `Day ${streak}. ` : '';
-                  const text = `${streakText}Perfect day — every growth lever pulled. There are 15+ things that affect your kid's height that most parents never hear about. biokids.me`;
-                  if (navigator.share) {
-                    navigator.share({ text }).catch(() => {});
-                  } else {
-                    navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard!')).catch(() => {});
-                  }
-                }}
-                style={{
-                  fontFamily:"'Courier New', Courier, monospace",
-                  fontSize:11, fontWeight:600, color:"#fff",
-                  background:"rgba(255,255,255,0.15)", border:"1px solid rgba(255,255,255,0.3)", borderRadius:10,
-                  padding:"8px 18px", cursor:"pointer",
-                  display:"inline-flex", alignItems:"center", gap:6,
-                }}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-                Tell a parent friend
-              </button>
-            </div>
-          </div>
-        )}
+        {/* Removed: checklist celebration card — protocol is reference, not homework */}
 
         {/* Brain statement + Height Potential — featured at top */}
         {heightData && (
@@ -1417,8 +1293,7 @@ export default function Dashboard() {
 
         {/* Title — centered, outside the box */}
         <div style={{ fontSize:20, fontWeight:900, color:"#1c1917", letterSpacing:"-0.02em", textAlign:"center", marginBottom:8 }}>Today&apos;s Game Plan</div>
-        <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#44403c", textAlign:"center", marginBottom:12, lineHeight:1.5 }}>Check them off as you go. It gets easier every day.</div>
-        <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#78716c", textAlign:"center", marginBottom:32, lineHeight:1.6, fontStyle:"italic" }}>Miss something? That&apos;s fine. Even 60% consistency compounds beautifully over months.</div>
+        <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#78716c", textAlign:"center", marginBottom:32, lineHeight:1.6, fontStyle:"italic" }}>Even 60% consistency compounds beautifully over months.</div>
 
         {/* Day sections */}
         {dayData.map((p, pi) => (
@@ -1444,8 +1319,6 @@ export default function Dashboard() {
                   item={item}
                   isOpen={openId === item.id}
                   onToggle={() => setOpenId(openId === item.id ? null : item.id)}
-                  done={!!done[item.id]}
-                  onDone={() => { setDone(d => { const next = !d[item.id]; analytics.checklistToggle(item.id, next, 'daily'); return { ...d, [item.id]: next }; }); }}
                 />
               ))}
             </div>
@@ -1456,7 +1329,7 @@ export default function Dashboard() {
         {/* Footer */}
         <div style={{ margin:"52px 0 40px", textAlign:"center" }}>
           <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#065f46", fontWeight:600, marginBottom:6 }}>
-            {allDone ? "Perfect. See you tomorrow." : allCoreDone ? "Core done. See you tomorrow." : "Every day counts."}
+            Every day counts.
           </p>
           <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9.5, color:"#78716c", lineHeight:1.6 }}>
             Every number on this page comes from an academic or scientific study. * from adult studies — whole foods deliver these pathways at lower but meaningful doses.
