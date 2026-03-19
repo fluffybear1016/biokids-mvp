@@ -92,14 +92,14 @@ const SLOTS: NotificationSlot[] = [
   // 12 PM ET — Lunch: growth proteins + fermented side
   // ══════════════════════════════════════════════════════════
   // This is where the fermented side goes (not dinner).
-  // Protein check built in. No dairy at lunch.
+  // Protein check built in.
   {
     name: 'lunch',
     utcHour: 16,
     messages: [
       {
         title: "Lunch — growth protein + fermented side",
-        body: "Rotate the growth proteins: liver meatballs (2–3×/wk), beef, chicken, turkey, wild salmon, eggs, oysters (1×/wk = full week of zinc), lentils. Cooked veg + a fermented side — sauerkraut or kimchi (GABA for tonight's GH release). No dairy at lunch — save it for the sprint stack. Protein check: ~0.6 g per lb (80 lb = 48 g, 100 lb = 60 g).",
+        body: "Rotate the growth proteins: liver meatballs (2–3×/wk), beef, chicken, turkey, wild salmon, eggs, oysters (1×/wk = full week of zinc), lentils. Cooked veg + a fermented side — sauerkraut or kimchi (GABA for tonight's GH release). Protein check: ~0.6 g per lb (80 lb = 48 g, 100 lb = 60 g).",
         url: "/home#item-lunch",
         tag: "biokids-lunch",
       },
@@ -122,14 +122,14 @@ const SLOTS: NotificationSlot[] = [
   // ══════════════════════════════════════════════════════════
   // Protein + lentils + veg. No ferments here (those are lunch).
   // Gelatin as bone broth, jello, gummies, or homemade ice cream.
-  // No dairy. Screens off. Kitchen closes 2-3 hrs before bed.
+  // Screens off. Kitchen closes 2-3 hrs before bed.
   {
     name: 'dinner',
     utcHour: 22,
     messages: [
       {
         title: "Growth dinner + gelatin — screens off after this",
-        body: "Rotated protein + lentils + cooked vegetables. No dairy — save it for the bedtime drink. Gelatin in any form: bone broth, jello, gummies, or homemade ice cream. It's glycine — builds growth plates + lowers core temp. No exercise after dinner. Screens off. Kitchen closes 2–3 hours before bed — insulin must clear for tonight's GH surge.",
+        body: "Rotated protein + lentils + cooked vegetables. Gelatin in any form: bone broth, jello, gummies, or homemade ice cream. It's glycine — builds growth plates + lowers core temp. No exercise after dinner. Screens off. Kitchen closes 2–3 hours before bed — insulin must clear for tonight's GH surge.",
         url: "/home#item-lunch",
         tag: "biokids-dinner",
       },
