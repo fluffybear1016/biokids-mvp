@@ -263,14 +263,19 @@ function getCurrentSlot(): NotificationSlot | null {
   return matching[0];
 }
 
-// Verify this is a legitimate cron request (fail-closed: deny if no secret configured)
+// Verify this is a legitimate cron request
+// Supports both GitHub Actions (Bearer token) and Vercel Cron (Bearer token or CRON_SECRET header)
 function verifyCron(request: Request): boolean {
   const authHeader = request.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
   if (!cronSecret) {
     return false;
   }
-  return authHeader === `Bearer ${cronSecret}`;
+  // Standard Bearer token auth (GitHub Actions + Vercel Cron)
+  if (authHeader === `Bearer ${cronSecret}`) return true;
+  // Vercel Cron also sends this header
+  if (request.headers.get('x-vercel-cron-secret') === cronSecret) return true;
+  return false;
 }
 
 export async function GET(request: Request) {
