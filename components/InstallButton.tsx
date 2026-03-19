@@ -29,6 +29,40 @@ export default function InstallButton() {
   const [installed, setInstalled] = useState(false);
   const [minimized, setMinimized] = useState(false);
 
+  // Inject pulse keyframes once
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const id = 'biokids-install-pulse';
+    if (document.getElementById(id)) return;
+    const style = document.createElement('style');
+    style.id = id;
+    style.textContent = `
+      @keyframes biokids-pulse-ring {
+        0% { box-shadow: 0 0 0 0 rgba(6,95,70,0.45); }
+        70% { box-shadow: 0 0 0 10px rgba(6,95,70,0); }
+        100% { box-shadow: 0 0 0 0 rgba(6,95,70,0); }
+      }
+      @keyframes biokids-pulse-glow {
+        0%, 100% { background: #065f46; }
+        50% { background: #059669; }
+      }
+      @keyframes biokids-shimmer {
+        0% { opacity: 0.7; }
+        50% { opacity: 1; }
+        100% { opacity: 0.7; }
+      }
+      @keyframes biokids-bounce-subtle {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.04); }
+      }
+      @keyframes biokids-card-glow {
+        0%, 100% { border-color: #34d399; box-shadow: 0 0 8px rgba(52,211,153,0.3); }
+        50% { border-color: #10b981; box-shadow: 0 0 16px rgba(16,185,129,0.45); }
+      }
+    `;
+    document.head.appendChild(style);
+  }, []);
+
   useEffect(() => {
     setPlatform(detectPlatform());
 
@@ -91,16 +125,17 @@ export default function InstallButton() {
             fontFamily: "'Courier New', Courier, monospace",
             fontSize: 11,
             fontWeight: 600,
-            color: '#065f46',
-            background: '#f0fdf4',
-            border: '1px solid #d1fae5',
+            color: '#fff',
+            background: '#065f46',
+            border: '2px solid #34d399',
             borderRadius: 10,
             padding: '8px 14px',
             marginBottom: 12,
             cursor: 'pointer',
+            animation: 'biokids-pulse-ring 2s ease-in-out infinite, biokids-pulse-glow 2s ease-in-out infinite',
           }}
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#065f46" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <rect x="4" y="8" width="16" height="13" rx="2"/>
             <line x1="12" y1="2" x2="12" y2="14"/>
             <polyline points="8 6 12 2 16 6"/>
@@ -108,10 +143,10 @@ export default function InstallButton() {
           Add to Home Screen
         </button>
       ) : (
-        /* Full install card */
+        /* Full install card — glowing border so users can't miss it */
         <div style={{
-          background: '#fff',
-          border: '1px solid #e7e5e4',
+          background: '#f0fdf4',
+          border: '2px solid #34d399',
           borderRadius: 14,
           padding: '16px 20px',
           marginBottom: 16,
@@ -119,6 +154,7 @@ export default function InstallButton() {
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 12,
+          animation: 'biokids-card-glow 2s ease-in-out infinite',
         }}>
           <div style={{ flex: 1 }}>
             <p style={{
@@ -127,7 +163,24 @@ export default function InstallButton() {
               fontWeight: 700,
               color: '#1c1917',
               margin: '0 0 3px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
             }}>
+              <span style={{
+                display: 'inline-block',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: 8,
+                fontWeight: 800,
+                color: '#fff',
+                background: '#dc2626',
+                borderRadius: 4,
+                padding: '2px 5px',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                animation: 'biokids-shimmer 1.5s ease-in-out infinite',
+                flexShrink: 0,
+              }}>STEP 1</span>
               Add to Home Screen
             </p>
             <p style={{
@@ -161,17 +214,18 @@ export default function InstallButton() {
               onClick={handleInstall}
               style={{
                 fontFamily: "'Courier New', Courier, monospace",
-                fontSize: 12,
+                fontSize: 13,
                 fontWeight: 700,
                 color: '#fff',
                 background: '#065f46',
                 border: 'none',
                 borderRadius: 10,
-                padding: '10px 18px',
+                padding: '11px 22px',
                 cursor: 'pointer',
+                animation: 'biokids-pulse-ring 2s ease-in-out infinite, biokids-bounce-subtle 2s ease-in-out infinite',
               }}
             >
-              Install
+              Install App
             </button>
           </div>
         </div>

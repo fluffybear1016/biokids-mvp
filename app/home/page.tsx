@@ -1282,6 +1282,41 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* ═══ Growth Blockers Article ═══ */}
+        <div
+          onClick={() => { analytics.citationTap('growth_blockers_article_home'); window.location.href = '/learn/growth-blockers-to-avoid'; }}
+          style={{
+            cursor:"pointer", marginTop:16,
+            background:"linear-gradient(135deg, #1c1917 0%, #292524 100%)",
+            borderRadius:20, overflow:"hidden",
+            border:"1.5px solid #44403c",
+            position:"relative",
+          }}
+        >
+          {/* Top accent bar */}
+          <div style={{ height:3, background:"linear-gradient(90deg, #dc2626, #f59e0b, #dc2626)" }} />
+          <div style={{ padding:"24px 20px 20px" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:14 }}>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, fontWeight:700, color:"#dc2626", textTransform:"uppercase", letterSpacing:"0.1em", background:"rgba(220,38,38,0.12)", padding:"3px 8px", borderRadius:6 }}>Toxins</span>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e" }}>10 min read</span>
+            </div>
+            <div style={{ fontSize:19, fontWeight:900, color:"#fafaf9", letterSpacing:"-0.02em", lineHeight:1.3, marginBottom:10 }}>
+              18 Growth Blockers to Avoid
+            </div>
+            <p style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:12, color:"#57534e", lineHeight:1.65, margin:"0 0 16px" }}>
+              Caffeine, sugar, screens before bed, heavy backpacks — these are not &quot;moderation&quot; items. They are targets to remove. Protect their growth plates, deep sleep, and hormones from sabotage.
+            </p>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+              <div style={{ display:"flex", gap:6 }}>
+                {["Sleep", "Hormones", "Growth Plates"].map(tag => (
+                  <span key={tag} style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#57534e", background:"rgba(120,113,108,0.15)", padding:"3px 8px", borderRadius:6 }}>{tag}</span>
+                ))}
+              </div>
+              <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#dc2626", fontWeight:700 }}>Read →</span>
+            </div>
+          </div>
+        </div>
+
         {/* Breath before the protocol */}
         <div style={{ height:1, background:"#e7e5e4", margin:"36px 0 40px" }} />
 
