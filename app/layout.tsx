@@ -6,7 +6,7 @@ import PostHogProvider from "@/components/PostHogProvider";
 
 export const metadata: Metadata = {
   title: "bioKids — Teach Height",
-  description: "The parent's system for growing taller kids naturally — backed by 137 medical studies.",
+  description: "The parent's system for growing taller kids naturally — backed by 250+ medical studies.",
   keywords: ["height", "grow taller", "child height", "height potential", "growth protocol", "nutrition", "sprints", "sleep", "parenting", "pediatric research"],
   manifest: "/manifest.json",
   metadataBase: new URL("https://www.biokids.me"),
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "bioKids — Teach Height",
-    description: "The parent's system for growing taller kids naturally — backed by 137 medical studies.",
+    description: "The parent's system for growing taller kids naturally — backed by 250+ medical studies.",
     url: "https://www.biokids.me",
     type: "website",
     siteName: "bioKids",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "bioKids — Teach Height",
-    description: "The parent's system for growing taller kids naturally — backed by 137 medical studies.",
+    description: "The parent's system for growing taller kids naturally — backed by 250+ medical studies.",
     images: ["/og-image.png"],
   },
   robots: {

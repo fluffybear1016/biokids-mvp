@@ -73,7 +73,7 @@ export default function Step8Pricing({ data, onNext, onBack }: Props) {
           </h3>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { value: '137', label: 'peer-reviewed studies indexed' },
+              { value: '250+', label: 'peer-reviewed studies indexed' },
               { value: '2,400+', label: 'hours of research synthesis' },
               { value: '47', label: 'expert reviews' },
               { value: '100%', label: 'backed by academic research' },
