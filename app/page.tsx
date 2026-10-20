@@ -14,10 +14,8 @@ export default function Home() {
           </Link>
           <div className="flex items-center gap-3 sm:gap-6">
             <Link href="/about" style={{ fontSize: '0.75rem', fontWeight: 500, color: '#1c1917', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-sm">About</Link>
-            <Link href="/login" style={{ fontSize: '0.75rem', fontWeight: 500, color: '#1c1917', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-sm">Log in</Link>
-            <Link href="/onboarding" className="text-xs sm:text-sm" style={{ background: '#065f46', color: 'white', padding: '0.4rem 0.75rem', borderRadius: '10px', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>
-              Get Started
-            </Link>
+            <Link href="/learn" style={{ fontSize: '0.75rem', fontWeight: 500, color: '#1c1917', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-sm">Learn</Link>
+            <Link href="/home" className="text-xs sm:text-sm" style={{ background: '#065f46', color: 'white', padding: '0.4rem 0.75rem', borderRadius: '10px', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>Open the Protocol</Link>
           </div>
         </div>
       </nav>
@@ -250,11 +248,9 @@ export default function Home() {
               <span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2.5rem', color: '#065f46' }}>Free</span>
             </h2>
             <p style={{ fontSize: '0.8125rem', color: '#57534e', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500, marginBottom: '1.5rem', lineHeight: 1.6 }}>
-              Full protocol access. No credit card. Just sign up and start.
+              Full protocol access. No credit card. No sign up. Just open it and start.
             </p>
-            <Link href="/onboarding" style={{ background: '#065f46', color: 'white', padding: '0.875rem 2.5rem', borderRadius: '12px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', display: 'inline-block', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-lg">
-              Get Started — Free
-            </Link>
+            <Link href="/home" style={{ background: '#065f46', color: 'white', padding: '0.875rem 2.5rem', borderRadius: '12px', fontSize: '1rem', fontWeight: 600, textDecoration: 'none', display: 'inline-block', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-lg">Open the Full Protocol</Link>
           </div>
         </div>
       </section>
