@@ -73,7 +73,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
     if (supabase) {
       await supabase.auth.signOut();
     }
-    // Clear all bioKids localStorage keys
+    // Clear all heightMaxxing localStorage keys
     const keysToRemove = [
       'biokids_auth_email', 'biokids_auth_user_id',
       'biokids_onboarding_complete', 'biokids_welcomed',
@@ -116,7 +116,7 @@ export default function Nav({ children, currentChild, onChildSelect }: NavProps)
         {/* Logo */}
         <Link href="/home" className="flex items-center gap-2" style={{ textDecoration:'none', background:'#f0fdf4', border:'1px solid #065f46', borderRadius:10, padding:'5px 12px' }}>
           <span style={{ width:8, height:8, borderRadius:'50%', background:'#065f46', display:'inline-block' }} />
-          <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, fontWeight:700, color:'#065f46', letterSpacing:'0.04em' }}>bioKids</span>
+          <span style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:13, fontWeight:700, color:'#065f46', letterSpacing:'0.04em' }}>heightMaxxing</span>
           <span style={{ fontSize:9, fontWeight:700, color:'#fff', background:'#065f46', borderRadius:4, padding:'1px 5px', letterSpacing:'0.08em', marginLeft:4 }}>BETA</span>
         </Link>
 
