@@ -140,10 +140,10 @@ export default function LandingHeightPredictor() {
                 {/* Subtle grid pattern */}
                 <div style={{ position: 'absolute', inset: 0, opacity: 0.04, backgroundImage: 'repeating-linear-gradient(90deg, #fff 0px, transparent 1px, transparent 20px), repeating-linear-gradient(0deg, #fff 0px, transparent 1px, transparent 20px)' }} />
 
-                {/* bioKids branding */}
+                {/* heightMaxxing branding */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20, position: 'relative' }}>
                   <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
-                  <span style={{ fontFamily: mono, fontSize: 11, fontWeight: 700, color: '#d1fae5', letterSpacing: '0.06em' }}>bioKids Height Report</span>
+                  <span style={{ fontFamily: mono, fontSize: 11, fontWeight: 700, color: '#d1fae5', letterSpacing: '0.06em' }}>heightMaxxing Height Report</span>
                 </div>
 
                 {/* Big number — the screenshot moment */}
@@ -166,7 +166,7 @@ export default function LandingHeightPredictor() {
                     <div style={{ fontFamily: mono, fontSize: 9, color: 'rgba(255,255,255,0.35)', marginTop: 4 }}>without optimization</div>
                   </div>
                   <div style={{ flex: 1, background: 'rgba(52,211,153,0.15)', borderRadius: 12, padding: '14px 16px', border: '1px solid rgba(52,211,153,0.2)' }}>
-                    <div style={{ fontFamily: mono, fontSize: 8, fontWeight: 700, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>bioKids zone</div>
+                    <div style={{ fontFamily: mono, fontSize: 8, fontWeight: 700, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>heightMaxxing zone</div>
                     <div style={{ fontFamily: serif, fontSize: 18, fontWeight: 800, color: '#ffffff' }}>
                       {result.bioLow} — {result.bioHigh}
                     </div>
@@ -184,9 +184,9 @@ export default function LandingHeightPredictor() {
               {/* Share button */}
               <button
                 onClick={async () => {
-                  const text = `My ${gender === 'boy' ? "son's" : "daughter's"} height potential:\n\nGenetic range: ${result.rangeLow} — ${result.rangeHigh}\nbioKids zone: ${result.bioLow} — ${result.bioHigh}\n\nFree height calculator at biokids.me`;
+                  const text = `My ${gender === 'boy' ? "son's" : "daughter's"} height potential:\n\nGenetic range: ${result.rangeLow} — ${result.rangeHigh}\nheightMaxxing zone: ${result.bioLow} — ${result.bioHigh}\n\nFree height calculator at biokids.me`;
                   if (navigator.share) {
-                    try { await navigator.share({ title: 'bioKids Height Report', text }); } catch {}
+                    try { await navigator.share({ title: 'heightMaxxing Height Report', text }); } catch {}
                   } else {
                     try { await navigator.clipboard.writeText(text); alert('Copied to clipboard!'); } catch {}
                   }
@@ -206,7 +206,7 @@ export default function LandingHeightPredictor() {
               {/* CTA */}
               <div style={{ textAlign: 'center' }}>
                 <p style={{ fontFamily: mono, fontSize: 12, color: '#065f46', marginBottom: 14, lineHeight: 1.6 }}>
-                  The bioKids protocol shows you how to reach the upper end — every day.
+                  The heightMaxxing protocol shows you how to reach the upper end — every day.
                 </p>
                 <button
                   onClick={() => {
@@ -256,7 +256,7 @@ export default function LandingHeightPredictor() {
                       Zeevi et al., 2024
                     </a>
                     <p style={{ fontFamily: mono, fontSize: 10, color: '#065f46', lineHeight: 1.5, margin: '4px 0 0' }}>
-                      Published in <em>Children</em> (MDPI). Studied healthy families and documented that children can reach 3–4 standard deviations above their predicted midpoint when sleep, nutrition, and physical activity are optimized during the growth window. The &quot;bioKids zone&quot; above is based on this finding.
+                      Published in <em>Children</em> (MDPI). Studied healthy families and documented that children can reach 3–4 standard deviations above their predicted midpoint when sleep, nutrition, and physical activity are optimized during the growth window. The &quot;heightMaxxing zone&quot; above is based on this finding.
                     </p>
                   </div>
                 </div>
