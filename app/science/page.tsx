@@ -229,7 +229,7 @@ export default function Dashboard() {
     <div style={{ minHeight: '100vh', background: col.bg, fontFamily: F }}>
       <Nav currentChild={child} />
 
-      <div style={{ maxWidth: 540, margin: '0 auto', padding: '0 20px', paddingTop: 32, paddingBottom: 64 }}>
+      <div style={{ maxWidth: 680, margin: '0 auto', padding: '0 20px', paddingTop: 32, paddingBottom: 64 }}>
 
         {/* Search → Austin */}
         <form
