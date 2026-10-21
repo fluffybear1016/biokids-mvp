@@ -13,9 +13,7 @@ export default function Home() {
             <span style={{ fontSize: 9, fontWeight: 700, color: '#fff', background: '#065f46', borderRadius: 4, padding: '1px 5px', letterSpacing: '0.08em', marginLeft: 4 }}>BETA</span>
           </Link>
           <div className="flex items-center gap-3 sm:gap-6">
-            <Link href="/about" style={{ fontSize: '0.75rem', fontWeight: 500, color: '#1c1917', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-sm">About</Link>
-            <Link href="/learn" style={{ fontSize: '0.75rem', fontWeight: 500, color: '#1c1917', textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }} className="sm:text-sm">Learn</Link>
-            <Link href="/home" className="text-xs sm:text-sm" style={{ background: '#065f46', color: 'white', padding: '0.4rem 0.75rem', borderRadius: '10px', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>Open the Protocol</Link>
+            <Link href="/home" className="text-xs sm:text-sm" style={{ background: '#065f46', color: 'white', padding: '0.4rem 0.75rem', borderRadius: '10px', fontWeight: 600, textDecoration: 'none', fontFamily: "'Courier New', Courier, monospace" }}>Launch App</Link>
           </div>
         </div>
       </nav>
