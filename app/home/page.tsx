@@ -794,7 +794,7 @@ export default function Dashboard() {
 
       {/* Clean top bar */}
 
-      <div style={{ maxWidth:540, margin:"0 auto", padding:"0 20px" }}>
+      <div style={{ maxWidth:680, margin:"0 auto", padding:"0 20px" }}>
 
         {/* Header */}
         <div style={{ paddingTop:48, paddingBottom:0 }}>
