@@ -188,7 +188,7 @@ function Austin() {
     <div style={{ minHeight: '100vh', background: C.bg, fontFamily: F, display: 'flex', flexDirection: 'column' }}>
       <Nav currentChild={child} />
 
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', maxWidth: 540, margin: '0 auto', width: '100%', padding: '24px 20px' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', maxWidth: 680, margin: '0 auto', width: '100%', padding: '24px 20px' }}>
 
         {/* Header */}
         <header style={{ textAlign: 'center', marginBottom: 24 }}>
