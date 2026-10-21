@@ -9,7 +9,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Courier New', Courier, monospace", textDecoration: 'none', background: '#f0fdf4', border: '1px solid #065f46', borderRadius: 10, padding: '5px 12px' }}>
             <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#065f46', display: 'inline-block' }} />
-            <span style={{ fontSize: 13, fontWeight: 700, color: '#065f46', letterSpacing: '0.04em' }}>bioKids</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: '#065f46', letterSpacing: '0.04em' }}>heightMaxxing</span>
             <span style={{ fontSize: 9, fontWeight: 700, color: '#fff', background: '#065f46', borderRadius: 4, padding: '1px 5px', letterSpacing: '0.08em', marginLeft: 4 }}>BETA</span>
           </Link>
           <div className="flex items-center gap-3 sm:gap-6">
@@ -127,7 +127,7 @@ export default function Home() {
             <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1.5px solid #065f46', position: 'relative' }}>
               <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2rem', color: '#d1fae5', lineHeight: 1, marginBottom: '0.5rem' }}>&ldquo;</div>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', lineHeight: 1.7, marginBottom: '1rem' }}>
-                I&apos;ve trained top NBA talent all the way down to elementary school kids. The limiting factor is always height. bioKids might just change the game forever&hellip;
+                I&apos;ve trained top NBA talent all the way down to elementary school kids. The limiting factor is always height. heightMaxxing might just change the game forever&hellip;
               </p>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', fontWeight: 700 }}>Thomas</p>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#57534e' }}>Athletic Trainer &middot; Miami</p>
@@ -136,7 +136,7 @@ export default function Home() {
             <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid #e7e5e4', position: 'relative' }}>
               <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2rem', color: '#d1fae5', lineHeight: 1, marginBottom: '0.5rem' }}>&ldquo;</div>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', lineHeight: 1.7, marginBottom: '1rem' }}>
-                My son just turned 13 and went from the 60th to 87th percentile for height thanks to bioKids. My husband and I are 5&apos;9 and 5&apos;7.5&rdquo; respectively. I am starting my other two boys 11 and 7 on bioKids now.
+                My son just turned 13 and went from the 60th to 87th percentile for height thanks to heightMaxxing. My husband and I are 5&apos;9 and 5&apos;7.5&rdquo; respectively. I am starting my other two boys 11 and 7 on heightMaxxing now.
               </p>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', fontWeight: 700 }}>Maggie</p>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#57534e' }}>Mom of 3 &middot; New York</p>
@@ -145,7 +145,7 @@ export default function Home() {
             <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid #e7e5e4', position: 'relative' }}>
               <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: '2rem', color: '#d1fae5', lineHeight: 1, marginBottom: '0.5rem' }}>&ldquo;</div>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#1c1917', lineHeight: 1.7, marginBottom: '1rem' }}>
-                Both my kids are in the 99th percentile, 8 and 7 years old. We helped create the bioKids protocol and are starting tennis lessons for them next year in hopes of a D1 scholarship.
+                Both my kids are in the 99th percentile, 8 and 7 years old. We helped create the heightMaxxing protocol and are starting tennis lessons for them next year in hopes of a D1 scholarship.
               </p>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', fontWeight: 700 }}>Jeffrey</p>
               <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.625rem', color: '#57534e' }}>Dad of 2 &middot; New York</p>
@@ -193,7 +193,7 @@ export default function Home() {
               </summary>
               <div style={{ padding: '0 1.25rem 1.25rem', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.8125rem', color: '#57534e', lineHeight: 1.75 }}>
                 <p style={{ marginBottom: '0.75rem' }}>It starts with the standard mid-parental height prediction used by pediatric endocrinologists worldwide &mdash; your height plus your partner&apos;s height, adjusted for your child&apos;s sex, with a &plusmn;2&quot; genetic range. The &ldquo;genetic range&rdquo; comes directly from this method.</p>
-                <p style={{ marginBottom: '0.75rem' }}>Then it shows the <em>bioKids zone</em> &mdash; where your child could land with optimized sleep, nutrition, and physical activity during the growth window. This isn&apos;t a guarantee. It&apos;s the ceiling that the science supports when every lever is pulled consistently.</p>
+                <p style={{ marginBottom: '0.75rem' }}>Then it shows the <em>heightMaxxing zone</em> &mdash; where your child could land with optimized sleep, nutrition, and physical activity during the growth window. This isn&apos;t a guarantee. It&apos;s the ceiling that the science supports when every lever is pulled consistently.</p>
                 <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: '0.6875rem', color: '#065f46', lineHeight: 1.8 }}>
                   <a href="https://pubmed.ncbi.nlm.nih.gov/9600238/" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46' }}>Luo, Albertsson-Wikland &amp; Karlberg, &ldquo;Target Height as Predicted by Parental Heights in a Population-Based Study&rdquo; &mdash; Pediatric Research, 1998</a><br/>
                   <a href="https://www.mdpi.com/2227-9067/11/12/1440" target="_blank" rel="noopener noreferrer" style={{ color: '#065f46' }}>Zeevi et al., &ldquo;The Effect of Lifestyle Interventions on Final Height in Healthy Children&rdquo; &mdash; Children (MDPI), 2024</a>
@@ -265,7 +265,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
           <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f0fdf4', border: '1px solid #065f46', borderRadius: 10, padding: '5px 12px' }}>
             <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#065f46', display: 'inline-block' }} />
-            <span style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 13, fontWeight: 700, color: '#065f46', letterSpacing: '0.04em' }}>bioKids</span>
+            <span style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 13, fontWeight: 700, color: '#065f46', letterSpacing: '0.04em' }}>heightMaxxing</span>
             <span style={{ fontSize: 9, fontWeight: 700, color: '#fff', background: '#065f46', borderRadius: 4, padding: '1px 5px', letterSpacing: '0.08em', marginLeft: 4 }}>BETA</span>
           </span>
           <div className="flex gap-6 sm:gap-8 text-sm" style={{ color: '#1c1917', fontFamily: "'Courier New', Courier, monospace", fontWeight: 500 }}>
