@@ -1,4 +1,3 @@
-import Anthropic from '@anthropic-ai/sdk';
 import { createClient } from '@supabase/supabase-js';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
@@ -895,7 +894,9 @@ export async function POST(request: Request) {
     const safeName = typeof childName === 'string' ? childName.slice(0, 50) : undefined;
     const safeAge = typeof childAge === 'number' && childAge >= 0 && childAge <= 30 ? childAge : undefined;
 
-    const apiKey = process.env.ANTHROPIC_API_KEY;
+    const apiKey = process.env.AI_API_KEY || process.env.OPENROUTER_API_KEY;
+    const aiBaseUrl = process.env.AI_BASE_URL || 'https://openrouter.ai/api/v1';
+    const aiModel = process.env.AI_MODEL || 'deepseek/deepseek-chat-v3-0324:free';
     if (!apiKey) {
       return new Response(JSON.stringify({ error: 'Service temporarily unavailable' }), {
         status: 503,
@@ -922,24 +923,53 @@ export async function POST(request: Request) {
       systemPrompt += userContext;
     }
 
-    const client = new Anthropic({ apiKey });
     const encoder = new TextEncoder();
 
     const readable = new ReadableStream({
       async start(controller) {
         try {
-          const stream = client.messages.stream({
-            model: 'claude-sonnet-4-20250514',
-            max_tokens: 2048,
-            system: systemPrompt,
-            messages: validatedMessages,
+          const upstream = await fetch(aiBaseUrl + '/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + apiKey,
+              'HTTP-Referer': 'https://heightmaxxing.ai',
+              'X-Title': 'heightMaxxing',
+            },
+            body: JSON.stringify({
+              model: aiModel,
+              max_tokens: 2048,
+              stream: true,
+              messages: [{ role: 'system', content: systemPrompt }, ...validatedMessages],
+            }),
           });
 
-          stream.on('text', (text) => {
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
-          });
+          if (!upstream.ok || !upstream.body) {
+            const errText = await upstream.text().catch(() => '');
+            throw new Error('Upstream ' + upstream.status + ': ' + errText.slice(0, 200));
+          }
 
-          await stream.finalMessage();
+          const reader = upstream.body.getReader();
+          const decoder = new TextDecoder();
+          let buffer = '';
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buffer += decoder.decode(value, { stream: true });
+            const parts = buffer.split('\n');
+            buffer = parts.pop() || '';
+            for (const line of parts) {
+              const trimmed = line.trim();
+              if (!trimmed.startsWith('data:')) continue;
+              const payload = trimmed.slice(5).trim();
+              if (payload === '[DONE]') continue;
+              try {
+                const json = JSON.parse(payload);
+                const text = json.choices && json.choices[0] && json.choices[0].delta && json.choices[0].delta.content;
+                if (text) controller.enqueue(encoder.encode('data: ' + JSON.stringify({ text }) + '\n\n'));
+              } catch { /* ignore partial chunk */ }
+            }
+          }
           controller.enqueue(encoder.encode('data: [DONE]\n\n'));
           controller.close();
         } catch (streamError: unknown) {
