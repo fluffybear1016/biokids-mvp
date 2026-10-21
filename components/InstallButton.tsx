@@ -264,7 +264,7 @@ export default function InstallButton() {
                 color: '#1c1917',
                 margin: 0,
               }}>
-                Install bioKids
+                Install heightMaxxing
               </h3>
               <button
                 onClick={() => setShowInstructions(false)}
@@ -303,7 +303,7 @@ export default function InstallButton() {
                 <Step
                   num={3}
                   text='Tap "Add" in the top right'
-                  detail="bioKids will appear on your Home Screen"
+                  detail="heightMaxxing will appear on your Home Screen"
                   icon="✓"
                 />
               </div>
@@ -318,13 +318,13 @@ export default function InstallButton() {
                 <Step
                   num={2}
                   text='Tap "Install app" or "Add to Home Screen"'
-                  detail="This will add bioKids to your device"
+                  detail="This will add heightMaxxing to your device"
                   icon="+"
                 />
                 <Step
                   num={3}
                   text="Confirm by tapping Install"
-                  detail="bioKids will appear on your Home Screen"
+                  detail="heightMaxxing will appear on your Home Screen"
                   icon="✓"
                 />
               </div>
