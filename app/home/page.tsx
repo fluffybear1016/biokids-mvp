@@ -19,7 +19,7 @@ const mockChild: Child = {
 };
 
 /*
- * bioKids — Ive Edition v8
+ * heightMaxxing — Ive Edition v8
  *
  * Design philosophy: Jony Ive
  * - One number, one action, one reason per card
@@ -401,7 +401,7 @@ const dayData: DayPeriod[] = [
         { p:"Cortisol reduction", n:"calming", d:"Consistent touch ritual lowers cortisol" },
       ]},
 
-    { id:"drink", t:"Tart cherry + A2 milk", sub:"4 oz A2 milk, 1 oz tart cherry juice, unsweetened — 60–90 minutes before bed", gh:"24-hr growth signal", headline:"the 24-hour growth cycle completes — GH 451% at 24h in adult study, IGF-1 +14%", tier:0, sig:true, cite:"Zajac, Biol Sport 2018; Howatson, Eur J Nutr 2012; Forsling, J Pineal Res 1999", why:"The signature bioKids ritual. Everything unsweetened, no added sugar — sugar close to bed fragments sleep and blunts GH pulses after midnight. Casein slow-releases aminos 6–7 hours feeding GH pulses all night. Tart cherry = highest food melatonin (melatonin raised GH 157% in adult studies + aromatase inhibition). α-Lactalbumin = highest tryptophan — serotonin — melatonin. In the Zajac study (adults), GH remained 451% above baseline at 24 hours, IGF-1 14% higher. ~55 calories — too small to spike insulin. Use 100% tart cherry juice ONLY — no blends, no added sugar.\n\nTHE 24-HOUR GROWTH CYCLE: Here's how every meal connects — morning eggs deliver choline that primes the pituitary → sprints trigger a massive GH spike → post-sprint milk converts that GH to IGF-1 (the actual growth signal) → this Sleep Drink feeds casein overnight, slow-releasing aminos for 6–7 hours into each GH pulse while you sleep → tomorrow morning's eggs restart the whole cycle. Some growth lever is always on. Nothing is random.", tip:"Mix, serve 60 min before bed. Unsweetened — no honey, no sugar. 100% tart cherry juice only. This is a DAIRY window. Dim lights after.\n\nNO TART CHERRY JUICE? Warm A2 milk by itself still delivers casein overnight. The cherry adds melatonin — but the milk alone is the foundation. Even regular whole milk before bed is better than nothing. Start where you are.",
+    { id:"drink", t:"Tart cherry + A2 milk", sub:"4 oz A2 milk, 1 oz tart cherry juice, unsweetened — 60–90 minutes before bed", gh:"24-hr growth signal", headline:"the 24-hour growth cycle completes — GH 451% at 24h in adult study, IGF-1 +14%", tier:0, sig:true, cite:"Zajac, Biol Sport 2018; Howatson, Eur J Nutr 2012; Forsling, J Pineal Res 1999", why:"The signature heightMaxxing ritual. Everything unsweetened, no added sugar — sugar close to bed fragments sleep and blunts GH pulses after midnight. Casein slow-releases aminos 6–7 hours feeding GH pulses all night. Tart cherry = highest food melatonin (melatonin raised GH 157% in adult studies + aromatase inhibition). α-Lactalbumin = highest tryptophan — serotonin — melatonin. In the Zajac study (adults), GH remained 451% above baseline at 24 hours, IGF-1 14% higher. ~55 calories — too small to spike insulin. Use 100% tart cherry juice ONLY — no blends, no added sugar.\n\nTHE 24-HOUR GROWTH CYCLE: Here's how every meal connects — morning eggs deliver choline that primes the pituitary → sprints trigger a massive GH spike → post-sprint milk converts that GH to IGF-1 (the actual growth signal) → this Sleep Drink feeds casein overnight, slow-releasing aminos for 6–7 hours into each GH pulse while you sleep → tomorrow morning's eggs restart the whole cycle. Some growth lever is always on. Nothing is random.", tip:"Mix, serve 60 min before bed. Unsweetened — no honey, no sugar. 100% tart cherry juice only. This is a DAIRY window. Dim lights after.\n\nNO TART CHERRY JUICE? Warm A2 milk by itself still delivers casein overnight. The cherry adds melatonin — but the milk alone is the foundation. Even regular whole milk before bed is better than nothing. Start where you are.",
       pumps:[
         { p:"GH at 24h*", n:"up to 451%", d:"Zajac: still 451% above baseline at 24h in adult athletes" },
         { p:"IGF-1*", n:"+14%", d:"14% higher than controls in adult study" },
@@ -1053,7 +1053,7 @@ export default function Dashboard() {
               </div>
 
               <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:9, color:"#86efac", letterSpacing:"0.08em", margin:"12px 0 16px" }}>
-                &#x25CF; bioKids
+                &#x25CF; heightMaxxing
               </div>
 
               {/* Share — FOMO text */}
@@ -1128,7 +1128,7 @@ export default function Dashboard() {
                     background:"#ebe9e6",
                     borderRadius:"0 0 10px 10px",
                   }} />
-                  {/* bioKids zone (top) — green gradient */}
+                  {/* heightMaxxing zone (top) — green gradient */}
                   <div style={{
                     position:"absolute", top:0, left:0, right:0,
                     height:`${100 - geneticPct}%`,
@@ -1170,9 +1170,9 @@ export default function Dashboard() {
                     </div>
                   </div>
 
-                  {/* Middle — bioKids zone range */}
+                  {/* Middle — heightMaxxing zone range */}
                   <div style={{ padding:"12px 0" }}>
-                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#065f46", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:3 }}>bioKids Zone</div>
+                    <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:8, color:"#065f46", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:3 }}>heightMaxxing Zone</div>
                     <div style={{ fontFamily:"Georgia, 'Times New Roman', serif", fontSize:17, fontWeight:800, color:"#065f46" }}>
                       {heightData.bioLow} — {heightData.bioHigh}
                     </div>
