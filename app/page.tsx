@@ -58,7 +58,7 @@ export default function Home() {
                 </span>
                 <span className="flex items-center gap-1.5 sm:gap-2">
                   <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#065f46', display: 'inline-block' }}></span>
-                  bioKid
+                  heightMaxxer
                 </span>
               </div>
             </div>
