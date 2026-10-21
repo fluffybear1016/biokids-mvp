@@ -213,7 +213,7 @@ export default function PWAInstall() {
         }}>
           <div>
             <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 13, fontWeight: 700, color: '#fff', margin: '0 0 2px' }}>
-              Add bioKids to your home screen
+              Add heightMaxxing to your home screen
             </p>
             <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 10, color: '#d1fae5', margin: 0 }}>
               Quick access to your child&apos;s daily protocol
