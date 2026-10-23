@@ -6,7 +6,6 @@ import { Child } from '@/lib/supabase';
 import { useChildName } from '@/lib/useChildName';
 import { getActiveChild } from '@/lib/children';
 import { analytics } from '@/lib/analytics';
-import InstallButton from '@/components/InstallButton';
 
 const mockChild: Child = {
   id: '1',
@@ -611,8 +610,9 @@ export default function Dashboard() {
   const childName = useChildName();
   const child = { ...mockChild, name: childName };
 
-  const [openId, setOpenId] = useState<string | null>(null);
-  const [showProtocol, setShowProtocol] = useState(false);
+  const [closedIds, setClosedIds] = useState<Set<string>>(new Set());
+  const openItem = (id: string) => setClosedIds(prev => { const n = new Set(prev); n.delete(id); return n; });
+  const [showProtocol] = useState(true);
 
   // Per-child checklist: include active child ID in the localStorage key
   const activeChild = typeof window !== 'undefined' ? getActiveChild() : null;
@@ -732,7 +732,7 @@ export default function Dashboard() {
     prevCoreDone.current = allCoreDone;
   }, [allCoreDone]);
 
-  const [introOpen, setIntroOpen] = useState(false);
+  const [introOpen, setIntroOpen] = useState(true);
 
   // First-visit welcome — shows once after payment, then never again
   const [showWelcome, setShowWelcome] = useState(() => {
@@ -766,7 +766,7 @@ export default function Dashboard() {
         const el = document.getElementById(hash.slice(1));
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          setOpenId(itemId);
+          openItem(itemId);
         }
       }, 400);
     } else {
@@ -833,11 +833,6 @@ export default function Dashboard() {
               </div>
             </div>
           </>}
-        </div>
-
-        {/* Install to Home Screen prompt — top of page for visibility */}
-        <div style={{ marginTop: 16 }}>
-          <InstallButton />
         </div>
 
         {/* Quick links — Shopping List + Height Log */}
@@ -951,7 +946,7 @@ export default function Dashboard() {
                 key={i}
                 onClick={() => {
                   const el = document.getElementById(`item-${item.anchor}`);
-                  if (el) { el.scrollIntoView({ behavior:'smooth', block:'center' }); setOpenId(item.anchor); }
+                  if (el) { el.scrollIntoView({ behavior:'smooth', block:'center' }); openItem(item.anchor); }
                 }}
                 style={{
                   display:"flex", gap:12, padding:"14px 0",
@@ -976,7 +971,7 @@ export default function Dashboard() {
             <div
               onClick={() => {
                 const el = document.getElementById('item-joy');
-                if (el) { el.scrollIntoView({ behavior:'smooth', block:'center' }); setOpenId('joy'); }
+                if (el) { el.scrollIntoView({ behavior:'smooth', block:'center' }); openItem('joy'); }
               }}
               style={{
                 display:"flex", gap:12, padding:"14px 0",
@@ -1320,22 +1315,14 @@ export default function Dashboard() {
         {/* Breath before the protocol */}
         <div style={{ height:1, background:"#e7e5e4", margin:"36px 0 40px" }} />
 
-        {/* Protocol toggle — collapsed by default, calm by design */}
-        <div
-          onClick={() => setShowProtocol(!showProtocol)}
-          style={{ cursor:"pointer", textAlign:"center", marginBottom: showProtocol ? 32 : 0 }}
-        >
+        {/* Full protocol — always open, just scroll */}
+        <div style={{ textAlign:"center", marginBottom: 32 }}>
           <div style={{ fontSize:20, fontWeight:900, color:"#1c1917", letterSpacing:"-0.02em", marginBottom:8 }}>
             Full Daily Protocol
           </div>
-          <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:12, color:"#065f46", fontWeight:600, marginBottom:4 }}>
-            {showProtocol ? "Hide protocol ▲" : "See all 35 science-backed levers ▼"}
+          <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#57534e", lineHeight:1.6, fontStyle:"italic" }}>
+            Every science-backed lever, in order — scroll through the whole day below.
           </div>
-          {!showProtocol && (
-            <div style={{ fontFamily:"'Courier New', Courier, monospace", fontSize:11, color:"#57534e", lineHeight:1.6, fontStyle:"italic", marginTop:8 }}>
-              Your notifications walk you through these daily. Tap to explore the science.
-            </div>
-          )}
         </div>
 
         {/* Day sections — collapsed by default */}
@@ -1360,8 +1347,8 @@ export default function Dashboard() {
                 <Card
                   key={item.id}
                   item={item}
-                  isOpen={openId === item.id}
-                  onToggle={() => setOpenId(openId === item.id ? null : item.id)}
+                  isOpen={!closedIds.has(item.id)}
+                  onToggle={() => setClosedIds(prev => { const n = new Set(prev); if (n.has(item.id)) n.delete(item.id); else n.add(item.id); return n; })}
                 />
               ))}
             </div>
